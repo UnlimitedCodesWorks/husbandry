@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.Admin">
+    <id column="adminid" jdbcType="INTEGER" property="adminid" />
+    <result column="admin_num" jdbcType="VARCHAR" property="adminNum" />
+    <result column="admin_pass" jdbcType="VARCHAR" property="adminPass" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adminid, admin_num, admin_pass
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.Admin">
+    insert into admin (adminid, admin_num, admin_pass
+      )
+    values (#{adminid,jdbcType=INTEGER}, #{adminNum,jdbcType=VARCHAR}, #{adminPass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        adminid,
+      </if>
+      <if test="adminNum != null">
+        admin_num,
+      </if>
+      <if test="adminPass != null">
+        admin_pass,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminNum != null">
+        #{adminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPass != null">
+        #{adminPass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.yiliya.pojo.Admin">
+    update admin
+    <set>
+      <if test="adminNum != null">
+        admin_num = #{adminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPass != null">
+        admin_pass = #{adminPass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.Admin">
+    update admin
+    set admin_num = #{adminNum,jdbcType=VARCHAR},
+      admin_pass = #{adminPass,jdbcType=VARCHAR}
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+  <select id="AdminLogin" resultMap="BaseResultMap">
+    SELECT * FROM admin WHERE admin.admin_num AND admin.admin_pass
+  </select>
+</mapper>
