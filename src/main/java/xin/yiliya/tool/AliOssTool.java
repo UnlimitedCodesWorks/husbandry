@@ -1,6 +1,8 @@
 package xin.yiliya.tool;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.OSSObjectSummary;
+import com.aliyun.oss.model.ObjectListing;
 import com.aliyun.oss.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,8 +10,6 @@ import xin.yiliya.exception.ImageFormatException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class AliOssTool {
     @Autowired
     OSSClient ossClient;
 
+    //将单个图片传入指定目录
     public String putImage(MultipartFile file,String nameSpace) throws ImageFormatException, IOException {
         String fileName = file.getName();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
@@ -42,6 +43,7 @@ public class AliOssTool {
         return String.valueOf(link);
     }
 
+    //将多个图片传入指定目录
     public List<String> putImages(MultipartFile[] files,String nameSpace) throws IOException, ImageFormatException {
             List<String> links = new LinkedList<String>();
             for (MultipartFile file : files) {
@@ -50,4 +52,18 @@ public class AliOssTool {
              }
             return links;
     }
+
+    //列出目录下的文件
+    public String listFiles(String nameSpace){
+        StringBuffer files = new StringBuffer();
+        ObjectListing objectListing = ossClient.listObjects(BUCKETNAME, nameSpace+"/");
+        List<OSSObjectSummary> sums = objectListing.getObjectSummaries();
+        for (OSSObjectSummary s : sums) {
+            String fileName = s.getKey();
+            fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+            files.append(fileName+"\t");
+        }
+        return String.valueOf(files);
+    }
+
 }
