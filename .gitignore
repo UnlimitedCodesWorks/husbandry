@@ -24,4 +24,4 @@ hs_err_pid*
 /target/
 /.idea/
 .idea/workspace.xml
-src\main\resources\generatorConfig.xml
+src/main/resources/generatorConfig.xml
