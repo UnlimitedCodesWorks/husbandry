@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.AptitudeMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.Aptitude">
+    <id column="aptitudeid" jdbcType="INTEGER" property="aptitudeid" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="aptitude_img" jdbcType="VARCHAR" property="aptitudeImg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aptitudeid, store_id, aptitude_img
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from aptitude
+    where aptitudeid = #{aptitudeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from aptitude
+    where aptitudeid = #{aptitudeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.Aptitude">
+    insert into aptitude (aptitudeid, store_id, aptitude_img
+      )
+    values (#{aptitudeid,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{aptitudeImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.Aptitude">
+    insert into aptitude
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aptitudeid != null">
+        aptitudeid,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="aptitudeImg != null">
+        aptitude_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aptitudeid != null">
+        #{aptitudeid,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="aptitudeImg != null">
+        #{aptitudeImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.yiliya.pojo.Aptitude">
+    update aptitude
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="aptitudeImg != null">
+        aptitude_img = #{aptitudeImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aptitudeid = #{aptitudeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.Aptitude">
+    update aptitude
+    set store_id = #{storeId,jdbcType=INTEGER},
+      aptitude_img = #{aptitudeImg,jdbcType=VARCHAR}
+    where aptitudeid = #{aptitudeid,jdbcType=INTEGER}
+  </update>
+</mapper>

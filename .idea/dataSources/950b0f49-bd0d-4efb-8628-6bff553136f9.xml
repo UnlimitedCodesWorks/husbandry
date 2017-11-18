@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="husbandry">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="beautifulcity"/>
+    <schema id="4" parent="1" name="countryforum"/>
+    <schema id="5" parent="1" name="gamemall"/>
+    <schema id="6" parent="1" name="information_schema"/>
+    <schema id="7" parent="1" name="mysql"/>
+    <schema id="8" parent="1" name="payment"/>
+    <schema id="9" parent="1" name="performance_schema"/>
+    <schema id="10" parent="1" name="sys"/>
+    <schema id="11" parent="1" name="test"/>
+    <table id="12" parent="2" name="tequipment"/>
+    <table id="13" parent="2" name="tuser"/>
+    <column id="14" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="15" parent="12" name="name">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="16" parent="12" name="description">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="17" parent="12" name="code">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="18" parent="12" name="add_time">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="19" parent="12" name="price">
+      <Position>6</Position>
+      <DataType>float(10,2)|0</DataType>
+    </column>
+    <column id="20" parent="12" name="user_id">
+      <Position>7</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="21" parent="12" name="user_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="22" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="23" parent="12" name="tequipment_ibfk_1">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>husbandry</RefSchemaName>
+      <RefTableName>tuser</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="24" parent="13" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="25" parent="13" name="login_name">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="26" parent="13" name="real_name">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="27" parent="13" name="password">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="28" parent="13" name="tel">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="29" parent="13" name="email">
+      <Position>6</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="30" parent="13" name="type">
+      <Position>7</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <column id="31" parent="13" name="last_login_time">
+      <Position>8</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="32" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
