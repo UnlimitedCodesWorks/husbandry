@@ -19,6 +19,26 @@ public class RegisterStore {
 
     private MultipartFile[] aptitudeImgs;
 
+    private String areaId;
+
+    private String detailInfo;
+
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
+
+    public String getDetailInfo() {
+        return detailInfo;
+    }
+
+    public void setDetailInfo(String detailInfo) {
+        this.detailInfo = detailInfo;
+    }
+
     public String getRegistNum() {
         return registNum;
     }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.AreasMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.Areas">
+    <id column="arid" jdbcType="INTEGER" property="arid" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaId" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="xin.yiliya.pojo.Areas">
+    <id column="arid" jdbcType="INTEGER" property="arid" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaId" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    arid,area,areaid
+  </sql>
+  <sql id="Base_Column_List1">
+    arid,area,areaid,cityid
+  </sql>
+  <select id="selectAllAreasByCity" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    areas
+    WHERE
+    cityid = #{cityId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllAreas" resultMap="BaseResultMap1">
+    SELECT
+    <include refid="Base_Column_List1" />
+    FROM
+    areas
+  </select>
+  <select id="selectAridByAreaId" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT
+    arid
+    FROM
+    areas
+    WHERE areaid = #{areaId,jdbcType=VARCHAR}
+  </select>
+</mapper>

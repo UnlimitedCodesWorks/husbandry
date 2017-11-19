@@ -8,13 +8,14 @@
     <result column="store_name" jdbcType="VARCHAR" property="storeName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="area_id" jdbcType="INTEGER" property="arid" />
     <result column="detail_info" jdbcType="VARCHAR" property="detailInfo" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
     <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
     <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
   <sql id="Base_Column_List">
     storeid, regist_num, password, store_name, phone, email, area_id, detail_info, head_img, 
     logo_img, regist_time, status
@@ -31,6 +32,12 @@
     from store
     where regist_num = #{RegistNum,jdbcType=VARCHAR}
   </select>
+  <select id="selectAllByLogin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from store
+    where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
     where storeid = #{storeid,jdbcType=INTEGER}
@@ -43,7 +50,7 @@
       )
     values (#{storeid,jdbcType=INTEGER}, #{registNum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{storeName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{areaId,jdbcType=INTEGER}, #{detailInfo,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, 
+      #{arid,jdbcType=INTEGER}, #{detailInfo,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR},
       #{logoImg,jdbcType=VARCHAR}, #{registTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
@@ -68,7 +75,7 @@
       <if test="email != null">
         email,
       </if>
-      <if test="areaId != null">
+      <if test="arid != null">
         area_id,
       </if>
       <if test="detailInfo != null">
@@ -106,8 +113,8 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="areaId != null">
-        #{areaId,jdbcType=INTEGER},
+      <if test="arid != null">
+        #{arid,jdbcType=INTEGER},
       </if>
       <if test="detailInfo != null">
         #{detailInfo,jdbcType=VARCHAR},
@@ -144,8 +151,8 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="areaId != null">
-        area_id = #{areaId,jdbcType=INTEGER},
+      <if test="arid != null">
+        area_id = #{arid,jdbcType=INTEGER},
       </if>
       <if test="detailInfo != null">
         detail_info = #{detailInfo,jdbcType=VARCHAR},
@@ -172,7 +179,7 @@
       store_name = #{storeName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      area_id = #{areaId,jdbcType=INTEGER},
+      area_id = #{arid,jdbcType=INTEGER},
       detail_info = #{detailInfo,jdbcType=VARCHAR},
       head_img = #{headImg,jdbcType=VARCHAR},
       logo_img = #{logoImg,jdbcType=VARCHAR},

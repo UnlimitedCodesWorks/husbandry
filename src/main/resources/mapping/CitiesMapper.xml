@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.CitiesMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.Cities">
+    <id column="ciid" jdbcType="INTEGER" property="ciid" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityId" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="xin.yiliya.pojo.Cities">
+    <id column="ciid" jdbcType="INTEGER" property="ciid" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityId" />
+    <result column="provinceid" jdbcType="VARCHAR" property="provinceId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ciid,city,cityid
+  </sql>
+  <sql id="Base_Column_List1">
+    ciid,city,cityid,provinceid
+  </sql>
+  <select id="selectAllCitiesByProvince" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    cities
+    WHERE
+    provinceid = #{provinceId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllCities" resultMap="BaseResultMap1">
+    SELECT
+    <include refid="Base_Column_List1" />
+    FROM
+    cities
+  </select>
+</mapper>

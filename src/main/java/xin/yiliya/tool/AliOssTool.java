@@ -36,7 +36,7 @@ public class AliOssTool {
             throw new ImageFormatException("不能上传除jpg，gif，png以外的图片或文件");
         }
         StringBuffer position = new StringBuffer(nameSpace);
-        position.append("/"+fileName);
+        position.append("/").append(fileName);
         ossClient.putObject(BUCKETNAME, String.valueOf(position),new ByteArrayInputStream(file.getBytes()),meta);
         StringBuffer link = new StringBuffer(ENDPOINT);
         link.append(position);
@@ -61,7 +61,7 @@ public class AliOssTool {
         for (OSSObjectSummary s : sums) {
             String fileName = s.getKey();
             fileName = fileName.substring(fileName.lastIndexOf("/")+1);
-            files.append(fileName+"\t");
+            files.append(fileName).append("\t");
         }
         return String.valueOf(files);
     }
