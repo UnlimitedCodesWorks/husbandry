@@ -52,10 +52,10 @@ public class Client {
     public void test() throws IOException, ImageFormatException {
         File file1 = new File("src/main/test/test.jpg");
         FileInputStream input1 = new FileInputStream(file1);
-        File file2 = new File("src/main/test/test1.png");
+        File file2 = new File("src/main/test/test1.jpg");
         FileInputStream input2 = new FileInputStream(file2);
         MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
-        MultipartFile multipartFile2 = new MockMultipartFile("test1.png",file2.getName(),"image/png", IOUtils.toByteArray(input2));
+        MultipartFile multipartFile2 = new MockMultipartFile("test1.jpg",file2.getName(),"image/jpeg", IOUtils.toByteArray(input2));
         MultipartFile[] files = new MultipartFile[2];
         files[0] = multipartFile1;
         files[1] = multipartFile2;
@@ -69,5 +69,6 @@ public class Client {
     SimpleOfferServiceMapper simpleOfferServiceMapper;
     @Test
     public void test1(){
+        System.out.println(aliOssTool.deleteFileByLink("http://husbandry.oss-cn-shanghai.aliyuncs.com/store/test.jpg"));
     }
 }

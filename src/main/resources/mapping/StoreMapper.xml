@@ -200,7 +200,7 @@
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
-    where storeid = #{storeid,jdbcType=INTEGER}
+    where regist_num = #{registNum,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.Store">
     update store

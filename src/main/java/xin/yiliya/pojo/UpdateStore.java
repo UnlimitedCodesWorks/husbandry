@@ -16,11 +16,31 @@ public class UpdateStore {
 
     private MultipartFile headImg;
 
+    private String headLink;
+
     private MultipartFile logoImg;
+
+    private String logoLink;
 
     private String areaId;
 
     private String detailInfo;
+
+    public String getHeadLink() {
+        return headLink;
+    }
+
+    public void setHeadLink(String headLink) {
+        this.headLink = headLink;
+    }
+
+    public String getLogoLink() {
+        return logoLink;
+    }
+
+    public void setLogoLink(String logoLink) {
+        this.logoLink = logoLink;
+    }
 
     public String getRegistNum() {
         return registNum;

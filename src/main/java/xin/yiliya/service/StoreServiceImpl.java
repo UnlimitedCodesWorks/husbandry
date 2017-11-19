@@ -34,7 +34,7 @@ public class StoreServiceImpl implements StoreService {
     private AreasMapper areasMapper;
 
     @Resource
-    private SimpleOfferServiceMapper simpleOfferServiceMapper;
+    private SimpleOfferServiceService simpleOfferServiceService;
 
     public Boolean register(RegisterStore registerStore) {
         try{
@@ -66,7 +66,7 @@ public class StoreServiceImpl implements StoreService {
         String realPassword = DigestUtils.md5Hex(password).substring(0,10);
         Store store = storeMapper.selectAllByLogin(loginName,realPassword);
         store.setSimpleOfferServices(
-                simpleOfferServiceMapper.getAllSimpleOfferServiceByStoreId(store.getStoreid()));
+                simpleOfferServiceService.getAllSimpleOfferServiceByStoreId(store.getStoreid(),1,9).getList());
         return store;
     }
 
@@ -82,9 +82,11 @@ public class StoreServiceImpl implements StoreService {
                 store.setArid(areasMapper.selectAridByAreaId(updateStore.getAreaId()));
             }
             if(updateStore.getHeadImg()!=null){
+                aliOssTool.deleteFileByLink(updateStore.getHeadLink());
                 store.setHeadImg(aliOssTool.putImage(updateStore.getHeadImg(),"store"));
             }
             if(updateStore.getLogoImg()!=null){
+                aliOssTool.deleteFileByLink(updateStore.getLogoLink());
                 store.setLogoImg(aliOssTool.putImage(updateStore.getLogoImg(),"store"));
             }
             storeMapper.updateByPrimaryKeySelective(store);

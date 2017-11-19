@@ -66,4 +66,28 @@ public class AliOssTool {
         return String.valueOf(files);
     }
 
+    //根据文件名删除文件
+    public Boolean deleteFile(String fileName,String nameSpace){
+        try{
+            String key = nameSpace+"/"+fileName;
+            ossClient.deleteObject(BUCKETNAME,key);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    //根据图片链接删除文件
+    public Boolean deleteFileByLink(String link){
+        try{
+            String[] strings = link.split(ENDPOINT);
+            String key = strings[1];
+            ossClient.deleteObject(BUCKETNAME,key);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }
