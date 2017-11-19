@@ -48,6 +48,8 @@
     <!-- ========================================针对myBatis的配置项============================== -->
     <!-- 配置sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--打印SQL语句-->
+        <property name="configLocation" value="classpath:config/mybatis-config.xml" />
         <!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
         <property name="dataSource" ref="dataSource" />
         <!-- 自动扫描me/gacl/mapping/目录下的所有SQL映射的xml文件, 省掉Configuration.xml里的手工配置

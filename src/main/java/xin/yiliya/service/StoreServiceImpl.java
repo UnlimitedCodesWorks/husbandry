@@ -1,5 +1,6 @@
 package xin.yiliya.service;
 
+import com.alibaba.fastjson.JSON;
 import com.aliyun.oss.OSSClient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -82,11 +83,15 @@ public class StoreServiceImpl implements StoreService {
                 store.setArid(areasMapper.selectAridByAreaId(updateStore.getAreaId()));
             }
             if(updateStore.getHeadImg()!=null){
-                aliOssTool.deleteFileByLink(updateStore.getHeadLink());
+                if(updateStore.getHeadLink()!=null){
+                    aliOssTool.deleteFileByLink(updateStore.getHeadLink());
+                }
                 store.setHeadImg(aliOssTool.putImage(updateStore.getHeadImg(),"store"));
             }
             if(updateStore.getLogoImg()!=null){
-                aliOssTool.deleteFileByLink(updateStore.getLogoLink());
+                if(updateStore.getLogoLink()!=null){
+                    aliOssTool.deleteFileByLink(updateStore.getLogoLink());
+                }
                 store.setLogoImg(aliOssTool.putImage(updateStore.getLogoImg(),"store"));
             }
             storeMapper.updateByPrimaryKeySelective(store);
