@@ -69,6 +69,6 @@
     where adminid = #{adminid,jdbcType=INTEGER}
   </update>
   <select id="AdminLogin" resultMap="BaseResultMap">
-    SELECT * FROM admin WHERE admin.admin_num AND admin.admin_pass
+    SELECT * FROM admin WHERE admin.admin_num=#{num} AND admin.admin_pass=#{pass}
   </select>
 </mapper>
