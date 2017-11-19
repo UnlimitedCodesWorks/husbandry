@@ -11,4 +11,6 @@ public interface AreasMapper {
     public List<Areas> selectAllAreasByCity(String cityId);
 
     public List<Areas> selectAllAreas();
+
+    public Integer selectAridByAreaId(String areaId);
 }

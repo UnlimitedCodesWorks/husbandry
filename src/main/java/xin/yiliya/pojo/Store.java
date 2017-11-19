@@ -15,7 +15,7 @@ public class Store {
 
     private String email;
 
-    private Integer areaId;
+    private Integer arid;
 
     private String detailInfo;
 
@@ -26,6 +26,14 @@ public class Store {
     private Date registTime;
 
     private Integer status;
+
+    public Integer getArid() {
+        return arid;
+    }
+
+    public void setArid(Integer arid) {
+        this.arid = arid;
+    }
 
     public Integer getStoreid() {
         return storeid;
@@ -73,14 +81,6 @@ public class Store {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
-    }
-
-    public Integer getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
     }
 
     public String getDetailInfo() {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.AptitudeMapper;
+import xin.yiliya.dao.AreasMapper;
 import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.pojo.Aptitude;
 import xin.yiliya.pojo.RegisterStore;
@@ -30,6 +31,9 @@ public class StoreServiceImpl implements StoreService {
     @Resource
     private AptitudeMapper aptitudeMapper;
 
+    @Resource
+    private AreasMapper areasMapper;
+
     public Boolean register(RegisterStore registerStore) {
         try{
             String password = registerStore.getPassword();
@@ -38,6 +42,7 @@ public class StoreServiceImpl implements StoreService {
             BeanUtils.copyProperties(store,registerStore);
             store.setRegistTime(new Date());
             store.setStatus(0);
+            store.setArid(areasMapper.selectAridByAreaId(registerStore.getAreaId()));
             store.setHeadImg(aliOssTool.putImage(registerStore.getHeadImg(),"store"));
             store.setLogoImg(aliOssTool.putImage(registerStore.getLogoImg(),"store"));
             storeMapper.insertSelective(store);

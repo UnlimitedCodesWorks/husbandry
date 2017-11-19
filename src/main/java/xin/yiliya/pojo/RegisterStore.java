@@ -19,15 +19,15 @@ public class RegisterStore {
 
     private MultipartFile[] aptitudeImgs;
 
-    private Integer areaId;
+    private String areaId;
 
     private String detailInfo;
 
-    public Integer getAreaId() {
+    public String getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(Integer areaId) {
+    public void setAreaId(String areaId) {
         this.areaId = areaId;
     }
 

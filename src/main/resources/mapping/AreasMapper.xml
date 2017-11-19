@@ -32,4 +32,11 @@
     FROM
     areas
   </select>
+  <select id="selectAridByAreaId" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT
+    arid
+    FROM
+    areas
+    WHERE areaid = #{areaId,jdbcType=VARCHAR}
+  </select>
 </mapper>

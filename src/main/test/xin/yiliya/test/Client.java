@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
+import xin.yiliya.dao.AreasMapper;
 import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.Store;
@@ -38,6 +39,9 @@ public class Client {
 
     @Autowired
     RegionService regionService;
+
+    @Autowired
+    AreasMapper areasMapper;
     @Test
     public void test() throws IOException, ImageFormatException {
         File file1 = new File("src/main/test/test.jpg");
@@ -53,5 +57,10 @@ public class Client {
         for(String link:links){
             System.out.println(link);
         }
+    }
+
+    @Test
+    public void test1() {
+       System.out.println(areasMapper.selectAridByAreaId("110102"));
     }
 }
