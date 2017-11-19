@@ -3,7 +3,6 @@ package xin.yiliya.pojo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RegisterUser {
-    private  Integer userid;
 
     private String registNum;
 
@@ -16,14 +15,6 @@ public class RegisterUser {
     private String email;
 
     private MultipartFile headImg;
-
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
 
     public String getRegistNum() {
         return registNum;

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.Admin;
 import xin.yiliya.pojo.RegisterUser;
+import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.AdminService;
 import xin.yiliya.service.UserService;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,7 +61,7 @@ public class HhfTest {
 //        for(String link:links){
 //            System.out.println(link);
 //        }
-          //用户注册
+        //用户注册
 //        RegisterUser registerUser=new RegisterUser();
 //        registerUser.setRegistNum("12345");
 //        registerUser.setPassword("12345");
@@ -71,7 +73,19 @@ public class HhfTest {
 //        System.out.print(b);
 
         //用户登录
-        User user=userService.userLogin("12345","12345");
-        System.out.print(JSON.toJSONString(user,true));
+//        User user=userService.userLogin("12345","12345");
+//        System.out.print(JSON.toJSONString(user,true));
+
+        //修改我的信息
+//        UpdateUser updateUser=new UpdateUser();
+//        updateUser.setUserName("bb");
+//        updateUser.setRegistNum("1616161");
+//        updateUser.setIntroduce("bbbb");
+//        updateUser.setSex("bb");
+//        updateUser.setBirth(new Date());
+//        updateUser.setCommunity("bb");
+//        updateUser.setCityId("110200");
+//        boolean b=userService.userMyInfoUpdate(updateUser);
+//        System.out.print(b);
     }
 }

@@ -179,7 +179,7 @@
         community = #{community,jdbcType=VARCHAR},
       </if>
     </set>
-    where userid = #{userid,jdbcType=INTEGER}
+    where regist_num=#{registNum}
   </update>
   <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.User">
     update user
@@ -199,6 +199,10 @@
 
   <select id="userLogin" resultMap="UserCity">
     select * from user,cities WHERE regist_num=#{num} AND password=md5(#{pass}) AND user.city_id=cities.ciid
+  </select>
+
+  <select id="selectUserIdByRegistNum" resultType="java.lang.Integer">
+    SELECT userid FROM user WHERE regist_num=#{registNum}
   </select>
 
 </mapper>

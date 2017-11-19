@@ -4,8 +4,10 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xin.yiliya.dao.CitiesMapper;
 import xin.yiliya.dao.UserMapper;
 import xin.yiliya.pojo.RegisterUser;
+import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
 import xin.yiliya.tool.AliOssTool;
 
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    CitiesMapper citiesMapper;
 
     public Boolean userRegister(RegisterUser registerUser){
         try{
@@ -33,5 +38,28 @@ public class UserServiceImpl implements UserService{
 
     public User userLogin(String registNum,String password){
         return userMapper.userLogin(registNum,password);
+    }
+
+    public Boolean userMyInfoUpdate(UpdateUser updateUser){
+        try{
+            if(updateUser.getPassword()!=null){
+                updateUser.setPassword(DigestUtils.md5Hex(updateUser.getPassword()));
+            }
+            User user=new User();
+            BeanUtils.copyProperties(user,updateUser);
+            if (updateUser.getCityId()!=null){
+                user.setCityId(citiesMapper.selectCiidByCityId(updateUser.getCityId()));
+            }
+            if(updateUser.getHeadImg()!=null){
+                if(updateUser.getHeadLink()!=null){
+                    aliOssTool.deleteFileByLink(updateUser.getHeadLink());
+                }
+                user.setHeadImg(aliOssTool.putImage(updateUser.getHeadImg(),"user"));
+            }
+            userMapper.updateByPrimaryKeySelective(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

@@ -2,6 +2,7 @@ package xin.yiliya.service;
 
 import org.springframework.stereotype.Service;
 import xin.yiliya.pojo.RegisterUser;
+import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
 
 @Service
@@ -13,4 +14,8 @@ public interface UserService {
     //用户登录接口
     //返回：User对象类型
     public User userLogin(String registNum,String password);
+
+    //修改个人信息(我的信息、账号安全)
+    public Boolean userMyInfoUpdate(UpdateUser updateUser);
+
 }

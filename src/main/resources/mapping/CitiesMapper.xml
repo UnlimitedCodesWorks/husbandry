@@ -33,4 +33,8 @@
     FROM
     cities
   </select>
+
+  <select id="selectCiidByCityId" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT ciid FROM cities WHERE cityid = #{cityId,jdbcType=VARCHAR}
+  </select>
 </mapper>
