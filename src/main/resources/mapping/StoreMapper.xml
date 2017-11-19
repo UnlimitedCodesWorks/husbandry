@@ -15,6 +15,7 @@
     <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
   <sql id="Base_Column_List">
     storeid, regist_num, password, store_name, phone, email, area_id, detail_info, head_img, 
     logo_img, regist_time, status
@@ -30,6 +31,12 @@
     storeid
     from store
     where regist_num = #{RegistNum,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByLogin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from store
+    where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
