@@ -71,7 +71,7 @@ public class HhfTest {
 //        System.out.print(b);
 
         //用户登录
-//        User user=userService.userLogin("12345","12345");
-//        System.out.print(JSON.toJSONString(user,true));
+        User user=userService.userLogin("12345","12345");
+        System.out.print(JSON.toJSONString(user,true));
     }
 }

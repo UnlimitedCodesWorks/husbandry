@@ -27,6 +27,8 @@ public class User {
 
     private String community;
 
+    private Cities cities;
+
     public Integer getUserid() {
         return userid;
     }
@@ -121,5 +123,13 @@ public class User {
 
     public void setCommunity(String community) {
         this.community = community == null ? null : community.trim();
+    }
+
+    public Cities getCities() {
+        return cities;
+    }
+
+    public void setCities(Cities cities) {
+        this.cities = cities;
     }
 }
