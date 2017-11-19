@@ -14,6 +14,16 @@ public class Cities implements Serializable {
 
     private String provinceId;
 
+    private Provinces provinces;
+
+    public Provinces getProvinces() {
+        return provinces;
+    }
+
+    public void setProvinces(Provinces provinces) {
+        this.provinces = provinces;
+    }
+
     public String getProvinceId() {
         return provinceId;
     }

@@ -14,6 +14,16 @@ public class Areas implements Serializable{
 
     private String cityId;
 
+    private Cities city;
+
+    public Cities getCity() {
+        return city;
+    }
+
+    public void setCity(Cities city) {
+        this.city = city;
+    }
+
     public String getCityId() {
         return cityId;
     }

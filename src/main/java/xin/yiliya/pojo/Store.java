@@ -27,6 +27,16 @@ public class Store {
 
     private Integer status;
 
+    private Areas areas;
+
+    public Areas getAreas() {
+        return areas;
+    }
+
+    public void setAreas(Areas areas) {
+        this.areas = areas;
+    }
+
     public Integer getArid() {
         return arid;
     }
