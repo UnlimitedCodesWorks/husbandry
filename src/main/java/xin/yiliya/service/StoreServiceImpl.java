@@ -65,10 +65,7 @@ public class StoreServiceImpl implements StoreService {
 
     public Store login(String loginName, String password) {
         String realPassword = DigestUtils.md5Hex(password).substring(0,10);
-        Store store = storeMapper.selectAllByLogin(loginName,realPassword);
-        store.setSimpleOfferServices(
-                simpleOfferServiceService.getAllSimpleOfferServiceByStoreId(store.getStoreid(),1,9).getList());
-        return store;
+        return storeMapper.selectAllByLogin(loginName,realPassword);
     }
 
     public Boolean update(UpdateStore updateStore) {
