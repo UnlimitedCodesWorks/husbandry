@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.AptitudeMapper;
 import xin.yiliya.dao.AreasMapper;
+import xin.yiliya.dao.SimpleOfferServiceMapper;
 import xin.yiliya.dao.StoreMapper;
-import xin.yiliya.pojo.Aptitude;
-import xin.yiliya.pojo.RegisterStore;
-import xin.yiliya.pojo.Store;
+import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
 
 import javax.annotation.Resource;
@@ -33,6 +32,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Resource
     private AreasMapper areasMapper;
+
+    @Resource
+    private SimpleOfferServiceMapper simpleOfferServiceMapper;
 
     public Boolean register(RegisterStore registerStore) {
         try{
@@ -62,7 +64,34 @@ public class StoreServiceImpl implements StoreService {
 
     public Store login(String loginName, String password) {
         String realPassword = DigestUtils.md5Hex(password).substring(0,10);
-        return storeMapper.selectAllByLogin(loginName,realPassword);
+        Store store = storeMapper.selectAllByLogin(loginName,realPassword);
+        store.setSimpleOfferServices(
+                simpleOfferServiceMapper.getAllSimpleOfferServiceByStoreId(store.getStoreid()));
+        return store;
+    }
+
+    public Boolean update(UpdateStore updateStore) {
+        try{
+            String password = updateStore.getPassword();
+            if(password!=null){
+                updateStore.setPassword(DigestUtils.md5Hex(password).substring(0,10));
+            }
+            Store store = new Store();
+            BeanUtils.copyProperties(store,updateStore);
+            if(updateStore.getAreaId()!=null){
+                store.setArid(areasMapper.selectAridByAreaId(updateStore.getAreaId()));
+            }
+            if(updateStore.getHeadImg()!=null){
+                store.setHeadImg(aliOssTool.putImage(updateStore.getHeadImg(),"store"));
+            }
+            if(updateStore.getLogoImg()!=null){
+                store.setLogoImg(aliOssTool.putImage(updateStore.getLogoImg(),"store"));
+            }
+            storeMapper.updateByPrimaryKeySelective(store);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }

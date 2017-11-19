@@ -1,6 +1,7 @@
 package xin.yiliya.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Store {
     private Integer storeid;
@@ -28,6 +29,16 @@ public class Store {
     private Integer status;
 
     private Areas areas;
+
+    private List<SimpleOfferService> simpleOfferServices;
+
+    public List<SimpleOfferService> getSimpleOfferServices() {
+        return simpleOfferServices;
+    }
+
+    public void setSimpleOfferServices(List<SimpleOfferService> simpleOfferServices) {
+        this.simpleOfferServices = simpleOfferServices;
+    }
 
     public Areas getAreas() {
         return areas;

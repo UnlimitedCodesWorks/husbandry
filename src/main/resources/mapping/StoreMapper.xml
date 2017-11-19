@@ -15,9 +15,39 @@
     <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
+  <resultMap id="LoginResultMap" type="xin.yiliya.pojo.Store">
+    <id column="storeid" jdbcType="INTEGER" property="storeid" />
+    <result column="regist_num" jdbcType="VARCHAR" property="registNum" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="detail_info" jdbcType="VARCHAR" property="detailInfo" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <association property="areas" column="area_id" javaType="xin.yiliya.pojo.Areas">
+      <id column="arid" jdbcType="INTEGER" property="arid" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <association property="city" column="cityid" javaType="xin.yiliya.pojo.Cities">
+        <id column="ciid" jdbcType="INTEGER" property="ciid" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <association property="provinces" column="provinceid" javaType="xin.yiliya.pojo.Provinces">
+          <id column="proid" jdbcType="INTEGER" property="proid" />
+          <result column="province" jdbcType="VARCHAR" property="province" />
+        </association>
+      </association>
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
     storeid, regist_num, password, store_name, phone, email, area_id, detail_info, head_img, 
     logo_img, regist_time, status
+  </sql>
+  <sql id="Login_Column_List">
+    storeid, regist_num, password, store_name, phone, email,detail_info, head_img,
+    logo_img, regist_time, status,arid,area,ciid,city,proid,province
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,11 +61,12 @@
     from store
     where regist_num = #{RegistNum,jdbcType=VARCHAR}
   </select>
-  <select id="selectAllByLogin" resultMap="BaseResultMap">
+  <select id="selectAllByLogin" resultMap="LoginResultMap">
     select
-    <include refid="Base_Column_List" />
-    from store
+    <include refid="Login_Column_List" />
+    from store,areas,cities,provinces
     where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+    and area_id = arid and areas.cityid = cities.cityid and cities.provinceid = provinces.provinceid
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
