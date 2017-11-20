@@ -1,6 +1,7 @@
 package xin.yiliya.test;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.*;
 import xin.yiliya.service.AdminService;
 import xin.yiliya.service.OrderFormService;
+import xin.yiliya.service.OrderService;
 import xin.yiliya.service.UserService;
 import xin.yiliya.tool.AliOssTool;
 
@@ -42,6 +44,9 @@ public class HhfTest {
 
     @Autowired
     OrderFormService orderFormService;
+
+    @Autowired
+    OrderService orderService;
 
     @Test
     public void test() throws IOException, ImageFormatException {
@@ -92,5 +97,10 @@ public class HhfTest {
         //根据服务类型的所有问题和答案
 //        List<Problem> allInfo=orderFormService.getAllOrderFormRow("月嫂");
 //        System.out.print(JSON.toJSONString(allInfo,true));
+
+        //获取客户全部订单
+//        PageInfo<Order> info=orderService.getAllUserOrder(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
     }
 }
