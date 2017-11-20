@@ -98,4 +98,8 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
+    public StoreInfo getInfoByStoreId(Integer storeId) {
+        return storeMapper.selectByPrimaryKey(storeId);
+    }
+
 }

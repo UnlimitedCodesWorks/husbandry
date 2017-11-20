@@ -3,6 +3,7 @@ package xin.yiliya.service;
 import org.springframework.stereotype.Service;
 import xin.yiliya.pojo.RegisterStore;
 import xin.yiliya.pojo.Store;
+import xin.yiliya.pojo.StoreInfo;
 import xin.yiliya.pojo.UpdateStore;
 
 public interface StoreService {
@@ -18,5 +19,9 @@ public interface StoreService {
     //厂商修改个人信息
     //返回：一个修改是否成功的布尔值
     public Boolean update(UpdateStore updateStore);
+
+    //根据id获取所有信息
+    //返回：厂商信息bean
+    public StoreInfo getInfoByStoreId(Integer storeId);
 
 }

@@ -3,6 +3,7 @@ package xin.yiliya.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.Store;
+import xin.yiliya.pojo.StoreInfo;
 
 @Repository
 public interface StoreMapper {
@@ -12,7 +13,7 @@ public interface StoreMapper {
 
     int insertSelective(Store record);
 
-    Store selectByPrimaryKey(Integer storeid);
+    StoreInfo selectByPrimaryKey(Integer storeid);
     
     Store selectAllByLogin(@Param(value = "loginName") String loginName,@Param(value = "password") String password);
 

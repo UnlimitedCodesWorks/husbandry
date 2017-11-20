@@ -30,15 +30,6 @@ public class Store {
 
     private Areas areas;
 
-    private List<SimpleOfferService> simpleOfferServices;
-
-    public List<SimpleOfferService> getSimpleOfferServices() {
-        return simpleOfferServices;
-    }
-
-    public void setSimpleOfferServices(List<SimpleOfferService> simpleOfferServices) {
-        this.simpleOfferServices = simpleOfferServices;
-    }
 
     public Areas getAreas() {
         return areas;

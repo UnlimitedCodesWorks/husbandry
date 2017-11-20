@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.ServiceSpotsMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.ServiceSpotsKey">
+    <id column="offerservice_id" jdbcType="INTEGER" property="offerserviceId" />
+    <id column="city_id" jdbcType="INTEGER" property="cityId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="xin.yiliya.pojo.ServiceSpotsKey">
+    delete from servicespots
+    where offerservice_id = #{offerserviceId,jdbcType=INTEGER}
+      and city_id = #{cityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.ServiceSpotsKey">
+    insert into servicespots (offerservice_id, city_id)
+    values (#{offerserviceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.ServiceSpotsKey">
+    insert into servicespots
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="offerserviceId != null">
+        offerservice_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="offerserviceId != null">
+        #{offerserviceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
