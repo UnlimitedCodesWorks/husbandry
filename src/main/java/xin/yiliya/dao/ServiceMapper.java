@@ -9,4 +9,6 @@ import java.util.List;
 public interface ServiceMapper {
 
     public List<Service> getAllService();
+
+    public Integer getSerId(String serKind);
 }

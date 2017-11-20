@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.yiliya.dao.OrderFormMapper">
+    <resultMap id="Base_1" type="xin.yiliya.pojo.Problem">
+        <id property="problemid" column="problemid" />
+        <result property="proName" column="pro_name" />
+        <result property="key" column="key"/>
+        <result property="proType" column="pro_type"/>
+        <collection property="values" ofType="xin.yiliya.pojo.Value">
+            <id column="value_id" property="valueId" jdbcType="INTEGER"/>
+            <result column="problem_id" property="problemId" jdbcType="INTEGER"/>
+            <result column="content" property="content" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllOrderFormRow" resultMap="Base_1">
+        SELECT * from problem,value where problem.problemid=value.problem_id AND problem.key=#{kind}
+    </select>
+</mapper>

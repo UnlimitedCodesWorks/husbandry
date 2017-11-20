@@ -10,11 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.exception.ImageFormatException;
-import xin.yiliya.pojo.Admin;
-import xin.yiliya.pojo.RegisterUser;
-import xin.yiliya.pojo.UpdateUser;
-import xin.yiliya.pojo.User;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.AdminService;
+import xin.yiliya.service.OrderFormService;
 import xin.yiliya.service.UserService;
 import xin.yiliya.tool.AliOssTool;
 
@@ -41,6 +39,9 @@ public class HhfTest {
 
     @Resource
     UserService userService;
+
+    @Autowired
+    OrderFormService orderFormService;
 
     @Test
     public void test() throws IOException, ImageFormatException {
@@ -81,11 +82,15 @@ public class HhfTest {
 //        updateUser.setUserName("bb");
 //        updateUser.setRegistNum("1616161");
 //        updateUser.setIntroduce("bbbb");
-//        updateUser.setSex("bb");
+//        updateUser.setSex("bbaa");
 //        updateUser.setBirth(new Date());
 //        updateUser.setCommunity("bb");
 //        updateUser.setCityId("110200");
 //        boolean b=userService.userMyInfoUpdate(updateUser);
 //        System.out.print(b);
+
+        //根据服务类型的所有问题和答案
+//        List<Problem> allInfo=orderFormService.getAllOrderFormRow("月嫂");
+//        System.out.print(JSON.toJSONString(allInfo,true));
     }
 }

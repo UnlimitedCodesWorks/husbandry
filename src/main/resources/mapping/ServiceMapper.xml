@@ -10,4 +10,8 @@
         *
         FROM service
     </select>
+
+    <select id="getSerId" resultType="Integer">
+        SELECT serid FROM service WHERE serkind=#{serKind}
+    </select>
 </mapper>
