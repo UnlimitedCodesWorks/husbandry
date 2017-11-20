@@ -1,7 +1,12 @@
 package xin.yiliya.dao;
 
 import org.springframework.stereotype.Repository;
+import xin.yiliya.pojo.Cities;
 import xin.yiliya.pojo.OfferService;
+import xin.yiliya.pojo.OfferServiceDetail;
+import xin.yiliya.pojo.OfferServiceSimple;
+
+import java.util.List;
 
 @Repository
 public interface OfferServiceMapper {
@@ -18,4 +23,11 @@ public interface OfferServiceMapper {
     int updateByPrimaryKey(OfferService record);
 
     Integer selectIdByName(String name);
+
+    List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId);
+
+    OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
+
+    List<Cities> getCitiesByServiceId(Integer serviceId);
+
 }

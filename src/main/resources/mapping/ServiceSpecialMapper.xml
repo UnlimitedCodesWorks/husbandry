@@ -19,6 +19,10 @@
     delete from servicespecial
     where spid = #{spid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByLink" parameterType="java.lang.String">
+    DELETE FROM servicespecial
+    WHERE special_img = #{link,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="xin.yiliya.pojo.ServiceSpecial">
     insert into servicespecial (spid, offerservice_id, special_img
       )

@@ -7,6 +7,8 @@ import xin.yiliya.pojo.ServiceSpecial;
 public interface ServiceSpecialMapper {
     int deleteByPrimaryKey(Integer spid);
 
+    int deleteByLink(String link);
+
     int insert(ServiceSpecial record);
 
     int insertSelective(ServiceSpecial record);

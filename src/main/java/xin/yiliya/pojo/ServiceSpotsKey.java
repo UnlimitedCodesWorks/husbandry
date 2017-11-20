@@ -5,6 +5,16 @@ public class ServiceSpotsKey {
 
     private Integer cityId;
 
+    private Cities city;
+
+    public Cities getCity() {
+        return city;
+    }
+
+    public void setCity(Cities city) {
+        this.city = city;
+    }
+
     public Integer getOfferserviceId() {
         return offerserviceId;
     }

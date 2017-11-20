@@ -15,9 +15,45 @@
     <result column="notice" jdbcType="LONGVARCHAR" property="notice" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <resultMap id="BaseMap" type="xin.yiliya.pojo.SimpleOfferService">
+    <id column="offerserviceid" property="offerServiceId" jdbcType="INTEGER" />
+    <result property="introduce" column="introduce" jdbcType="LONGNVARCHAR" />
+    <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP" />
+    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP" />
+    <result property="serviceName" column="service_name" jdbcType="VARCHAR" />
+    <result property="serviceImg" column="service_img" jdbcType="VARCHAR" />
+    <association property="kind" column="kind" javaType="xin.yiliya.pojo.Service">
+      <id property="serid" column="serid" jdbcType="INTEGER" />
+      <result property="serKind" column="serkind" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+  <resultMap id="offerServiceDetail" type="xin.yiliya.pojo.OfferServiceDetail">
+    <id property="offerserviceid" column="offerserviceid" jdbcType="INTEGER" />
+    <result property="serviceImg" column="service_img" jdbcType="VARCHAR"/>
+    <result property="storeId" column="store_id" jdbcType="INTEGER" />
+    <result property="serviceName" column="service_name" jdbcType="VARCHAR"/>
+    <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP" />
+    <result property="introduce" column="introduce" jdbcType="LONGNVARCHAR" />
+    <result property="notice" column="notice" jdbcType="LONGNVARCHAR"/>
+    <result property="peoplePhone" column="people_phone" jdbcType="VARCHAR" />
+    <result property="price" column="price" jdbcType="VARCHAR" />
+    <result property="kind" column="service_name" jdbcType="VARCHAR" />
+    <collection property="serviceSpecial"  column="offerserviceid" ofType="xin.yiliya.pojo.ServiceSpecial" >
+      <id property="spid" column="spid" />
+      <result property="specialImg" column="special_img" />
+    </collection>
+  </resultMap>
+  <sql id="BaseSQL">
+    offerserviceid,introduce,publish_time,update_time,service_name,service_img,serid,serkind
+  </sql>
   <sql id="Base_Column_List">
     offerserviceid, store_id, service_name, service_img, kind, price, publish_time, update_time, 
     people_phone, introduce, notice, status
+  </sql>
+  <sql id="offerServiceDetail">
+    offerserviceid,service_name,service_img,price,publish_time,people_phone,introduce,notice,
+    service_name,special_img,store_id,spid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,9 +61,46 @@
     from offerservice
     where offerserviceid = #{offerserviceid,jdbcType=INTEGER}
   </select>
-  <select id="selectIdByName" resultType="_int">
-
+  <select id="selectIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+      SELECT
+      offerserviceid
+      FROM offerservice
+      WHERE service_name = #{name,jdbcType=VARCHAR}
   </select>
+  <select id="getAllSimpleOfferServiceByStoreId"
+          resultMap="BaseMap" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="BaseSQL" />
+    FROM offerservice,service
+    WHERE store_id = #{storeId,jdbcType=INTEGER} and offerservice.kind = service.serid ORDER BY update_time DESC
+  </select>
+  <select id="getOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
+    SELECT
+    <include refid="offerServiceDetail" />
+    FROM offerservice,service,servicespecial
+    WHERE
+    offerserviceid = #{serviceId,jdbcType=INTEGER} and offerservice.kind = service.serid
+    and offerservice.offerserviceid = servicespecial.offerservice_id
+  </select>
+  <resultMap id="getCitiesByServiceId" type="xin.yiliya.pojo.Cities">
+    <id property="ciid" column="ciid" />
+    <result property="cityId" column="cityid" />
+    <result property="city" column="city" />
+    <association property="provinces" column="cprovinceid" javaType="xin.yiliya.pojo.Provinces">
+      <id property="proid" column="proid" />
+      <result property="provinceId" column="provinceid" />
+      <result property="province" column="province" />
+    </association>
+  </resultMap>
+  <select id="getCitiesByServiceId" resultMap="getCitiesByServiceId" parameterType="java.lang.Integer">
+    SELECT
+    ciid,cityid,city,cities.provinceid as cprovinceid,provinces.proid,provinces.provinceid,provinces.province
+    FROM servicespots,cities,provinces
+    WHERE
+    servicespots.city_id = cities.ciid and servicespots.offerservice_id = #{serviceId}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from offerservice
     where offerserviceid = #{offerserviceid,jdbcType=INTEGER}

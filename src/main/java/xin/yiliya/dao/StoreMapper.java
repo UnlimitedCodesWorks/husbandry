@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.pojo.StoreInfo;
+import xin.yiliya.pojo.StoreSimple;
 
 @Repository
 public interface StoreMapper {
@@ -22,4 +23,6 @@ public interface StoreMapper {
     int updateByPrimaryKeySelective(Store record);
 
     int updateByPrimaryKey(Store record);
+
+    StoreSimple selectStoreSimpleByStoreId(Integer storeId);
 }

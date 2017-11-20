@@ -10,8 +10,11 @@ import xin.yiliya.exception.ImageFormatException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class AliOssTool {
 
@@ -25,18 +28,25 @@ public class AliOssTool {
     public String putImage(MultipartFile file,String nameSpace) throws ImageFormatException, IOException {
         String fileName = file.getName();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String date = df.format(new Date());
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "").substring(0,6);
+        StringBuilder imageName = new StringBuilder(date+uuid);
         ObjectMetadata meta = new ObjectMetadata();
         if(suffix.equals("jpg")||suffix.equals("jpeg")||suffix.equals("jpe")){
             meta.setContentType("image/jpeg");
+            imageName.append(".jpg");
         }else if(suffix.equals("gif")){
             meta.setContentType("image/gif");
+            imageName.append(".gif");
         }else if(suffix.equals("png")){
             meta.setContentType("image/png");
+            imageName.append(".png");
         }else{
             throw new ImageFormatException("不能上传除jpg，gif，png以外的图片或文件");
         }
         StringBuffer position = new StringBuffer(nameSpace);
-        position.append("/").append(fileName);
+        position.append("/").append(imageName);
         ossClient.putObject(BUCKETNAME, String.valueOf(position),new ByteArrayInputStream(file.getBytes()),meta);
         StringBuffer link = new StringBuffer(ENDPOINT);
         link.append(position);

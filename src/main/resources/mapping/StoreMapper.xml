@@ -64,6 +64,16 @@
     </association>
   </resultMap>
 
+  <resultMap id="selectStoreSimpleByStoreId" type="xin.yiliya.pojo.StoreSimple">
+    <id property="storeid" column="storeid" jdbcType="VARCHAR" />
+    <result property="headImg" column="head_img" jdbcType="VARCHAR" />
+    <result property="registTime" column="regist_time" jdbcType="TIMESTAMP" />
+    <result property="serviceNum" column="service_num" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="selectStoreSimpleByStoreId">
+    storeid,head_img,regist_time,COUNT(*) as service_num
+  </sql>
   <sql id="Base_Column_List">
     storeid, regist_num, password, store_name, phone, email, area_id, detail_info, head_img, 
     logo_img, regist_time, status
@@ -97,6 +107,12 @@
     from store,areas,cities,provinces
     where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
     and area_id = arid and areas.cityid = cities.cityid and cities.provinceid = provinces.provinceid
+  </select>
+  <select id="selectStoreSimpleByStoreId" resultMap="selectStoreSimpleByStoreId" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="selectStoreSimpleByStoreId" />
+    from offerservice,store
+    where offerservice.store_id = store.storeid and store.storeid = #{storeId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
