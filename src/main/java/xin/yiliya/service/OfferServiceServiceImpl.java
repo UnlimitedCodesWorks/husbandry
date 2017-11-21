@@ -7,10 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import xin.yiliya.dao.OfferServiceMapper;
-import xin.yiliya.dao.ServiceSpecialMapper;
-import xin.yiliya.dao.ServiceSpotsMapper;
-import xin.yiliya.dao.StoreMapper;
+import xin.yiliya.dao.*;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
 
@@ -36,6 +33,9 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     StoreMapper storeMapper;
 
+    @Resource
+    CitiesMapper citiesMapper;
+
     public Boolean addService(OfferServiceAdd offerServiceAdd) {
         try{
             OfferService offerService = new OfferService();
@@ -53,10 +53,10 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 serviceSpecial.setSpecialImg(link);
                 serviceSpecialMapper.insertSelective(serviceSpecial);
             }
-            Integer[] cityIds = offerServiceAdd.getCityIds();
-            for(Integer cityId : cityIds){
+            List<String> cityIds = offerServiceAdd.getCityIds();
+            for(String cityId : cityIds){
                 ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
-                serviceSpotsKey.setCityId(cityId);
+                serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
                 serviceSpotsKey.setOfferserviceId(offerserviceId);
                 serviceSpotsMapper.insertSelective(serviceSpotsKey);
             }
@@ -95,19 +95,19 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
             }
             if(offerServiceUpdate.getDeleteCityIds()!=null){
-                Integer[] cityIds = offerServiceUpdate.getDeleteCityIds();
-                for(Integer cityId : cityIds){
+                List<String> cityIds = offerServiceUpdate.getDeleteCityIds();
+                for(String cityId : cityIds){
                     ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
-                    serviceSpotsKey.setCityId(cityId);
+                    serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
                     serviceSpotsKey.setOfferserviceId(offerServiceUpdate.getOfferServiceId());
                     serviceSpotsMapper.deleteByPrimaryKey(serviceSpotsKey);
                 }
             }
             if(offerServiceUpdate.getCityIds()!=null){
-                Integer[] cityIds = offerServiceUpdate.getCityIds();
-                for(Integer cityId : cityIds){
+                List<String> cityIds = offerServiceUpdate.getCityIds();
+                for(String cityId : cityIds){
                     ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
-                    serviceSpotsKey.setCityId(cityId);
+                    serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
                     serviceSpotsKey.setOfferserviceId(offerServiceUpdate.getOfferServiceId());
                     serviceSpotsMapper.insertSelective(serviceSpotsKey);
                 }

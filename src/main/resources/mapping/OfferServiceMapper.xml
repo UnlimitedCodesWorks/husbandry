@@ -15,7 +15,7 @@
     <result column="notice" jdbcType="LONGVARCHAR" property="notice" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
-  <resultMap id="BaseMap" type="xin.yiliya.pojo.SimpleOfferService">
+  <resultMap id="BaseMap" type="xin.yiliya.pojo.OfferServiceSimple">
     <id column="offerserviceid" property="offerServiceId" jdbcType="INTEGER" />
     <result property="introduce" column="introduce" jdbcType="LONGNVARCHAR" />
     <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP" />
@@ -72,7 +72,10 @@
     SELECT
     <include refid="BaseSQL" />
     FROM offerservice,service
-    WHERE store_id = #{storeId,jdbcType=INTEGER} and offerservice.kind = service.serid ORDER BY update_time DESC
+    WHERE store_id = #{storeId,jdbcType=INTEGER}
+    and offerservice.kind = service.serid
+    and offerservice.template_id == NULL
+    ORDER BY update_time DESC
   </select>
   <select id="getOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
     SELECT
