@@ -95,6 +95,12 @@
     WHERE
     servicespots.city_id = cities.ciid and servicespots.offerservice_id = #{serviceId}
   </select>
+  <select id="getLinkByServiceId" resultType="string" parameterType="java.lang.Integer">
+    SELECT
+    service_img
+    FROM offerservice
+    WHERE offerserviceid = #{serviceId,jdbcType=INTEGER}
+  </select>
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

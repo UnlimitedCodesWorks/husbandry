@@ -1,5 +1,7 @@
 package xin.yiliya.pojo;
 
+import java.util.List;
+
 public class OfferServiceTemplate {
     private Integer servicetemplateid;
 
@@ -8,6 +10,16 @@ public class OfferServiceTemplate {
     private String templateDetail;
 
     private String templateName;
+
+    private OfferServiceDetail offerServiceDetail;
+
+    public OfferServiceDetail getOfferServiceDetail() {
+        return offerServiceDetail;
+    }
+
+    public void setOfferServiceDetail(OfferServiceDetail offerServiceDetail) {
+        this.offerServiceDetail = offerServiceDetail;
+    }
 
     public Integer getServicetemplateid() {
         return servicetemplateid;

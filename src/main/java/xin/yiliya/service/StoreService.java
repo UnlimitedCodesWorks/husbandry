@@ -20,8 +20,9 @@ public interface StoreService {
     //返回：一个修改是否成功的布尔值
     Boolean update(UpdateStore updateStore);
 
-    //根据id获取所有信息
-    //返回：厂商信息bean
+    //根据id获取详细信息
+    //返回：厂商详细信息bean
+    //待补充的接口
     StoreInfo getInfoByStoreId(Integer storeId);
 
 }

@@ -19,17 +19,37 @@ public interface OfferServiceService {
     //返回：修改服务是否成功的布尔值
     Boolean updateService(OfferServiceUpdate offerServiceupdate);
 
+    //修改一个服务模板
+    //返回：修改服务是否成功的布尔值
+    Boolean updateServiceTemplate(
+            OfferServiceTemplate offerServiceTemplate,OfferServiceUpdate offerServiceUpdate);
+
     //删除一个服务
     //返回：删除服务是否成功的布尔值
+    //待补充的接口
     Boolean deleteService(Integer serviceId);
+
+    //删除一个服务模板
+    //返回：删除服务模板是否成功的布尔值
+    Boolean deleteServiceTemplate(Integer templateId);
 
     //根据厂商id获取简单服务详情（可分页）
     //返回多个简单服务详情Bean
     PageInfo<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(
             Integer storeId,int currentPage,int pageSize);
 
+    //根据厂商id获取简单模板详情（可分页）
+    //返回多个简单模板详情Bean
+    PageInfo<OfferServiceTemplate> getAllOfferServiceTemplateByStoreId(
+            Integer storeId,int currentPage,int pageSize);
+
     //根据服务id获取服务详细信息
     //返回单个服务详细信息Bean
+    //待补充的接口
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
+
+    //根据模板id获取模板详细信息
+    //返回单个模板详细信息Bean
+    OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId);
 
 }

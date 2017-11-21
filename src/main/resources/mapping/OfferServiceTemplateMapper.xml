@@ -16,6 +16,24 @@
     from offerservicetemplate
     where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}
   </select>
+  <resultMap id="getAllOfferServiceTemplateByStoreId" type="xin.yiliya.pojo.OfferServiceTemplate">
+    <id property="servicetemplateid" column="servicetemplateid" />
+    <result property="offerserviceId" column="offerservice_id" />
+    <result property="templateName" column="template_name" />
+    <result property="templateDetail" column="template_detail" />
+  </resultMap>
+  <select id="getAllOfferServiceTemplateByStoreId" resultMap="getAllOfferServiceTemplateByStoreId" parameterType="java.lang.Integer">
+    SELECT
+    *
+    FROM offerservicetemplate,offerservice
+    WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid and offerservice.store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+  <select id="getServiceIdByTemplateId" resultType="int" parameterType="java.lang.Integer">
+    SELECT
+    offerservice_id
+    FROM offerservicetemplate
+    WHERE servicetemplateid = #{templateId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from offerservicetemplate
     where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}

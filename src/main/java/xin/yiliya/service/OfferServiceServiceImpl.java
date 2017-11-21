@@ -139,10 +139,46 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         }
     }
 
-    public Boolean deleteService(Integer serviceId) {
-        if(offerServiceMapper.deleteByPrimaryKey(serviceId)==1){
+    public Boolean updateServiceTemplate(OfferServiceTemplate offerServiceTemplate, OfferServiceUpdate offerServiceUpdate) {
+        try{
+            updateService(offerServiceUpdate);
+            offerServiceTemplateMapper.updateByPrimaryKeySelective(offerServiceTemplate);
             return true;
-        }else {
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean deleteService(Integer serviceId) {
+       try{
+            aliOssTool.deleteFileByLink(offerServiceMapper.getLinkByServiceId(serviceId));
+            List<String> links = serviceSpecialMapper.getLinksByServiceId(serviceId);
+            for (String link : links){
+                aliOssTool.deleteFileByLink(link);
+            }
+            serviceSpotsMapper.deleteByServiceId(serviceId);
+            serviceSpecialMapper.deleteByServiceId(serviceId);
+            offerServiceMapper.deleteByPrimaryKey(serviceId);
+            return true;
+       }catch (Exception e){
+            return false;
+       }
+    }
+
+    public Boolean deleteServiceTemplate(Integer templateId) {
+        try{
+            Integer serviceId = offerServiceTemplateMapper.getServiceIdByTemplateId(templateId);
+            aliOssTool.deleteFileByLink(offerServiceMapper.getLinkByServiceId(serviceId));
+            List<String> links = serviceSpecialMapper.getLinksByServiceId(serviceId);
+            for (String link : links){
+                aliOssTool.deleteFileByLink(link);
+            }
+            offerServiceTemplateMapper.deleteByPrimaryKey(templateId);
+            serviceSpotsMapper.deleteByServiceId(serviceId);
+            serviceSpecialMapper.deleteByServiceId(serviceId);
+            offerServiceMapper.deleteByPrimaryKey(serviceId);
+            return true;
+        }catch (Exception e){
             return false;
         }
     }
@@ -155,6 +191,15 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return pageInfo;
     }
 
+    public PageInfo<OfferServiceTemplate> getAllOfferServiceTemplateByStoreId(
+            Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OfferServiceTemplate> list =
+                offerServiceTemplateMapper.getAllOfferServiceTemplateByStoreId(storeId);
+        PageInfo<OfferServiceTemplate> pageInfo = new PageInfo<OfferServiceTemplate>(list);
+        return pageInfo;
+    }
+
     public OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId) {
         OfferServiceDetail offerServiceDetail = new OfferServiceDetail();
         offerServiceDetail = offerServiceMapper.getOfferServiceDetailByServiceId(serviceId);
@@ -162,5 +207,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceDetail.setStore(storeMapper.selectStoreSimpleByStoreId(storeId));
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
         return offerServiceDetail;
+    }
+
+    public OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId) {
+        OfferServiceTemplate offerServiceTemplate = offerServiceTemplateMapper.selectByPrimaryKey(templateId);
+        offerServiceTemplate.setOfferServiceDetail(getOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));
+        return offerServiceTemplate;
     }
 }
