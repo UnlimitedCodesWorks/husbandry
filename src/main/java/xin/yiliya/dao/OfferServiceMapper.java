@@ -30,4 +30,6 @@ public interface OfferServiceMapper {
 
     List<Cities> getCitiesByServiceId(Integer serviceId);
 
+    List<OfferServiceSimple> getAllUserConcernServices(Integer userId);
+
 }

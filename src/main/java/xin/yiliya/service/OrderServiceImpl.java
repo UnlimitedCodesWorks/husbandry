@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
 import xin.yiliya.pojo.Order;
+import xin.yiliya.pojo.OrderCancel;
+import xin.yiliya.pojo.OrderShow;
 
 import java.util.List;
 
@@ -16,31 +18,38 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     OrderMapper orderMapper;
 
-    public PageInfo<Order> getAllUserOrder(Integer userId,int currentPage,int pageSize){
+    public PageInfo<OrderShow> getAllUserOrder(Integer userId, int currentPage, int pageSize){
         PageHelper.startPage(currentPage,pageSize);
-        List<Order> list=orderMapper.getAllUserOrder(userId);
-        PageInfo<Order> pageInfo=new PageInfo<Order>(list);
+        List<OrderShow> list=orderMapper.getAllUserOrder(userId);
+        PageInfo<OrderShow> pageInfo=new PageInfo<OrderShow>(list);
         return pageInfo;
     }
 
-    public PageInfo<Order> getAllUserSendOrder(Integer userId, int currentPage, int pageSize) {
+    public PageInfo<OrderShow> getAllUserSendOrder(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
-        List<Order> list = orderMapper.getAllUserSendOrder(userId);
-        PageInfo<Order> pageInfo=new PageInfo<Order>(list);
+        List<OrderShow> list = orderMapper.getAllUserSendOrder(userId);
+        PageInfo<OrderShow> pageInfo=new PageInfo<OrderShow>(list);
         return pageInfo;
     }
 
-    public PageInfo<Order> getAllUserSureOrder(Integer userId, int currentPage, int pageSize) {
+    public PageInfo<OrderShow> getAllUserSureOrder(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
-        List<Order> list =orderMapper.getAllUserSureOrder(userId);
-        PageInfo<Order> pageInfo=new PageInfo<Order>(list);
+        List<OrderShow> list =orderMapper.getAllUserSureOrder(userId);
+        PageInfo<OrderShow> pageInfo=new PageInfo<OrderShow>(list);
         return pageInfo;
     }
 
-    public PageInfo<Order> getAllUserAssessOrder(Integer userId, int currentPage, int pageSize) {
+    public PageInfo<OrderShow> getAllUserAssessOrder(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
-        List<Order> list =orderMapper.getAllUserAssessOrder(userId);
-        PageInfo<Order> pageInfo=new PageInfo<Order>(list);
+        List<OrderShow> list =orderMapper.getAllUserAssessOrder(userId);
+        PageInfo<OrderShow> pageInfo=new PageInfo<OrderShow>(list);
+        return pageInfo;
+    }
+
+    public PageInfo<OrderCancel> getAllUserCancelOrder(Integer userId, int currentPage, int pageSize){
+        PageHelper.startPage(currentPage,pageSize);
+        List<OrderCancel> list=orderMapper.getAllUserCancelOrder(userId);
+        PageInfo<OrderCancel> pageInfo=new PageInfo<OrderCancel>(list);
         return pageInfo;
     }
 }
