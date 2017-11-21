@@ -20,9 +20,9 @@ public class OfferServiceUpdate {
 
     private List<String> serviceSpecialLink;
 
-    private Integer[] cityIds;
+    private List<String> cityIds;
 
-    private Integer[] deleteCityIds;
+    private List<String> deleteCityIds;
 
     private Integer kind;
 
@@ -37,11 +37,19 @@ public class OfferServiceUpdate {
     private String notice;
 
 
-    public Integer[] getDeleteCityIds() {
+    public List<String> getCityIds() {
+        return cityIds;
+    }
+
+    public void setCityIds(List<String> cityIds) {
+        this.cityIds = cityIds;
+    }
+
+    public List<String> getDeleteCityIds() {
         return deleteCityIds;
     }
 
-    public void setDeleteCityIds(Integer[] deleteCityIds) {
+    public void setDeleteCityIds(List<String> deleteCityIds) {
         this.deleteCityIds = deleteCityIds;
     }
 
@@ -99,14 +107,6 @@ public class OfferServiceUpdate {
 
     public void setServiceSpecialLink(List<String> serviceSpecialLink) {
         this.serviceSpecialLink = serviceSpecialLink;
-    }
-
-    public Integer[] getCityIds() {
-        return cityIds;
-    }
-
-    public void setCityIds(Integer[] cityIds) {
-        this.cityIds = cityIds;
     }
 
     public Integer getKind() {

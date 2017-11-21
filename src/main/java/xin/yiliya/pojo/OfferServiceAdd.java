@@ -3,6 +3,7 @@ package xin.yiliya.pojo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 public class OfferServiceAdd {
 
@@ -14,7 +15,7 @@ public class OfferServiceAdd {
 
     private MultipartFile[] serviceSpecial;
 
-    private Integer[] cityIds;
+    private List<String> cityIds;
 
     private Integer kind;
 
@@ -29,11 +30,11 @@ public class OfferServiceAdd {
     private String notice;
 
 
-    public Integer[] getCityIds() {
+    public List<String> getCityIds() {
         return cityIds;
     }
 
-    public void setCityIds(Integer[] cityIds) {
+    public void setCityIds(List<String> cityIds) {
         this.cityIds = cityIds;
     }
 
