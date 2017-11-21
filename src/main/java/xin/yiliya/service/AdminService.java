@@ -5,5 +5,7 @@ import xin.yiliya.pojo.Admin;
 
 @Service
 public interface AdminService {
-    public Admin AdminLogin(String adminNum,String adminPass);   //管理员登录
+
+    //管理员登录
+    public Admin AdminLogin(String adminNum,String adminPass);
 }

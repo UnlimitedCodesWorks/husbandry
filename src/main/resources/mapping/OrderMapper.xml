@@ -49,18 +49,21 @@
     <select id="getAllUserSendOrder" resultMap="Base_1">
         SELECT * FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=#{userId} and "order".status=0 ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=0
+        ORDER BY orderid ASC
     </select>
 
     <select id="getAllUserSureOrder" resultMap="Base_1">
         SELECT * FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=#{userId} and "order".status=1 ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=1
+        ORDER BY orderid ASC
     </select>
 
     <select id="getAllUserAssessOrder" resultMap="Base_1">
-        SELECT * FROM `order`,offerservice,store
+       SELECT * FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=#{userId} and "order".status=2 ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=2
+        ORDER BY orderid ASC
     </select>
 </mapper>

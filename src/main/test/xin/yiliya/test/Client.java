@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.AreasMapper;
-import xin.yiliya.dao.SimpleOfferServiceMapper;
 import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.Store;
@@ -65,8 +64,8 @@ public class Client {
         }
     }
 
-    @Autowired
-    SimpleOfferServiceMapper simpleOfferServiceMapper;
+//    @Autowired
+//    SimpleOfferServiceMapper simpleOfferServiceMapper;
     @Test
     public void test1(){
         System.out.println(aliOssTool.deleteFileByLink("http://husbandry.oss-cn-shanghai.aliyuncs.com/store/test.jpg"));

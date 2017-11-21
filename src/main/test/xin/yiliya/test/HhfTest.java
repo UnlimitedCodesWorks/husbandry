@@ -99,8 +99,19 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(allInfo,true));
 
         //获取客户全部订单
-//        PageInfo<Order> info=orderService.getAllUserOrder(15,1,2);
+//        PageInfo<Order> info=orderService.getAllUserOrder(15,2,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
+        //获取客户等待派遣订单
+//        PageInfo<Order> info=orderService.getAllUserSendOrder(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取客户等待确认订单
+//        PageInfo<Order> info=orderService.getAllUserSureOrder(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取客户等待评价订单
+//        PageInfo<Order> info=orderService.getAllUserAssessOrder(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
     }
 }
