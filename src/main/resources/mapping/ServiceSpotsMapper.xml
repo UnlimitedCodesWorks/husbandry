@@ -10,6 +10,10 @@
     where offerservice_id = #{offerserviceId,jdbcType=INTEGER}
       and city_id = #{cityId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByServiceId" parameterType="java.lang.Integer">
+    DELETE FROM servicespots
+    WHERE offerservice_id = #{serviceId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="xin.yiliya.pojo.ServiceSpotsKey">
     insert into servicespots (offerservice_id, city_id)
     values (#{offerserviceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER})

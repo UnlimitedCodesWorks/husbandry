@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.OfferServiceTemplateMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.OfferServiceTemplate">
+    <id column="servicetemplateid" jdbcType="INTEGER" property="servicetemplateid" />
+    <result column="offerservice_id" jdbcType="INTEGER" property="offerserviceId" />
+    <result column="template_detail" jdbcType="VARCHAR" property="templateDetail" />
+    <result column="template_name" jdbcType="VARCHAR" property="templateName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    servicetemplateid, offerservice_id, template_detail, template_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from offerservicetemplate
+    where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}
+  </select>
+  <resultMap id="getAllOfferServiceTemplateByStoreId" type="xin.yiliya.pojo.OfferServiceTemplate">
+    <id property="servicetemplateid" column="servicetemplateid" />
+    <result property="offerserviceId" column="offerservice_id" />
+    <result property="templateName" column="template_name" />
+    <result property="templateDetail" column="template_detail" />
+  </resultMap>
+  <select id="getAllOfferServiceTemplateByStoreId" resultMap="getAllOfferServiceTemplateByStoreId" parameterType="java.lang.Integer">
+    SELECT
+    *
+    FROM offerservicetemplate,offerservice
+    WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid and offerservice.store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+  <select id="getServiceIdByTemplateId" resultType="int" parameterType="java.lang.Integer">
+    SELECT
+    offerservice_id
+    FROM offerservicetemplate
+    WHERE servicetemplateid = #{templateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from offerservicetemplate
+    where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.OfferServiceTemplate">
+    insert into offerservicetemplate (servicetemplateid, offerservice_id, 
+      template_detail, template_name)
+    values (#{servicetemplateid,jdbcType=INTEGER}, #{offerserviceId,jdbcType=INTEGER}, 
+      #{templateDetail,jdbcType=VARCHAR}, #{templateName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="servicetemplateid" parameterType="xin.yiliya.pojo.OfferServiceTemplate">
+    insert into offerservicetemplate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="servicetemplateid != null">
+        servicetemplateid,
+      </if>
+      <if test="offerserviceId != null">
+        offerservice_id,
+      </if>
+      <if test="templateDetail != null">
+        template_detail,
+      </if>
+      <if test="templateName != null">
+        template_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="servicetemplateid != null">
+        #{servicetemplateid,jdbcType=INTEGER},
+      </if>
+      <if test="offerserviceId != null">
+        #{offerserviceId,jdbcType=INTEGER},
+      </if>
+      <if test="templateDetail != null">
+        #{templateDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.yiliya.pojo.OfferServiceTemplate">
+    update offerservicetemplate
+    <set>
+      <if test="offerserviceId != null">
+        offerservice_id = #{offerserviceId,jdbcType=INTEGER},
+      </if>
+      <if test="templateDetail != null">
+        template_detail = #{templateDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.OfferServiceTemplate">
+    update offerservicetemplate
+    set offerservice_id = #{offerserviceId,jdbcType=INTEGER},
+      template_detail = #{templateDetail,jdbcType=VARCHAR},
+      template_name = #{templateName,jdbcType=VARCHAR}
+    where servicetemplateid = #{servicetemplateid,jdbcType=INTEGER}
+  </update>
+</mapper>

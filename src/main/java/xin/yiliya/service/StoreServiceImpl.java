@@ -28,7 +28,7 @@ public class StoreServiceImpl implements StoreService {
     @Resource
     private AreasMapper areasMapper;
 
-    public Boolean register(RegisterStore registerStore) {
+    public Integer register(RegisterStore registerStore) {
         try{
             String password = registerStore.getPassword();
             registerStore.setPassword(DigestUtils.md5Hex(password).substring(0,10));
@@ -48,9 +48,9 @@ public class StoreServiceImpl implements StoreService {
                 aptitude.setAptitudeImg(link);
                 aptitudeMapper.insertSelective(aptitude);
             }
-            return true;
+            return storeId;
         }catch (Exception e){
-            return false;
+            return 0;
         }
     }
 

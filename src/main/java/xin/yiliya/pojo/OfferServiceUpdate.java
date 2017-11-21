@@ -18,11 +18,11 @@ public class OfferServiceUpdate {
 
     private MultipartFile[] serviceSpecial;
 
-    private List<String> serviceSpecialLink;
+    private String[] serviceSpecialLink;
 
-    private List<String> cityIds;
+    private String[] cityIds;
 
-    private List<String> deleteCityIds;
+    private String[] deleteCityIds;
 
     private Integer kind;
 
@@ -37,19 +37,27 @@ public class OfferServiceUpdate {
     private String notice;
 
 
-    public List<String> getCityIds() {
+    public String[] getServiceSpecialLink() {
+        return serviceSpecialLink;
+    }
+
+    public void setServiceSpecialLink(String[] serviceSpecialLink) {
+        this.serviceSpecialLink = serviceSpecialLink;
+    }
+
+    public String[] getCityIds() {
         return cityIds;
     }
 
-    public void setCityIds(List<String> cityIds) {
+    public void setCityIds(String[] cityIds) {
         this.cityIds = cityIds;
     }
 
-    public List<String> getDeleteCityIds() {
+    public String[] getDeleteCityIds() {
         return deleteCityIds;
     }
 
-    public void setDeleteCityIds(List<String> deleteCityIds) {
+    public void setDeleteCityIds(String[] deleteCityIds) {
         this.deleteCityIds = deleteCityIds;
     }
 
@@ -99,14 +107,6 @@ public class OfferServiceUpdate {
 
     public void setServiceSpecial(MultipartFile[] serviceSpecial) {
         this.serviceSpecial = serviceSpecial;
-    }
-
-    public List<String> getServiceSpecialLink() {
-        return serviceSpecialLink;
-    }
-
-    public void setServiceSpecialLink(List<String> serviceSpecialLink) {
-        this.serviceSpecialLink = serviceSpecialLink;
     }
 
     public Integer getKind() {

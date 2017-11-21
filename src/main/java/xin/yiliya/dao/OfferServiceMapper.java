@@ -22,7 +22,7 @@ public interface OfferServiceMapper {
 
     int updateByPrimaryKey(OfferService record);
 
-    Integer selectIdByName(String name);
+    String getLinkByServiceId(Integer serviceId);
 
     List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId);
 

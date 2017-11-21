@@ -15,13 +15,23 @@
     from servicespecial
     where spid = #{spid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="getLinksByServiceId" resultType="string" parameterType="java.lang.Integer">
+      SELECT
+      special_img
+      FROM servicespecial
+      WHERE offerservice_id = #{serviceId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from servicespecial
     where spid = #{spid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByLink" parameterType="java.lang.String">
     DELETE FROM servicespecial
     WHERE special_img = #{link,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByServiceId" parameterType="java.lang.Integer">
+    DELETE FROM servicespecial
+    WHERE offerservice_id = #{serviceId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="xin.yiliya.pojo.ServiceSpecial">
     insert into servicespecial (spid, offerservice_id, special_img

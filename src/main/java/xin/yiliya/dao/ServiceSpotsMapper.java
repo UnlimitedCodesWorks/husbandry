@@ -10,4 +10,6 @@ public interface ServiceSpotsMapper {
     int insert(ServiceSpotsKey record);
 
     int insertSelective(ServiceSpotsKey record);
+
+    int deleteByServiceId(Integer serviceId);
 }
