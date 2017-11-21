@@ -27,6 +27,7 @@ public class OfferService {
 
     private Integer status;
 
+
     public Integer getOfferserviceid() {
         return offerserviceid;
     }

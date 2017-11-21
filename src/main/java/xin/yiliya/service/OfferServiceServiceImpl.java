@@ -36,16 +36,25 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     CitiesMapper citiesMapper;
 
-    public Boolean addService(OfferServiceAdd offerServiceAdd) {
+    @Resource
+    OfferServiceTemplateMapper offerServiceTemplateMapper;
+
+    public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
             BeanUtils.copyProperties(offerService,offerServiceAdd);
+            offerService.setPublishTime(new Date());
             offerService.setUpdateTime(new Date());
             offerService.setServiceImg(aliOssTool.putImage(offerServiceAdd.getServiceImg(),"store"));
-            //设置状态0为待审核
-            offerService.setStatus(0);
+            if(ifTemplate == false){
+                //设置状态0为待审核
+                offerService.setStatus(0);
+            }else{
+                //设置状态为模板状态-1
+                offerService.setStatus(-1);
+            }
             offerServiceMapper.insertSelective(offerService);
-            Integer offerserviceId = offerServiceMapper.selectIdByName(offerServiceAdd.getServiceName());
+            Integer offerserviceId = offerService.getOfferserviceid();
             List<String> links = aliOssTool.putImages(offerServiceAdd.getServiceSpecial(),"store");
             for(String link : links){
                 ServiceSpecial serviceSpecial = new ServiceSpecial();
@@ -53,7 +62,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 serviceSpecial.setSpecialImg(link);
                 serviceSpecialMapper.insertSelective(serviceSpecial);
             }
-            List<String> cityIds = offerServiceAdd.getCityIds();
+            String[] cityIds = offerServiceAdd.getCityIds();
             for(String cityId : cityIds){
                 ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
                 serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
@@ -61,9 +70,20 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 serviceSpotsMapper.insertSelective(serviceSpotsKey);
             }
 
-            return true;
+            return offerserviceId;
         }catch (Exception e){
-            return false;
+            return 0;
+        }
+    }
+
+    public Integer addServiceTemplate(OfferServiceTemplate offerServiceTemplate, OfferServiceAdd offerServiceAdd) {
+        try{
+            Integer offerserviceId = addService(offerServiceAdd,true);
+            offerServiceTemplate.setOfferserviceId(offerserviceId);
+            offerServiceTemplateMapper.insertSelective(offerServiceTemplate);
+            return offerServiceTemplate.getServicetemplateid();
+        }catch (Exception e){
+            return 0;
         }
     }
 
@@ -79,7 +99,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 offerService.setServiceImg(aliOssTool.putImage(offerServiceUpdate.getServiceImg(),"store"));
             }
             if(offerServiceUpdate.getServiceSpecialLink()!=null){
-                List<String> links = offerServiceUpdate.getServiceSpecialLink();
+                String[] links = offerServiceUpdate.getServiceSpecialLink();
                 for(String link:links){
                     aliOssTool.deleteFileByLink(link);
                     serviceSpecialMapper.deleteByLink(link);
@@ -95,7 +115,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
             }
             if(offerServiceUpdate.getDeleteCityIds()!=null){
-                List<String> cityIds = offerServiceUpdate.getDeleteCityIds();
+                String[] cityIds = offerServiceUpdate.getDeleteCityIds();
                 for(String cityId : cityIds){
                     ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
                     serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
@@ -104,7 +124,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
             }
             if(offerServiceUpdate.getCityIds()!=null){
-                List<String> cityIds = offerServiceUpdate.getCityIds();
+                String[] cityIds = offerServiceUpdate.getCityIds();
                 for(String cityId : cityIds){
                     ServiceSpotsKey serviceSpotsKey = new ServiceSpotsKey();
                     serviceSpotsKey.setCityId(citiesMapper.selectCiidByCityId(cityId));
@@ -127,7 +147,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         }
     }
 
-    public PageInfo<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId, int currentPage, int pageSize) {
+    public PageInfo<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(
+            Integer storeId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list = offerServiceMapper.getAllSimpleOfferServiceByStoreId(storeId);
         PageInfo<OfferServiceSimple> pageInfo = new PageInfo<OfferServiceSimple>(list);

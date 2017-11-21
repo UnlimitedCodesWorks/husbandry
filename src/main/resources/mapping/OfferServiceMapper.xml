@@ -61,12 +61,6 @@
     from offerservice
     where offerserviceid = #{offerserviceid,jdbcType=INTEGER}
   </select>
-  <select id="selectIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
-      SELECT
-      offerserviceid
-      FROM offerservice
-      WHERE service_name = #{name,jdbcType=VARCHAR}
-  </select>
   <select id="getAllSimpleOfferServiceByStoreId"
           resultMap="BaseMap" parameterType="java.lang.Integer">
     SELECT
@@ -74,7 +68,6 @@
     FROM offerservice,service
     WHERE store_id = #{storeId,jdbcType=INTEGER}
     and offerservice.kind = service.serid
-    and offerservice.template_id == NULL
     ORDER BY update_time DESC
   </select>
   <select id="getOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
@@ -119,7 +112,7 @@
       #{peoplePhone,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="xin.yiliya.pojo.OfferService">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="offerserviceid" parameterType="xin.yiliya.pojo.OfferService">
     insert into offerservice
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="offerserviceid != null">

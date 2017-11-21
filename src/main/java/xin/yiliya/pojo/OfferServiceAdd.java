@@ -15,7 +15,7 @@ public class OfferServiceAdd {
 
     private MultipartFile[] serviceSpecial;
 
-    private List<String> cityIds;
+    private String[] cityIds;
 
     private Integer kind;
 
@@ -30,11 +30,11 @@ public class OfferServiceAdd {
     private String notice;
 
 
-    public List<String> getCityIds() {
+    public String[] getCityIds() {
         return cityIds;
     }
 
-    public void setCityIds(List<String> cityIds) {
+    public void setCityIds(String[] cityIds) {
         this.cityIds = cityIds;
     }
 

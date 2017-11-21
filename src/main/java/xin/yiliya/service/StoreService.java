@@ -9,19 +9,19 @@ import xin.yiliya.pojo.UpdateStore;
 public interface StoreService {
 
     //注册厂商
-    //返回：一个注册是否成功的布尔值
-    public Boolean register(RegisterStore store);
+    //返回：注册成功的厂商id，若注册未成功，则返回0
+    Integer register(RegisterStore store);
 
     // 厂商登录
     //返回：厂商的实体Bean
-    public Store login(String loginName,String password);
+    Store login(String loginName, String password);
 
     //厂商修改个人信息
     //返回：一个修改是否成功的布尔值
-    public Boolean update(UpdateStore updateStore);
+    Boolean update(UpdateStore updateStore);
 
     //根据id获取所有信息
     //返回：厂商信息bean
-    public StoreInfo getInfoByStoreId(Integer storeId);
+    StoreInfo getInfoByStoreId(Integer storeId);
 
 }

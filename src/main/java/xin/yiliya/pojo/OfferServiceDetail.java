@@ -36,6 +36,7 @@ public class OfferServiceDetail {
 
     private Boolean priceJudgement;
 
+
     public Boolean getPriceJudgement() {
         return priceJudgement;
     }

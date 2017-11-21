@@ -22,8 +22,6 @@ public interface OfferServiceMapper {
 
     int updateByPrimaryKey(OfferService record);
 
-    Integer selectIdByName(String name);
-
     List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId);
 
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);

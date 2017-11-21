@@ -1,16 +1,19 @@
 package xin.yiliya.service;
 
 import com.github.pagehelper.PageInfo;
-import xin.yiliya.pojo.OfferServiceAdd;
-import xin.yiliya.pojo.OfferServiceDetail;
-import xin.yiliya.pojo.OfferServiceSimple;
-import xin.yiliya.pojo.OfferServiceUpdate;
+import xin.yiliya.pojo.*;
 
 public interface OfferServiceService {
 
     //添加一个服务
-    //返回：添加服务是否成功的布尔值
-    Boolean addService(OfferServiceAdd offerServiceAdd);
+    //参数ifTemplate表示是否添加的是模板，true为添加模板，false为不添加
+    //单纯只添加服务这里填false
+    //返回：添加服务的id,若返回值为0则表示添加失败
+    Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate);
+
+    //添加一个服务模板
+    //返回：添加服务模板成功后的id，若返回值为0则表示添加失败
+    Integer addServiceTemplate(OfferServiceTemplate offerServiceTemplate,OfferServiceAdd offerServiceAdd);
 
     //修改一个服务
     //返回：修改服务是否成功的布尔值
