@@ -52,4 +52,5 @@ public interface OfferServiceService {
     //返回单个模板详细信息Bean
     OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId);
 
+
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.EserviceUserMapper">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from eserviceuser
+    where eserviceuserid = #{eserviceuserid,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByEserviceId" parameterType="java.lang.Integer">
+      DELETE FROM eserviceuser
+      WHERE eservice_id = #{eserviceid,jdbcType=INTEGER}
+    </delete>
+  <resultMap id="getAllReplyByEvaluateId" type="xin.yiliya.pojo.EserviceUser">
+    <id property="eserviceuserid" column="eserviceuserid" />
+    <result property="content" column="content" />
+    <result property="time" column="time" />
+    <result property="userId" column="user_id" />
+  </resultMap>
+  <select id="getAllReplyByEvaluateId" resultMap="getAllReplyByEvaluateId" parameterType="java.lang.Integer">
+    SELECT
+    eserviceuserid,content,time,user_id
+    FROM eserviceuser
+    WHERE eservice_id = #{evaluateId,jdbcType=INTEGER}
+    ORDER BY time desc
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.EserviceUser">
+    insert into eserviceuser (eserviceuserid, eservice_id, user_id, 
+      time, content)
+    values (#{eserviceuserid,jdbcType=INTEGER}, #{eserviceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.EserviceUser" useGeneratedKeys="true" keyProperty="eserviceuserid">
+    insert into eserviceuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eserviceuserid != null">
+        eserviceuserid,
+      </if>
+      <if test="eserviceId != null">
+        eservice_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eserviceuserid != null">
+        #{eserviceuserid,jdbcType=INTEGER},
+      </if>
+      <if test="eserviceId != null">
+        #{eserviceId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

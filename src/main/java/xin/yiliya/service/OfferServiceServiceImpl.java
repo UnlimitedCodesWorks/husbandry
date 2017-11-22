@@ -39,6 +39,12 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     OfferServiceTemplateMapper offerServiceTemplateMapper;
 
+    @Resource
+    ServiceEvaluateService serviceEvaluateService;
+
+    @Resource
+    EvaluateServiceMapper evaluateServiceMapper;
+
     public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
@@ -158,6 +164,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             }
             serviceSpotsMapper.deleteByServiceId(serviceId);
             serviceSpecialMapper.deleteByServiceId(serviceId);
+            evaluateServiceMapper.deleteByServiceIdCascade(serviceId);
+            evaluateServiceMapper.deleteByServiceId(serviceId);
             offerServiceMapper.deleteByPrimaryKey(serviceId);
             return true;
        }catch (Exception e){
@@ -206,6 +214,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         Integer storeId = offerServiceDetail.getStoreId();
         offerServiceDetail.setStore(storeMapper.selectStoreSimpleByStoreId(storeId));
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
+        offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0).getList().size());
+        offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
         return offerServiceDetail;
     }
 
@@ -214,4 +224,5 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceTemplate.setOfferServiceDetail(getOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));
         return offerServiceTemplate;
     }
+
 }

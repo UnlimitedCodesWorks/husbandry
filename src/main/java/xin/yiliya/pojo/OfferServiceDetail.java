@@ -32,10 +32,19 @@ public class OfferServiceDetail {
 
     private Integer markNum;
 
+    private float grade;
+
     private Integer orderNum;
 
     private Boolean priceJudgement;
 
+    public float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
 
     public Boolean getPriceJudgement() {
         return priceJudgement;
