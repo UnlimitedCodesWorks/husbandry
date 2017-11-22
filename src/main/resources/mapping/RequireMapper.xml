@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.yiliya.dao.RequireMapper">
+    <resultMap id="RequireOrder" type="xin.yiliya.pojo.Order">
+        <id property="orderid" column="orderid" />
+        <result property="orderNumber" column="order_number" />
+        <result property="serviceId" column="service_id" />
+        <result property="userId" column="user_id" />
+        <result property="status" column="status" />
+        <result property="startTime" column="start_time" />
+    </resultMap>
+
+    <insert id="addRequireOrder" useGeneratedKeys="true" keyProperty="orderid" parameterType="xin.yiliya.pojo.Order">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderid != null">
+                orderid,
+            </if>
+            <if test="orderNumber != null">
+                order_number,
+            </if>
+            <if test="serviceId != null">
+                service_id,
+            </if>
+            <if test="markserviceId != null">
+                markservice_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderid != null">
+                #{orderid,jdbcType=INTEGER},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=INTEGER},
+            </if>
+            <if test="markserviceId != null">
+                #{markserviceId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="status  != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addRequire" useGeneratedKeys="true" keyProperty="requireid" parameterType="xin.yiliya.pojo.Require">
+        insert into `require`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="requireid != null">
+                requireid,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="problem != null">
+                problem,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="requireid != null">
+                #{requireid,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="problem != null">
+                #{problem,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
+import xin.yiliya.dao.RequireMapper;
 import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.*;
 import xin.yiliya.service.*;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +49,9 @@ public class HhfTest {
 
     @Autowired
     UserConcernService userConcernService;
+
+    @Autowired
+    RequireService requireService;
 
     @Test
     public void test() throws IOException, ImageFormatException {
@@ -125,5 +130,28 @@ public class HhfTest {
         //获取客户退款订单
 //        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
+
+        //确认需求表单生成订单order
+//        Integer integer=requireService.addRequireOrder(15,3);
+//        System.out.print(integer);
+
+        //确认订单后将问题，选中的答案都插入require表
+//        RequireList requires=new RequireList();
+//        List<Require> requireList=new ArrayList<Require>();
+//        Require require1=new Require();
+//        Require require2=new Require();
+//        Require require3=new Require();
+//        require1.setProblem("问题1");
+//        require1.setContent("答案1");
+//        require2.setProblem("问题2");
+//        require2.setContent("答案2");
+//        require3.setProblem("问题3");
+//        require3.setContent("答案3");
+//        requireList.add(require1);
+//        requireList.add(require2);
+//        requireList.add(require3);
+//        requires.setRequireList(requireList);
+//        Boolean b=requireService.addRequires(7,requires);
+//        System.out.print(b);
     }
 }

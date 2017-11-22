@@ -20,12 +20,6 @@ public class Order {
 
     private Date endTime;
 
-    private OfferService offerService;
-
-    private Store store;
-
-    private Cancel cancel;
-
     public Integer getOrderid() {
         return orderid;
     }
@@ -90,27 +84,4 @@ public class Order {
         this.endTime = endTime;
     }
 
-    public OfferService getOfferService() {
-        return offerService;
-    }
-
-    public void setOfferService(OfferService offerService) {
-        this.offerService = offerService;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public Cancel getCancel() {
-        return cancel;
-    }
-
-    public void setCancel(Cancel cancel) {
-        this.cancel = cancel;
-    }
 }
