@@ -53,6 +53,9 @@ public class HhfTest {
     @Autowired
     RequireService requireService;
 
+    @Autowired
+    RequireMapper requireMapper;
+
     @Test
     public void test() throws IOException, ImageFormatException {
         //管理员登录
@@ -139,19 +142,58 @@ public class HhfTest {
 //        RequireList requires=new RequireList();
 //        List<Require> requireList=new ArrayList<Require>();
 //        Require require1=new Require();
+//        List<RequireContent> contents1=new ArrayList<RequireContent>();
+//        RequireContent content11=new RequireContent();
+//        RequireContent content12=new RequireContent();
 //        Require require2=new Require();
+//        List<RequireContent> contents2=new ArrayList<RequireContent>();
+//        RequireContent content21=new RequireContent();
+//        RequireContent content22=new RequireContent();
 //        Require require3=new Require();
+//        RequireContent content31=new RequireContent();
+//        RequireContent content32=new RequireContent();
+//        List<RequireContent> contents3=new ArrayList<RequireContent>();
 //        require1.setProblem("问题1");
-//        require1.setContent("答案1");
+//        content11.setContent("答案11");
+//        content12.setContent("答案12");
+//        contents1.add(content11);
+//        contents1.add(content12);
+//        require1.setRequireContents(contents1);
 //        require2.setProblem("问题2");
-//        require2.setContent("答案2");
+//        content21.setContent("答案21");
+//        content22.setContent("答案22");
+//        contents2.add(content21);
+//        contents2.add(content22);
+//        require2.setRequireContents(contents2);
 //        require3.setProblem("问题3");
-//        require3.setContent("答案3");
+//        content31.setContent("答案31");
+//        content32.setContent("答案32");
+//        contents3.add(content31);
+//        contents3.add(content32);
+//        require3.setRequireContents(contents3);
 //        requireList.add(require1);
 //        requireList.add(require2);
 //        requireList.add(require3);
 //        requires.setRequireList(requireList);
 //        Boolean b=requireService.addRequires(7,requires);
 //        System.out.print(b);
+
+//        Require require1=new Require();
+//        require1.setOrderId(7);
+//        require1.setProblem("问题1");
+//        List<RequireContent> contents1=new ArrayList<RequireContent>();
+//        RequireContent content11=new RequireContent();
+//        RequireContent content12=new RequireContent();
+//        content11.setContent("答案11");
+//        content12.setContent("答案12");
+//        contents1.add(content11);
+//        contents1.add(content12);
+//        require1.setRequireContents(contents1);
+//        requireMapper.addRequire(require1);
+//        int id=requireMapper.selectRequireIdByOrderIdAndProblem(require1.getOrderId(),require1.getProblem());
+//        for(RequireContent content:contents1){
+//            content.setRequireId(id);
+//            requireMapper.addContent(content);
+//        }
     }
 }

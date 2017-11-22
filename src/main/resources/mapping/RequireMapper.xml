@@ -75,9 +75,6 @@
             <if test="orderId != null">
                 order_id,
             </if>
-            <if test="content != null">
-                content,
-            </if>
             <if test="problem != null">
                 problem,
             </if>
@@ -89,11 +86,38 @@
             <if test="orderId != null">
                 #{orderId,jdbcType=INTEGER},
             </if>
+            <if test="problem != null">
+                #{problem,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectRequireIdByOrderIdAndProblem" resultType="java.lang.Integer">
+        SELECT requireid FROM `require` WHERE order_id=#{orderid} AND problem=#{pro}
+    </select>
+
+    <insert id="addContent" useGeneratedKeys="true" keyProperty="contentid" parameterType="xin.yiliya.pojo.RequireContent">
+        insert into requirecontent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contentid != null">
+                contentid,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="requireId != null">
+                require_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contentid != null">
+                #{contentid,jdbcType=INTEGER},
+            </if>
             <if test="content != null">
                 #{content,jdbcType=VARCHAR},
             </if>
-            <if test="problem != null">
-                #{problem,jdbcType=VARCHAR},
+            <if test="requireId != null">
+                #{requireId,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

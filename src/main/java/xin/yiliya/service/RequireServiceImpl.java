@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xin.yiliya.dao.RequireMapper;
 import xin.yiliya.pojo.Order;
 import xin.yiliya.pojo.Require;
+import xin.yiliya.pojo.RequireContent;
 import xin.yiliya.pojo.RequireList;
 
 import java.util.Date;
@@ -37,6 +38,12 @@ public class RequireServiceImpl implements RequireService{
             for(Require require:requires){
                 require.setOrderId(orderId);
                 requireMapper.addRequire(require);
+                int id=requireMapper.selectRequireIdByOrderIdAndProblem(require.getOrderId(),require.getProblem());
+                List<RequireContent> contents=require.getRequireContents();
+                for(RequireContent content:contents){
+                    content.setRequireId(id);
+                    requireMapper.addContent(content);
+                }
             }
             return true;
         }catch (Exception e){
