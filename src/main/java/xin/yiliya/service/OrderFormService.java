@@ -9,5 +9,6 @@ import java.util.List;
 public interface OrderFormService {
 
     //根据种类名获取全部问题及对应的答案
+    //参数：服务种类
     public List<Problem> getAllOrderFormRow(String kind);
 }

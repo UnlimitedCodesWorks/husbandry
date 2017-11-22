@@ -6,6 +6,8 @@ import xin.yiliya.pojo.Store;
 import xin.yiliya.pojo.StoreInfo;
 import xin.yiliya.pojo.StoreSimple;
 
+import java.util.List;
+
 @Repository
 public interface StoreMapper {
     int deleteByPrimaryKey(Integer storeid);
@@ -25,4 +27,6 @@ public interface StoreMapper {
     int updateByPrimaryKey(Store record);
 
     StoreSimple selectStoreSimpleByStoreId(Integer storeId);
+
+    List<StoreInfo> getAllUserConcernStores(Integer userId);
 }

@@ -252,4 +252,14 @@
       status = #{status,jdbcType=INTEGER}
     where offerserviceid = #{offerserviceid,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllUserConcernServices" resultMap="BaseMap">
+    SELECT
+    <include refid="BaseSQL" />
+    FROM offerservice,concernservice,service
+    WHERE offerserviceid=concernservice.service_id AND
+    kind=service.serid AND
+    user_id=#{userId} ORDER BY update_time DESC
+  </select>
+
 </mapper>

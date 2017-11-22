@@ -2,7 +2,7 @@ package xin.yiliya.pojo;
 
 import java.util.Date;
 
-public class Order {
+public class OrderShow {
 
     private Integer orderid;
 
@@ -18,13 +18,9 @@ public class Order {
 
     private Date startTime;
 
-    private Date endTime;
-
     private OfferService offerService;
 
-    private Store store;
-
-    private Cancel cancel;
+    private StoreInfo storeInfo;
 
     public Integer getOrderid() {
         return orderid;
@@ -82,14 +78,6 @@ public class Order {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
     public OfferService getOfferService() {
         return offerService;
     }
@@ -98,19 +86,11 @@ public class Order {
         this.offerService = offerService;
     }
 
-    public Store getStore() {
-        return store;
+    public StoreInfo getStoreInfo() {
+        return storeInfo;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public Cancel getCancel() {
-        return cancel;
-    }
-
-    public void setCancel(Cancel cancel) {
-        this.cancel = cancel;
+    public void setStoreInfo(StoreInfo storeInfo) {
+        this.storeInfo = storeInfo;
     }
 }

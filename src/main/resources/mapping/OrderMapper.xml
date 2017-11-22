@@ -1,69 +1,108 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yiliya.dao.OrderMapper">
-    <resultMap id="Base_1" type="xin.yiliya.pojo.Order">
+    <resultMap id="Base_1" type="xin.yiliya.pojo.OrderShow">
         <id property="orderid" column="orderid" />
         <result property="orderNumber" column="order_number" />
         <result property="serviceId" column="service_id" />
         <result property="markserviceId" column="markservice_id" />
         <result property="userId" column="user_id" />
-        <result property="status" column="state" />
+        <result property="status" column="status" />
         <result property="startTime" column="start_time" />
-        <result property="endTime" column="end_time" />
         <association property="offerService" column="service_id" javaType="xin.yiliya.pojo.OfferService">
             <id column="offerserviceid" jdbcType="INTEGER" property="offerserviceid" />
-            <result column="store_id" jdbcType="INTEGER" property="storeId" />
             <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
             <result column="service_img" jdbcType="VARCHAR" property="serviceImg" />
             <result column="kind" jdbcType="INTEGER" property="kind" />
             <result column="price" jdbcType="VARCHAR" property="price" />
-            <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
-            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
             <result column="people_phone" jdbcType="VARCHAR" property="peoplePhone" />
             <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
-            <result column="notice" jdbcType="LONGVARCHAR" property="notice" />
-            <result column="status1" jdbcType="INTEGER" property="status" />
+            <result column="state" jdbcType="INTEGER" property="status" />
         </association>
-        <association property="store" javaType="xin.yiliya.pojo.Store">
+        <association property="storeInfo" javaType="xin.yiliya.pojo.StoreInfo">
             <id column="storeid" jdbcType="INTEGER" property="storeid" />
-            <result column="regist_num" jdbcType="VARCHAR" property="registNum" />
-            <result column="password" jdbcType="VARCHAR" property="password" />
             <result column="store_name" jdbcType="VARCHAR" property="storeName" />
-            <result column="phone" jdbcType="VARCHAR" property="phone" />
-            <result column="email" jdbcType="VARCHAR" property="email" />
-            <result column="area_id" jdbcType="INTEGER" property="arid" />
-            <result column="detail_info" jdbcType="VARCHAR" property="detailInfo" />
-            <result column="head_img" jdbcType="VARCHAR" property="headImg" />
-            <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
-            <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
-            <result column="status2" jdbcType="INTEGER" property="status" />
         </association>
     </resultMap>
 
+    <resultMap id="Base_cancel" type="xin.yiliya.pojo.OrderCancel">
+        <id property="orderid" column="orderid" />
+        <result property="orderNumber" column="order_number" />
+        <result property="serviceId" column="service_id" />
+        <result property="markserviceId" column="markservice_id" />
+        <result property="userId" column="user_id" />
+        <result property="status" column="status" />
+        <result property="startTime" column="start_time" />
+        <association property="offerService" column="service_id" javaType="xin.yiliya.pojo.OfferService">
+            <id column="offerserviceid" jdbcType="INTEGER" property="offerserviceid" />
+            <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+            <result column="service_img" jdbcType="VARCHAR" property="serviceImg" />
+            <result column="kind" jdbcType="INTEGER" property="kind" />
+            <result column="price" jdbcType="VARCHAR" property="price" />
+            <result column="people_phone" jdbcType="VARCHAR" property="peoplePhone" />
+            <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
+            <result column="state" jdbcType="INTEGER" property="status" />
+        </association>
+        <association property="storeInfo" javaType="xin.yiliya.pojo.StoreInfo">
+            <id column="storeid" jdbcType="INTEGER" property="storeid" />
+            <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+        </association>
+        <association property="cancel" javaType="xin.yiliya.pojo.Cancel">
+            <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
+            <result column="userId" jdbcType="INTEGER" property="userId" />
+            <result column="reason" jdbcType="VARCHAR" property="reason" />
+            <result column="cancelStatus" jdbcType="INTEGER" property="status" />
+            <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+        </association>
+    </resultMap>
+
+    <sql id="BaseSQL">
+        orderid,order_number,service_id,markservice_id,user_id,`order`.`status`,start_time,
+        offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
+        offerservice.`status` AS state,storeid,store_name
+    </sql>
+
+    <sql id="BaseCancel">
+        orderid,order_number,service_id,markservice_id,`order`.user_id,`order`.`status`,start_time,
+        offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
+        offerservice.`status` AS state,storeid,store_name,cancelid,cancel.user_id AS userId,reason,
+        cancel.status AS cancelStatus,order_id
+    </sql>
+
     <select id="getAllUserOrder" resultMap="Base_1">
-        SELECT * FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} ORDER BY orderid ASC
     </select>
 
     <select id="getAllUserSendOrder" resultMap="Base_1">
-        SELECT * FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=0
         ORDER BY orderid ASC
     </select>
 
     <select id="getAllUserSureOrder" resultMap="Base_1">
-        SELECT * FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=1
         ORDER BY orderid ASC
     </select>
 
     <select id="getAllUserAssessOrder" resultMap="Base_1">
-       SELECT * FROM `order`,offerservice,store
+       SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=2
         ORDER BY orderid ASC
     </select>
+
+    <select id="getAllUserCancelOrder" resultMap="Base_cancel">
+        SELECT <include refid="BaseCancel" />
+         FROM `order`,offerservice,store,cancel
+        WHERE cancel.order_id=`order`.orderid
+        AND `order`.service_id=offerservice.offerserviceid
+        AND store_id=store.storeid
+        AND cancel.user_id=#{userId}
+    </select>
+
 </mapper>

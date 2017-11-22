@@ -12,10 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.exception.ImageFormatException;
 import xin.yiliya.pojo.*;
-import xin.yiliya.service.AdminService;
-import xin.yiliya.service.OrderFormService;
-import xin.yiliya.service.OrderService;
-import xin.yiliya.service.UserService;
+import xin.yiliya.service.*;
 import xin.yiliya.tool.AliOssTool;
 
 import javax.annotation.Resource;
@@ -47,6 +44,9 @@ public class HhfTest {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    UserConcernService userConcernService;
 
     @Test
     public void test() throws IOException, ImageFormatException {
@@ -99,11 +99,11 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(allInfo,true));
 
         //获取客户全部订单
-//        PageInfo<Order> info=orderService.getAllUserOrder(15,2,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待派遣订单
-//        PageInfo<Order> info=orderService.getAllUserSendOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserSendOrder(15,1,1);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待确认订单
@@ -112,6 +112,18 @@ public class HhfTest {
 
         //获取客户等待评价订单
 //        PageInfo<Order> info=orderService.getAllUserAssessOrder(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取客户关注的服务
+//        PageInfo<OfferServiceSimple> info=userConcernService.userConcernServices(15,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取客户关注的供应商
+//        PageInfo<StoreInfo> info=userConcernService.userConcernStores(15,2,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取客户退款订单
+//        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
     }
 }
