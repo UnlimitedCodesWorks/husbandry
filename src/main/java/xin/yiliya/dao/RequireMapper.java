@@ -13,8 +13,8 @@ public interface RequireMapper {
 
     Integer addRequire(Require require);
 
-    Integer selectRequireIdByOrderIdAndProblem(@Param("orderid") Integer orderId, @Param("pro") String problem);
-
     Integer addContent(RequireContent requireContent);
+
+
 
 }

@@ -135,10 +135,6 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //确认需求表单生成订单order
-//        Integer integer=requireService.addRequireOrder(15,3);
-//        System.out.print(integer);
-
-        //确认订单后将问题，选中的答案都插入require表
 //        RequireList requires=new RequireList();
 //        List<Require> requireList=new ArrayList<Require>();
 //        Require require1=new Require();
@@ -150,9 +146,9 @@ public class HhfTest {
 //        RequireContent content21=new RequireContent();
 //        RequireContent content22=new RequireContent();
 //        Require require3=new Require();
+//        List<RequireContent> contents3=new ArrayList<RequireContent>();
 //        RequireContent content31=new RequireContent();
 //        RequireContent content32=new RequireContent();
-//        List<RequireContent> contents3=new ArrayList<RequireContent>();
 //        require1.setProblem("问题1");
 //        content11.setContent("答案11");
 //        content12.setContent("答案12");
@@ -174,26 +170,13 @@ public class HhfTest {
 //        requireList.add(require1);
 //        requireList.add(require2);
 //        requireList.add(require3);
+//        requires.setServiceId(7);
 //        requires.setRequireList(requireList);
-//        Boolean b=requireService.addRequires(7,requires);
-//        System.out.print(b);
+//        Integer integer=requireService.addRequireOrder(15,requires);
+//        System.out.print(integer);
 
-//        Require require1=new Require();
-//        require1.setOrderId(7);
-//        require1.setProblem("问题1");
-//        List<RequireContent> contents1=new ArrayList<RequireContent>();
-//        RequireContent content11=new RequireContent();
-//        RequireContent content12=new RequireContent();
-//        content11.setContent("答案11");
-//        content12.setContent("答案12");
-//        contents1.add(content11);
-//        contents1.add(content12);
-//        require1.setRequireContents(contents1);
-//        requireMapper.addRequire(require1);
-//        int id=requireMapper.selectRequireIdByOrderIdAndProblem(require1.getOrderId(),require1.getProblem());
-//        for(RequireContent content:contents1){
-//            content.setRequireId(id);
-//            requireMapper.addContent(content);
-//        }
+        //确认订单后将问题，选中的答案都插入require表
+//        Boolean b=requireService.addRequires(integer,requires);
+//        System.out.print(b);
     }
 }

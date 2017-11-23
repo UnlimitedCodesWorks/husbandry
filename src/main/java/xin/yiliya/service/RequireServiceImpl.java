@@ -17,10 +17,11 @@ public class RequireServiceImpl implements RequireService{
     @Autowired
     RequireMapper requireMapper;
 
-    public Integer addRequireOrder(Integer userId, Integer serviceId) {
+    public Integer addRequireOrder(Integer userId,RequireList requireList) {
         try {
             Order order=new Order();
             order.setOrderNumber(String.valueOf(System.currentTimeMillis())+String.valueOf((int)(Math.random()*900)+100));
+            Integer serviceId=requireList.getServiceId();
             order.setServiceId(serviceId);
             order.setUserId(userId);
             order.setStatus(0);
@@ -38,7 +39,7 @@ public class RequireServiceImpl implements RequireService{
             for(Require require:requires){
                 require.setOrderId(orderId);
                 requireMapper.addRequire(require);
-                int id=requireMapper.selectRequireIdByOrderIdAndProblem(require.getOrderId(),require.getProblem());
+                int id=require.getRequireid();
                 List<RequireContent> contents=require.getRequireContents();
                 for(RequireContent content:contents){
                     content.setRequireId(id);

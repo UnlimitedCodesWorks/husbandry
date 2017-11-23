@@ -92,10 +92,6 @@
         </trim>
     </insert>
 
-    <select id="selectRequireIdByOrderIdAndProblem" resultType="java.lang.Integer">
-        SELECT requireid FROM `require` WHERE order_id=#{orderid} AND problem=#{pro}
-    </select>
-
     <insert id="addContent" useGeneratedKeys="true" keyProperty="contentid" parameterType="xin.yiliya.pojo.RequireContent">
         insert into requirecontent
         <trim prefix="(" suffix=")" suffixOverrides=",">
