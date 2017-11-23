@@ -5,7 +5,6 @@
         <id property="orderid" column="orderid" />
         <result property="orderNumber" column="order_number" />
         <result property="serviceId" column="service_id" />
-        <result property="markserviceId" column="markservice_id" />
         <result property="userId" column="user_id" />
         <result property="status" column="status" />
         <result property="startTime" column="start_time" />
@@ -29,7 +28,6 @@
         <id property="orderid" column="orderid" />
         <result property="orderNumber" column="order_number" />
         <result property="serviceId" column="service_id" />
-        <result property="markserviceId" column="markservice_id" />
         <result property="userId" column="user_id" />
         <result property="status" column="status" />
         <result property="startTime" column="start_time" />
@@ -56,44 +54,87 @@
         </association>
     </resultMap>
 
+    <resultMap id="store_handle" type="xin.yiliya.pojo.OrderSimple">
+        <id property="orderid" column="orderid" />
+        <result property="orderNumber" column="order_number" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status" />
+        <association property="service" javaType="xin.yiliya.pojo.Service">
+            <id property="serid" column="serid" />
+            <result column="serkind" property="serKind"/>
+        </association>
+        <association property="user" column="user_id" javaType="xin.yiliya.pojo.User">
+            <id property="userid" column="userid"/>
+            <result property="userName" column="user_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="user_requires" type="xin.yiliya.pojo.Require">
+        <id column="requireid" property="requireid"/>
+        <result column="order_id" property="orderId"/>
+        <result column="problem" property="problem"/>
+        <collection property="requireContents" ofType="xin.yiliya.pojo.RequireContent">
+            <id column="contentid" property="contentid"/>
+            <result column="content" property="content"/>
+        </collection>
+    </resultMap>
+
     <sql id="BaseSQL">
-        orderid,order_number,service_id,markservice_id,user_id,`order`.`status`,start_time,
+        orderid,order_number,service_id,user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
         offerservice.`status` AS state,storeid,store_name
     </sql>
 
     <sql id="BaseCancel">
-        orderid,order_number,service_id,markservice_id,`order`.user_id,`order`.`status`,start_time,
+        orderid,order_number,service_id,`order`.user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
         offerservice.`status` AS state,storeid,store_name,cancelid,cancel.user_id AS userId,reason,
         cancel.status AS cancelStatus,order_id
     </sql>
 
+    <sql id="store_handle">
+        orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name
+    </sql>
+
+    <select id="getServiceTypeFinish" resultType="Integer">
+        SELECT COUNT(*) FROM `order`,offerservice
+        WHERE `order`.orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        AND `order`.service_id=offerserviceid AND kind=#{serid}
+    </select>
+
+    <select id="getStoreServiceFinish" resultType="Integer">
+        SELECT COUNT(*) FROM `order`,offerservice,store
+        WHERE `order`.orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        AND offerserviceid=`order`.service_id AND offerservice.store_id=storeid
+        AND storeid=#{storeId}
+    </select>
+
     <select id="getAllUserOrder" resultMap="Base_1">
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=#{userId} ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=#{userId} ORDER BY start_time DESC
     </select>
 
     <select id="getAllUserSendOrder" resultMap="Base_1">
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=0
-        ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=0
+        ORDER BY start_time DESC
     </select>
 
     <select id="getAllUserSureOrder" resultMap="Base_1">
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=1
-        ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=1
+        ORDER BY end_time DESC
     </select>
 
     <select id="getAllUserAssessOrder" resultMap="Base_1">
        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=15 and `order`.`status`=2
-        ORDER BY orderid ASC
+        AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=2
+        ORDER BY end_time DESC
     </select>
 
     <select id="getAllUserCancelOrder" resultMap="Base_cancel">
@@ -103,6 +144,24 @@
         AND `order`.service_id=offerservice.offerserviceid
         AND store_id=store.storeid
         AND cancel.user_id=#{userId}
+        ORDER BY cancel.cancel_time DESC
+    </select>
+
+    <select id="getAllStoreHandleOrder" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=0
+        AND store_id=#{storeId} ORDER BY start_time ASC
+    </select>
+
+    <select id="getUserRequires" resultMap="user_requires">
+        SELECT requireid,order_id,problem,contentid,content
+        FROM `require`,requirecontent
+        WHERE order_id=#{orderId}
+        AND requireid=require_id;
     </select>
 
 </mapper>

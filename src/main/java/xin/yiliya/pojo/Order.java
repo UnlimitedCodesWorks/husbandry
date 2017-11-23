@@ -10,8 +10,6 @@ public class Order {
 
     private Integer serviceId;
 
-    private Integer markserviceId;
-
     private Integer userId;
 
     private Integer status;
@@ -42,14 +40,6 @@ public class Order {
 
     public void setServiceId(Integer serviceId) {
         this.serviceId = serviceId;
-    }
-
-    public Integer getMarkserviceId() {
-        return markserviceId;
-    }
-
-    public void setMarkserviceId(Integer markserviceId) {
-        this.markserviceId = markserviceId;
     }
 
     public Integer getUserId() {

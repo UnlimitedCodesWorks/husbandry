@@ -6,9 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
-import xin.yiliya.pojo.Order;
-import xin.yiliya.pojo.OrderCancel;
-import xin.yiliya.pojo.OrderShow;
+import xin.yiliya.pojo.*;
 
 import java.util.List;
 
@@ -17,6 +15,14 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderMapper orderMapper;
+
+    public Integer getServiceTypeFinish(int serid){
+        return orderMapper.getServiceTypeFinish(serid);
+    }
+
+    public Integer getStoreServiceFinish(int storeId) {
+        return orderMapper.getStoreServiceFinish(storeId);
+    }
 
     public PageInfo<OrderShow> getAllUserOrder(Integer userId, int currentPage, int pageSize){
         PageHelper.startPage(currentPage,pageSize);
@@ -51,5 +57,17 @@ public class OrderServiceImpl implements OrderService{
         List<OrderCancel> list=orderMapper.getAllUserCancelOrder(userId);
         PageInfo<OrderCancel> pageInfo=new PageInfo<OrderCancel>(list);
         return pageInfo;
+    }
+
+    public PageInfo<OrderSimple> getAllStoreHandleOrder(Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OrderSimple> list=orderMapper.getAllStoreHandleOrder(storeId);
+        PageInfo<OrderSimple> pageInfo=new PageInfo<OrderSimple>(list);
+        return pageInfo;
+     }
+
+    public List<Require> getUserRequires(Integer orderId) {
+        List<Require> requires=orderMapper.getUserRequires(orderId);
+        return requires;
     }
 }
