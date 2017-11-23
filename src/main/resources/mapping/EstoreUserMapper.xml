@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.EstoreUserMapper">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from estoreuser
+    where estoreuserid = #{estoreuserid,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByEStoreId" parameterType="java.lang.Integer">
+      DELETE FROM  estoreuser
+      WHERE estore_id = #{estoreId,jdbcType=INTEGER}
+    </delete>
+  <resultMap id="getAllEstoreUserByEstoreId" type="xin.yiliya.pojo.EstoreUser">
+    <id property="estoreuserid" column="estoreuserid" />
+    <result property="content" column="content" />
+    <result property="time" column="time" />
+    <association property="user" column="user_id" javaType="xin.yiliya.pojo.UserEvaluate">
+      <id property="userId" column="userid" />
+      <result property="headImg" column="head_img" />
+      <result property="userName" column="user_name" />
+    </association>
+  </resultMap>
+  <select id="getAllEstoreUserByEstoreId" resultMap="getAllEstoreUserByEstoreId" parameterType="java.lang.Integer">
+    SELECT
+    estoreuserid,content,user_id,time,userid,head_img,user_name
+    FROM estoreuser,user
+    WHERE estore_id = #{estoreId,jdbcType=INTEGER} and estoreuser.user_id = user.userid
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.EstoreUser">
+    insert into estoreuser (estoreuserid, estore_id, user_id, 
+      time, content)
+    values (#{estoreuserid,jdbcType=INTEGER}, #{estoreId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.EstoreUser" useGeneratedKeys="true" keyProperty="estoreuserid">
+    insert into estoreuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="estoreuserid != null">
+        estoreuserid,
+      </if>
+      <if test="estoreId != null">
+        estore_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="estoreuserid != null">
+        #{estoreuserid,jdbcType=INTEGER},
+      </if>
+      <if test="estoreId != null">
+        #{estoreId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

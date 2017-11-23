@@ -22,7 +22,6 @@ public interface StoreService {
 
     //根据id获取详细信息
     //返回：厂商详细信息bean
-    //待补充的接口
     StoreInfo getInfoByStoreId(Integer storeId);
 
 }

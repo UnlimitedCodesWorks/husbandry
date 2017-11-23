@@ -13,13 +13,17 @@
     <id property="eserviceuserid" column="eserviceuserid" />
     <result property="content" column="content" />
     <result property="time" column="time" />
-    <result property="userId" column="user_id" />
+    <association property="user" column="user_id" javaType="xin.yiliya.pojo.UserEvaluate">
+      <id property="userId" column="userid" />
+      <result property="headImg" column="head_img" />
+      <result property="userName" column="user_name" />
+    </association>
   </resultMap>
   <select id="getAllReplyByEvaluateId" resultMap="getAllReplyByEvaluateId" parameterType="java.lang.Integer">
     SELECT
-    eserviceuserid,content,time,user_id
-    FROM eserviceuser
-    WHERE eservice_id = #{evaluateId,jdbcType=INTEGER}
+    eserviceuserid,content,time,user_id,userid,head_img,user_name
+    FROM eserviceuser,user
+    WHERE eservice_id = #{evaluateId,jdbcType=INTEGER} and eserviceuser.user_id = user.userid
     ORDER BY time desc
   </select>
   <insert id="insert" parameterType="xin.yiliya.pojo.EserviceUser">

@@ -25,24 +25,36 @@
   </delete>
   <resultMap id="getAllEvaluateByServiceId" type="xin.yiliya.pojo.EvaluateService" >
     <id property="evaluateserviceid" column="evaluateserviceid" />
-    <result property="userId" column="userid" />
     <result property="content" column="content" />
     <result property="time" column="time" />
     <result property="praise" column="praise" />
     <result property="grade" column="grade" />
+    <association property="user" column="user_id" javaType="xin.yiliya.pojo.UserEvaluate">
+      <id property="userId" column="userid" />
+      <result property="headImg" column="head_img" />
+      <result property="userName" column="user_name" />
+    </association>
   </resultMap>
     <select id="getAllEvaluateByServiceId" resultMap="getAllEvaluateByServiceId" parameterType="java.lang.Integer">
         SELECT
-        evaluateserviceid,user_id,content,time,praise,grade
-        FROM evaluateservice
-        WHERE service_id = #{serviceId,jdbcType=INTEGER}
+        evaluateserviceid,content,time,praise,grade,user_id,userid,head_img,user_name
+        FROM evaluateservice,user
+        WHERE service_id = #{serviceId,jdbcType=INTEGER} and user.userid = evaluateservice.user_id
     </select>
   <select id="getGradeByServiceId" resultType="float" parameterType="java.lang.Integer">
-    SELECT avg(grade)
+    SELECT COALESCE(avg(grade),0)
     FROM evaluateservice
     where service_id = #{serviceId,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="xin.yiliya.pojo.EvaluateService">
+    <select id="getGradePerDayBySeviceId" resultType="float">
+      SELECT  COALESCE(avg(grade),0)
+      FROM evaluateservice
+      where service_id = #{serviceId,jdbcType=INTEGER}
+      AND time
+      BETWEEN #{startTime,jdbcType=VARCHAR}
+      AND #{endTime,jdbcType=VARCHAR}
+    </select>
+    <insert id="insert" parameterType="xin.yiliya.pojo.EvaluateService">
     insert into evaluateservice (evaluateserviceid, user_id, service_id, 
       content, time, praise,grade
       )

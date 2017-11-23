@@ -2,10 +2,10 @@ package xin.yiliya.pojo;
 
 import java.util.Date;
 
-public class EserviceUser {
-    private Integer eserviceuserid;
+public class EstoreUser {
+    private Integer estoreuserid;
 
-    private Integer eserviceId;
+    private Integer estoreId;
 
     private UserEvaluate user;
 
@@ -24,20 +24,20 @@ public class EserviceUser {
     }
 
 
-    public Integer getEserviceuserid() {
-        return eserviceuserid;
+    public Integer getEstoreuserid() {
+        return estoreuserid;
     }
 
-    public void setEserviceuserid(Integer eserviceuserid) {
-        this.eserviceuserid = eserviceuserid;
+    public void setEstoreuserid(Integer estoreuserid) {
+        this.estoreuserid = estoreuserid;
     }
 
-    public Integer getEserviceId() {
-        return eserviceId;
+    public Integer getEstoreId() {
+        return estoreId;
     }
 
-    public void setEserviceId(Integer eserviceId) {
-        this.eserviceId = eserviceId;
+    public void setEstoreId(Integer estoreId) {
+        this.estoreId = estoreId;
     }
 
     public UserEvaluate getUser() {

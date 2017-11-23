@@ -3,20 +3,18 @@ package xin.yiliya.pojo;
 import java.util.Date;
 import java.util.List;
 
-public class EvaluateService {
-    private Integer evaluateserviceid;
+public class EvaluateStore {
+    private Integer evaluatestoreid;
 
     private UserEvaluate user;
 
-    private Integer serviceId;
+    private Integer storeId;
 
     private String content;
 
     private Date time;
 
     private Integer praise;
-
-    private float grade;
 
     private Integer userId;
 
@@ -28,31 +26,22 @@ public class EvaluateService {
         this.userId = userId;
     }
 
+    private List<EstoreUser> estoreUserList;
 
-    public float getGrade() {
-        return grade;
+    public List<EstoreUser> getEstoreUserList() {
+        return estoreUserList;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public void setEstoreUserList(List<EstoreUser> estoreUserList) {
+        this.estoreUserList = estoreUserList;
     }
 
-    private List<EserviceUser> eserviceUsers;
-
-    public List<EserviceUser> getEserviceUsers() {
-        return eserviceUsers;
+    public Integer getEvaluatestoreid() {
+        return evaluatestoreid;
     }
 
-    public void setEserviceUsers(List<EserviceUser> eserviceUsers) {
-        this.eserviceUsers = eserviceUsers;
-    }
-
-    public Integer getEvaluateserviceid() {
-        return evaluateserviceid;
-    }
-
-    public void setEvaluateserviceid(Integer evaluateserviceid) {
-        this.evaluateserviceid = evaluateserviceid;
+    public void setEvaluatestoreid(Integer evaluatestoreid) {
+        this.evaluatestoreid = evaluatestoreid;
     }
 
     public UserEvaluate getUser() {
@@ -63,12 +52,12 @@ public class EvaluateService {
         this.user = user;
     }
 
-    public Integer getServiceId() {
-        return serviceId;
+    public Integer getStoreId() {
+        return storeId;
     }
 
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     public String getContent() {

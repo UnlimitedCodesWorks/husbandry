@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.EvaluateStoreMapper">
+  <update id="updatePraisePlusById" parameterType="java.lang.Integer">
+    UPDATE evaluatestore
+    SET praise = praise+1
+    WHERE evaluatestoreid = #{evaluateId,jdbcType=INTEGER}
+  </update>
+  <update id="updatePraiseMinusById">
+    UPDATE evaluatestore
+    SET praise = praise-1
+    WHERE evaluatestoreid = #{evaluateId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from evaluatestore
+    where evaluatestoreid = #{evaluatestoreid,jdbcType=INTEGER}
+  </delete>
+  <resultMap id="getAllEvaluateByStoreId" type="xin.yiliya.pojo.EvaluateStore">
+    <id property="evaluatestoreid" column="evaluatestoreid" />
+    <result property="time" column="time" />
+    <result property="content" column="content" />
+    <result property="praise" column="praise" />
+    <association property="user" column="user_id" javaType="xin.yiliya.pojo.UserEvaluate">
+      <id property="userId" column="userid" />
+      <result property="headImg" column="head_img" />
+      <result property="userName" column="user_name" />
+    </association>
+  </resultMap>
+  <select id="getAllEvaluateByStoreId" parameterType="java.lang.Integer" resultMap="getAllEvaluateByStoreId" >
+    SELECT
+    evaluatestoreid,user_id,content,praise,time,userid,head_img,user_name
+    FROM evaluatestore,user
+    WHERE store_id = #{storeId,jdbcType=INTEGER} and evaluatestore.user_id = user.userid
+  </select>
+  <select id="getGradeByStoreId" resultType="float" parameterType="java.lang.Integer">
+    SELECT
+	COALESCE(avg(grade),0)
+    FROM offerservice,evaluateservice
+    WHERE
+	offerservice.offerserviceid = evaluateservice.service_id
+    AND store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+  <select id="getGradePerDayByStoreId" resultType="float">
+    SELECT
+	COALESCE(avg(grade),0)
+    FROM offerservice,evaluateservice
+    WHERE
+	offerservice.offerserviceid = evaluateservice.service_id
+    AND store_id = #{storeId,jdbcType=INTEGER}
+    AND time
+    BETWEEN #{startTime,jdbcType=VARCHAR}
+    AND #{endTime,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.EvaluateStore">
+    insert into evaluatestore (evaluatestoreid, user_id, store_id, 
+      content, time, praise
+      )
+    values (#{evaluatestoreid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{praise,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.EvaluateStore" useGeneratedKeys="true" keyProperty="evaluatestoreid">
+    insert into evaluatestore
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="evaluatestoreid != null">
+        evaluatestoreid,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="praise != null">
+        praise,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="evaluatestoreid != null">
+        #{evaluatestoreid,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="praise != null">
+        #{praise,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

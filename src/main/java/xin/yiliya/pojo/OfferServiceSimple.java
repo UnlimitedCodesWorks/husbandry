@@ -15,6 +15,26 @@ public class OfferServiceSimple {
 
     private Date updateTime;
 
+    private float grade;
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
+
     private xin.yiliya.pojo.Service kind;
 
     public xin.yiliya.pojo.Service getKind() {

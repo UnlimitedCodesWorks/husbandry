@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.*;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
+import xin.yiliya.tool.GradeJudge;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -195,8 +196,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             Integer storeId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list = offerServiceMapper.getAllSimpleOfferServiceByStoreId(storeId);
-        PageInfo<OfferServiceSimple> pageInfo = new PageInfo<OfferServiceSimple>(list);
-        return pageInfo;
+        for(OfferServiceSimple offerServiceSimple:list){
+            offerServiceSimple.setGrade(serviceEvaluateService.getGradeByServiceId(offerServiceSimple.getOfferServiceId()));
+            offerServiceSimple.setStatus(GradeJudge.judge(offerServiceSimple.getGrade()));
+        }
+        return new PageInfo<OfferServiceSimple>(list);
     }
 
     public PageInfo<OfferServiceTemplate> getAllOfferServiceTemplateByStoreId(
@@ -209,8 +213,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     }
 
     public OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId) {
-        OfferServiceDetail offerServiceDetail = new OfferServiceDetail();
-        offerServiceDetail = offerServiceMapper.getOfferServiceDetailByServiceId(serviceId);
+        OfferServiceDetail offerServiceDetail = offerServiceMapper.getOfferServiceDetailByServiceId(serviceId);
         Integer storeId = offerServiceDetail.getStoreId();
         offerServiceDetail.setStore(storeMapper.selectStoreSimpleByStoreId(storeId));
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));

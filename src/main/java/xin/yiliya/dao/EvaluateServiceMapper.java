@@ -1,5 +1,6 @@
 package xin.yiliya.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.EvaluateService;
 
@@ -25,4 +26,8 @@ public interface EvaluateServiceMapper {
     int updatePraiseMinusById(Integer evaluateId);
 
     float getGradeByServiceId(Integer serviceId);
+
+    float getGradePerDayBySeviceId(
+            @Param(value = "serviceId") Integer serviceId,@Param(value = "startTime") String startTime,
+            @Param(value = "endTime") String endTime);
 }

@@ -28,6 +28,9 @@ public class StoreServiceImpl implements StoreService {
     @Resource
     private AreasMapper areasMapper;
 
+    @Resource
+    private EvaluateStoreService evaluateStoreService;
+
     public Integer register(RegisterStore registerStore) {
         try{
             String password = registerStore.getPassword();
@@ -90,7 +93,9 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public StoreInfo getInfoByStoreId(Integer storeId) {
-        return storeMapper.selectByPrimaryKey(storeId);
+        StoreInfo storeInfo = storeMapper.selectByPrimaryKey(storeId);
+        storeInfo.setGrade(evaluateStoreService.getGradeByStoreId(storeId));
+        return storeInfo;
     }
 
 }

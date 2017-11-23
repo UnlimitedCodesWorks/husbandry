@@ -22,6 +22,7 @@
     <result property="updateTime" column="update_time" jdbcType="TIMESTAMP" />
     <result property="serviceName" column="service_name" jdbcType="VARCHAR" />
     <result property="serviceImg" column="service_img" jdbcType="VARCHAR" />
+    <result property="status" column="status" jdbcType="INTEGER" />
     <association property="kind" column="kind" javaType="xin.yiliya.pojo.Service">
       <id property="serid" column="serid" jdbcType="INTEGER" />
       <result property="serKind" column="serkind" jdbcType="VARCHAR" />
@@ -45,7 +46,7 @@
     </collection>
   </resultMap>
   <sql id="BaseSQL">
-    offerserviceid,introduce,publish_time,update_time,service_name,service_img,serid,serkind
+    offerserviceid,introduce,publish_time,update_time,service_name,service_img,serid,serkind,status
   </sql>
   <sql id="Base_Column_List">
     offerserviceid, store_id, service_name, service_img, kind, price, publish_time, update_time, 

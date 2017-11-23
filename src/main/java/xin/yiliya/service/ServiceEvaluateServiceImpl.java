@@ -6,10 +6,17 @@ import org.springframework.stereotype.Service;
 import xin.yiliya.dao.EserviceUserMapper;
 import xin.yiliya.dao.EvaluateServiceMapper;
 import xin.yiliya.pojo.EvaluateService;
+import xin.yiliya.pojo.ServiceEvalutePerDay;
+import xin.yiliya.pojo.ServiceEvalutePerMonth;
+import xin.yiliya.tool.DateManager;
+import xin.yiliya.tool.GradeJudge;
 
 import javax.annotation.Resource;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -79,5 +86,42 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
     public Float getGradeByServiceId(Integer serviceId) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         return Float.valueOf(decimalFormat.format(evaluateServiceMapper.getGradeByServiceId(serviceId)));
+    }
+
+    public ServiceEvalutePerMonth getGradePerMonthBySeviceId(Integer serviceId,String serviceName,Date time)  {
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        ServiceEvalutePerMonth serviceEvalutePerMonth = new ServiceEvalutePerMonth();
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            String nowTime = dateFormat.format(time);
+            String[] date = nowTime.split("-");
+            int year = Integer.valueOf(date[0]);
+            int month = Integer.valueOf(date[1]);
+            int days = DateManager.getDaysByYearAndMonth(year,month);
+            serviceEvalutePerMonth.setDate(time);
+            serviceEvalutePerMonth.setServiceName(serviceName);
+            List<ServiceEvalutePerDay> serviceEvalutePerDays = new LinkedList<ServiceEvalutePerDay>();
+            float gradeSum = 0;
+            int gradeDay = 0;
+            String startTime = nowTime + "-1"+" 00:00:00";
+            for(int i=0;i<days;i++){
+                ServiceEvalutePerDay serviceEvalutePerDay = new ServiceEvalutePerDay();
+                serviceEvalutePerDay.setDayNum(i+1);
+                String endTime = nowTime + "-" +(i+1)+" 23:59:59";
+                serviceEvalutePerDay.setGrade(Float.parseFloat(decimalFormat.format(evaluateServiceMapper.getGradePerDayBySeviceId(serviceId,startTime,endTime))));
+                serviceEvalutePerDay.setStatus(GradeJudge.judge(serviceEvalutePerDay.getGrade()));
+                serviceEvalutePerDays.add(serviceEvalutePerDay);
+                gradeSum += serviceEvalutePerDay.getGrade();
+                if(serviceEvalutePerDay.getGrade()!=0){
+                    gradeDay++;
+                }
+            }
+            serviceEvalutePerMonth.setDays(serviceEvalutePerDays);
+            serviceEvalutePerMonth.setGrade(Float.parseFloat(decimalFormat.format(gradeSum/gradeDay)));
+            serviceEvalutePerMonth.setStatus(GradeJudge.judge(serviceEvalutePerMonth.getGrade()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return serviceEvalutePerMonth;
     }
 }
