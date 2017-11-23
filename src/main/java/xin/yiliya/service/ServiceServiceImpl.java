@@ -11,7 +11,8 @@ import java.util.List;
 public class ServiceServiceImpl implements ServiceService {
 
     @Resource
-    ServiceMapper serviceMapper;
+    private ServiceMapper serviceMapper;
+
     public List<Service> getAllService() {
         return serviceMapper.getAllService();
     }

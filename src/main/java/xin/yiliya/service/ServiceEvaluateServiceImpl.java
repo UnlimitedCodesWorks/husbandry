@@ -23,10 +23,13 @@ import java.util.List;
 public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
 
     @Resource
-    EvaluateServiceMapper evaluateServiceMapper;
+    private EvaluateServiceMapper evaluateServiceMapper;
 
     @Resource
-    EserviceUserMapper eserviceUserMapper;
+    private EserviceUserMapper eserviceUserMapper;
+
+    @Resource
+    private EserviceUserService eserviceUserService;
 
     public Integer addEvaluate(EvaluateService evaluateService) {
         try {
@@ -51,7 +54,7 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
     }
 
     public PageInfo<EvaluateService> getAllEvaluateByServiceId(
-            Integer serviceId,Boolean pattern, int currentPage, int pageSize) {
+            Integer serviceId,Boolean pattern, int currentPage, int pageSize,int sonPageSize) {
         PageHelper.startPage(currentPage,pageSize);
         if(pattern){
             PageHelper.orderBy("time desc");
@@ -60,7 +63,7 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
         }
         List<EvaluateService> list = evaluateServiceMapper.getAllEvaluateByServiceId(serviceId);
         for(EvaluateService reply:list){
-            reply.setEserviceUsers(eserviceUserMapper.getAllReplyByEvaluateId(reply.getEvaluateserviceid()));
+            reply.setEserviceUsers(eserviceUserService.getAllReplyByEvaluateId(reply.getEvaluateserviceid(),1,sonPageSize).getList());
         }
         return new PageInfo<EvaluateService>(list);
     }

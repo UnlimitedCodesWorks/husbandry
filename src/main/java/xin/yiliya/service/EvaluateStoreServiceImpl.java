@@ -20,10 +20,13 @@ import java.util.List;
 public class EvaluateStoreServiceImpl implements EvaluateStoreService {
 
     @Resource
-    EvaluateStoreMapper evaluateStoreMapper;
+    private EvaluateStoreMapper evaluateStoreMapper;
 
     @Resource
-    EstoreUserMapper estoreUserMapper;
+    private EStoreUserService eStoreUserService;
+
+    @Resource
+    private EstoreUserMapper estoreUserMapper;
 
     public Integer addEvaluate(EvaluateStore evaluateStore) {
         try{
@@ -46,7 +49,7 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
         }
     }
 
-    public PageInfo<EvaluateStore> getAllEvaluateByStoreId(Integer storeId, Boolean pattern, int currentPage, int pageSize) {
+    public PageInfo<EvaluateStore> getAllEvaluateByStoreId(Integer storeId, Boolean pattern, int currentPage, int pageSize,int sonPageSize) {
         PageHelper.startPage(currentPage,pageSize);
         if(pattern){
             PageHelper.orderBy("time desc");
@@ -55,7 +58,7 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
         }
         List<EvaluateStore> list = evaluateStoreMapper.getAllEvaluateByStoreId(storeId);
         for(EvaluateStore evaluateStore:list){
-            evaluateStore.setEstoreUserList(estoreUserMapper.getAllEstoreUserByEstoreId(evaluateStore.getEvaluatestoreid()));
+            evaluateStore.setEstoreUserList(eStoreUserService.getAllEstoreUserByEstoreId(evaluateStore.getEvaluatestoreid(),1,sonPageSize).getList());
         }
         return new PageInfo<EvaluateStore>(list);
     }

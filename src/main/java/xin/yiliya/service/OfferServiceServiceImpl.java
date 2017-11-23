@@ -20,31 +20,31 @@ import java.util.List;
 public class OfferServiceServiceImpl implements OfferServiceService {
 
     @Resource
-    AliOssTool aliOssTool;
+    private AliOssTool aliOssTool;
 
     @Resource
-    OfferServiceMapper offerServiceMapper;
+    private OfferServiceMapper offerServiceMapper;
 
     @Resource
-    ServiceSpecialMapper serviceSpecialMapper;
+    private ServiceSpecialMapper serviceSpecialMapper;
 
     @Resource
-    ServiceSpotsMapper serviceSpotsMapper;
+    private ServiceSpotsMapper serviceSpotsMapper;
 
     @Resource
-    StoreMapper storeMapper;
+    private StoreMapper storeMapper;
 
     @Resource
-    CitiesMapper citiesMapper;
+    private CitiesMapper citiesMapper;
 
     @Resource
-    OfferServiceTemplateMapper offerServiceTemplateMapper;
+    private OfferServiceTemplateMapper offerServiceTemplateMapper;
 
     @Resource
-    ServiceEvaluateService serviceEvaluateService;
+    private ServiceEvaluateService serviceEvaluateService;
 
     @Resource
-    EvaluateServiceMapper evaluateServiceMapper;
+    private EvaluateServiceMapper evaluateServiceMapper;
 
     public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
@@ -208,8 +208,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceTemplate> list =
                 offerServiceTemplateMapper.getAllOfferServiceTemplateByStoreId(storeId);
-        PageInfo<OfferServiceTemplate> pageInfo = new PageInfo<OfferServiceTemplate>(list);
-        return pageInfo;
+        return new PageInfo<OfferServiceTemplate>(list);
     }
 
     public OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId) {
@@ -217,7 +216,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         Integer storeId = offerServiceDetail.getStoreId();
         offerServiceDetail.setStore(storeMapper.selectStoreSimpleByStoreId(storeId));
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
-        offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0).getList().size());
+        offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0,1).getList().size());
         offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
         return offerServiceDetail;
     }

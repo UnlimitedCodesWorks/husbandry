@@ -18,9 +18,10 @@ public interface ServiceEvaluateService {
 
     //列出服务下的所有评论(包括子回复）
     //参数：pattern为true时代表默认模式按时间排序，为false时代表按热度排序
+    // sonPageSize代表子回复所显示的个数
     //返回: 多个评论集合
     PageInfo<EvaluateService> getAllEvaluateByServiceId(
-            Integer serviceId,Boolean pattern,int currentPage,int pageSize);
+            Integer serviceId,Boolean pattern,int currentPage,int pageSize,int sonPageSize);
 
     //为评论点赞
     //返回：更新是否成功的布尔值

@@ -18,6 +18,8 @@ public class EvaluateStore {
 
     private Integer userId;
 
+    private List<EstoreUser> estoreUserList;
+
     public Integer getUserId() {
         return userId;
     }
@@ -25,8 +27,6 @@ public class EvaluateStore {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    private List<EstoreUser> estoreUserList;
 
     public List<EstoreUser> getEstoreUserList() {
         return estoreUserList;
