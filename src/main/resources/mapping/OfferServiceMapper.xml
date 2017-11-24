@@ -291,5 +291,33 @@
     AND kind = #{kind,jdbcType=INTEGER}
     AND city_id = #{ciid,jdbcType=INTEGER}
   </select>
+  <select id="getServiceNameByInput" resultType="string" >
+      SELECT
+      service_name
+      FROM offerservice,servicespots
+      WHERE service_name LIKE '%${input}%'
+      and offerservice.offerserviceid = servicespots.offerservice_id
+      and city_id = #{ciid,jdbcType=INTEGER}
+   </select>
+
+  <select id="getServicesByInput" resultMap="getServicesByCityAndKind">
+    SELECT
+	offerserviceid,
+	service_name,
+	service_img,
+	price,
+	store_id,
+	storeid,
+	store_name
+    FROM
+	offerservice,
+	servicespots,
+	store
+    WHERE
+	servicespots.offerservice_id = offerservice.offerserviceid
+    AND offerservice.store_id = store.storeid
+    AND service_name LIKE '%${input}%'
+    AND city_id = #{ciid,jdbcType=INTEGER}
+  </select>
 
 </mapper>

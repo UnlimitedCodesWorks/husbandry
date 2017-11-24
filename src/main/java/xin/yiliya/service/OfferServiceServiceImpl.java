@@ -303,4 +303,76 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return new PageInfo<OfferServiceSimple>(list);
     }
 
+    public String[] getServiceNameByInput(String input, Integer ciid) {
+        return offerServiceMapper.getServiceNameByInput(input,ciid);
+    }
+
+    public PageInfo<OfferServiceSimple> getServicesByInput(String input, Integer ciid, int schema, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OfferServiceSimple> list = null;
+        switch (schema){
+            case Rank.PRICE_ASC :
+                PageHelper.orderBy("price");
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                break;
+            case Rank.PRICE_DESC :
+                PageHelper.orderBy("price desc");
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                break;
+            case Rank.GRADE_ASC :
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()>o2.getGrade()) return 1;
+                        else if(o1.getGrade()<o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.GRADE_DESC :
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()<o2.getGrade()) return 1;
+                        else if(o1.getGrade()>o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.SALES_ASC :
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getMarkNum()>o2.getMarkNum()) return 1;
+                        else if(o1.getMarkNum()<o2.getMarkNum()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.SALES_DESC :
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getMarkNum()<o2.getMarkNum()) return 1;
+                        else if(o1.getMarkNum()>o2.getMarkNum()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+        }
+        return new PageInfo<OfferServiceSimple>(list);
+    }
+
 }

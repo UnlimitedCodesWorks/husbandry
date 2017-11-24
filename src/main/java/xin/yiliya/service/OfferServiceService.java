@@ -60,4 +60,17 @@ public interface OfferServiceService {
     //返回多个服务简单信息Bean
     PageInfo<OfferServiceSimple> getServicesByCityAndKind(
     Integer serviceKind,Integer ciid,int schema,int currentPage,int pageSize);
+
+    //根据输入的字符串模糊搜索服务名
+    //返回服务名字符串集合
+    String[] getServiceNameByInput(String input,Integer ciid);
+
+    //根据城市和所输入的字符串模糊匹配对应服务
+    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE,Rank.SALES,Rank.PRICE
+    // Rank.GRADE表示按评分排序，Rank.SALES表示按销量排序，Rank.PRICE表示按价格排序
+    // 每个参数都有后缀DESC与ASC代表降序和升序排序,如Rank.GRADE_DESC表示按评分降序排序
+    //返回多个服务简单信息Bean
+    PageInfo<OfferServiceSimple> getServicesByInput(
+            String input,Integer ciid,int schema,int currentPage,int pageSize);
+
 }
