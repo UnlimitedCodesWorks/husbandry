@@ -83,7 +83,7 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
 
     public Float getGradeByStoreId(Integer storeId) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
-        return Float.valueOf(decimalFormat.format(evaluateStoreMapper.getAllEvaluateByStoreId(storeId)));
+        return Float.valueOf(decimalFormat.format(evaluateStoreMapper.getGradeByStoreId(storeId)));
     }
 
     public StoreEvalutePerMonth getGradePerMonthByStoreId(Integer storeId, String storeName, Date time) {

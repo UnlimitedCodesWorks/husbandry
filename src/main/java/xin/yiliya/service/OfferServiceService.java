@@ -54,7 +54,7 @@ public interface OfferServiceService {
 
 
     //根据城市和所选服务类别匹配对应服务商的服务
-    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE,Rank.SALES,Rank.TIME
+    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE,Rank.SALES,Rank.PRICE
     // Rank.GRADE表示按评分排序，Rank.SALES表示按销量排序，Rank.PRICE表示按价格排序
     // 每个参数都有后缀DESC与ASC代表降序和升序排序,如Rank.GRADE_DESC表示按评分降序排序
     //返回多个服务简单信息Bean

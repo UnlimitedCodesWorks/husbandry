@@ -1,17 +1,25 @@
 package xin.yiliya.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.AptitudeMapper;
 import xin.yiliya.dao.AreasMapper;
 import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
+import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -30,6 +38,13 @@ public class StoreServiceImpl implements StoreService {
 
     @Resource
     private EvaluateStoreService evaluateStoreService;
+
+    @Resource
+    private OrderService orderService;
+
+    @Resource
+    private RedisTemplate<String,StoreIndex> redisTemplate;
+
 
     public Integer register(RegisterStore registerStore) {
         try{
@@ -96,6 +111,57 @@ public class StoreServiceImpl implements StoreService {
         StoreInfo storeInfo = storeMapper.selectByPrimaryKey(storeId);
         storeInfo.setGrade(evaluateStoreService.getGradeByStoreId(storeId));
         return storeInfo;
+    }
+
+    public List<StoreIndex> getAllHotStore(int schema) {
+        PageHelper.startPage(1,9);
+        List<StoreIndex> storeList = null;
+        ListOperations<String,StoreIndex> list = redisTemplate.opsForList();
+        switch (schema){
+            case Rank.GRADE_DESC :
+                if(list.size("hotStoreByGrade") == 0){
+                    storeList = storeMapper.getAllHotStore();
+                    for(StoreIndex store:storeList){
+                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
+                    }
+                    Collections.sort(storeList, new Comparator<StoreIndex>() {
+                        public int compare(StoreIndex o1, StoreIndex o2) {
+                            if(o1.getGrade()<o2.getGrade()) return 1;
+                            else if(o1.getGrade()>o2.getGrade()) return -1;
+                            return 0;
+                        }
+                    });
+                    list.rightPushAll("hotStoreByGrade",new PageInfo<StoreIndex>(storeList).getList());
+                    redisTemplate.expire("hotStoreByGrade",5, TimeUnit.MINUTES);
+                }else{
+                    storeList = list.range("hotStoreByGrade",0,-1);
+                }
+                break;
+            case Rank.SALES_DESC :
+                if(list.size("hotStoreBySales") == 0){
+                    storeList = storeMapper.getAllHotStore();
+                    for(StoreIndex store:storeList){
+                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
+                    }
+                    Collections.sort(storeList, new Comparator<StoreIndex>() {
+                        public int compare(StoreIndex o1, StoreIndex o2) {
+                            if(o1.getMarkNum()<o2.getMarkNum()) return 1;
+                            else if(o1.getMarkNum()>o2.getMarkNum()) return -1;
+                            return 0;
+                        }
+                    });
+                    list.rightPushAll("hotStoreBySales",new PageInfo<StoreIndex>(storeList).getList());
+                    redisTemplate.expire("hotStoreBySales",5, TimeUnit.MINUTES);
+                }else{
+                    storeList = list.range("hotStoreBySales",0,-1);
+                }
+                break;
+        }
+        return storeList;
     }
 
 }

@@ -1,10 +1,10 @@
 package xin.yiliya.service;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import xin.yiliya.pojo.RegisterStore;
-import xin.yiliya.pojo.Store;
-import xin.yiliya.pojo.StoreInfo;
-import xin.yiliya.pojo.UpdateStore;
+import xin.yiliya.pojo.*;
+
+import java.util.List;
 
 public interface StoreService {
 
@@ -23,5 +23,10 @@ public interface StoreService {
     //根据id获取详细信息
     //返回：厂商详细信息bean
     StoreInfo getInfoByStoreId(Integer storeId);
+
+    //获取全国热门服务商
+    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE_DESC,Rank.SALES_DESC
+    //返回多个初始页面服务商bean
+    List<StoreIndex> getAllHotStore(int schema);
 
 }

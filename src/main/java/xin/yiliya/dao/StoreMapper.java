@@ -3,6 +3,7 @@ package xin.yiliya.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.Store;
+import xin.yiliya.pojo.StoreIndex;
 import xin.yiliya.pojo.StoreInfo;
 import xin.yiliya.pojo.StoreSimple;
 
@@ -29,4 +30,9 @@ public interface StoreMapper {
     StoreSimple selectStoreSimpleByStoreId(Integer storeId);
 
     List<StoreInfo> getAllUserConcernStores(Integer userId);
+
+    List<StoreIndex> getAllHotStore();
+
+    Integer getFansByStoreId(Integer storeId);
+
 }
