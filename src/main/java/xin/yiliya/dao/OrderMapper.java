@@ -24,6 +24,10 @@ public interface OrderMapper {
 
     List<OrderSimple> getAllStoreHandleOrder(Integer storeId);
 
+    List<OrderSimple> getAllStoreSureOrder(Integer storeId);
+
+    List<OrderCancel> getAllStoreCancelOrder(Integer storeId);
+
     List<Require> getUserRequires(Integer orderId);
 
 }

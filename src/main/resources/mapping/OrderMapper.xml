@@ -70,6 +70,25 @@
         </association>
     </resultMap>
 
+    <resultMap id="store_cancel" type="xin.yiliya.pojo.OrderCancel">
+        <id property="orderid" column="orderid" />
+        <result property="orderNumber" column="order_number" />
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
+        <result property="startTime" column="start_time"/>
+        <association property="service" javaType="xin.yiliya.pojo.Service">
+            <result column="serkind" property="serKind"/>
+        </association>
+        <association property="user" column="user_id" javaType="xin.yiliya.pojo.User">
+            <result property="userName" column="user_name"/>
+        </association>
+        <association property="cancel" javaType="xin.yiliya.pojo.Cancel">
+            <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
+            <result column="reason" jdbcType="VARCHAR" property="reason" />
+            <result column="cancel_state" jdbcType="INTEGER" property="status" />
+        </association>
+    </resultMap>
+
     <resultMap id="user_requires" type="xin.yiliya.pojo.Require">
         <id column="requireid" property="requireid"/>
         <result column="order_id" property="orderId"/>
@@ -95,6 +114,11 @@
 
     <sql id="store_handle">
         orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name
+    </sql>
+
+    <sql id="store_cancel">
+        orderid,`order`.order_number,`order`.user_id,`order`.`status`,`order`.start_time,serkind,
+        `user`.user_name,cancelid,reason,cancel.`status` AS cancel_state
     </sql>
 
     <select id="getServiceTypeFinish" resultType="Integer">
@@ -155,6 +179,26 @@
         AND kind=serid
         AND `order`.`status`=0
         AND store_id=#{storeId} ORDER BY start_time ASC
+    </select>
+
+    <select id="getAllStoreSureOrder" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=1
+        AND store_id=#{storeId} ORDER BY start_time ASC
+    </select>
+
+    <select id="getAllStoreCancelOrder" resultMap="store_cancel">
+        SELECT <include refid="store_cancel" />
+        FROM offerservice,service,`order`,cancel,`user`
+        WHERE offerservice.kind=serid AND offerservice.store_id=#{storeId}
+        AND `order`.service_id=offerserviceid
+        AND cancel.order_id=orderid
+        AND userid=cancel.user_id
+        AND cancel.`status`=0 ORDER BY cancel.cancel_time DESC
     </select>
 
     <select id="getUserRequires" resultMap="user_requires">

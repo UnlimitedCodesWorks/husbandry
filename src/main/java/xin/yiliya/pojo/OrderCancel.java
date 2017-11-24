@@ -16,11 +16,15 @@ public class OrderCancel {
 
     private Date startTime;
 
+    private Service service;
+
     private OfferService offerService;
 
     private StoreInfo storeInfo;
 
     private Cancel cancel;
+
+    private User user;
 
     public Integer getOrderid() {
         return orderid;
@@ -92,5 +96,21 @@ public class OrderCancel {
 
     public void setCancel(Cancel cancel) {
         this.cancel = cancel;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

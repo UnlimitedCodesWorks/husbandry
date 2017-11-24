@@ -39,6 +39,15 @@ public interface OrderService {
     //参数：商户id    分页显示
     public PageInfo<OrderSimple> getAllStoreHandleOrder(Integer storeId, int currentPage, int pageSize);
 
+    //获取商户待确认订单
+    //参数：商户id    分页显示
+    public PageInfo<OrderSimple> getAllStoreSureOrder(Integer storeId, int currentPage, int pageSize);
+
+    //获取商户待退款订单
+    //参数：商户id    分页显示
+    public PageInfo<OrderCancel> getAllStoreCancelOrder(Integer storeId, int currentPage, int pageSize);
+
     //获取每个订单用户的需求
     public List<Require> getUserRequires(Integer orderId);
+
 }

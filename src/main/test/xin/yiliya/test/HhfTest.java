@@ -12,7 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.RequireMapper;
 import xin.yiliya.exception.ImageFormatException;
-import xin.yiliya.pojo.*;
+import xin.yiliya.pojo.OrderCancel;
+import xin.yiliya.pojo.OrderSimple;
+import xin.yiliya.pojo.ServicePeople;
+import xin.yiliya.pojo.ServicePeopleAdd;
 import xin.yiliya.service.*;
 import xin.yiliya.tool.AliOssTool;
 
@@ -20,9 +23,8 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
@@ -56,8 +58,11 @@ public class HhfTest {
     @Autowired
     RequireMapper requireMapper;
 
+    @Autowired
+    ServicePeopleService servicePeopleService;
+
     @Test
-    public void test() throws IOException, ImageFormatException {
+    public void test() throws IOException, ImageFormatException, InvocationTargetException, IllegalAccessException {
         //管理员登录
 //        Admin admin=adminService.AdminLogin("123456","123456");
 //        System.out.println(JSON.toJSONString(admin,true));
@@ -183,6 +188,14 @@ public class HhfTest {
 //        PageInfo<OrderSimple> info=orderService.getAllStoreHandleOrder(1,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
+        //获取商家待确认订单
+//        PageInfo<OrderSimple> info=orderService.getAllStoreSureOrder(5,1,3);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取商户待退款订单
+//        PageInfo<OrderCancel> info=orderService.getAllStoreCancelOrder(5,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
         //获取商家订单需求
 //        List<Require> requires=orderService.getUserRequires(10);
 //        System.out.print(JSON.toJSONString(requires,true));
@@ -194,5 +207,39 @@ public class HhfTest {
         //厂商所有服务的成交量总和(不包括退款)
 //        int n=orderService.getStoreServiceFinish(2);
 //        System.out.print(n);
+
+        //创建服务人员模板
+//        File file1 = new File("src/main/test/test.jpg");
+//        FileInputStream input1 = new FileInputStream(file1);
+//        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+//
+//        ServicePeopleAdd servicePeopleAdd=new ServicePeopleAdd();
+//        servicePeopleAdd.setStoreId(1);
+//        servicePeopleAdd.setSphead(multipartFile1);
+//        servicePeopleAdd.setSpName("HHF");
+//        servicePeopleAdd.setSpSex("男");
+//        servicePeopleAdd.setSpBirth(new Date());
+//        servicePeopleAdd.setSpHeight("189");
+//        servicePeopleAdd.setSpWeight("80");
+//        servicePeopleAdd.setSpNation("汉族");
+//        servicePeopleAdd.setSpRemark("有很多时间");
+//        servicePeopleAdd.setSpTemplatename("我是模板1");
+//        servicePeopleAdd.setSpPhone("15068829980");
+//        servicePeopleAdd.setSpOtherinfo("我是滨江人");
+//
+//        Integer n=servicePeopleService.addServicePeopleTemplate(servicePeopleAdd);
+//        System.out.print(n);
+
+        //获取供应商服务人员模板  返回服务人员模板详情bean   可分页
+//        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //根据服务人员末id查询单个服务人员模板bean
+//        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(14);
+//        System.out.print(JSON.toJSONString(servicePeople,true));
+
+        //删除服务人员模板
+//        boolean b=servicePeopleService.deleteServicePeopleTemplate(14);
+//        System.out.print(b);
     }
 }

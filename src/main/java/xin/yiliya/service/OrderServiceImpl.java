@@ -66,8 +66,21 @@ public class OrderServiceImpl implements OrderService{
         return pageInfo;
      }
 
+    public PageInfo<OrderSimple> getAllStoreSureOrder(Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OrderSimple> list=orderMapper.getAllStoreSureOrder(storeId);
+        return new PageInfo<OrderSimple>(list);
+    }
+
+    public PageInfo<OrderCancel> getAllStoreCancelOrder(Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OrderCancel> list=orderMapper.getAllStoreCancelOrder(storeId);
+        return new PageInfo<OrderCancel>(list);
+    }
+
     public List<Require> getUserRequires(Integer orderId) {
         List<Require> requires=orderMapper.getUserRequires(orderId);
         return requires;
     }
+
 }

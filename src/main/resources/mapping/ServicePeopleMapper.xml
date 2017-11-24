@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.ServicePeopleMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.ServicePeople">
+    <id column="servicepeopleid" jdbcType="INTEGER" property="servicepeopleid" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="sp_head" jdbcType="VARCHAR" property="spHead" />
+    <result column="sp_name" jdbcType="VARCHAR" property="spName" />
+    <result column="sp_sex" jdbcType="VARCHAR" property="spSex" />
+    <result column="sp_birth" jdbcType="TIMESTAMP" property="spBirth" />
+    <result column="sp_height" jdbcType="VARCHAR" property="spHeight" />
+    <result column="sp_weight" jdbcType="VARCHAR" property="spWeight" />
+    <result column="sp_nation" jdbcType="VARCHAR" property="spNation" />
+    <result column="sp_templatename" jdbcType="VARCHAR" property="spTemplatename" />
+    <result column="sp_phone" jdbcType="VARCHAR" property="spPhone" />
+    <result column="sp_remark" jdbcType="VARCHAR" property="spRemark" />
+    <result column="sp_otherinfo" jdbcType="VARCHAR" property="spOtherinfo" />
+    <result column="up_time" jdbcType="TIMESTAMP" property="upTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    servicepeopleid, store_id, sp_head, sp_name, sp_sex, sp_birth, sp_height, sp_weight, 
+    sp_nation,sp_templatename, sp_phone, sp_remark,sp_otherinfo,up_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from servicepeople
+    where servicepeopleid = #{servicepeopleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from servicepeople
+    where servicepeopleid = #{servicepeopleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.ServicePeople">
+    insert into servicepeople (servicepeopleid, store_id, sp_head, 
+      sp_name, sp_sex, sp_birth, 
+      sp_height, sp_weight, sp_nation,sp_templatename,
+      sp_phone, sp_remark,sp_otherinfo, up_time)
+    values (#{servicepeopleid,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{spHead,jdbcType=VARCHAR}, 
+      #{spName,jdbcType=VARCHAR}, #{spSex,jdbcType=VARCHAR}, #{spBirth,jdbcType=TIMESTAMP}, 
+      #{spHeight,jdbcType=VARCHAR}, #{spWeight,jdbcType=VARCHAR}, #{spNation,jdbcType=VARCHAR},#{spTemplatename},
+      #{spPhone,jdbcType=VARCHAR}, #{spRemark},#{spOtherinfo,jdbcType=VARCHAR},#{upTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" parameterType="xin.yiliya.pojo.ServicePeople" keyProperty="servicepeopleid">
+    insert into servicepeople
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="servicepeopleid != null">
+        servicepeopleid,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="spHead != null">
+        sp_head,
+      </if>
+      <if test="spName != null">
+        sp_name,
+      </if>
+      <if test="spSex != null">
+        sp_sex,
+      </if>
+      <if test="spBirth != null">
+        sp_birth,
+      </if>
+      <if test="spHeight != null">
+        sp_height,
+      </if>
+      <if test="spWeight != null">
+        sp_weight,
+      </if>
+      <if test="spNation != null">
+        sp_nation,
+      </if>
+      <if test="spTemplatename != null">
+        sp_templatename,
+      </if>
+      <if test="spPhone != null">
+        sp_phone,
+      </if>
+      <if test="spRemark != null">
+        sp_remark,
+      </if>
+      <if test="spOtherinfo != null">
+        sp_otherinfo,
+      </if>
+      <if test="upTime != null">
+        up_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="servicepeopleid != null">
+        #{servicepeopleid,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="spHead != null">
+        #{spHead,jdbcType=VARCHAR},
+      </if>
+      <if test="spName != null">
+        #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="spSex != null">
+        #{spSex,jdbcType=VARCHAR},
+      </if>
+      <if test="spBirth != null">
+        #{spBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spHeight != null">
+        #{spHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="spWeight != null">
+        #{spWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="spNation != null">
+        #{spNation,jdbcType=VARCHAR},
+      </if>
+      <if test="spTemplatename != null">
+        #{spTemplatename,jdbcType=VARCHAR},
+      </if>
+      <if test="spPhone != null">
+        #{spPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="spRemark != null">
+        #{spRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="spOtherinfo != null">
+        #{spOtherinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.yiliya.pojo.ServicePeople">
+    update servicepeople
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="spHead != null">
+        sp_head = #{spHead,jdbcType=VARCHAR},
+      </if>
+      <if test="spName != null">
+        sp_name = #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="spSex != null">
+        sp_sex = #{spSex,jdbcType=VARCHAR},
+      </if>
+      <if test="spBirth != null">
+        sp_birth = #{spBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spHeight != null">
+        sp_height = #{spHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="spWeight != null">
+        sp_weight = #{spWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="spNation != null">
+        sp_nation = #{spNation,jdbcType=VARCHAR},
+      </if>
+      <if test="spTemplatename != null">
+        sp_templatename = #{spTemplatename,jdbcType=VARCHAR},
+      </if>
+      <if test="spPhone != null">
+        sp_phone = #{spPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="spRemark != null">
+        sp_remark = #{spRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="spOtherinfo != null">
+        sp_otherinfo = #{spOtherinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null">
+        time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where servicepeopleid = #{servicepeopleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.ServicePeople">
+    update servicepeople
+    set store_id = #{storeId,jdbcType=INTEGER},
+      sp_head = #{spHead,jdbcType=VARCHAR},
+      sp_name = #{spName,jdbcType=VARCHAR},
+      sp_sex = #{spSex,jdbcType=VARCHAR},
+      sp_birth = #{spBirth,jdbcType=TIMESTAMP},
+      sp_height = #{spHeight,jdbcType=VARCHAR},
+      sp_weight = #{spWeight,jdbcType=VARCHAR},
+      sp_nation = #{spNation,jdbcType=VARCHAR},
+      sp_templatename=#{spTemplatename,jdbcType=VARCHAR},
+      sp_phone = #{spPhone,jdbcType=VARCHAR},
+      sp_remark=#{spRemark,jdbcType=VARCHAR}
+      sp_otherinfo = #{spOtherinfo,jdbcType=VARCHAR},
+      up_time = #{upTime,jdbcType=TIMESTAMP}
+    where servicepeopleid = #{servicepeopleid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllServicePeopleTemplateByStoreId" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT * FROM servicepeople WHERE store_id=#{storeId}
+  </select>
+
+  <select id="getServicePeopleHeadImg" resultType="String">
+    SELECT sp_head from servicepeople WHERE servicepeopleid=#{servicePeopleId}
+  </select>
+
+</mapper>
