@@ -52,5 +52,7 @@ public interface OfferServiceService {
     //返回单个模板详细信息Bean
     OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId);
 
-
+    //根据城市和所选服务类别匹配对应服务商的服务
+    //返回多个服务简单信息Bean
+    PageInfo<OfferServiceSimple> getServicesByCityAndKind(Integer serviceKind,Integer ciid);
 }

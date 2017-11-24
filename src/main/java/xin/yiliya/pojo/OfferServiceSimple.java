@@ -19,6 +19,46 @@ public class OfferServiceSimple {
 
     private String status;
 
+    private String price;
+
+    private String marketPrice;
+
+    private Boolean priceJudge;
+
+    private Store store;
+
+    public String getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(String marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public Boolean getPriceJudge() {
+        return priceJudge;
+    }
+
+    public void setPriceJudge(Boolean priceJudge) {
+        this.priceJudge = priceJudge;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public String getStatus() {
         return status;
     }
