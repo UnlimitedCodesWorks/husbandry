@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.ConcernStoreMapper">
+  <delete id="deleteByPrimaryKey" parameterType="xin.yiliya.pojo.ConcernStoreKey">
+    delete from concernstore
+    where store_id = #{storeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+    <select id="concernStoreJudgement" resultType="int" parameterType="xin.yiliya.pojo.ConcernStoreKey">
+      SELECT count(*)
+      FROM concernstore
+      WHERE store_id = #{storeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="xin.yiliya.pojo.ConcernStore">
+    insert into concernstore (store_id, user_id, time
+      )
+    values (#{storeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.ConcernStore">
+    insert into concernstore
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

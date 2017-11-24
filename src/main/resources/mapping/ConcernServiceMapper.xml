@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.ConcernServiceMapper">
+  <delete id="deleteByPrimaryKey" parameterType="xin.yiliya.pojo.ConcernServiceKey">
+    delete from concernservice
+    where service_id = #{serviceId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <select id="concernServiceJudgement" resultType="int" parameterType="xin.yiliya.pojo.ConcernServiceKey">
+    SELECT count(*)
+    FROM concernservice
+    WHERE service_id = #{serviceId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.ConcernService">
+    insert into concernservice (service_id, user_id, time
+      )
+    values (#{serviceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.ConcernService" >
+    insert into concernservice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
