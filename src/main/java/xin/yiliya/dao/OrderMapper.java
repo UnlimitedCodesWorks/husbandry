@@ -1,14 +1,16 @@
 package xin.yiliya.dao;
 
 import org.springframework.stereotype.Repository;
-import xin.yiliya.pojo.Order;
-import xin.yiliya.pojo.OrderCancel;
-import xin.yiliya.pojo.OrderShow;
+import xin.yiliya.pojo.*;
 
 import java.util.List;
 
 @Repository
 public interface OrderMapper {
+
+    Integer getServiceTypeFinish(int serid);
+
+    Integer getStoreServiceFinish(int storeId);
 
     List<OrderShow> getAllUserOrder(Integer userId);
 
@@ -19,5 +21,9 @@ public interface OrderMapper {
     List<OrderShow> getAllUserAssessOrder(Integer userId);
 
     List<OrderCancel> getAllUserCancelOrder(Integer userId);
+
+    List<OrderSimple> getAllStoreHandleOrder(Integer storeId);
+
+    List<Require> getUserRequires(Integer orderId);
 
 }

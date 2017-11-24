@@ -107,19 +107,19 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(allInfo,true));
 
         //获取客户全部订单
-//        PageInfo<OrderShow> info=orderService.getAllUserOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserOrder(15,2,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待派遣订单
-//        PageInfo<OrderShow> info=orderService.getAllUserSendOrder(15,1,1);
+//        PageInfo<OrderShow> info=orderService.getAllUserSendOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待确认订单
-//        PageInfo<Order> info=orderService.getAllUserSureOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserSureOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待评价订单
-//        PageInfo<Order> info=orderService.getAllUserAssessOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserAssessOrder(15,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户关注的服务
@@ -178,5 +178,21 @@ public class HhfTest {
         //确认订单后将问题，选中的答案都插入require表
 //        Boolean b=requireService.addRequires(integer,requires);
 //        System.out.print(b);
+
+        //获取商家待处理订单
+//        PageInfo<OrderSimple> info=orderService.getAllStoreHandleOrder(1,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //获取商家订单需求
+//        List<Require> requires=orderService.getUserRequires(10);
+//        System.out.print(JSON.toJSONString(requires,true));
+
+        //某服务类型服务订单完成的次数(不包括退款)
+//        int n=orderService.getServiceTypeFinish(3);
+//        System.out.print(n);
+
+        //厂商所有服务的成交量总和(不包括退款)
+//        int n=orderService.getStoreServiceFinish(2);
+//        System.out.print(n);
     }
 }
