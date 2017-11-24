@@ -1,5 +1,6 @@
 package xin.yiliya.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.Cities;
 import xin.yiliya.pojo.OfferService;
@@ -31,5 +32,7 @@ public interface OfferServiceMapper {
     List<Cities> getCitiesByServiceId(Integer serviceId);
 
     List<OfferServiceSimple> getAllUserConcernServices(Integer userId);
+
+    List<OfferServiceSimple> getServicesByCityAndKind(@Param(value = "kind") Integer serviceKind,@Param(value = "ciid") Integer ciid);
 
 }

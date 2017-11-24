@@ -27,6 +27,16 @@ public class OfferServiceSimple {
 
     private Store store;
 
+    private Integer markNum;
+
+    public Integer getMarkNum() {
+        return markNum;
+    }
+
+    public void setMarkNum(Integer markNum) {
+        this.markNum = markNum;
+    }
+
     public String getMarketPrice() {
         return marketPrice;
     }

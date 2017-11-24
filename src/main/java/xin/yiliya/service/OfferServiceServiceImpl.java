@@ -11,8 +11,11 @@ import xin.yiliya.dao.*;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
 import xin.yiliya.tool.GradeJudge;
+import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +48,9 @@ public class OfferServiceServiceImpl implements OfferServiceService {
 
     @Resource
     private EvaluateServiceMapper evaluateServiceMapper;
+
+    @Resource
+    private OrderService orderService;
 
     public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
@@ -218,6 +224,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
         offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0,1).getList().size());
         offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
+        offerServiceDetail.setOrderNum(orderService.getServiceTypeFinish(serviceId));
         return offerServiceDetail;
     }
 
@@ -225,6 +232,75 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         OfferServiceTemplate offerServiceTemplate = offerServiceTemplateMapper.selectByPrimaryKey(templateId);
         offerServiceTemplate.setOfferServiceDetail(getOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));
         return offerServiceTemplate;
+    }
+
+    public PageInfo<OfferServiceSimple> getServicesByCityAndKind(
+            Integer serviceKind, Integer ciid, int schema,int currentPage,int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OfferServiceSimple> list = null;
+        switch (schema){
+            case Rank.PRICE_ASC :
+                PageHelper.orderBy("price");
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                break;
+            case Rank.PRICE_DESC :
+                PageHelper.orderBy("price desc");
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                break;
+            case Rank.GRADE_ASC :
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()>o2.getGrade()) return 1;
+                        else if(o1.getGrade()<o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.GRADE_DESC :
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()<o2.getGrade()) return 1;
+                        else if(o1.getGrade()>o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.SALES_ASC :
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getMarkNum()>o2.getMarkNum()) return 1;
+                        else if(o1.getMarkNum()<o2.getMarkNum()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+            case Rank.SALES_DESC :
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getMarkNum()<o2.getMarkNum()) return 1;
+                        else if(o1.getMarkNum()>o2.getMarkNum()) return -1;
+                        return 0;
+                    }
+                });
+                break;
+        }
+        return new PageInfo<OfferServiceSimple>(list);
     }
 
 }

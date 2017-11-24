@@ -262,5 +262,34 @@
     kind=service.serid AND
     user_id=#{userId} ORDER BY update_time DESC
   </select>
+  <resultMap id="getServicesByCityAndKind" type="xin.yiliya.pojo.OfferServiceSimple">
+    <id property="offerServiceId" column="offerserviceid" />
+    <result property="serviceName" column="service_name" />
+    <result property="serviceImg" column="service_img" />
+    <result property="price" column="price" />
+    <association property="store" column="store_id" javaType="xin.yiliya.pojo.Store" >
+      <id property="storeid" column="storeid" />
+      <result property="storeName" column="store_name" />
+    </association>
+  </resultMap>
+  <select id="getServicesByCityAndKind" resultMap="getServicesByCityAndKind">
+    SELECT
+	offerserviceid,
+	service_name,
+	service_img,
+	price,
+	store_id,
+	storeid,
+	store_name
+    FROM
+	offerservice,
+	servicespots,
+	store
+    WHERE
+	servicespots.offerservice_id = offerservice.offerserviceid
+    AND offerservice.store_id = store.storeid
+    AND kind = #{kind,jdbcType=INTEGER}
+    AND city_id = #{ciid,jdbcType=INTEGER}
+  </select>
 
 </mapper>
