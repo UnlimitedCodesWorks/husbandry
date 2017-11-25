@@ -3,10 +3,7 @@ package xin.yiliya.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.*;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
@@ -157,6 +154,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             offerServiceMapper.updateByPrimaryKeySelective(offerService);
             return true;
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -178,13 +176,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             for (String link : links){
                 aliOssTool.deleteFileByLink(link);
             }
-            serviceSpotsMapper.deleteByServiceId(serviceId);
-            serviceSpecialMapper.deleteByServiceId(serviceId);
-            evaluateServiceMapper.deleteByServiceIdCascade(serviceId);
-            evaluateServiceMapper.deleteByServiceId(serviceId);
-            concernServiceMapper.deleteByServiceId(serviceId);
-            feedbackMapper.deleteByServiceId(serviceId);
-            complainMapper.deleteByserviceId(serviceId);
             offerServiceMapper.deleteByPrimaryKey(serviceId);
             return true;
        }catch (Exception e){

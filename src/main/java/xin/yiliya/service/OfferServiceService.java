@@ -26,7 +26,6 @@ public interface OfferServiceService {
 
     //删除一个服务
     //返回：删除服务是否成功的布尔值
-    //待补充的接口
     Boolean deleteService(Integer serviceId);
 
     //删除一个服务模板
