@@ -1,6 +1,7 @@
 package xin.yiliya.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.*;
 
@@ -37,4 +38,13 @@ public interface OrderMapper {
 
     Integer userSureToOrder(int orderId);
 
+    Integer cancelCount(int storeId);
+
+    Integer handleCount(int storeId);
+
+    Integer sureCount(int storeId);
+
+    Order getOrderByOrderId(Integer orderId);
+
+    Integer updateOrder(Order order);
 }

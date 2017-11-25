@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yiliya.dao.OrderMapper">
+
+    <resultMap id="Base" type="xin.yiliya.pojo.Order">
+        <id property="orderid" column="orderid" />
+        <result property="orderNumber" column="order_number" />
+        <result property="serviceId" column="service_id" />
+        <result property="userId" column="user_id" />
+        <result property="status" column="status" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+
     <resultMap id="Base_1" type="xin.yiliya.pojo.OrderShow">
         <id property="orderid" column="orderid" />
         <result property="orderNumber" column="order_number" />
@@ -270,4 +281,64 @@
         UPDATE `order` SET `status`=2 WHERE orderid=#{orderId}
     </update>
 
+    <select id="cancelCount" resultType="Integer">
+        SELECT COUNT(*) FROM offerservice,`order`
+        WHERE offerservice.store_id=#{storeId}
+        AND service_id=offerserviceid
+        AND orderid IN(SELECT order_id FROM cancel)
+    </select>
+
+    <select id="handleCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=0
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        AND store_id=#{storeId} ORDER BY start_time ASC
+    </select>
+
+    <select id="sureCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=1
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        AND store_id=#{storeId} ORDER BY start_time ASC
+    </select>
+
+    <select id="getOrderByOrderId" parameterType="Integer" resultMap="Base">
+        SELECT * FROM `order` WHERE orderid=#{orderId}
+    </select>
+
+    <update id="updateOrder" parameterType="xin.yiliya.pojo.Order">
+        update `order`
+        <set>
+            <if test="orderid != null">
+                orderid = #{orderid,jdbcType=INTEGER},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                service_id = #{serviceId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where orderid = #{orderid,jdbcType=INTEGER}
+    </update>
 </mapper>

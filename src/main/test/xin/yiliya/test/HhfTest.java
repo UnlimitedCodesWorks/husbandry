@@ -262,5 +262,28 @@ public class HhfTest {
         //客户确认订单
 //        Boolean b=orderService.userSureToOrder(1);
 //        System.out.print(b);
+
+        //商户带退款数量
+//        int n=orderService.cancelCount(5);
+//        System.out.print(n);
+
+        //商户待处理订单数量
+//        int n=orderService.handleCount(1);
+//        System.out.print(n);
+
+        //商户待确认订单数量
+//        int n=orderService.sureCount(1);
+//        System.out.print(n);
+
+        //根据服务人员名字显示模板
+//        ServicePeople servicePeople=servicePeopleService.getServicePeople("HHF");
+//        System.out.print(JSON.toJSONString(servicePeople,true));
+
+        //供应商派遣服务人员
+//        OrderPeople orderPeople=new OrderPeople();
+//        orderPeople.setOrderId(11);
+//        orderPeople.setSpId(15);
+//        int n=orderService.dispatcheServicePeople(orderPeople);
+//        System.out.print(n);
     }
 }

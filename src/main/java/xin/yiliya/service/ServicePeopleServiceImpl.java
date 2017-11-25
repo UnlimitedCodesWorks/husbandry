@@ -76,4 +76,8 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
             return false;
         }
     }
+
+    public ServicePeople getServicePeople(String spName) {
+        return servicePeopleMapper.getServicePeople(spName);
+    }
 }

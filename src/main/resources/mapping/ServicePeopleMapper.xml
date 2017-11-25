@@ -203,4 +203,8 @@
     SELECT sp_head from servicepeople WHERE servicepeopleid=#{servicePeopleId}
   </select>
 
+  <select id="getServicePeople" resultMap="BaseResultMap" parameterType="String" >
+    SELECT * from servicepeople WHERE sp_name=#{spName}
+  </select>
+
 </mapper>

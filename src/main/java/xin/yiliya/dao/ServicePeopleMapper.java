@@ -22,4 +22,6 @@ public interface ServicePeopleMapper {
     List<ServicePeople> getAllServicePeopleTemplateByStoreId(Integer storeId);
 
     String getServicePeopleHeadImg(Integer servicePeopleId);
+
+    ServicePeople getServicePeople(String spName);
 }

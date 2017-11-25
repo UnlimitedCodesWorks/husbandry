@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
+import xin.yiliya.dao.OrderPeopleMapper;
 import xin.yiliya.pojo.*;
 
 import java.util.Date;
@@ -16,6 +17,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderMapper orderMapper;
+
+    @Autowired
+    OrderPeopleMapper orderPeopleMapper;
 
     public Integer getServiceTypeFinish(int serid){
         return orderMapper.getServiceTypeFinish(serid);
@@ -113,5 +117,26 @@ public class OrderServiceImpl implements OrderService{
         }catch (Exception e){
             return false;
         }
+    }
+
+    public Integer cancelCount(Integer storeId) {
+        return orderMapper.cancelCount(storeId);
+    }
+
+    public Integer handleCount(Integer storeId) {
+        return orderMapper.handleCount(storeId);
+    }
+
+    public Integer sureCount(Integer storeId) {
+        return orderMapper.sureCount(storeId);
+    }
+
+    public Integer dispatcheServicePeople(OrderPeople orderPeople) {
+        Order order=orderMapper.getOrderByOrderId(orderPeople.getOrderId());
+        order.setStatus(1);
+        order.setEndTime(new Date());
+        orderMapper.updateOrder(order);
+        orderPeopleMapper.insertSelective(orderPeople);
+        return orderPeople.getOrderpeopleid();
     }
 }

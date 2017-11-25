@@ -48,6 +48,15 @@ public interface OrderService {
     //参数：商户id    分页显示
     public PageInfo<OrderCancel> getAllStoreCancelOrder(Integer storeId, int currentPage, int pageSize);
 
+    //商户待退款订单数量
+    public Integer cancelCount(Integer storeId);
+
+    //商户待处理订单数量
+    public Integer handleCount(Integer storeId);
+
+    //商户待确认订单数量
+    public Integer sureCount(Integer storeId);
+
     //获取每个订单用户的需求
     public List<Require> getUserRequires(Integer orderId);
 
@@ -60,7 +69,7 @@ public interface OrderService {
     //客户确认订单
     public Boolean userSureToOrder(int orderId);
 
-    //客户删除订单
-
+    //商户派遣服务人员
+    public Integer dispatcheServicePeople(OrderPeople orderPeople);
 
 }

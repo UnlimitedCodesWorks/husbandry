@@ -29,4 +29,6 @@ public interface ServicePeopleService {
     //返回：修改服务人员模板是否成功的布尔值
     public Boolean updateServicePeopleTemlate(ServicePeopleUpdate servicePeopleUpdate);
 
+    //根据服务人员名字显示模板
+    public ServicePeople getServicePeople(String spName);
 }
