@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.ComplainMapper">
+  <update id="updateReadStautsById" parameterType="java.lang.Integer">
+    UPDATE complain
+    SET store_read = 1
+    WHERE complainid = #{complainId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from complain
+    where complainid = #{complainid,jdbcType=INTEGER}
+  </delete>
+  <resultMap id="getAllComplainByStoreId" type="xin.yiliya.pojo.ComplainSimple">
+    <id property="complainid" column="complainid" />
+    <result property="status" column="complain_status" />
+    <result property="reason" column="reason" />
+    <result property="time" column="time" />
+    <association property="user" column="user_id" javaType="xin.yiliya.pojo.User" >
+      <id property="userid" column="userid" />
+      <result property="userName" column="user_name" />
+    </association>
+    <association property="service" column="service_id" javaType="xin.yiliya.pojo.OfferService">
+      <id property="offerserviceid" column="offerserviceid" />
+      <result property="serviceName" column="service_name" />
+    </association>
+  </resultMap>
+  <select id="getAllComplainByStoreId" resultMap="getAllComplainByStoreId" parameterType="java.lang.Integer">
+    SELECT
+	complainid,complain.`status` as complain_status,reason,time,
+	user_id,userid,user_name,service_id,offerserviceid,service_name
+    FROM
+	complain,offerservice,`user`
+    WHERE
+	complain.service_id = offerservice.offerserviceid
+    AND complain.user_id = `user` .userid
+    AND store_id = #{storeId,jdbcType=INTEGER}
+    ORDER BY complain.time desc
+  </select>
+  <select id="getUnreadNumByStoreId" resultType="int" parameterType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM complain,offerservice
+    WHERE complain.service_id = offerservice.offerserviceid
+    AND store_id = #{storeId,jdbcType=INTEGER}
+    AND store_read = 0
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.Complain">
+    insert into complain (complainid, service_id, user_id, 
+      time, status, store_read, 
+      reason)
+    values (#{complainid,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{storeRead,jdbcType=INTEGER}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.Complain" useGeneratedKeys="true" keyProperty="complainid">
+    insert into complain
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="complainid != null">
+        complainid,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="storeRead != null">
+        store_read,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="complainid != null">
+        #{complainid,jdbcType=INTEGER},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="storeRead != null">
+        #{storeRead,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

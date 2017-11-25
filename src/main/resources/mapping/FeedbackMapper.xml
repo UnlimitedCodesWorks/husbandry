@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.FeedbackMapper">
+  <update id="updateReadStautsById" parameterType="java.lang.Integer">
+    UPDATE feedback
+    SET user_read = 1
+    WHERE feedbackid = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from feedback
+    where feedbackid = #{feedbackid,jdbcType=INTEGER}
+  </delete>
+  <resultMap id="getAllFeedbackByUserId" type="xin.yiliya.pojo.FeedbackSimple">
+    <id property="feedbackid" column="feedbackid" />
+    <result property="time" column="time" />
+    <result property="content" column="content" />
+    <association property="service" column="service_id" javaType="xin.yiliya.pojo.OfferService">
+      <id property="offerserviceid" column="offerserviceid" />
+      <result property="serviceName" column="service_name" />
+    </association>
+  </resultMap>
+  <select id="getAllFeedbackByUserId" resultMap="getAllFeedbackByUserId" parameterType="java.lang.Integer">
+    SELECT
+    feedbackid,time,content,service_id,offerserviceid,service_name
+    FROM feedback,user,offerservice
+    WHERE feedback.user_id = user.userid
+    AND feedback.service_id = offerservice.offerserviceid
+    AND user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="getUnreadNumByUserId" resultType="int" parameterType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM feedback
+    WHERE user_id = #{userId,jdbcType=INTEGER}
+    AND user_read = 0
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.Feedback">
+    insert into feedback (feedbackid, service_id, user_id, 
+      time, user_read, content
+      )
+    values (#{feedbackid,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{userRead,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.Feedback" useGeneratedKeys="true" keyProperty="feedbackid">
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="feedbackid != null">
+        feedbackid,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="userRead != null">
+        user_read,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="feedbackid != null">
+        #{feedbackid,jdbcType=INTEGER},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userRead != null">
+        #{userRead,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
