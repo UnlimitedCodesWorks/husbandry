@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.StoreNewsMapper">
+  <update id="updateReadStautsById" parameterType="java.lang.Integer">
+    UPDATE storenews
+    SET read_status = 1
+    WHERE storenewsid = #{storeNewsId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from storenews
+    where storenewsid = #{storenewsid,jdbcType=INTEGER}
+  </delete>
+  <resultMap id="getAllNewsByStoreId" type="xin.yiliya.pojo.StoreNews">
+    <id property="storenewsid" column="storenewsid" />
+    <result property="content" column="content" />
+    <result property="time" column="time" />
+    <result property="type" column="type" />
+  </resultMap>
+  <select id="getAllNewsByStoreId" resultMap="getAllNewsByStoreId" parameterType="java.lang.Integer">
+    SELECT
+    storenewsid,content,time,type
+    FROM storenews
+    WHERE store_id = #{storeId,jdbcType=INTEGER}
+    ORDER BY time desc
+  </select>
+  <select id="getUnreadNumByStoreId" resultType="int" parameterType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM storenews
+    WHERE store_id = #{storeId,jdbcType=INTEGER}
+    AND read_status = 0
+  </select>
+  <insert id="insert" parameterType="xin.yiliya.pojo.StoreNews">
+    insert into storenews (storenewsid, store_id, type, 
+      time, read_status, content
+      )
+    values (#{storenewsid,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{readStatus,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.StoreNews" useGeneratedKeys="true" keyProperty="storenewsid">
+    insert into storenews
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storenewsid != null">
+        storenewsid,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="readStatus != null">
+        read_status,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storenewsid != null">
+        #{storenewsid,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readStatus != null">
+        #{readStatus,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

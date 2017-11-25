@@ -26,6 +26,7 @@
     WHERE feedback.user_id = user.userid
     AND feedback.service_id = offerservice.offerserviceid
     AND user_id = #{userId,jdbcType=INTEGER}
+    ORDER BY feedback.time DESC
   </select>
   <select id="getUnreadNumByUserId" resultType="int" parameterType="java.lang.Integer">
     SELECT COUNT(*)
