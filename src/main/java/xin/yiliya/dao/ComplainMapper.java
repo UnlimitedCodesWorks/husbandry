@@ -10,6 +10,8 @@ import java.util.List;
 public interface ComplainMapper {
     int deleteByPrimaryKey(Integer complainid);
 
+    int deleteByserviceId(Integer serviceId);
+
     int insert(Complain record);
 
     int insertSelective(Complain record);

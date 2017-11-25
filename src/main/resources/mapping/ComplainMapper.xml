@@ -10,6 +10,10 @@
     delete from complain
     where complainid = #{complainid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByserviceId" parameterType="java.lang.Integer">
+    DELETE FROM complain
+    WHERE service_id = #{serviceId,jdbcType=INTEGER}
+  </delete>
   <resultMap id="getAllComplainByStoreId" type="xin.yiliya.pojo.ComplainSimple">
     <id property="complainid" column="complainid" />
     <result property="status" column="complain_status" />

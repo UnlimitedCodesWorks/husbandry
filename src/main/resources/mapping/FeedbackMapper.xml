@@ -10,6 +10,10 @@
     delete from feedback
     where feedbackid = #{feedbackid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByServiceId" parameterType="java.lang.Integer">
+    DELETE FROM feedback
+    WHERE service_id = #{serviceId,jdbcType=INTEGER}
+  </delete>
   <resultMap id="getAllFeedbackByUserId" type="xin.yiliya.pojo.FeedbackSimple">
     <id property="feedbackid" column="feedbackid" />
     <result property="time" column="time" />

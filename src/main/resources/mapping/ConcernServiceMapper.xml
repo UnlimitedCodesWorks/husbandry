@@ -6,6 +6,10 @@
     where service_id = #{serviceId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByServiceId" parameterType="java.lang.Integer">
+    DELETE FROM concernservice
+    WHERE service_id = #{serviceId,jdbcType=INTEGER}
+  </delete>
   <select id="concernServiceJudgement" resultType="int" parameterType="xin.yiliya.pojo.ConcernServiceKey">
     SELECT count(*)
     FROM concernservice

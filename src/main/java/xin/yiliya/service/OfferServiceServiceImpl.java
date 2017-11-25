@@ -52,6 +52,15 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     private OrderService orderService;
 
+    @Resource
+    private ConcernServiceMapper concernServiceMapper;
+
+    @Resource
+    private FeedbackMapper feedbackMapper;
+
+    @Resource
+    private ComplainMapper complainMapper;
+
     public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
@@ -59,7 +68,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             offerService.setPublishTime(new Date());
             offerService.setUpdateTime(new Date());
             offerService.setServiceImg(aliOssTool.putImage(offerServiceAdd.getServiceImg(),"store"));
-            if(ifTemplate == false){
+            if(!ifTemplate){
                 //设置状态0为待审核
                 offerService.setStatus(0);
             }else{
@@ -173,6 +182,9 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             serviceSpecialMapper.deleteByServiceId(serviceId);
             evaluateServiceMapper.deleteByServiceIdCascade(serviceId);
             evaluateServiceMapper.deleteByServiceId(serviceId);
+            concernServiceMapper.deleteByServiceId(serviceId);
+            feedbackMapper.deleteByServiceId(serviceId);
+            complainMapper.deleteByserviceId(serviceId);
             offerServiceMapper.deleteByPrimaryKey(serviceId);
             return true;
        }catch (Exception e){

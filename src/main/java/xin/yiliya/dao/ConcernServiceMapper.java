@@ -8,6 +8,8 @@ import xin.yiliya.pojo.ConcernServiceKey;
 public interface ConcernServiceMapper {
     int deleteByPrimaryKey(ConcernServiceKey key);
 
+    int deleteByServiceId(Integer serviceId);
+
     int insert(ConcernService record);
 
     int insertSelective(ConcernService record);

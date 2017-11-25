@@ -29,4 +29,5 @@ public interface StoreService {
     //返回多个初始页面服务商bean
     List<StoreIndex> getAllHotStore(int schema);
 
+
 }
