@@ -28,4 +28,5 @@ public interface ServicePeopleService {
     //修改一个服务人员模板
     //返回：修改服务人员模板是否成功的布尔值
     public Boolean updateServicePeopleTemlate(ServicePeopleUpdate servicePeopleUpdate);
+
 }

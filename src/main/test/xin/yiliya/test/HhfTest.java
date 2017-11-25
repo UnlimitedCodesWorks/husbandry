@@ -12,10 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 import xin.yiliya.dao.RequireMapper;
 import xin.yiliya.exception.ImageFormatException;
-import xin.yiliya.pojo.OrderCancel;
-import xin.yiliya.pojo.OrderSimple;
-import xin.yiliya.pojo.ServicePeople;
-import xin.yiliya.pojo.ServicePeopleAdd;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.*;
 import xin.yiliya.tool.AliOssTool;
 
@@ -112,7 +109,7 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(allInfo,true));
 
         //获取客户全部订单
-//        PageInfo<OrderShow> info=orderService.getAllUserOrder(15,2,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserOrder(15,2,1);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待派遣订单
@@ -216,16 +213,16 @@ public class HhfTest {
 //        ServicePeopleAdd servicePeopleAdd=new ServicePeopleAdd();
 //        servicePeopleAdd.setStoreId(1);
 //        servicePeopleAdd.setSphead(multipartFile1);
-//        servicePeopleAdd.setSpName("HHF");
+//        servicePeopleAdd.setSpName("hhf");
 //        servicePeopleAdd.setSpSex("男");
 //        servicePeopleAdd.setSpBirth(new Date());
-//        servicePeopleAdd.setSpHeight("189");
-//        servicePeopleAdd.setSpWeight("80");
+//        servicePeopleAdd.setSpHeight("180");
+//        servicePeopleAdd.setSpWeight("75");
 //        servicePeopleAdd.setSpNation("汉族");
-//        servicePeopleAdd.setSpRemark("有很多时间");
-//        servicePeopleAdd.setSpTemplatename("我是模板1");
-//        servicePeopleAdd.setSpPhone("15068829980");
-//        servicePeopleAdd.setSpOtherinfo("我是滨江人");
+//        servicePeopleAdd.setSpRemark("没什么时间");
+//        servicePeopleAdd.setSpTemplatename("我是模板2");
+//        servicePeopleAdd.setSpPhone("15068829981");
+//        servicePeopleAdd.setSpOtherinfo("我是杭州人");
 //
 //        Integer n=servicePeopleService.addServicePeopleTemplate(servicePeopleAdd);
 //        System.out.print(n);
@@ -234,12 +231,36 @@ public class HhfTest {
 //        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
-        //根据服务人员末id查询单个服务人员模板bean
+        //根据服务人员模板id查询单个服务人员模板bean
 //        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(14);
 //        System.out.print(JSON.toJSONString(servicePeople,true));
 
         //删除服务人员模板
 //        boolean b=servicePeopleService.deleteServicePeopleTemplate(14);
+//        System.out.print(b);
+
+        //修改一个服务人员模板
+//        File file1 = new File("src/main/test/test.jpg");
+//        FileInputStream input1 = new FileInputStream(file1);
+//        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+//
+//        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
+
+        //客户撤销订单
+//        Cancel cancel=new Cancel();
+//        cancel.setUserId(15);
+//        cancel.setReason("这东西不好");
+//        cancel.setOrderId(1);
+//        Boolean b=orderService.userCancelToOrder(cancel);
+//        System.out.print(b);
+
+        //商户通过客户退款
+//        int [] orderId={1,2};
+//        Boolean b=orderService.storeSureCancelOrder(orderId);
+//        System.out.print(b);
+
+        //客户确认订单
+//        Boolean b=orderService.userSureToOrder(1);
 //        System.out.print(b);
     }
 }

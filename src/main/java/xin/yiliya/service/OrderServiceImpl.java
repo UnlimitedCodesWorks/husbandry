@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
 import xin.yiliya.pojo.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -83,4 +84,34 @@ public class OrderServiceImpl implements OrderService{
         return requires;
     }
 
+    public Boolean userCancelToOrder(Cancel cancel) {
+        try{
+            cancel.setStatus(0);
+            cancel.setCancelTime(new Date());
+            orderMapper.addUserOrderCancel(cancel);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean storeSureCancelOrder(int[] orderId) {
+        try{
+            for(int id:orderId){
+                orderMapper.storeUpdateCancelStatus(id);
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean userSureToOrder(int orderId) {
+        try{
+            orderMapper.userSureToOrder(orderId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

@@ -137,13 +137,17 @@
     <select id="getAllUserOrder" resultMap="Base_1">
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
-        AND store_id=storeid AND `order`.user_id=#{userId} ORDER BY start_time DESC
+        AND store_id=storeid
+        AND `order`.user_id=#{userId}
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        ORDER BY start_time DESC
     </select>
 
     <select id="getAllUserSendOrder" resultMap="Base_1">
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=0
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY start_time DESC
     </select>
 
@@ -151,6 +155,7 @@
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=1
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY end_time DESC
     </select>
 
@@ -158,6 +163,7 @@
        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=2
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY end_time DESC
     </select>
 
@@ -178,6 +184,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=0
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         AND store_id=#{storeId} ORDER BY start_time ASC
     </select>
 
@@ -188,6 +195,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=1
+        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         AND store_id=#{storeId} ORDER BY start_time ASC
     </select>
 
@@ -198,14 +206,68 @@
         AND `order`.service_id=offerserviceid
         AND cancel.order_id=orderid
         AND userid=cancel.user_id
-        AND cancel.`status`=0 ORDER BY cancel.cancel_time DESC
+        AND cancel.`status`=0 ORDER BY cancel.cancel_time ASC
     </select>
 
     <select id="getUserRequires" resultMap="user_requires">
         SELECT requireid,order_id,problem,contentid,content
         FROM `require`,requirecontent
         WHERE order_id=#{orderId}
-        AND requireid=require_id;
+        AND requireid=require_id
     </select>
+
+    <insert id="addUserOrderCancel" keyProperty="cancelid" useGeneratedKeys="true" parameterType="xin.yiliya.pojo.Cancel">
+        insert into cancel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cancelid != null">
+                cancelid,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="cancelTime != null">
+                cancel_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cancelid != null">
+                #{cancelid,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelTime != null">
+                #{cancelTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="storeUpdateCancelStatus">
+        update cancel
+        SET status=1
+        where order_id = #{orderId,jdbcType=INTEGER}
+    </update>
+
+    <update id="userSureToOrder">
+        UPDATE `order` SET `status`=2 WHERE orderid=#{orderId}
+    </update>
 
 </mapper>

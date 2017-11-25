@@ -1,5 +1,6 @@
 package xin.yiliya.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import xin.yiliya.pojo.*;
 
@@ -29,5 +30,11 @@ public interface OrderMapper {
     List<OrderCancel> getAllStoreCancelOrder(Integer storeId);
 
     List<Require> getUserRequires(Integer orderId);
+
+    Integer addUserOrderCancel(Cancel cancel);
+
+    Integer storeUpdateCancelStatus(int orderId);
+
+    Integer userSureToOrder(int orderId);
 
 }

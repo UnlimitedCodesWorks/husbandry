@@ -1,6 +1,7 @@
 package xin.yiliya.service;
 
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 import xin.yiliya.pojo.*;
 
@@ -49,5 +50,17 @@ public interface OrderService {
 
     //获取每个订单用户的需求
     public List<Require> getUserRequires(Integer orderId);
+
+    //客户撤销订单
+    public Boolean userCancelToOrder(Cancel cancel);
+
+    //商户批量通过客户退款
+    public Boolean storeSureCancelOrder(int [] orderId);
+
+    //客户确认订单
+    public Boolean userSureToOrder(int orderId);
+
+    //客户删除订单
+
 
 }

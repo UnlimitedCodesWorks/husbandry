@@ -1,5 +1,7 @@
 package xin.yiliya.pojo;
 
+import java.util.Date;
+
 public class Cancel {
 
     private Integer cancelid;
@@ -11,6 +13,8 @@ public class Cancel {
     private Integer status;
 
     private Integer orderId;
+
+    private Date cancelTime;
 
     public Integer getCancelid() {
         return cancelid;
@@ -50,5 +54,13 @@ public class Cancel {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Date getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(Date cancelTime) {
+        this.cancelTime = cancelTime;
     }
 }
