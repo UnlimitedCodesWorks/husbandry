@@ -60,7 +60,6 @@
             <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
             <result column="userId" jdbcType="INTEGER" property="userId" />
             <result column="reason" jdbcType="VARCHAR" property="reason" />
-            <result column="cancelStatus" jdbcType="INTEGER" property="status" />
             <result column="order_id" jdbcType="VARCHAR" property="orderId" />
         </association>
     </resultMap>
@@ -96,7 +95,6 @@
         <association property="cancel" javaType="xin.yiliya.pojo.Cancel">
             <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
             <result column="reason" jdbcType="VARCHAR" property="reason" />
-            <result column="cancel_state" jdbcType="INTEGER" property="status" />
         </association>
     </resultMap>
 
@@ -120,7 +118,7 @@
         orderid,order_number,service_id,`order`.user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
         offerservice.`status` AS state,storeid,store_name,cancelid,cancel.user_id AS userId,reason,
-        cancel.status AS cancelStatus,order_id
+        order_id
     </sql>
 
     <sql id="store_handle">
@@ -129,20 +127,20 @@
 
     <sql id="store_cancel">
         orderid,`order`.order_number,`order`.user_id,`order`.`status`,`order`.start_time,serkind,
-        `user`.user_name,cancelid,reason,cancel.`status` AS cancel_state
+        `user`.user_name,cancelid,reason
     </sql>
 
     <select id="getServiceTypeFinish" resultType="Integer">
-        SELECT COUNT(*) FROM `order`,offerservice
-        WHERE `order`.orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND `order`.service_id=offerserviceid AND kind=#{serid}
+        SELECT COUNT(*) FROM offerservice,`order`
+        WHERE kind=#{serid} AND `order`.service_id=offerserviceid
+        AND `order`.`status`=2
     </select>
 
     <select id="getStoreServiceFinish" resultType="Integer">
-        SELECT COUNT(*) FROM `order`,offerservice,store
-        WHERE `order`.orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND offerserviceid=`order`.service_id AND offerservice.store_id=storeid
-        AND storeid=#{storeId}
+        SELECT COUNT(*) FROM offerservice,`order`
+        WHERE offerservice.store_id=#{storeId}
+        AND `order`.service_id=offerserviceid
+        AND `order`.`status`=2
     </select>
 
     <select id="getAllUserOrder" resultMap="Base_1">
@@ -150,7 +148,7 @@
         WHERE service_id=offerserviceid
         AND store_id=storeid
         AND `order`.user_id=#{userId}
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
+        AND `order`.`status`!=3 AND `order`.`status`!=4
         ORDER BY start_time DESC
     </select>
 
@@ -158,7 +156,6 @@
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=0
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY start_time DESC
     </select>
 
@@ -166,7 +163,6 @@
         SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=1
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY end_time DESC
     </select>
 
@@ -174,7 +170,6 @@
        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=2
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
         ORDER BY end_time DESC
     </select>
 
@@ -195,8 +190,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=0
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND store_id=#{storeId} ORDER BY start_time ASC
+        AND store_id=#{storeId} ORDER BY start_time DESC
     </select>
 
     <select id="getAllStoreSureOrder" resultMap="store_handle">
@@ -206,8 +200,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=1
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND store_id=#{storeId} ORDER BY start_time ASC
+        AND store_id=#{storeId} ORDER BY start_time DESC
     </select>
 
     <select id="getAllStoreCancelOrder" resultMap="store_cancel">
@@ -217,7 +210,18 @@
         AND `order`.service_id=offerserviceid
         AND cancel.order_id=orderid
         AND userid=cancel.user_id
-        AND cancel.`status`=0 ORDER BY cancel.cancel_time ASC
+        AND `order`.`status`=3 ORDER BY cancel.cancel_time DESC
+    </select>
+
+    <select id="getAllStoreFinishOrder" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status` IN(2,4)
+        AND store_id=#{storeId}
+        ORDER BY end_time DESC
     </select>
 
     <select id="getUserRequires" resultMap="user_requires">
@@ -239,9 +243,6 @@
             <if test="reason != null">
                 reason,
             </if>
-            <if test="status != null">
-                status,
-            </if>
             <if test="orderId != null">
                 order_id,
             </if>
@@ -259,9 +260,6 @@
             <if test="reason != null">
                 #{reason,jdbcType=VARCHAR},
             </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
             <if test="orderId != null">
                 #{orderId,jdbcType=VARCHAR},
             </if>
@@ -271,10 +269,10 @@
         </trim>
     </insert>
 
-    <update id="storeUpdateCancelStatus">
-        update cancel
-        SET status=1
-        where order_id = #{orderId,jdbcType=INTEGER}
+    <update id="storeUpdateOrderCancelStatus">
+        update `order`
+        SET status=4
+        where orderid = #{orderId,jdbcType=INTEGER}
     </update>
 
     <update id="userSureToOrder">
@@ -282,10 +280,13 @@
     </update>
 
     <select id="cancelCount" resultType="Integer">
-        SELECT COUNT(*) FROM offerservice,`order`
-        WHERE offerservice.store_id=#{storeId}
-        AND service_id=offerserviceid
-        AND orderid IN(SELECT order_id FROM cancel)
+        SELECT COUNT(*)
+        FROM offerservice,service,`order`,cancel,`user`
+        WHERE offerservice.kind=serid AND offerservice.store_id=#{storeId}
+        AND `order`.service_id=offerserviceid
+        AND cancel.order_id=orderid
+        AND userid=cancel.user_id
+        AND `order`.`status`=3
     </select>
 
     <select id="handleCount" resultType="Integer">
@@ -295,8 +296,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=0
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND store_id=#{storeId} ORDER BY start_time ASC
+        AND store_id=#{storeId}
     </select>
 
     <select id="sureCount" resultType="Integer">
@@ -306,8 +306,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=1
-        AND orderid NOT IN(SELECT cancel.order_id FROM cancel)
-        AND store_id=#{storeId} ORDER BY start_time ASC
+        AND store_id=#{storeId}
     </select>
 
     <select id="getOrderByOrderId" parameterType="Integer" resultMap="Base">
@@ -341,4 +340,8 @@
         </set>
         where orderid = #{orderid,jdbcType=INTEGER}
     </update>
+    
+    <delete id="userDeleteOrder" parameterType="Integer">
+        DELETE FROM `order` WHERE `order`.orderid=#{orderId}
+    </delete>
 </mapper>

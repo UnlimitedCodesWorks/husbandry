@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class ServicePeopleUpdate {
 
-    private Integer servicePeopleId;
+    private Integer servicepeopleid;
 
     private Integer storeId;
 
@@ -34,12 +34,12 @@ public class ServicePeopleUpdate {
 
     private String spRemark;
 
-    public Integer getServicePeopleId() {
-        return servicePeopleId;
+    public Integer getServicepeopleid() {
+        return servicepeopleid;
     }
 
-    public void setServicePeopleId(Integer servicePeopleId) {
-        this.servicePeopleId = servicePeopleId;
+    public void setServicepeopleid(Integer servicepeopleid) {
+        this.servicepeopleid = servicepeopleid;
     }
 
     public Integer getStoreId() {

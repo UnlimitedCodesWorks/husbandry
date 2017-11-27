@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
 import xin.yiliya.dao.OrderPeopleMapper;
+import xin.yiliya.dao.ServicePeopleMapper;
 import xin.yiliya.pojo.*;
 
 import java.util.Date;
@@ -20,6 +21,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderPeopleMapper orderPeopleMapper;
+
+    @Autowired
+    ServicePeopleMapper servicePeopleMapper;
 
     public Integer getServiceTypeFinish(int serid){
         return orderMapper.getServiceTypeFinish(serid);
@@ -64,6 +68,43 @@ public class OrderServiceImpl implements OrderService{
         return pageInfo;
     }
 
+    public Boolean userCancelToOrder(Cancel cancel) {
+        try{
+            Order order=orderMapper.getOrderByOrderId(cancel.getOrderId());
+            order.setStatus(3);
+            cancel.setCancelTime(new Date());
+            orderMapper.addUserOrderCancel(cancel);
+            orderMapper.updateOrder(order);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public PageInfo<ServicePeople> getOrderServicePeople(Integer orderId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<ServicePeople> list=servicePeopleMapper.getServicePeopleByOrderId(orderId);
+        return new PageInfo<ServicePeople>(list);
+    }
+
+    public Boolean userDeleteOrder(Integer orderId) {
+        try{
+            orderMapper.userDeleteOrder(orderId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean userSureToOrder(int orderId) {
+        try{
+            orderMapper.userSureToOrder(orderId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public PageInfo<OrderSimple> getAllStoreHandleOrder(Integer storeId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OrderSimple> list=orderMapper.getAllStoreHandleOrder(storeId);
@@ -83,36 +124,22 @@ public class OrderServiceImpl implements OrderService{
         return new PageInfo<OrderCancel>(list);
     }
 
+    public PageInfo<OrderSimple> getAllStoreFinishOrder(Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OrderSimple> list=orderMapper.getAllStoreFinishOrder(storeId);
+        return new PageInfo<OrderSimple>(list);
+    }
+
     public List<Require> getUserRequires(Integer orderId) {
         List<Require> requires=orderMapper.getUserRequires(orderId);
         return requires;
     }
 
-    public Boolean userCancelToOrder(Cancel cancel) {
-        try{
-            cancel.setStatus(0);
-            cancel.setCancelTime(new Date());
-            orderMapper.addUserOrderCancel(cancel);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     public Boolean storeSureCancelOrder(int[] orderId) {
         try{
             for(int id:orderId){
-                orderMapper.storeUpdateCancelStatus(id);
+                orderMapper.storeUpdateOrderCancelStatus(id);
             }
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    public Boolean userSureToOrder(int orderId) {
-        try{
-            orderMapper.userSureToOrder(orderId);
             return true;
         }catch (Exception e){
             return false;

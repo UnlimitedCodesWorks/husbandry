@@ -11,7 +11,7 @@ import xin.yiliya.pojo.ServicePeopleUpdate;
 public interface ServicePeopleService {
 
     //添加一个服务人员模板
-    //返回：添加服务人员模板的id，若返回为0，则添加失败
+    //返回：添加服务人员的id，若返回为0，则添加失败
     public Integer addServicePeopleTemplate(ServicePeopleAdd servicePeopleAdd);
 
     //获取供应商服务人员模板

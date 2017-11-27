@@ -36,6 +36,28 @@ public interface OrderService {
     //参数：客户id    分页显示
     public PageInfo<OrderCancel> getAllUserCancelOrder(Integer userId, int currentPage, int pageSize);
 
+    //客户撤销订单
+    //返回：布尔值
+    public Boolean userCancelToOrder(Cancel cancel);
+
+    //客户查看服务进展
+    public PageInfo<ServicePeople> getOrderServicePeople(Integer orderId, int currentPage, int pageSize);
+
+    //客户删除订单
+    public Boolean userDeleteOrder(Integer orderId);
+
+    //客户确认订单
+    public Boolean userSureToOrder(int orderId);
+
+    //商户待退款订单数量
+    public Integer cancelCount(Integer storeId);
+
+    //商户待处理订单数量
+    public Integer handleCount(Integer storeId);
+
+    //商户待确认订单数量
+    public Integer sureCount(Integer storeId);
+
     //获取商户待处理订单
     //参数：商户id    分页显示
     public PageInfo<OrderSimple> getAllStoreHandleOrder(Integer storeId, int currentPage, int pageSize);
@@ -48,26 +70,15 @@ public interface OrderService {
     //参数：商户id    分页显示
     public PageInfo<OrderCancel> getAllStoreCancelOrder(Integer storeId, int currentPage, int pageSize);
 
-    //商户待退款订单数量
-    public Integer cancelCount(Integer storeId);
-
-    //商户待处理订单数量
-    public Integer handleCount(Integer storeId);
-
-    //商户待确认订单数量
-    public Integer sureCount(Integer storeId);
+    //获取商户已完成订单
+    //参数：商户id    分页显示
+    public PageInfo<OrderSimple> getAllStoreFinishOrder(Integer storeId, int currentPage, int pageSize);
 
     //获取每个订单用户的需求
     public List<Require> getUserRequires(Integer orderId);
 
-    //客户撤销订单
-    public Boolean userCancelToOrder(Cancel cancel);
-
     //商户批量通过客户退款
     public Boolean storeSureCancelOrder(int [] orderId);
-
-    //客户确认订单
-    public Boolean userSureToOrder(int orderId);
 
     //商户派遣服务人员
     public Integer dispatcheServicePeople(OrderPeople orderPeople);

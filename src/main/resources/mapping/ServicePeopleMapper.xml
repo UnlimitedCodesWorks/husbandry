@@ -207,4 +207,8 @@
     SELECT * from servicepeople WHERE sp_name=#{spName}
   </select>
 
+  <select id="getServicePeopleByOrderId" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT servicepeople.* FROM servicepeople,orderpeople WHERE sp_id=servicepeople.servicepeopleid AND order_id=#{orderId}
+  </select>
+
 </mapper>

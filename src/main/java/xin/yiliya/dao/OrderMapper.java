@@ -30,11 +30,13 @@ public interface OrderMapper {
 
     List<OrderCancel> getAllStoreCancelOrder(Integer storeId);
 
+    List<OrderSimple> getAllStoreFinishOrder(Integer storeId);
+
     List<Require> getUserRequires(Integer orderId);
 
     Integer addUserOrderCancel(Cancel cancel);
 
-    Integer storeUpdateCancelStatus(int orderId);
+    Integer storeUpdateOrderCancelStatus(int orderId);
 
     Integer userSureToOrder(int orderId);
 
@@ -47,4 +49,6 @@ public interface OrderMapper {
     Order getOrderByOrderId(Integer orderId);
 
     Integer updateOrder(Order order);
+
+    Integer userDeleteOrder(Integer orderId);
 }
