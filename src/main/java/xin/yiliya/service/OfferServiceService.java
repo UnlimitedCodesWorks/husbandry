@@ -69,7 +69,7 @@ public interface OfferServiceService {
     // 每个参数都有后缀DESC与ASC代表降序和升序排序,如Rank.GRADE_DESC表示按评分降序排序
     //返回多个服务简单信息Bean
     PageInfo<OfferServiceSimple> getServicesByInput(
-            String input,Integer ciid,int schema,int currentPage,int pageSize);
+            String input,Integer serviceKind,Integer ciid,int schema,int currentPage,int pageSize);
 
 
 }

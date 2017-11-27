@@ -231,7 +231,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0,1).getList().size());
         offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
         offerServiceDetail.setOrderNum(orderService.getServiceTypeFinish(serviceId));
-        if(serviceService.getServiceKindPrice(offerServiceDetail.getSerid())< Float.parseFloat(offerServiceDetail.getPrice())){
+        float marketPrice = serviceService.getServiceKindPrice(offerServiceDetail.getSerid());
+        if(marketPrice< Float.parseFloat(offerServiceDetail.getPrice())){
             offerServiceDetail.setPriceJudgement(true);
         }else{
             offerServiceDetail.setPriceJudgement(false);
@@ -249,7 +250,21 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             Integer serviceKind, Integer ciid, int schema,int currentPage,int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list = null;
+        float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
+            default:
+                list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()<o2.getGrade()) return 1;
+                        else if(o1.getGrade()>o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
             case Rank.PRICE_ASC :
                 PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
@@ -311,6 +326,13 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
         }
+        for(OfferServiceSimple offerServiceSimple : list){
+            if(marketPrice<Float.parseFloat(offerServiceSimple.getPrice())){
+                offerServiceSimple.setPriceJudge(true);
+            }else {
+                offerServiceSimple.setPriceJudge(false);
+            }
+        }
         return new PageInfo<OfferServiceSimple>(list);
     }
 
@@ -318,10 +340,24 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return offerServiceMapper.getServiceNameByInput(input,ciid);
     }
 
-    public PageInfo<OfferServiceSimple> getServicesByInput(String input, Integer ciid, int schema, int currentPage, int pageSize) {
+    public PageInfo<OfferServiceSimple> getServicesByInput(String input,Integer serviceKind, Integer ciid, int schema, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list = null;
+        float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
+            default:
+                list = offerServiceMapper.getServicesByInput(input,ciid);
+                for(OfferServiceSimple object: list){
+                    object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
+                }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(o1.getGrade()<o2.getGrade()) return 1;
+                        else if(o1.getGrade()>o2.getGrade()) return -1;
+                        return 0;
+                    }
+                });
+                break;
             case Rank.PRICE_ASC :
                 PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByInput(input,ciid);
@@ -382,6 +418,13 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     }
                 });
                 break;
+        }
+        for(OfferServiceSimple offerServiceSimple : list){
+            if(marketPrice<Float.parseFloat(offerServiceSimple.getPrice())){
+                offerServiceSimple.setPriceJudge(true);
+            }else {
+                offerServiceSimple.setPriceJudge(false);
+            }
         }
         return new PageInfo<OfferServiceSimple>(list);
     }
