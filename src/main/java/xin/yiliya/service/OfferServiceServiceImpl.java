@@ -58,6 +58,9 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     private ComplainMapper complainMapper;
 
+    @Resource
+    private ServiceService serviceService;
+
     public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
@@ -228,6 +231,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0,1).getList().size());
         offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
         offerServiceDetail.setOrderNum(orderService.getServiceTypeFinish(serviceId));
+        if(serviceService.getServiceKindPrice(offerServiceDetail.getSerid())< Float.parseFloat(offerServiceDetail.getPrice())){
+            offerServiceDetail.setPriceJudgement(true);
+        }else{
+            offerServiceDetail.setPriceJudgement(false);
+        }
         return offerServiceDetail;
     }
 

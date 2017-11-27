@@ -14,6 +14,8 @@ public class OfferServiceDetail {
 
     private String serviceImg;
 
+    private Integer serid;
+
     private String kind;
 
     private String price;
@@ -37,6 +39,14 @@ public class OfferServiceDetail {
     private Integer orderNum;
 
     private Boolean priceJudgement;
+
+    public Integer getSerid() {
+        return serid;
+    }
+
+    public void setSerid(Integer serid) {
+        this.serid = serid;
+    }
 
     public float getGrade() {
         return grade;

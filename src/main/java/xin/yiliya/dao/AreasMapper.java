@@ -8,9 +8,9 @@ import java.util.List;
 @Repository
 public interface AreasMapper {
 
-    public List<Areas> selectAllAreasByCity(String cityId);
+     List<Areas> selectAllAreasByCity(String cityId);
 
-    public List<Areas> selectAllAreas();
+     List<Areas> selectAllAreas();
 
-    public Integer selectAridByAreaId(String areaId);
+     Integer selectAridByAreaId(String areaId);
 }

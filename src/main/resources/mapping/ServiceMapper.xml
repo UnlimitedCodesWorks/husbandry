@@ -14,4 +14,15 @@
     <select id="getSerId" resultType="Integer">
         SELECT serid FROM service WHERE serkind=#{serKind}
     </select>
+    <select id="getServiceKindPrice" resultType="float" parameterType="java.lang.Integer">
+        SELECT COALESCE(AVG(price),0)
+        FROM offerservice
+        WHERE kind = #{serid,jdbcType=INTEGER}
+    </select>
+    <select id="getSerKindBySerId" resultType="string" parameterType="java.lang.Integer">
+        SELECT
+        serkind
+        FROM service
+        WHERE serid = #{serid,jdbcType=INTEGER }
+    </select>
 </mapper>

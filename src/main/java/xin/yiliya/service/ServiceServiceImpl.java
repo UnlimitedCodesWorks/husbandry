@@ -4,6 +4,7 @@ import xin.yiliya.dao.ServiceMapper;
 import xin.yiliya.pojo.Service;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -15,5 +16,10 @@ public class ServiceServiceImpl implements ServiceService {
 
     public List<Service> getAllService() {
         return serviceMapper.getAllService();
+    }
+
+    public float getServiceKindPrice(Integer serid) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        return Float.parseFloat(decimalFormat.format(serviceMapper.getServiceKindPrice(serid)));
     }
 }

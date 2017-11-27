@@ -26,7 +26,8 @@
     SELECT
     *
     FROM offerservicetemplate,offerservice
-    WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid and offerservice.store_id = #{storeId,jdbcType=INTEGER}
+    WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid
+    AND offerservice.store_id = #{storeId,jdbcType=INTEGER}
   </select>
   <select id="getServiceIdByTemplateId" resultType="int" parameterType="java.lang.Integer">
     SELECT

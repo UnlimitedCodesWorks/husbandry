@@ -44,7 +44,6 @@ public interface OfferServiceService {
 
     //根据服务id获取服务详细信息
     //返回单个服务详细信息Bean
-    //待补充的接口
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
 
     //根据模板id获取模板详细信息
@@ -71,5 +70,6 @@ public interface OfferServiceService {
     //返回多个服务简单信息Bean
     PageInfo<OfferServiceSimple> getServicesByInput(
             String input,Integer ciid,int schema,int currentPage,int pageSize);
+
 
 }

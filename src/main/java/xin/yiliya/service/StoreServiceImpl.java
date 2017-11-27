@@ -53,13 +53,14 @@ public class StoreServiceImpl implements StoreService {
             Store store = new Store();
             BeanUtils.copyProperties(store,registerStore);
             store.setRegistTime(new Date());
+            //设置为未审核状态
             store.setStatus(0);
             store.setArid(areasMapper.selectAridByAreaId(registerStore.getAreaId()));
             store.setHeadImg(aliOssTool.putImage(registerStore.getHeadImg(),"store"));
             store.setLogoImg(aliOssTool.putImage(registerStore.getLogoImg(),"store"));
             storeMapper.insertSelective(store);
             Integer storeId = storeMapper.selectIdByRegistNum(store.getRegistNum());
-            List<String> links = aliOssTool.putImages(registerStore.getAptitudeImgs(),"store");
+            List<String> links = aliOssTool.putImages(registerStore.getAptitudeImgs(),"admin");
             for(String link : links){
                 Aptitude aptitude = new Aptitude();
                 aptitude.setStoreId(storeId);

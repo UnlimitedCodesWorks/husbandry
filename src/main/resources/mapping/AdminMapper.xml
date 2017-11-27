@@ -68,7 +68,122 @@
       admin_pass = #{adminPass,jdbcType=VARCHAR}
     where adminid = #{adminid,jdbcType=INTEGER}
   </update>
+  <update id="passStore" parameterType="java.lang.Integer">
+    UPDATE store
+    SET status = 1
+    WHERE storeid = #{storeId,jdbcType=INTEGER}
+  </update>
+  <update id="cancelStore" parameterType="java.lang.Integer">
+    UPDATE store
+    SET status = 0
+    WHERE storeid = #{storeId,jdbcType=INTEGER}
+  </update>
   <select id="AdminLogin" resultMap="BaseResultMap">
     SELECT * FROM admin WHERE admin.admin_num=#{num} AND admin.admin_pass=#{pass}
+  </select>
+    <select id="getUserNum" resultType="int">
+      SELECT COUNT(*)
+      FROM user
+    </select>
+  <select id="getStoreNum" resultType="int">
+    SELECT COUNT(*)
+    FROM store
+  </select>
+  <select id="getUnpassStoreNum" resultType="int">
+    SELECT COUNT(*)
+    FROM store
+    WHERE status = 0
+  </select>
+  <select id="getPassStoreNum" resultType="int">
+    SELECT COUNT(*)
+    FROM store
+    WHERE status = 1
+  </select>
+  <select id="getOrderNumPerMonth" resultType="int">
+    SELECT
+	COUNT(*)
+    FROM
+	`order`
+    WHERE
+	`status` = 2
+    AND end_time BETWEEN #{startTime,jdbcType=VARCHAR}
+    AND #{endTime,jdbcType=VARCHAR}
+  </select>
+  <resultMap id="getUnpassStores" type="xin.yiliya.pojo.StoreAdmin">
+    <id property="storeId" column="storeid" />
+    <result property="storeName" column="store_name" />
+    <result property="phone" column="phone" />
+    <result property="email" column="email" />
+    <result property="detailInfo" column="detail_info" />
+  </resultMap>
+  <select id="getUnpassStores" resultMap="getUnpassStores" >
+    SELECT
+    storeid,store_name,phone,email,detail_info
+    FROM store
+    WHERE status = 0
+  </select>
+  <select id="getAptitudeByStoreId" resultType="string" parameterType="java.lang.Integer">
+    SELECT
+    aptitude_img
+    FROM aptitude
+    WHERE store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+  <select id="getUnpassStoresBySearch" resultMap="getUnpassStores" parameterType="java.lang.String">
+    SELECT
+    storeid,store_name,phone,email,detail_info
+    FROM store
+    WHERE status = 0
+    AND store_name LIKE '%${input}%'
+  </select>
+  <resultMap id="getPassStores" type="xin.yiliya.pojo.StoreAdmin">
+    <id property="storeId" column="storeid" />
+    <result property="storeName" column="store_name" />
+    <result property="phone" column="phone" />
+    <result property="email" column="email" />
+    <result property="detailInfo" column="detail_info" />
+    <result property="registTime" column="regist_time" />
+  </resultMap>
+  <select id="getPassStores" resultMap="getPassStores">
+    SELECT
+    storeid,store_name,phone,email,detail_info,regist_time
+    FROM store
+    WHERE status = 1
+  </select>
+  <select id="getPassStoresBySearch" resultMap="getPassStores" parameterType="java.lang.String">
+    SELECT
+    storeid,store_name,phone,email,detail_info,regist_time
+    FROM store
+    WHERE status = 1
+    AND store_name LIKE '%${input}%'
+  </select>
+  <resultMap id="getUnpassServices" type="xin.yiliya.pojo.OfferServiceAdmin">
+    <id property="offerServiceId" column="offerserviceid" />
+    <result property="serviceName" column="service_name" />
+    <association property="service" column="kind" javaType="xin.yiliya.pojo.Service">
+      <id property="serid" column="serid" />
+      <result property="serKind" column="serkind" />
+    </association>
+    <association property="store" column="store_id" javaType="xin.yiliya.pojo.Store">
+      <id property="storeid" column="storeid" />
+      <result property="storeName" column="store_name" />
+    </association>
+  </resultMap>
+  <select id="getUnpassServices" resultMap="getUnpassServices">
+    SELECT
+    offerserviceid,service_name,kind,serid,serkind,store_id,storeid,store_name
+    FROM offerservice,service,store
+    WHERE
+    offerservice.store_id = store.storeid AND offerservice.kind = service.serid
+    AND offerservice.status = 0
+  </select>
+  <select id="getUnpassServicesBySearch" resultMap="getUnpassServices"
+          parameterType="java.lang.String">
+    SELECT
+    offerserviceid,service_name,kind,serid,serkind,store_id,storeid,store_name
+    FROM offerservice,service,store
+    WHERE
+    offerservice.store_id = store.storeid AND offerservice.kind = service.serid
+    AND offerservice.status = 0
+    AND store.store_name LIKE '%${input}%'
   </select>
 </mapper>

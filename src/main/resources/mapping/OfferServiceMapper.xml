@@ -40,6 +40,7 @@
     <result property="peoplePhone" column="people_phone" jdbcType="VARCHAR" />
     <result property="price" column="price" jdbcType="VARCHAR" />
     <result property="kind" column="service_name" jdbcType="VARCHAR" />
+    <result property="serid" column="serid" jdbcType="INTEGER" />
     <collection property="serviceSpecial"  column="offerserviceid" ofType="xin.yiliya.pojo.ServiceSpecial" >
       <id property="spid" column="spid" />
       <result property="specialImg" column="special_img" />
@@ -54,7 +55,7 @@
   </sql>
   <sql id="offerServiceDetail">
     offerserviceid,service_name,service_img,price,publish_time,people_phone,introduce,notice,
-    service_name,special_img,store_id,spid
+    service_name,special_img,store_id,spid,serid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -69,7 +70,8 @@
     FROM offerservice,service
     WHERE store_id = #{storeId,jdbcType=INTEGER}
     and offerservice.kind = service.serid
-    and status != -1
+    AND offerservice.`status` != - 1
+    AND offerservice.`status` != 0
     ORDER BY update_time DESC
   </select>
   <select id="getOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
@@ -290,6 +292,8 @@
     AND offerservice.store_id = store.storeid
     AND kind = #{kind,jdbcType=INTEGER}
     AND city_id = #{ciid,jdbcType=INTEGER}
+    AND offerservice.`status` != - 1
+    AND offerservice.`status` != 0
   </select>
   <select id="getServiceNameByInput" resultType="string" >
       SELECT
@@ -298,6 +302,8 @@
       WHERE service_name LIKE '%${input}%'
       and offerservice.offerserviceid = servicespots.offerservice_id
       and city_id = #{ciid,jdbcType=INTEGER}
+      AND offerservice.`status` != -1
+      AND offerservice.`status` != 0
    </select>
 
   <select id="getServicesByInput" resultMap="getServicesByCityAndKind">
@@ -318,6 +324,8 @@
     AND offerservice.store_id = store.storeid
     AND service_name LIKE '%${input}%'
     AND city_id = #{ciid,jdbcType=INTEGER}
+    AND offerservice.`status` != - 1
+    AND offerservice.`status` != 0
   </select>
 
 </mapper>

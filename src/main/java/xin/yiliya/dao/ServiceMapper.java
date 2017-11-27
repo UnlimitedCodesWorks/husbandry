@@ -8,7 +8,12 @@ import java.util.List;
 @Repository
 public interface ServiceMapper {
 
-    public List<Service> getAllService();
+     List<Service> getAllService();
 
-    public Integer getSerId(String serKind);
+     Integer getSerId(String serKind);
+
+     float getServiceKindPrice(Integer serid);
+
+     String getSerKindBySerId(Integer serid);
+
 }
