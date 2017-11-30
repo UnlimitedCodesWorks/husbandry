@@ -161,6 +161,27 @@ public class StoreServiceImpl implements StoreService {
                     storeList = list.range("hotStoreBySales",0,-1);
                 }
                 break;
+            case Rank.HITS_DESC :
+                if(list.size("hotStoreByHITS") == 0){
+                    storeList = storeMapper.getAllHotStore();
+                    for(StoreIndex store:storeList){
+                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
+                    }
+                    Collections.sort(storeList, new Comparator<StoreIndex>() {
+                        public int compare(StoreIndex o1, StoreIndex o2) {
+                            if(o1.getFans()<o2.getFans()) return 1;
+                            else if(o1.getFans()>o2.getFans()) return -1;
+                            return 0;
+                        }
+                    });
+                    list.rightPushAll("hotStoreByHITS",new PageInfo<StoreIndex>(storeList).getList());
+                    redisTemplate.expire("hotStoreByHITS",5, TimeUnit.MINUTES);
+                }else{
+                    storeList = list.range("hotStoreByHITS",0,-1);
+                }
+                break;
         }
         return storeList;
     }

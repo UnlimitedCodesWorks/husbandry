@@ -54,6 +54,11 @@
       BETWEEN #{startTime,jdbcType=VARCHAR}
       AND #{endTime,jdbcType=VARCHAR}
     </select>
+    <select id="getGradeNumByServiceId" resultType="int" parameterType="java.lang.Integer">
+      SELECT COUNT(*)
+      FROM evaluateservice
+      WHERE service_id = #{serviceId,jdbcType=INTEGER}
+    </select>
     <insert id="insert" parameterType="xin.yiliya.pojo.EvaluateService">
     insert into evaluateservice (evaluateserviceid, user_id, service_id, 
       content, time, praise,grade

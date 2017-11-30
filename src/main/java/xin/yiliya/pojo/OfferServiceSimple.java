@@ -17,6 +17,8 @@ public class OfferServiceSimple {
 
     private float grade;
 
+    private Integer gradeNum;
+
     private String status;
 
     private String price;
@@ -28,6 +30,14 @@ public class OfferServiceSimple {
     private Store store;
 
     private Integer markNum;
+
+    public Integer getGradeNum() {
+        return gradeNum;
+    }
+
+    public void setGradeNum(Integer gradeNum) {
+        this.gradeNum = gradeNum;
+    }
 
     public Integer getMarkNum() {
         return markNum;

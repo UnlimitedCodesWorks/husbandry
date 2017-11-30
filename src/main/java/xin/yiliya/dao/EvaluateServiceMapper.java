@@ -30,4 +30,7 @@ public interface EvaluateServiceMapper {
     float getGradePerDayBySeviceId(
             @Param(value = "serviceId") Integer serviceId,@Param(value = "startTime") String startTime,
             @Param(value = "endTime") String endTime);
+
+    int getGradeNumByServiceId(Integer serviceId);
+
 }

@@ -10,6 +10,7 @@ public class Rank {
     public final static int SALES_DESC  = 3;
     public final static int PRICE_ASC = 4;
     public final static int PRICE_DESC = 5;
+    public final static int HITS_DESC = 6;
 
 
 }

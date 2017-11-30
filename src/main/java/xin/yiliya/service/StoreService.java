@@ -25,7 +25,7 @@ public interface StoreService {
     StoreInfo getInfoByStoreId(Integer storeId);
 
     //获取全国热门服务商
-    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE_DESC,Rank.SALES_DESC
+    //参数：schema表示输入的排序模式，可输入参数为Rank.GRADE_DESC,Rank.SALES_DESC,Rank.HITS_DESC
     //返回多个初始页面服务商bean
     List<StoreIndex> getAllHotStore(int schema);
 

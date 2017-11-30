@@ -91,6 +91,10 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
         return Float.valueOf(decimalFormat.format(evaluateServiceMapper.getGradeByServiceId(serviceId)));
     }
 
+    public Integer getGradeNumByServiceId(Integer serviceId) {
+        return evaluateServiceMapper.getGradeNumByServiceId(serviceId);
+    }
+
     public ServiceEvalutePerMonth getGradePerMonthBySeviceId(Integer serviceId,String serviceName,Date time)  {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         ServiceEvalutePerMonth serviceEvalutePerMonth = new ServiceEvalutePerMonth();
