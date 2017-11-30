@@ -90,4 +90,12 @@ public class RegionServiceImpl implements RegionService {
         }
         return aresMap;
     }
+
+    public Integer selectCiidByCityId(String CityId) {
+        return citiesMapper.selectCiidByCityId(CityId);
+    }
+
+    public Integer selectAridByAreaId(String areaId) {
+        return areasMapper.selectAridByAreaId(areaId);
+    }
 }
