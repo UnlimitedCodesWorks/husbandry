@@ -1,3 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,7 +143,7 @@
 		<div class="layui-selector wow flipInX">
 			<form class="layui-form" action="">
 				<div class="layui-form-item">
-		      		<select name="" lay-verify="required" lay-filter="test">
+		      		<select  lay-verify="required" lay-filter="test">
 		        		<option value="0">综合排序</option>
 		        		<option value="1">按评分排序</option>
 		       			<option value="2">按人气排序</option>
@@ -146,77 +153,27 @@
 		</div>
 		<!-- 服务商 -->
 		<div class="layui-container wow bounceInUp reWow2">
+			<c:forEach var="i" begin="0" end="11" step="4">
 			<div class="layui-row layui-col-space10">
-				<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-					<div class="layui-row row-in" title="华峰国际有限公司">
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/201291810101174356.jpg"></div>
-						<div class="layui-row row-in2">
-							<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
-							<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
-						</div>
-						<div class="layui-row row-in3">
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-						</div>
-					</div>
-				</div>
-				<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-					<div class="layui-row row-in" title="华峰国际有限公司">
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/家居9.jpg"></div>
-						<div class="layui-row row-in2">
-							<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
-							<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
-						</div>
-						<div class="layui-row row-in3">
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+			<c:forEach var="storeIndex" items="${storeIndexList}" begin="${i}" end="${i+3}">
+					<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+						<div class="layui-row row-in" title="${storeIndex.storeName}">
+							<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+								<img src="${storeIndex.headImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'" />
+							</div>
+							<div class="layui-row row-in2">
+								<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${storeIndex.storeName}</a></div>
+								<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：${storeIndex.grade}分</div>
+							</div>
+							<div class="layui-row row-in3">
+								<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.fans}关注</div>
+								<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.markNum}笔交易</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-					<div class="layui-row row-in" title="华峰国际有限公司">
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/201291810101174356.jpg"></div>
-						<div class="layui-row row-in2">
-							<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
-							<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
-						</div>
-						<div class="layui-row row-in3">
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-						</div>
-					</div>
-				</div>
-				<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-					<div class="layui-row row-in" title="华峰国际有限公司">
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/家居9.jpg"></div>
-						<div class="layui-row row-in2">
-							<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
-							<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
-						</div>
-						<div class="layui-row row-in3">
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-						</div>
-					</div>
-				</div>
+			</c:forEach>
 			</div>
-			<div class="layui-row layui-col-space10">
-				<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-					<div class="layui-row row-in" title="华峰国际有限公司南美洲分公司">
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/家居9.jpg"></div>
-						<div class="layui-row row-in2">
-							<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司南美洲分公司</a></div>
-							<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
-						</div>
-						<div class="layui-row row-in3">
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-							<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="layui-row layui-col-space10">
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 	<footer>

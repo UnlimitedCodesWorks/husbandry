@@ -115,7 +115,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public List<StoreIndex> getAllHotStore(int schema) {
-        PageHelper.startPage(1,9);
+        PageHelper.startPage(1,12);
         List<StoreIndex> storeList = null;
         ListOperations<String,StoreIndex> list = redisTemplate.opsForList();
         switch (schema){
