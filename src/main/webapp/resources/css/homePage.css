@@ -1,0 +1,271 @@
+body {
+	overflow-x: hidden;
+}
+
+hr {
+	margin: 5px auto;
+}
+
+header {
+	position: relative;
+	width: 100%;
+	z-index: 3;
+}
+
+nav {
+	position: fixed;
+	width: inherit;
+	top: 0;
+	left: 0;
+}
+
+.layui-nav-item:nth-child(2) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(3) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(4) {
+	float: right;
+}
+
+.layui-home-bg {
+	width: 100%;
+	padding-top: 60px;
+	position: relative;
+}
+
+.layui-home-bg img {
+	width: inherit;
+	margin-top: -19%;
+}
+
+.mask {
+	width: 100%;
+	background: #000;
+	position: absolute;
+	top: 60px;
+	opacity: 0;
+	left: 0;
+	transition: opacity 1s;
+}
+
+.layui-home-bg .reWow-wrap {
+	width: 100%;
+}
+
+.layui-home-bg .reWow-wrap {
+	position: absolute;
+	top: 25%;
+}
+
+.layui-home-bg .reWow-wrap p {
+	text-align: center;
+}
+
+.layui-home-bg .reWow-wrap p:nth-child(1) {
+	color: #fff;
+	font-size: 36px;
+	margin-bottom: 4%;
+}
+
+.layui-home-bg .reWow-wrap p:nth-child(2) {
+	color: #5FB878;
+	font-size: 28px;
+}
+
+.layui-form-group {
+	position: absolute;
+	top: 49%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 25%;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.layui-form-group input {
+	border: none;
+	border-bottom: 4px solid #5FB878;
+	background-color: transparent;
+	color: #fff;
+	font-size: 24px;
+	width: 100%;
+	height: 36px;
+	text-align: center;
+}
+
+.layui-form-group input::-webkit-input-placeholder {
+	text-align: center;
+	color: #fff;
+}
+
+.layui-form-group button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.layui-form-group i {
+	font-size: 36px;
+	color: #5FB878;
+	font-weight: bold;
+}
+
+.layui-service-wrap {
+	width: 100%;
+	background: #fff;
+	position: relative;
+}
+
+.layui-title {
+	padding-top: 3%;
+}
+
+.layui-title p {
+	text-align: center;
+}
+
+.title-cn {
+	font-size: 28px;
+	color: #535353;
+}
+
+.title-cn span {
+	font-size: 36px;
+}
+
+.title-en {
+	font-size: 16px;
+	color: #bdbdbd;
+	padding: 5px 0 15px 0;
+}
+
+.layui-service-wrap .layui-container {
+	padding-top: 5%;
+	padding-bottom: 180px;
+}
+
+.layui-service-wrap .row-in {
+	height: 150px;
+	background: #f3f3f3;
+	transition: background 0.2s;
+}
+
+.row-in p {
+	text-align: center;
+	color: #5f5f5f;
+	transition: color 0.2s;
+}
+
+.layui-service-wrap .layui-col-md12:nth-child(1) {
+	margin-top: 10%;
+}
+
+.servive-title-cn {
+	font-size: 24px;
+}
+
+.servive-title-en {
+	font-size: 12px;
+}
+
+.iconfont {
+	font-size: 48px;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 482629 */
+  src: url('http://at.alicdn.com/t/font_482629_abucvickpkxu5wmi.eot');
+  src: url('http://at.alicdn.com/t/font_482629_abucvickpkxu5wmi.eot?#iefix') format('embedded-opentype'),
+  url('http://at.alicdn.com/t/font_482629_abucvickpkxu5wmi.woff') format('woff'),
+  url('http://at.alicdn.com/t/font_482629_abucvickpkxu5wmi.ttf') format('truetype'),
+  url('http://at.alicdn.com/t/font_482629_abucvickpkxu5wmi.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family: "iconfont" !important;
+    font-size: 48px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-store-wrap {
+	width: 100%;
+	background: #f3f3f3;
+	position: relative;
+}
+
+.layui-selector {
+	z-index: 2;
+	position: relative;
+}
+
+.layui-form-item {
+	width: 50%;
+	margin: 10px auto;
+}
+
+.layui-store-wrap .layui-container {
+	padding-top: 5%;
+	background: #f3f3f3;
+	z-index: 1;
+	position: relative;
+	padding-bottom: 180px;
+}
+
+.layui-store-wrap .layui-col-md3 {
+	height: 200px;
+}
+
+.layui-store-wrap .layui-col-md12:nth-child(1) img {
+	display: block;
+	width: 100%;
+	height: 140px;
+}
+
+.store-title {
+	font-size: 18px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.layui-store-wrap .layui-col-md4 {
+	text-align: right;
+	color: #FF5722;
+}
+
+.layui-store-wrap .layui-col-md6 {
+	color: #5f5f5f;
+}
+
+.layui-store-wrap .layui-col-md6:nth-child(2) {
+	text-align: right;
+}
+
+.row-in3 {
+	padding-top: 5px;
+}
+
+footer {
+	background: #393D49;
+	height: 100px;
+	position: relative;
+	z-index: 2;
+}
+
+footer p{
+	color: #fff;
+	text-align: center;
+	padding-top: 50px;
+}

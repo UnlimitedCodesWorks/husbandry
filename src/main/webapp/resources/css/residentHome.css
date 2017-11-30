@@ -1,0 +1,263 @@
+header {
+	position: relative;
+	width: 100%;
+	z-index: 20;
+}
+
+nav {
+	position: fixed;
+	width: inherit;
+	top: 0;
+	left: 0;
+}
+
+h2 {
+	font-size: 24px;
+	color: #5FB878;
+}
+
+.particles-wrap {
+	height: 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	left: 0;
+	z-index: -1
+}
+
+#particles-js {
+	z-index: -1;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background: #fff;
+	height: 100%;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 482629 */
+  src: url('http://at.alicdn.com/t/font_482629_8aj4m55txmv7k3xr.eot');
+  src: url('http://at.alicdn.com/t/font_482629_8aj4m55txmv7k3xr.eot?#iefix') format('embedded-opentype'),
+  url('http://at.alicdn.com/t/font_482629_8aj4m55txmv7k3xr.woff') format('woff'),
+  url('http://at.alicdn.com/t/font_482629_8aj4m55txmv7k3xr.ttf') format('truetype'),
+  url('http://at.alicdn.com/t/font_482629_8aj4m55txmv7k3xr.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family: "iconfont" !important;
+    font-size: 24px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-nav-item:nth-child(2) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(3) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(4) {
+	float: right;
+}
+
+#wrap {
+	padding-top: 120px;
+}
+
+.resident-index {
+	height: 150px;
+}
+
+.layui-row {
+	height: inherit;
+}
+
+.head-wrap {
+	height: 100px;
+	width: 100px;
+	overflow: hidden;
+	display: inline-block;
+	border-radius: 50px;
+	float: right;
+	position: relative;
+}
+
+.head-wrap img {
+	width: 100%;
+	height: 100%;
+}
+
+.head-mask {
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: opacity 0.4s;
+	border-radius: 50px;
+}
+
+.head-mask a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	border-radius: 50px;
+	text-align: center;
+	color: #fff;
+	line-height: 100px;
+	text-decoration: none;
+}
+
+.row-in p {
+	margin-top: 10px;
+}
+
+.row-in .address {
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.row-in .autograph {
+	color: #a8a8a8;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+i {
+	color: #5FB878;
+}
+
+.tab1 .layui-container {
+	padding-top: 30px;
+	padding-bottom: 100px;
+}
+
+.tab1 .name-log {
+	line-height: 38px;
+	text-align: center;
+	color: #a8a8a8;
+}
+
+.tab1 .layui-btn {
+	width: 100px;
+}
+
+.tab2 .layui-container {
+	padding-top: 30px;
+}
+
+.tab2 .email button {
+	display: block;
+	margin: 0 auto;
+}
+
+.tab2 .tel button {
+	display: block;
+	margin: 0 auto;
+}
+
+.tab2 .password p {
+	color: red;
+	text-align: center;
+	line-height: 38px;
+}
+
+.tab2 .password .layui-btn {
+	width: 100px;
+}
+
+.tab2 .password {
+	padding-bottom: 100px;
+}
+
+.error {
+	text-align: center;
+	color: red;
+	line-height: 38px;
+}
+
+.tab3-1 .layui-container {
+	width: 100%;
+}
+
+.tab3-1 .row1 .name-wrap {
+	height: 48.4px;
+}
+
+.tab3-1 .row1 a {
+	height: 100%;
+	font-size: 18px;
+	line-height: 38.4px;
+	display: inline-block;
+}
+
+.tab3-1 .row1 p {
+	display: inline-block;
+	color: #5FB878;
+	padding-left: 10px;
+	height: 100%;
+	line-height: 38.4px;
+}
+
+.tab3-1 .row1 button {
+	width: 100%;
+}
+
+.tab3-1 .row2 .img-wrap {
+	height: 150px;
+}
+
+.tab3-1 .row2 .img-wrap img {
+	width: 100%;
+	height: 100%;
+}
+
+.tab3-1 .row2 .price-wrap p {
+	text-align: right;
+	color: #5FB878;
+	font-size: 18px;
+}
+
+.tab3-1 .row2 .service-wrap a {
+	font-size: 18px;
+	color: #1E9FFF;
+}
+
+.tab3-1 .row2 .detail-wrap p {
+	font-size: 16px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+}
+
+.tab3-1 .row2 .row2-2 button {
+	width: 100%;
+	height: 41.2px;
+}
+
+footer {
+	background: #393D49;
+	height: 100px;
+	position: relative;
+	z-index: 2;
+}
+
+footer p{
+	color: #fff;
+	text-align: center;
+	padding-top: 50px;
+}
