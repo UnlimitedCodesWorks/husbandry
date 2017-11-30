@@ -290,7 +290,9 @@
     WHERE
 	servicespots.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = store.storeid
+    <if test="kind !=0">
     AND kind = #{kind,jdbcType=INTEGER}
+    </if>
     AND city_id = #{ciid,jdbcType=INTEGER}
     AND offerservice.`status` != - 1
     AND offerservice.`status` != 0
@@ -322,7 +324,11 @@
     WHERE
 	servicespots.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = store.storeid
+    <if test="kind !=0">
+      AND kind = #{kind,jdbcType=INTEGER}
+    </if>
     AND service_name LIKE '%${input}%'
+    OR store_name LIKE '%${input}%'
     AND city_id = #{ciid,jdbcType=INTEGER}
     AND offerservice.`status` != - 1
     AND offerservice.`status` != 0

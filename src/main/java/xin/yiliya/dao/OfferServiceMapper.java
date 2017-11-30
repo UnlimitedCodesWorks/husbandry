@@ -35,7 +35,7 @@ public interface OfferServiceMapper {
 
     List<OfferServiceSimple> getServicesByCityAndKind(@Param(value = "kind") Integer serviceKind,@Param(value = "ciid") Integer ciid);
 
-    List<OfferServiceSimple> getServicesByInput(@Param(value = "input") String input,@Param(value = "ciid") Integer ciid);
+    List<OfferServiceSimple> getServicesByInput(@Param(value = "input") String input,@Param(value = "kind") Integer serviceKind,@Param(value = "ciid") Integer ciid);
 
     String[] getServiceNameByInput(@Param(value = "input") String input,@Param(value = "ciid") Integer ciid);
 }

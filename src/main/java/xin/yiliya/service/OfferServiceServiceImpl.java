@@ -395,13 +395,14 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return offerServiceMapper.getServiceNameByInput(input,ciid);
     }
 
-    public PageInfo<OfferServiceSimple> getServicesByInput(String input,Integer serviceKind, Integer ciid, int schema, int currentPage, int pageSize) {
+    public PageInfo<OfferServiceSimple> getServicesByInput(
+            String input,Integer serviceKind, Integer ciid, int schema, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
-        List<OfferServiceSimple> list = null;
+        List<OfferServiceSimple> list;
         float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
             default:
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -423,7 +424,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 break;
             case Rank.PRICE_ASC :
                 PageHelper.orderBy("price");
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -438,7 +439,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 break;
             case Rank.PRICE_DESC :
                 PageHelper.orderBy("price desc");
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -452,7 +453,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
                 break;
             case Rank.GRADE_ASC :
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -473,7 +474,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.GRADE_DESC :
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -494,7 +495,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_ASC :
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
@@ -515,7 +516,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_DESC :
-                list = offerServiceMapper.getServicesByInput(input,ciid);
+                list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));

@@ -35,6 +35,10 @@ public interface ServiceEvaluateService {
     //返回:该服务的评分
     Float getGradeByServiceId(Integer serviceId);
 
+    //获取服务评分人数
+    //返回：服务评分人数
+    Integer getGradeNumByServiceId(Integer serviceId);
+
     //获得某月份的服务评分曲线信息
     //参数：time为当前月份，如格式为2017-7
     //返回：该月每天的评分记录
