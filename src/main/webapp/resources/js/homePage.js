@@ -22,7 +22,43 @@ jQuery(document).ready(function($) {
     			live: true
 			});
 			wow.init();
-  			console.log(data.value); //得到被选中的值
+            if(data.value == 0){
+                $.ajax({
+                    url : 'rankSale.do',
+                    type : "post",
+                    dataType : "json",
+                    success: function(data){
+
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }else if(data.value == 1){
+                $.ajax({
+                    url : location.href + '/rankGrade.do',
+                    type : "post",
+                    dataType : "json",
+                    success: function(data){
+                        rankGrade(data);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }else if(data.value == 2){
+                $.ajax({
+                    url : 'rankHit.do',
+                    type : "post",
+                    dataType : "json",
+                    success: function(data){
+
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }
 		});
 	});
 
@@ -95,4 +131,9 @@ jQuery(document).ready(function($) {
     	live: true
 	});
 	wow.init();
+
+    function rankGrade(data) {
+        var fNode = $("#hotStore");
+        console.log(data);
+    }
 });

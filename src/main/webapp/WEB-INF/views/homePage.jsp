@@ -141,7 +141,7 @@
 		</div>
 		<!-- select -->
 		<div class="layui-selector wow flipInX">
-			<form class="layui-form" action="">
+			<form name ="" class="layui-form" action="">
 				<div class="layui-form-item">
 		      		<select  lay-verify="required" lay-filter="test">
 		        		<option value="0">综合排序</option>
@@ -152,7 +152,7 @@
 			</form>
 		</div>
 		<!-- 服务商 -->
-		<div class="layui-container wow bounceInUp reWow2">
+		<div class="layui-container wow bounceInUp reWow2" id="hotStore">
 			<c:forEach var="i" begin="0" end="11" step="4">
 			<div class="layui-row layui-col-space10">
 			<c:forEach var="storeIndex" items="${storeIndexList}" begin="${i}" end="${i+3}">
