@@ -157,20 +157,20 @@
 			<div class="layui-row layui-col-space10">
 			<c:forEach var="storeIndex" items="${storeIndexList}" begin="${i}" end="${i+3}">
 					<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-						<div class="layui-row row-in" title="${storeIndex.storeName}">
-							<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-								<img src="${storeIndex.headImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'" />
-							</div>
-							<div class="layui-row row-in2">
-								<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${storeIndex.storeName}</a></div>
-								<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：${storeIndex.grade}分</div>
-							</div>
-							<div class="layui-row row-in3">
-								<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.fans}关注</div>
-								<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.markNum}笔交易</div>
-							</div>
-						</div>
+				<div class="layui-row row-in" title="${storeIndex.storeName}">
+					<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+						<img src="${storeIndex.headImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'" />
 					</div>
+					<div class="layui-row row-in2">
+						<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${storeIndex.storeName}</a></div>
+						<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：${storeIndex.grade}分</div>
+					</div>
+					<div class="layui-row row-in3">
+						<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.fans}关注</div>
+						<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.markNum}笔交易</div>
+					</div>
+				</div>
+			</div>
 			</c:forEach>
 			</div>
 			</c:forEach>

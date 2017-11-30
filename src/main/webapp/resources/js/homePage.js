@@ -24,11 +24,11 @@ jQuery(document).ready(function($) {
 			wow.init();
             if(data.value == 0){
                 $.ajax({
-                    url : 'rankSale.do',
+                    url :location.href + '/rankSale.do',
                     type : "post",
                     dataType : "json",
                     success: function(data){
-
+                        rank(data);
                     },
                     error: function(jqXHR){
                         alert("发生错误：" + jqXHR.status);
@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
                     type : "post",
                     dataType : "json",
                     success: function(data){
-                        rankGrade(data);
+                        rank(data);
                     },
                     error: function(jqXHR){
                         alert("发生错误：" + jqXHR.status);
@@ -48,11 +48,11 @@ jQuery(document).ready(function($) {
                 });
             }else if(data.value == 2){
                 $.ajax({
-                    url : 'rankHit.do',
+                    url :location.href +'/rankHit.do',
                     type : "post",
                     dataType : "json",
                     success: function(data){
-
+                        rank(data);
                     },
                     error: function(jqXHR){
                         alert("发生错误：" + jqXHR.status);
@@ -132,8 +132,33 @@ jQuery(document).ready(function($) {
 	});
 	wow.init();
 
-    function rankGrade(data) {
+    function rank(data) {
         var fNode = $("#hotStore");
-        console.log(data);
+        fNode.html("");
+        var num = 0;
+        for(var i =0;i<data.length;i+=4){
+			fNode.append('<div class="layui-row layui-col-space10"></div>');
+			var CNode = fNode.children(".layui-row").eq(num);
+			num++;
+        	for(var q = i;q<i+4&&q<data.length;q++){
+        		console.log(q);
+        		var html = '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">' +
+                    '<div class="layui-row row-in" title="'+data[q].storeName+'">' +
+                    '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                    '<img src="'+data[q].headImg+'" onerror="this.src=\'../../resources/images/201291810101174356.jpg\'" />' +
+                    '</div>' +
+                    '<div class="layui-row row-in2">' +
+                    '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">'+data[q].storeName+'</a></div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+data[q].grade+'分</div>' +
+                    '</div>' +
+                    '<div class="layui-row row-in3">' +
+                    '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[q].fans+'关注</div>' +
+                    '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[q].markNum+'笔交易</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+				CNode.append(html);
+			}
+		}
     }
 });
