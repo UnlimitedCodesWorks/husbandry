@@ -1,0 +1,213 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+header {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+nav {
+    position: fixed;
+    width: inherit;
+    top: 0;
+    left: 0;
+}
+
+.layui-nav-item:nth-child(2) {
+    float: right;
+}
+
+.layui-nav-item:nth-child(3) {
+    float: right;
+}
+
+.layui-nav-item:nth-child(4) {
+    float: right;
+}
+
+.search_search_div {
+    padding-top: 150px;
+    padding-bottom: 80px;
+}
+
+.search_serach_img {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+}
+
+.search_input {
+    border-radius: 20px;
+    display: inline-block;
+    outline: none;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid rgba(57, 61, 73, 0.79);
+    height: 40px;
+}
+
+.search_button {
+    height: 40px;
+    margin-bottom: 130px;
+}
+
+.search_button1 {
+    border-radius: 20px;
+    background-color: rgba(0, 150, 135, 0.82);
+    border: 1px solid rgb(0, 150, 135);
+    height: 35px;
+    color: white;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+}
+
+.search_classify,
+.search_area,
+.search_rank {
+    font-size: 13px;
+    font-weight: bold;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #999999;
+}
+
+.search_classify1,
+.search_area1 {
+    border-bottom: 1px dashed #e8e8e8;
+}
+
+.search_title {
+    border: 1px solid #e8e8e8;
+    margin-bottom: 30px;
+}
+
+.search_classify_choose,
+.search_rank_choose {
+    font-size: 13px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.search_classify_choose span:hover,
+.search_rank_choose span:hover {
+    cursor: pointer;
+    color: #009688 !important;
+}
+
+.search_classify_choose :nth-child(1) {
+    color: #009688;
+}
+
+.search_rank_choose :nth-child(1) {
+    color: #009688;
+}
+
+.search_area_choose {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.search_area_province,
+.search_area_city {
+    height: 30px;
+    margin-top: 5px;
+}
+
+
+/* 123 */
+
+.search_main {
+    height: 700px;
+}
+
+.search_main_ul {
+    height: 45%;
+    margin-bottom: 5%;
+}
+
+.search_main_ul_ul {
+    height: 100%;
+}
+
+.search_main_ul_ul:hover {
+    border: 1px solid #5FB878;
+}
+
+.search_main_ul_img {
+    height: 60%;
+}
+
+.search_main_ul_img:hover {
+    cursor: pointer;
+}
+
+.search_price {
+    font-size: 20px;
+    padding: 5px 0px 5px 5px;
+    color: #5FB878;
+    font-weight: bolder;
+    float: left;
+}
+
+.search_price_noise {
+    font-size: 5px;
+    color: red;
+    padding: 10px;
+    float: left;
+    font-weight: bold;
+}
+
+.search_service {
+    padding-left: 10px;
+    font-size: 14px;
+    height: 20%;
+}
+
+.search_service:hover {
+    color: #5FB878;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.search_company {
+    padding-left: 10px;
+    font-size: 13px;
+    color: #666666;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.search_score {
+    font-size: 13px;
+    text-align: center;
+    color: #FF5722;
+    font-weight: bold;
+}
+
+#search_page {
+    float: right;
+}
+
+footer {
+    background: #393D49;
+    height: 100px;
+    position: relative;
+    z-index: 2;
+}
+
+footer p {
+    color: #fff;
+    text-align: center;
+    padding-top: 50px;
+}

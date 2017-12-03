@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/search.css">
+    <title>智慧社区-搜索</title>
+</head>
+
+<body>
+    <header>
+        <!-- 导航栏 -->
+        <nav>
+            <ul class="layui-nav">
+                <li class="layui-nav-item ">
+                    <a href="javascript:;" title="Husbandry">Husbandry</a>
+                </li>
+                <template v-if="isLogin">
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="注册">注册</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="登录">登录</a>
+					</li>
+				</template>
+                <li class="layui-nav-item" v-else>
+                    <a href="javascript:;"><img src="../../resources/images/user.png" class="layui-nav-img">何华峰</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
+                        <dd><a href="javascript:;">登出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="layui-row layui-col-md12 search_search_div">
+        <img src="../../resources/images/backloginimg.jpg" class="layui-col-md8 layui-col-md-offset2 search_serach_img">
+        <input type="text" placeholder="请输入要搜索的服务内容" class="layui-col-md6 layui-col-md-offset3 search_input">
+        <div class="layui-col-md12">
+            <div class="layui-col-md4 layui-col-md-offset4 search_button">
+                <div class="search_button1"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 标题栏 -->
+    <div class=" layui-row layui-col-md10 layui-col-md-offset1 search_title ">
+        <div class="layui-col-md12 search_classify1">
+            <span class="layui-col-md1 search_classify">分类</span>
+            <div class="layui-col-md11 search_classify_choose">
+                <span class="layui-col-md1">全部</span>
+                <span class="layui-col-md1">保姆</span>
+                <span class="layui-col-md1">钟点工</span>
+                <span class="layui-col-md1">涉外家政</span>
+                <span class="layui-col-md1">老人陪护</span>
+                <span class="layui-col-md1">病人陪护</span>
+                <span class="layui-col-md1">育婴师</span>
+                <span class="layui-col-md1">催乳师</span>
+                <span class="layui-col-md1">月嫂</span>
+            </div>
+        </div>
+        <div class="layui-col-md12 search_area1">
+            <span class="layui-col-md1 search_area">地区</span>
+            <div class="layui-col-md11 search_area_choose">
+                <div class="layui-col-md12">
+                    <span class="layui-col-md1">省份</span>
+                    <span><select  id="province" runat="server" onchange="selectprovince(this)" class="layui-col-md2 search_area_province">
+                         
+                    </select></span>
+                    <span class="layui-col-md1">城市：</span>
+                    <span><select id="city" runat="server" class="layui-col-md2 search_area_city">
+                        
+                        </select></span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <span class="layui-col-md1 search_rank">排序</span>
+            <div class="layui-col-md11 search_rank_choose">
+                <span class="layui-col-md1">综合排序</span>
+                <span class="layui-col-md1">人气升序</span>
+                <span class="layui-col-md1">人气降序</span>
+                <span class="layui-col-md1">销量升序</span>
+                <span class="layui-col-md1">销量降序</span>
+            </div>
+        </div>
+
+    </div>
+    <!-- 具体项目 -->
+    <div class="layui-row layui-col-md10 layui-col-md-offset1 search_main">
+        <ul class="layui-row layui-col-md3 search_main_ul">
+            <ul class="layui-col-md10 layui-col-md-offset1 search_main_ul_ul">
+                <img src="../../resources/images/house.jpg" class="layui-col-md12 search_main_ul_img">
+                <div class="layui-col-md12">
+                    <div class="layui-col-md5 search_price text1">＄200.00</div>
+                    <div class="layui_col-md7 search_price_noise">此价格高于平均价！</div>
+                </div>
+                <div class="layui-col-md12 search_service">男士短袖t恤新款圆领宽松衣服夏季韩版潮流纯棉大码夏装体恤男装</div>
+                <div class="layui-col-md12 ">
+                    <div class="layui-col-md8 search_company">滨江何华峰服务公司</div>
+                    <div class="layui-col-md4 search_score">10分</div>
+                </div>
+            </ul>
+        </ul>
+    </div>
+    <!-- 分页处理 -->
+    <div class="layui-col-md10 layui-col-md-offset1">
+        <div id="search_page"></div>
+    </div>
+    <div class="layui-row layui-col-md12">
+        <footer>
+            <p>Husbandry-&copy2017</p>
+        </footer>
+    </div>
+    <script src="../../resources/js/jquery-3.2.1.min.js"></script>
+    <script src="../../resources/layui.js"></script>
+    <script src="../../resources/js/vue.js"></script>
+    <script src="../../resources/js/search.js"></script>
+
+</body>
+
+</html>

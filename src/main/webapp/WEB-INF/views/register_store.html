@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/register_store.css">
+    <title>智慧社区-商户注册</title>
+</head>
+
+<body>
+    <ul class="layui-nav layui-row layui-col-md12 register_store_top">
+        <li class="layui-nav-item layui-col-md1 register_store_webname">Husbandry</li>
+        <li class="layui-nav-item layui-col-md1 layui-col-md-offset10 register_store_top1">返回首页<span class="layui-icon">&#xe602;</span></li>
+    </ul>
+    <div class="register_store_l"></div>
+    <img src="../../resources/images/storebackimg.jpg" class="register_store_bgimg">
+    <div class="layui-row">
+        <div class="layui-col-md10 layui-col-md-offset1 register_store_main">
+            <div class="layui-col-md10 layui-col-md-offset1 register_store_title">商户注册</div>
+            <div class="layui-col-md10 layui-col-md-offset1">
+                <form class="layui-form">
+                    <div class="layui-col-md4">
+                        <div class="layui-col-md12 layui-form-item register_store_username">
+                            <span class="layui-col-md3 register_store_username_text">用户名：</span>
+                            <span class="layui-col-md7">
+                                <input type="text" name="username" path="userName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input register_store_username_text1" >
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item register_store_password">
+                            <span class="layui-col-md3 register_store_password_text">密码：</span>
+                            <span class="layui-col-md7">
+                                <input type="text" name="password" path="passWord" required lay-verify="required" placeholder="8~16位字母数字组合" autocomplete="off" class="layui-input register_store_password_text1" >
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item register_store_phone">
+                            <span class="layui-col-md3 register_store_phone_text">手机号：</span>
+                            <span class="layui-col-md7">
+                                <input type="text" name="storephone" path="storePhone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input register_store_phone_text1" >
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item register_store_email">
+                            <span class="layui-col-md3 register_store_email_text">邮箱：</span>
+                            <span class="layui-col-md7">
+                                <input type="text" name="storeemail" path="storeEmail" required lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" class="layui-input register_store_eamil_text1" >
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-md4">
+                        <div class="layui-col-md12 layui-form-item">
+                            <span class="layui-col-md3 register_store_headimg_text">头像：</span>
+                            <span class="layui-col-md4">
+                            <img src="../../resources/images/house.jpg" class="register_store_headingimg" >
+                            </span>
+                            <span>
+                                <input type="file"  class="register_store_upload" required lay-verify="required" autocomplete="off" onchange="imgPreview(this)">
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item">
+                            <span class="layui-col-md3 register_store_logo_text">LOGO：</span>
+                            <span class="layui-col-md4">
+                            <img src="../../resources/images/house.jpg" class="register_store_logoimg" >
+                            </span>
+                            <span>
+                                <input type="file"  class="register_store_logoupload" required lay-verify="required" autocomplete="off" onchange="imgPreview1(this)">
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item register_store_storename">
+                            <span class="layui-col-md3 register_store_email_text">商户名：</span>
+                            <span class="layui-col-md7">
+                                <input type="text" name="storename" path="storeName" required lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" class="layui-input register_store_eamil_text1" >
+                            </span>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <div class="layui-col-md12 layui-form-item register_store_address">
+                            <span class="layui-col-md3 register_store_address_text">地址：</span>
+                            <span class="layui-col-md9 ">
+                                <select runat="server" lay-ignore class="layui-col-md12" id="province">
+
+                                </select>
+                            </span>
+                            <span class="layui-col-md5 layui-col-md-offset3">
+                                <select runat="server" lay-ignore class="layui-col-md12" id="city">
+                                </select>
+                            </span>
+                            <span class="layui-col-md4">
+                                    <select runat="server" lay-ignore class="layui-col-md12" id="area">
+                                    </select>
+                            </span>
+                        </div>
+                        <div class="layui-col-md12 layui-form-item register_store_property">
+                            <span class="layui-col-md3 register_store_porperty_text">资产证明</span>
+                            <span class="layui-col-md9">
+                                <input type="file" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)">
+                            </span>
+                            <div id="register_store_porperty_show" class=" layui-col-md12 register_store_porperty_show">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md12">
+                        <button type="submit" class="layui-col-md4 layui-col-md-offset4 layui-btn layui-btn-primary register_store_success">完成注册</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../resources/js/jquery-3.2.1.min.js"></script>
+    <script src="../../resources/layui.js"></script>
+    <script src="../../resources/js/register_store.js"></script>
+</body>
+
+</html>

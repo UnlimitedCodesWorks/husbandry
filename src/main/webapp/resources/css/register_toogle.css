@@ -1,0 +1,115 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+body {
+    overflow-y: hidden;
+}
+
+.register_user_top {
+    position: fixed;
+}
+
+.register_user_top1 {
+    cursor: pointer;
+    text-align: center;
+}
+
+.register_user_webname {
+    text-align: center;
+    cursor: pointer;
+}
+
+.register_user_bgimg {
+    width: 100%;
+}
+
+.register_toogle_user {
+    width: 20%;
+    height: 20vw;
+    position: absolute;
+    top: 30%;
+    left: 28%;
+    overflow: hidden;
+    cursor: pointer;
+    font-size: 23px;
+    background-color: rgba(249, 247, 232, 0.8);
+    color: rgba(27, 29, 28, 0.73);
+    transition: box-shadow 0.7s, color 0.7s, width 0.7s, height 0.7s, top 0.7s, left 0.7s;
+    border-radius: 4px;
+}
+
+.register_toogle_user:hover {
+    color: #1b1d1c;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.80);
+    width: 21%;
+    height: 21vw;
+    top: 29.5%;
+    left: 27.5%;
+}
+
+.register_toogle_user_img {
+    text-align: center;
+    margin-top: 10%;
+    width: 100%;
+    height: 55%;
+}
+
+.register_toogle_user_img img {
+    width: 55%;
+    height: 100%;
+}
+
+.register_toogle_user_text {
+    text-align: center;
+    width: 100%;
+    margin-top: 10%;
+    font-family: 微软雅黑;
+    font-weight: bold;
+}
+
+.register_toogle_store {
+    width: 20%;
+    height: 20vw;
+    position: absolute;
+    top: 30%;
+    left: 52%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: rgba(249, 247, 232, 0.8);
+    color: rgba(27, 29, 28, 0.73);
+    transition: box-shadow 0.7s, color 0.7s, width 0.7s, height 0.7s, top 0.7s, left 0.7s;
+    border-radius: 4px;
+}
+
+.register_toogle_store:hover {
+    color: #1b1d1c;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.80);
+    width: 21%;
+    height: 21vw;
+    top: 29.5%;
+    left: 51.5%;
+}
+
+.register_toogle_store_img {
+    text-align: center;
+    margin-top: 10%;
+    width: 100%;
+    height: 55%;
+}
+
+.register_toogle_store_img img {
+    width: 55%;
+    height: 100%;
+}
+
+.register_toogle_store_text {
+    text-align: center;
+    width: 100%;
+    margin-top: 10%;
+    font-size: 23px;
+    font-family: 微软雅黑;
+    font-weight: bold;
+}
