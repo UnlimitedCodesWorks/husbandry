@@ -285,20 +285,22 @@ public class HhfTest {
 //        System.out.print(b);
 
         //修改一个服务人员模板
-        File file1 = new File("src/main/test/test1.jpg");
-        FileInputStream input1 = new FileInputStream(file1);
-        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+//        File file1 = new File("src/main/test/test1.jpg");
+//        FileInputStream input1 = new FileInputStream(file1);
+//        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+//
+//        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
+//        servicePeopleUpdate.setServicepeopleid(15);
+//        servicePeopleUpdate.setSphead(multipartFile1);
+//        servicePeopleUpdate.setSpName("wuliafeng");
+//
+//        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
+//        System.out.print(b);
 
-        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
-        servicePeopleUpdate.setServicepeopleid(15);
-        servicePeopleUpdate.setSphead(multipartFile1);
-        servicePeopleUpdate.setSpName("wuliafeng");
-
-        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
-        System.out.print(b);
+        //?????????????
 
         //根据服务人员名字显示模板
-//        ServicePeople servicePeople=servicePeopleService.getServicePeople("HHF");
+//        ServicePeople servicePeople=servicePeopleService.getServicePeople("aaa");
 //        System.out.print(JSON.toJSONString(servicePeople,true));
 
         //供应商派遣服务人员

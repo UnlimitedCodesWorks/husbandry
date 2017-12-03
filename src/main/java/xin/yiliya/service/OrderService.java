@@ -81,6 +81,6 @@ public interface OrderService {
     public Boolean storeSureCancelOrder(int [] orderId);
 
     //商户派遣服务人员
-    public Integer dispatcheServicePeople(OrderPeople orderPeople);
+    public Integer dispatchServicePeople(OrderPeople orderPeople);
 
 }

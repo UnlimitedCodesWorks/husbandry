@@ -172,7 +172,7 @@
         sp_otherinfo = #{spOtherinfo,jdbcType=VARCHAR},
       </if>
       <if test="upTime != null">
-        time = #{upTime,jdbcType=TIMESTAMP},
+        up_time = #{upTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where servicepeopleid = #{servicepeopleid,jdbcType=INTEGER}
