@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 	var nav = new Vue({
 		el: 'nav',
 		data: {
-			isLogin: true
+			isLogin: false
 		}
 	});
 

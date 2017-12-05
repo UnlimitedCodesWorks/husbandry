@@ -25,16 +25,12 @@
     areas
     WHERE
     cityid = #{cityId,jdbcType=VARCHAR}
-    ORDER BY
-    convert(area using gbk)
   </select>
   <select id="selectAllAreas" resultMap="BaseResultMap1">
     SELECT
     <include refid="Base_Column_List1" />
     FROM
     areas
-    ORDER BY
-    convert(area using gbk)
   </select>
   <select id="selectAridByAreaId" resultType="java.lang.Integer" parameterType="java.lang.String">
     SELECT
