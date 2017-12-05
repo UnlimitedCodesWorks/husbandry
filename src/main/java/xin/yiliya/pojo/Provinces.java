@@ -2,7 +2,7 @@ package xin.yiliya.pojo;
 
 import java.io.Serializable;
 
-public class Provinces implements Serializable {
+public class Provinces implements Serializable{
 
     private static final long serialVersionUID = -7186865862299738725L;
 
@@ -35,4 +35,5 @@ public class Provinces implements Serializable {
     public void setProvince(String province) {
         this.province = province == null ? null : province.trim();
     }
+
 }

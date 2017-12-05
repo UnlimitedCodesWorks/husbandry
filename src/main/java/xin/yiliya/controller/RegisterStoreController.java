@@ -13,6 +13,7 @@ import xin.yiliya.service.StoreService;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
@@ -27,7 +28,7 @@ public class RegisterStoreController {
 
     @RequestMapping(value = "/register.html",method = RequestMethod.GET)
     public String store(Model model){
-        Map<String,String> provinces = new HashMap<String, String>(regionService.getAllProvinces());
+        Map<String,String> provinces = regionService.getAllProvinces();
         model.addAttribute("provinces",provinces);
         model.addAttribute("registerStore",new RegisterStore());
         return "register_store";

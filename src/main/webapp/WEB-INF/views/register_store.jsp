@@ -2,7 +2,8 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+String registerPath =
+        request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/store/register.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -29,7 +30,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_main">
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title">商户注册</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-                <f:form cssClass="layui-form"   action="http://localhost:8080/store/register.do" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
+                <f:form cssClass="layui-form"   action="<%=registerPath%>" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
                     <div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_username">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_username_text">账户名：</span>
@@ -88,7 +89,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_address_text">地址：</span>
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs7">
                                 <f:select path="provinceId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
-                                   <f:options items="${provinces}" />
+                                    <f:option value="NONE" label="请选择省份" />
+                                    <f:options items="${provinces}" />
                                 </f:select>
                             </span>
                             <span class="layui-col-md4 layui-col-md-offset4 layui-col-sm5 layui-col-sm-offset2 layui-col-xs4 layui-col-xs-offset4">
