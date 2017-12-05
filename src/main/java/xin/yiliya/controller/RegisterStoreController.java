@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.yiliya.pojo.Areas;
+import xin.yiliya.pojo.Cities;
 import xin.yiliya.pojo.RegisterStore;
 import xin.yiliya.service.AdminService;
 import xin.yiliya.service.RegionService;
@@ -14,6 +16,7 @@ import xin.yiliya.service.StoreService;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,6 +35,18 @@ public class RegisterStoreController {
         model.addAttribute("provinces",provinces);
         model.addAttribute("registerStore",new RegisterStore());
         return "register_store";
+    }
+
+    @RequestMapping(value = "/getCitys.do",method = RequestMethod.POST)
+    @ResponseBody
+    public List<Cities> getCitys(String provinceId){
+        return regionService.getAllCitiesByProvince(provinceId);
+    }
+
+    @RequestMapping(value = "/getAreas.do",method = RequestMethod.POST)
+    @ResponseBody
+    public  List<Areas> getAreas(String cityId){
+        return regionService.getAllAreasByCity(cityId);
     }
 
     @RequestMapping(value = "/register.do",method = RequestMethod.POST)

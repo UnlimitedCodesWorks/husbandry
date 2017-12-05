@@ -2,6 +2,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 String registerPath =
         request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/store/register.do";
 %>
@@ -47,7 +48,7 @@ String registerPath =
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_phone">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_phone_text">手机号：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input  name="storephone" path="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" cssClass="layui-input register_store_phone_text1" />
+                                <f:input  name="storephone" path="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" cssClass="layui-input register_store_phone_text1"  />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_email">
@@ -80,7 +81,7 @@ String registerPath =
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_storename">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_email_text">商户名：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input   path="storeName" required="required" lay-verify="required" placeholder="请输入商户的名字" autocomplete="off" class="layui-input register_store_eamil_text1" />
+                                <f:input  path="storeName" required="required" lay-verify="required" placeholder="请输入商户的名字" autocomplete="off" class="layui-input register_store_eamil_text1" />
                             </span>
                         </div>
                     </div>
@@ -89,16 +90,18 @@ String registerPath =
                             <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_address_text">地址：</span>
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs7">
                                 <f:select path="provinceId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
-                                    <f:option value="NONE" label="请选择省份" />
+                                    <f:option value="NONE" label="省" />
                                     <f:options items="${provinces}" />
                                 </f:select>
                             </span>
                             <span class="layui-col-md4 layui-col-md-offset4 layui-col-sm5 layui-col-sm-offset2 layui-col-xs4 layui-col-xs-offset4">
                                 <f:select path="cityId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
+                                    <f:option value="NONE" label="市" />
                                 </f:select>
                             </span>
                             <span class="layui-col-md4 layui-col-sm5 layui-col-xs3">
                                     <f:select path="areaId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="area">
+                                        <f:option value="NONE" label="区" />
                                     </f:select>
                             </span>
                         </div>
@@ -117,12 +120,62 @@ String registerPath =
                 </f:form>
             </div>
         </div>
-
     </div>
 
-    <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/layui.all.js"></script>
-    <script type="text/javascript" src="../../resources/js/register_store.js"></script>
 </body>
-
+<script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../resources/layui.all.js"></script>
+<script type="text/javascript" src="../../resources/js/register_store.js"></script>
+<script type="text/javascript">
+    var province = $("#province");
+    var city = $("#city");
+    var area = $("#area");
+    var portPath = "<%=portPath%>";
+    province.change(function (e) {
+        city.html("");
+        area.html("");
+        city.append('<option value="NONE" label="市" />');
+        area.append('<option value="NONE" label="区" />');
+        var value = province.val();
+        $.ajax({
+            url :portPath + 'store/getCitys.do',
+            type : "post",
+            data:{
+                provinceId : value
+            },
+            dataType : "json",
+            success: function(data){
+                for(var i=0;i<data.length;i++){
+                    var node = '<option value="'+data[i].cityId+ '" label="'+data[i].city+'" />';
+                    city.append(node);
+                }
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    });
+    city.change(function (e) {
+        area.html("");
+        var value = city.val();
+        area.append('<option value="NONE" label="区" />');
+        $.ajax({
+            url :portPath + 'store/getAreas.do',
+            type : "post",
+            data:{
+                cityId : value
+            },
+            dataType : "json",
+            success: function(data){
+                for(var i=0;i<data.length;i++){
+                    var node = '<option value="'+data[i].areaId+ '" label="'+data[i].area+'" />';
+                    area.append(node);
+                }
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    })
+</script>
 </html>
