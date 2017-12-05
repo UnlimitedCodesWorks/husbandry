@@ -1,3 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +73,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="OperationOverview.jsp">
+                        <a href="/admin/OperationOverview.html">
                             <i class="fa fa-th"></i><span>运营总揽</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-red">new</small>
@@ -76,7 +81,7 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="priceControll.html">
+                        <a href="/admin/priceControll.html">
                             <i class="fa fa-signal"></i><span>价格调控</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green">new</small>
@@ -92,8 +97,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
-                            <li><a href="useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
+                            <li><a href="/admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
+                            <li><a href="/admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -105,7 +110,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
+                            <li><a href="admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -117,7 +122,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
+                            <li><a href="/admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
                         </ul>
                     </li>
                 </ul>

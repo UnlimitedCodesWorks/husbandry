@@ -1,6 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String loginPath= request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/all/userLogin.do";
+%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +32,7 @@
                     <div class=" layui-col-md5 layui-col-sm5 layui-col-xs5 login_store_title">商家登录</div>
                 </div>
                 <!-- 用户登录 -->
-                <form class="layui-form">
+                <form class="layui-form" action="<%=loginPath%>" method="post">
                     <div class="layui-form-item layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 login_user_username">
                         <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 login_user_username_text1">用户名：</span>
                         <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">

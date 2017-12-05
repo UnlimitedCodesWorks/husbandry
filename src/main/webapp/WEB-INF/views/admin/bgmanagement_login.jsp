@@ -2,6 +2,8 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String loginPath =
+            request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/admin/login.do";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +30,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 bgmanagement_login_admin_title">管理员登录</div>
                 </div>
                 <!-- 管理员登录 -->
-                <form class="layui-form" action="/admin/login.do" method="post">
+                <form class="layui-form" action="<%=loginPath%>" method="post">
                     <div class="layui-form-item layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 bgmanagement_login_admin_adminname">
                         <span class="bgmanagement_login_admin_adminname_text1">账号：</span>
                         <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">

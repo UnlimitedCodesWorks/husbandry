@@ -74,7 +74,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="OperationOverview.jsp">
+                        <a href="/admin/OperationOverview.html">
                             <i class="fa fa-th"></i><span>运营总揽</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-red">new</small>
@@ -82,7 +82,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="priceControll.html">
+                        <a href="/admin/priceControll.html">
                             <i class="fa fa-signal"></i><span>价格调控</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green">new</small>
@@ -98,8 +98,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
-                            <li><a href="useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
+                            <li><a href="/admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
+                            <li><a href="/admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -111,7 +111,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
+                            <li><a href="/admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -123,7 +123,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
+                            <li><a href="/admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -263,9 +263,7 @@
             //Boolean - whether to make the chart responsive to window resizing
             responsive           : true,
             // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio  : true,
-            //String - A legend template
-            legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+            maintainAspectRatio  : true
             };
             pieRegisterChart.Doughnut(PieRegisterData, pieOptions);
 
@@ -336,9 +334,7 @@
               datasetStrokeWidth      : 2,
               //Boolean - Whether to fill the dataset with a color
               datasetFill             : true,
-              //String - A legend template
-              legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-              //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
               maintainAspectRatio     : true,
               //Boolean - whether to make the chart responsive to window resizing
               responsive              : true

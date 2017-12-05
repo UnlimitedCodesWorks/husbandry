@@ -10,7 +10,7 @@ import xin.yiliya.service.UserService;
 
 @Controller
 @RequestMapping(value = "/user")
-public class UserController {
+public class RegisterUserController {
 
     @Autowired
     UserService userService;
@@ -23,7 +23,7 @@ public class UserController {
     @RequestMapping(value = "/registerUser.do",method = RequestMethod.POST)
     public String registerUserDo(RegisterUser registerUser){
         Boolean b=userService.userRegister(registerUser);
-        return "redirect:registerUser.html";
+        return "redirect:/all/login.html";
     }
 
 }

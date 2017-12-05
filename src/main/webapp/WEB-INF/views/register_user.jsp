@@ -2,6 +2,9 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String registerPath =
+            request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/user/registerUser.do";
 %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
@@ -28,7 +31,7 @@
     <div class="layui-row layui-col-md8 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset2 register_user_main">
         <div class="layui-col-md10 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset1 register_user_title"><span class="layui-icon">&#xe612;</span> 用户注册</div>
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-            <f:form class="layui-form" method="post" action="/user/registerUser.do" enctype="multipart/form-data">
+            <f:form class="layui-form" method="post" action="<%=registerPath%>" enctype="multipart/form-data">
                 <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_registernum">
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_registernum_text">用户名：</span>
@@ -56,7 +59,7 @@
                         <img src="../../resources/images/house.jpg" class="register_user_headingimg" >
                         </span>
                         <span class="layui-col-sm4 layui-col-xs3">
-                            <f:input path="headImg" type="file" class="register_user_upload" lay-verify="required" autocomplete="off" onchange="imgPreview(this)"/>
+                            <input name="headImg" type="file" class="register_user_upload" lay-verify="required" autocomplete="off" onchange="imgPreview(this)"/>
                         </span>
                     </div>
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_username">
