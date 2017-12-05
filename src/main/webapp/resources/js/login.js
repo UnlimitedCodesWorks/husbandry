@@ -1,10 +1,4 @@
 $(function() {
-    $(".login_store_username").hide();
-    $(".login_store_password").hide();
-    $(".login_store_button").hide();
-});
-
-$(function() {
     $(".login_user_title").click(function() {
         $(".login_user_title").css("color", "white");
         $(".login_user_title").css("background-color", "rgb(95, 184, 119)");
@@ -36,4 +30,15 @@ $(function() {
     $(".login_tz").click(function() {
         window.location.href = "register_toogle.html";
     });
+});
+
+$(window).resize(function() {
+    if ($(window).width() < 768) {
+        $(".login_user_username").css("margin-top", "5px");
+        $(".login_store_username").css("margin-top", "5px");
+
+    } else {
+        $(".login_user_username").css("margin-top", "40px");
+        $(".login_store_username").css("margin-top", "40px");
+    }
 });

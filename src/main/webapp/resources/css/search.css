@@ -124,15 +124,11 @@ nav {
     margin-top: 5px;
 }
 
-
-/* 123 */
-
 .search_main {
     height: 700px;
 }
 
 .search_main_ul {
-    height: 45%;
     margin-bottom: 5%;
 }
 
@@ -142,10 +138,11 @@ nav {
 
 .search_main_ul_ul:hover {
     border: 1px solid #5FB878;
+    box-sizing: content-box;
 }
 
 .search_main_ul_img {
-    height: 60%;
+    height: 190px;
 }
 
 .search_main_ul_img:hover {
@@ -163,7 +160,9 @@ nav {
 .search_price_noise {
     font-size: 5px;
     color: red;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     float: left;
     font-weight: bold;
 }
@@ -178,6 +177,11 @@ nav {
     color: #5FB878;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.search_comsco {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .search_company {

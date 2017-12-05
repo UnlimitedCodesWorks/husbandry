@@ -134,9 +134,10 @@ function imgPreview1(fileDom) {
 //多图
 function imgPreview2(fileDom) {
     var ddd = document.getElementById("porperty_input");
+    document.getElementById("register_store_porperty_show").innerHTML = "";
     var fileList = ddd.files;
     for (var i = 0; i < fileList.length; i++) {
-        document.getElementById("register_store_porperty_show").innerHTML += '<img class="layui-col-md4 register_store_porperty_img" src="' + window.URL.createObjectURL(ddd.files[i]) + '" />';
+        document.getElementById("register_store_porperty_show").innerHTML += '<img class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_porperty_img" src="' + window.URL.createObjectURL(ddd.files[i]) + '" />';
     }
 
     if (window.FileReader) {

@@ -4,17 +4,16 @@
     list-style-type: none;
 }
 
-body {
-    overflow-y: hidden;
-}
-
 .register_user_top {
     position: fixed;
+    z-index: 999;
 }
 
 .register_user_l {
     width: 100%;
-    position: absolute;
+    position: fixed;
+    top: 0px;
+    left: 0px;
     background-color: rgba(0, 0, 0, 0.38);
     height: 100%;
 }
@@ -30,13 +29,21 @@ body {
 }
 
 .register_user_bgimg {
+    background-image: url("../images/backimg1.jpg");
     width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    z-index: -99;
+    min-width: 1000px;
 }
 
 .register_user_main {
     position: absolute;
     border-radius: 5px;
     top: 25%;
+    margin-bottom: 50px;
     background-color: rgba(249, 247, 232, 0.78);
 }
 
