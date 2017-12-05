@@ -1,4 +1,16 @@
 jQuery(document).ready(function($) {
+	$("#wrap").css({
+		minHeight: ($(window).height()-110)+'px'
+	});
+
+	var layerWidth;
+	if($(window).width()>=768) {
+		layerWidth = '50%';
+	}
+	else {
+		layerWidth = '80%';
+	}
+
 	layui.use('element', function(){
 		//实例化element
   		var element = layui.element;
@@ -8,11 +20,6 @@ jQuery(document).ready(function($) {
         element.on('tab(demo)',function (data) {
         	console.log(data);
         });
-	});
-
-	layui.use('form', function(){
-		//实例化form
-  		var form = layui.form;
 	});
 
 	layui.use('laydate', function(){
@@ -28,7 +35,7 @@ jQuery(document).ready(function($) {
   		//执行一个laypage实例
   		//全部订单
   		laypage.render({
-    		elem: 'all-page1', //注意，这里的 test1 是 ID，不用加 # 号
+    		elem: 'all-page1', //注意，这里是ID，不用加 # 号
     		count: 100, //数据总数，从服务端得到
     		limit: 4,
     		jump: function(obj, first){
@@ -43,7 +50,7 @@ jQuery(document).ready(function($) {
   		});
   		//待派遣
   		laypage.render({
-    		elem: 'all-page2', //注意，这里的 test1 是 ID，不用加 # 号
+    		elem: 'all-page2', //注意，这里是ID，不用加 # 号
     		count: 100, //数据总数，从服务端得到
     		limit: 4,
     		jump: function(obj, first){
@@ -58,7 +65,7 @@ jQuery(document).ready(function($) {
   		});
   		//待确认
   		laypage.render({
-    		elem: 'all-page3', //注意，这里的 test1 是 ID，不用加 # 号
+    		elem: 'all-page3', //注意，这里是ID，不用加 # 号
     		count: 100, //数据总数，从服务端得到
     		limit: 4,
     		jump: function(obj, first){
@@ -73,7 +80,52 @@ jQuery(document).ready(function($) {
   		});
   		//待评价
   		laypage.render({
-    		elem: 'all-page4', //注意，这里的 test1 是 ID，不用加 # 号
+    		elem: 'all-page4', //注意，这里是ID，不用加 # 号
+    		count: 100, //数据总数，从服务端得到
+    		limit: 4,
+    		jump: function(obj, first){
+    			//obj包含了当前分页的所有参数，比如：
+    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+    			console.log(obj.limit); //得到每页显示的条数
+    			//首次不执行
+    			if(!first){
+      				//do something
+    			}
+  			}
+  		});
+  		//关注的服务
+  		laypage.render({
+    		elem: 'service-page', //这里是ID，不用加 # 号
+    		count: 100, //数据总数，从服务端得到
+    		limit: 4,
+    		jump: function(obj, first){
+    			//obj包含了当前分页的所有参数，比如：
+    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+    			console.log(obj.limit); //得到每页显示的条数
+    			//首次不执行
+    			if(!first){
+      				//do something
+    			}
+  			}
+  		});
+  		//关注的服务商
+  		laypage.render({
+    		elem: 'store-page', //这里是ID，不用加 # 号
+    		count: 100, //数据总数，从服务端得到
+    		limit: 4,
+    		jump: function(obj, first){
+    			//obj包含了当前分页的所有参数，比如：
+    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+    			console.log(obj.limit); //得到每页显示的条数
+    			//首次不执行
+    			if(!first){
+      				//do something
+    			}
+  			}
+  		});
+  		//退款详情
+  		laypage.render({
+    		elem: 'refund-page', //这里是ID，不用加 # 号
     		count: 100, //数据总数，从服务端得到
     		limit: 4,
     		jump: function(obj, first){
@@ -88,11 +140,70 @@ jQuery(document).ready(function($) {
   		});
 	});
 
+	layui.use('layer', function(){
+  		var layer = layui.layer;
+  		$(".check-progress").click(function(event) {
+  			layer.open({
+  				type: 1,
+  				title: 'XXXX服务进展状态',
+  				area: layerWidth,
+  				anim: 2,
+  				content: $('#service-progress')
+			});
+  		});
+
+  		$(".refund").click(function(event) {
+  			layer.open({
+  				type: 1,
+  				title: '撤销订单',
+  				area: layerWidth,
+  				anim: 2,
+  				content: $('#refund')
+			});
+  		});
+
+  		$(".head-mask a").click(function(event) {
+  			layer.open({
+  				type: 1,
+  				title: '修改头像',
+  				area: layerWidth,
+  				anim: 2,
+  				content: $('#head')
+			});
+  		});
+
+  		$(".refund-reason").click(function(event) {
+  			layer.open({
+  				type: 0,
+  				title: '退款理由',
+  				anim: 2,
+  				content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error dolorum voluptate, at obcaecati, aspernatur tempore esse suscipit sint asperiores dignissimos saepe quas excepturi ullam quasi quisquam aliquid! Minus, laboriosam quia!'
+			});
+  		});
+
+  		$(".delete").click(function(event) {
+  			layer.confirm('您确定要删除该订单吗？', {
+  				btn: ['确定','关闭'] //按钮
+			}, function(){
+  				layer.msg("已删除",{
+  					time: 1000
+  				});
+			}, function(){
+				//dosomething
+			});
+  		});
+	});
+
 	var nav = new Vue({
 		el: 'nav',
 		data: {
 			isLogin: false
 		}
+	});
+
+	layui.use('form', function(){
+		//实例化form
+  		var form = layui.form;
 	});
 
 	$(".head-mask").hover(function() {
@@ -103,6 +214,34 @@ jQuery(document).ready(function($) {
 		$(this).css({
 			opacity: '0'
 		});
+	});
+
+	//选择图片
+	$("#btn-upload").change(function(event) {
+		var $file = $(this);
+		var fileObj = $file[0];
+		var windowURL = window.URL || window.webkitURL;
+		var dataURL;
+		var $img = $("#head-img");
+		console.log(fileObj.files)
+		if(fileObj && fileObj.files && fileObj.files[0]){
+			dataURL = windowURL.createObjectURL(fileObj.files[0]);
+			$img.attr('src',dataURL);
+			//cropper
+			$('#head-img-wrap img').cropper({
+  				aspectRatio: 1 / 1,
+  					crop: function(data) {
+    				// Output the result data for cropping image.
+  				}
+			});
+			$('#head-img-wrap img').cropper('replace', dataURL);
+		}
+		else{
+			dataURL = $file.val();
+			var imgObj = document.getElementById("#head-img");
+			imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+			imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+		}
 	});
 
 	//particles
