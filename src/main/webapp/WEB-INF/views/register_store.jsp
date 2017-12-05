@@ -1,3 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,30 +29,30 @@
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_main">
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title">商户注册</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-                <form class="layui-form">
+                <f:form cssClass="layui-form"   action="http://localhost:8080/store/register.do" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
                     <div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_username">
-                            <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_username_text">用户名：</span>
+                            <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_username_text">账户名：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <input type="text" name="username" path="userName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input register_store_username_text1" >
+                                <f:input name="username" path="registNum"  required="required" lay-verify="required" placeholder="请输入用户名" autocomplete="off" cssClass="layui-input register_store_username_text1" />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_password">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_password_text">密码：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <input type="text" name="password" path="passWord" required lay-verify="required" placeholder="8~16位组合" autocomplete="off" class="layui-input register_store_password_text1" >
+                                <f:password  name="password" path="password" required="required" lay-verify="required" placeholder="8~16位组合" autocomplete="off" cssClass="layui-input register_store_password_text1" />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_phone">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_phone_text">手机号：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <input type="text" name="storephone" path="storePhone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input register_store_phone_text1" >
+                                <f:input  name="storephone" path="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" cssClass="layui-input register_store_phone_text1" />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_email">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_email_text">邮箱：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <input type="text" name="storeemail" path="storeEmail" required lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" class="layui-input register_store_eamil_text1" >
+                                <f:input  name="storeemail" path="email" required="required" lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" cssClass="layui-input register_store_eamil_text1" />
                             </span>
                         </div>
 
@@ -56,7 +64,7 @@
                             <img src="../../resources/images/house.jpg" class="register_store_headingimg" >
                             </span>
                             <span class="layui-col-sm4 layui-col-xs4">
-                                <input type="file"  class="register_store_upload" required lay-verify="required" autocomplete="off" onchange="imgPreview(this)">
+                                <input type="file" name="headImg"  class="register_store_upload" required lay-verify="required" autocomplete="off" onchange="imgPreview(this)">
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item">
@@ -65,13 +73,13 @@
                             <img src="../../resources/images/house.jpg" class="register_store_logoimg" >
                             </span>
                             <span class="layui-col-sm4 layui-col-xs4">
-                                <input type="file"  class="register_store_logoupload" required lay-verify="required" autocomplete="off" onchange="imgPreview1(this)">
+                                <input type="file" name="logoImg" class="register_store_logoupload" required lay-verify="required" autocomplete="off" onchange="imgPreview1(this)">
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_storename">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_email_text">商户名：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <input type="text" name="storename" path="storeName" required lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" class="layui-input register_store_eamil_text1" >
+                                <f:input   path="storeName" required="required" lay-verify="required" placeholder="请输入商户的名字" autocomplete="off" class="layui-input register_store_eamil_text1" />
                             </span>
                         </div>
                     </div>
@@ -79,23 +87,23 @@
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_address">
                             <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_address_text">地址：</span>
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs7">
-                                <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
-                                   
-                                </select>
+                                <f:select path="provinceId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
+                                   <f:options items="${provinces}" />
+                                </f:select>
                             </span>
                             <span class="layui-col-md4 layui-col-md-offset4 layui-col-sm5 layui-col-sm-offset2 layui-col-xs4 layui-col-xs-offset4">
-                                <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
-                                </select>
+                                <f:select path="cityId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
+                                </f:select>
                             </span>
                             <span class="layui-col-md4 layui-col-sm5 layui-col-xs3">
-                                    <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="area">
-                                    </select>
+                                    <f:select path="areaId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="area">
+                                    </f:select>
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_property">
                             <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_porperty_text">资产证明</span>
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs4">
-                                <input type="file" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)">
+                                <input type="file" name="aptitudeImgs" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)">
                             </span>
                             <div id="register_store_porperty_show" class=" layui-col-md12 layui-col-sm12 layui-col-xs12 register_store_porperty_show">
                             </div>
@@ -104,7 +112,7 @@
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                         <button type="submit" class="layui-col-md4 layui-col-md-offset4 layui-col-sm6 layui-col-sm-offset3 layui-col-xs8 layui-col-xs-offset2 layui-btn layui-btn-primary register_store_success">完成注册</button>
                     </div>
-                </form>
+                </f:form>
             </div>
         </div>
 

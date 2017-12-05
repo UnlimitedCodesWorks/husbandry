@@ -47,7 +47,7 @@ public class RegionServiceImpl implements RegionService {
             provincesList = list.range("provinces",0,-1);
         }
         for(Provinces province: provincesList){
-            provinceMap.put(province.getProvince(), String.valueOf(province.getProvinceId()));
+            provinceMap.put(String.valueOf(province.getProvinceId()),province.getProvince() );
         }
         return provinceMap;
     }
@@ -67,7 +67,7 @@ public class RegionServiceImpl implements RegionService {
 
         }
         for(Cities citie : citiesList){
-            citiesMap.put(citie.getCity(), String.valueOf(citie.getCityId()));
+            citiesMap.put(String.valueOf(citie.getCityId()),citie.getCity());
         }
         return citiesMap;
     }
@@ -86,7 +86,7 @@ public class RegionServiceImpl implements RegionService {
              areasList = list.range(cityId,0,-1);
         }
         for(Areas area:areasList){
-            aresMap.put(area.getArea(), String.valueOf(area.getAreaId()));
+            aresMap.put(String.valueOf(area.getAreaId()),area.getArea());
         }
         return aresMap;
     }

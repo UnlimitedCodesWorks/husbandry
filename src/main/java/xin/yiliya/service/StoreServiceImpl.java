@@ -1,5 +1,6 @@
 package xin.yiliya.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
@@ -55,6 +56,7 @@ public class StoreServiceImpl implements StoreService {
             store.setRegistTime(new Date());
             //设置为未审核状态
             store.setStatus(0);
+            store.setDetailInfo("暂无详细信息");
             store.setArid(areasMapper.selectAridByAreaId(registerStore.getAreaId()));
             store.setHeadImg(aliOssTool.putImage(registerStore.getHeadImg(),"store"));
             store.setLogoImg(aliOssTool.putImage(registerStore.getLogoImg(),"store"));
@@ -122,20 +124,23 @@ public class StoreServiceImpl implements StoreService {
             case Rank.GRADE_DESC :
                 if(list.size("hotStoreByGrade") == 0){
                     storeList = storeMapper.getAllHotStore();
-                    for(StoreIndex store:storeList){
-                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
-                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
-                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
-                    }
-                    Collections.sort(storeList, new Comparator<StoreIndex>() {
-                        public int compare(StoreIndex o1, StoreIndex o2) {
-                            if(o1.getGrade()<o2.getGrade()) return 1;
-                            else if(o1.getGrade()>o2.getGrade()) return -1;
-                            return 0;
+                    if(storeList.size() != 0){
+                        for(StoreIndex store:storeList){
+                            store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                            store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                            store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
                         }
-                    });
-                    list.rightPushAll("hotStoreByGrade",new PageInfo<StoreIndex>(storeList).getList());
-                    redisTemplate.expire("hotStoreByGrade",5, TimeUnit.MINUTES);
+                        Collections.sort(storeList, new Comparator<StoreIndex>() {
+                            public int compare(StoreIndex o1, StoreIndex o2) {
+                                if(o1.getGrade()<o2.getGrade()) return 1;
+                                else if(o1.getGrade()>o2.getGrade()) return -1;
+                                return 0;
+                            }
+                        });
+                        list.rightPushAll("hotStoreByGrade",new PageInfo<StoreIndex>(storeList).getList());
+                        redisTemplate.expire("hotStoreByGrade",5, TimeUnit.MINUTES);
+                    }
+
                 }else{
                     storeList = list.range("hotStoreByGrade",0,-1);
                 }
@@ -143,20 +148,22 @@ public class StoreServiceImpl implements StoreService {
             case Rank.SALES_DESC :
                 if(list.size("hotStoreBySales") == 0){
                     storeList = storeMapper.getAllHotStore();
-                    for(StoreIndex store:storeList){
-                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
-                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
-                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
-                    }
-                    Collections.sort(storeList, new Comparator<StoreIndex>() {
-                        public int compare(StoreIndex o1, StoreIndex o2) {
-                            if(o1.getMarkNum()<o2.getMarkNum()) return 1;
-                            else if(o1.getMarkNum()>o2.getMarkNum()) return -1;
-                            return 0;
+                    if(storeList.size() != 0) {
+                        for (StoreIndex store : storeList) {
+                            store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                            store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                            store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
                         }
-                    });
-                    list.rightPushAll("hotStoreBySales",new PageInfo<StoreIndex>(storeList).getList());
-                    redisTemplate.expire("hotStoreBySales",5, TimeUnit.MINUTES);
+                        Collections.sort(storeList, new Comparator<StoreIndex>() {
+                            public int compare(StoreIndex o1, StoreIndex o2) {
+                                if (o1.getMarkNum() < o2.getMarkNum()) return 1;
+                                else if (o1.getMarkNum() > o2.getMarkNum()) return -1;
+                                return 0;
+                            }
+                        });
+                        list.rightPushAll("hotStoreBySales", new PageInfo<StoreIndex>(storeList).getList());
+                        redisTemplate.expire("hotStoreBySales", 5, TimeUnit.MINUTES);
+                    }
                 }else{
                     storeList = list.range("hotStoreBySales",0,-1);
                 }
@@ -164,20 +171,22 @@ public class StoreServiceImpl implements StoreService {
             case Rank.HITS_DESC :
                 if(list.size("hotStoreByHITS") == 0){
                     storeList = storeMapper.getAllHotStore();
-                    for(StoreIndex store:storeList){
-                        store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
-                        store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
-                        store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
-                    }
-                    Collections.sort(storeList, new Comparator<StoreIndex>() {
-                        public int compare(StoreIndex o1, StoreIndex o2) {
-                            if(o1.getFans()<o2.getFans()) return 1;
-                            else if(o1.getFans()>o2.getFans()) return -1;
-                            return 0;
+                    if(storeList.size() != 0) {
+                        for (StoreIndex store : storeList) {
+                            store.setFans(storeMapper.getFansByStoreId(store.getStoreId()));
+                            store.setGrade(evaluateStoreService.getGradeByStoreId(store.getStoreId()));
+                            store.setMarkNum(orderService.getStoreServiceFinish(store.getStoreId()));
                         }
-                    });
-                    list.rightPushAll("hotStoreByHITS",new PageInfo<StoreIndex>(storeList).getList());
-                    redisTemplate.expire("hotStoreByHITS",5, TimeUnit.MINUTES);
+                        Collections.sort(storeList, new Comparator<StoreIndex>() {
+                            public int compare(StoreIndex o1, StoreIndex o2) {
+                                if (o1.getFans() < o2.getFans()) return 1;
+                                else if (o1.getFans() > o2.getFans()) return -1;
+                                return 0;
+                            }
+                        });
+                        list.rightPushAll("hotStoreByHITS", new PageInfo<StoreIndex>(storeList).getList());
+                        redisTemplate.expire("hotStoreByHITS", 5, TimeUnit.MINUTES);
+                    }
                 }else{
                     storeList = list.range("hotStoreByHITS",0,-1);
                 }

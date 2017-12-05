@@ -153,6 +153,7 @@
 		</div>
 		<!-- 服务商 -->
 		<div class="layui-container wow bounceInUp reWow2" id="hotStore">
+			<c:if test="${!empty storeIndexList}">
 			<c:forEach var="i" begin="0" end="11" step="4">
 			<div class="layui-row layui-col-space10">
 			<c:forEach var="storeIndex" items="${storeIndexList}" begin="${i}" end="${i+3}">
@@ -174,6 +175,7 @@
 			</c:forEach>
 			</div>
 			</c:forEach>
+			</c:if>
 		</div>
 	</div>
 	<footer>
