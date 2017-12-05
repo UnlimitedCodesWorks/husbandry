@@ -37,62 +37,62 @@ var ddlProvince = document.getElementById("province");
 var ddlCity = document.getElementById("city");
 var ddlArea = document.getElementById("area");
 
-for (var i = 0; i < list1.length; i++) {
-    var option = document.createElement("option");
-    option.appendChild(document.createTextNode(list1[i]));
-    option.value = list1[i];
-    ddlProvince.appendChild(option);
-}
-for (var i = 0; i < list2[0].length; i++) {
-    var node = document.createElement("option");
-    //创建文本节点  
-    var text = document.createTextNode(list2[0][i]);
-    node.appendChild(text);
-    ddlCity.appendChild(node);
-}
-for (var i = 0; i < list3[0].length; i++) {
-    var node = document.createElement("option");
-    //创建文本节点  
-    var text = document.createTextNode(list3[0][0][i]);
-    node.appendChild(text);
-    ddlArea.appendChild(node);
-}
-
-ddlProvince.onchange = function() {
-    var selectNum = this.selectedIndex;
-    var selectCityNum = ddlArea.selectedIndex;
-    ddlCity.length = 0;
-    ddlArea.length = 0;
-    for (var i = 0; i < list2[selectNum].length; i++) {
-        //创建元素节点  
-        var node = document.createElement("option");
-        //创建文本节点  
-        var text = document.createTextNode(list2[selectNum][i]);
-        node.appendChild(text);
-        ddlCity.appendChild(node);
-    }
-
-    for (var i = 0; i < list3[selectNum][selectCityNum].length; i++) {
-        var node = document.createElement("option");
-        var text = document.createTextNode(list3[selectNum][selectCityNum][i]);
-        node.appendChild(text);
-        ddlArea.appendChild(node);
-    }
-
-
-}
-ddlCity.onchange = function() {
-    ddlArea.length = 0;
-    var selectAreaNum = this.selectedIndex;
-    var selectCityNum = ddlProvince.selectedIndex;
-    for (var i = 0; i < list3[selectCityNum][selectAreaNum].length; i++) {
-        var node = document.createElement("option");
-        var text = document.createTextNode(list3[selectCityNum][selectAreaNum][i]);
-        node.appendChild(text);
-        ddlArea.appendChild(node);
-    }
-}
-
+// for (var i = 0; i < list1.length; i++) {
+//     var option = document.createElement("option");
+//     option.appendChild(document.createTextNode(list1[i]));
+//     option.value = list1[i];
+//     ddlProvince.appendChild(option);
+// }
+// for (var i = 0; i < list2[0].length; i++) {
+//     var node = document.createElement("option");
+//     //创建文本节点
+//     var text = document.createTextNode(list2[0][i]);
+//     node.appendChild(text);
+//     ddlCity.appendChild(node);
+// }
+// for (var i = 0; i < list3[0].length; i++) {
+//     var node = document.createElement("option");
+//     //创建文本节点
+//     var text = document.createTextNode(list3[0][0][i]);
+//     node.appendChild(text);
+//     ddlArea.appendChild(node);
+// }
+//
+// ddlProvince.onchange = function() {
+//     var selectNum = this.selectedIndex;
+//     var selectCityNum = ddlArea.selectedIndex;
+//     ddlCity.length = 0;
+//     ddlArea.length = 0;
+//     for (var i = 0; i < list2[selectNum].length; i++) {
+//         //创建元素节点
+//         var node = document.createElement("option");
+//         //创建文本节点
+//         var text = document.createTextNode(list2[selectNum][i]);
+//         node.appendChild(text);
+//         ddlCity.appendChild(node);
+//     }
+//
+//     for (var i = 0; i < list3[selectNum][selectCityNum].length; i++) {
+//         var node = document.createElement("option");
+//         var text = document.createTextNode(list3[selectNum][selectCityNum][i]);
+//         node.appendChild(text);
+//         ddlArea.appendChild(node);
+//     }
+//
+//
+// }
+// ddlCity.onchange = function() {
+//     ddlArea.length = 0;
+//     var selectAreaNum = this.selectedIndex;
+//     var selectCityNum = ddlProvince.selectedIndex;
+//     for (var i = 0; i < list3[selectCityNum][selectAreaNum].length; i++) {
+//         var node = document.createElement("option");
+//         var text = document.createTextNode(list3[selectCityNum][selectAreaNum][i]);
+//         node.appendChild(text);
+//         ddlArea.appendChild(node);
+//     }
+// }
+//
 
 
 //商户头像
