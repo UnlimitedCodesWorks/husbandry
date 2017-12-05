@@ -71,6 +71,7 @@ public class StoreServiceImpl implements StoreService {
             }
             return storeId;
         }catch (Exception e){
+            e.printStackTrace();
             return 0;
         }
     }

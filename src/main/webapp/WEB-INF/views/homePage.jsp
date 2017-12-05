@@ -2,6 +2,7 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -26,11 +27,11 @@
 		<nav>
 			<ul class="layui-nav">
 				<li class="layui-nav-item ">
-					<a href="javascript:;" title="Husbandry">Husbandry</a>
+					<a href="" title="Husbandry">Husbandry</a>
 				</li>
 				<template v-if="isLogin">
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="注册">注册</a>
+						<a href="<%=portPath%>register.html" title="注册">注册</a>
 					</li>
 					<li class="layui-nav-item">
 						<a href="javascript:;" title="登录">登录</a>

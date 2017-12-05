@@ -14,5 +14,7 @@
     <include refid="Base_Column_List" />
     FROM
     provinces
+    ORDER BY
+    convert(province using gbk)
   </select>
 </mapper>
