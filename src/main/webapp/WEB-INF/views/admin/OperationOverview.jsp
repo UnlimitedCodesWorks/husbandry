@@ -1,3 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +74,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="OperationOverview.html">
+                        <a href="OperationOverview.jsp">
                             <i class="fa fa-th"></i><span>运营总揽</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-red">new</small>
