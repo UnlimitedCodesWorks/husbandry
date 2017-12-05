@@ -26,7 +26,7 @@ public class AliOssTool {
 
     //将单个图片传入指定目录
     public String putImage(MultipartFile file,String nameSpace) throws ImageFormatException, IOException {
-        String fileName = file.getName();
+        String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         String date = df.format(new Date());

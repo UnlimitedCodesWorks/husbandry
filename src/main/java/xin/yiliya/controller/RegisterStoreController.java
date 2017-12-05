@@ -1,5 +1,6 @@
 package xin.yiliya.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,13 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Areas;
 import xin.yiliya.pojo.Cities;
 import xin.yiliya.pojo.RegisterStore;
-import xin.yiliya.service.AdminService;
 import xin.yiliya.service.RegionService;
 import xin.yiliya.service.StoreService;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +48,8 @@ public class RegisterStoreController {
     }
 
     @RequestMapping(value = "/register.do",method = RequestMethod.POST)
-    @ResponseBody
-    public Integer register(RegisterStore store){
-        return storeService.register(store);
+    public String register(@ModelAttribute("registerStore") RegisterStore store){
+        Integer b = storeService.register(store);
+        return "redirect:/index.html";
     }
 }

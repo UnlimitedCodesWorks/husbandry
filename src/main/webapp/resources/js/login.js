@@ -28,7 +28,7 @@ $(function() {
     });
 
     $(".login_tz").click(function() {
-        window.location.href = "register_toogle.html";
+        window.location.href = location.href;
     });
 });
 
