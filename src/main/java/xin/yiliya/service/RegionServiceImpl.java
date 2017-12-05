@@ -52,7 +52,7 @@ public class RegionServiceImpl implements RegionService {
         return provinceMap;
     }
 
-    public Map<String, String> getAllCitiesByProvince(String provinceId) {
+    public List<Cities> getAllCitiesByProvince(String provinceId) {
         ListOperations<String, Cities> list = redisCitiesTemplate.opsForList();
         List<Cities> citiesList;
         Map<String,String> citiesMap = new LinkedHashMap<String, String>();
@@ -66,13 +66,10 @@ public class RegionServiceImpl implements RegionService {
             citiesList = list.range(provinceId,0,-1);
 
         }
-        for(Cities citie : citiesList){
-            citiesMap.put(String.valueOf(citie.getCityId()),citie.getCity());
-        }
-        return citiesMap;
+        return citiesList;
     }
 
-    public Map<String, String> getAllAreasByCity(String cityId) {
+    public List<Areas> getAllAreasByCity(String cityId) {
         ListOperations<String, Areas> list = redisAreasTemplate.opsForList();
         List<Areas> areasList;
         Map<String,String> aresMap = new LinkedHashMap<String, String>();
@@ -85,10 +82,7 @@ public class RegionServiceImpl implements RegionService {
         }else {
              areasList = list.range(cityId,0,-1);
         }
-        for(Areas area:areasList){
-            aresMap.put(String.valueOf(area.getAreaId()),area.getArea());
-        }
-        return aresMap;
+        return areasList;
     }
 
     public Integer selectCiidByCityId(String CityId) {

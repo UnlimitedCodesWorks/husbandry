@@ -25,6 +25,8 @@
     cities
     WHERE
     provinceid = #{provinceId,jdbcType=VARCHAR}
+    ORDER BY
+    convert(city using gbk)
   </select>
 
   <select id="selectAllCities" resultMap="BaseResultMap1">
@@ -32,6 +34,8 @@
     <include refid="Base_Column_List1" />
     FROM
     cities
+    ORDER BY
+    convert(city using gbk)
   </select>
 
   <select id="selectCiidByCityId" resultType="java.lang.Integer" parameterType="java.lang.String">
