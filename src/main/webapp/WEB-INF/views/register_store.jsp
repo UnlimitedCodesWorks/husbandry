@@ -22,8 +22,8 @@ String registerPath =
 
 <body>
     <ul class="layui-nav layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 register_store_top">
-        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 register_store_webname">Husbandry</li>
-        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-md-offset10 layui-col-xs-offset6 layui-col-sm-offset9 register_store_top1">返回首页<span class="layui-icon">&#xe602;</span></li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 register_store_webname" onclick="location.href='<%=portPath%>index.html'" >Husbandry</li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-md-offset10 layui-col-xs-offset6 layui-col-sm-offset9 register_store_top1" onclick="location.href='<%=portPath%>index.html'" >返回首页<span class="layui-icon">&#xe602;</span></li>
     </ul>
     <div class="register_store_l"></div>
     <div class="register_store_bgimg"></div>

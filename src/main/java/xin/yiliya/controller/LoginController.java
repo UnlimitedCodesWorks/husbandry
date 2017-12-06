@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.UserService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value = "/all")
+@RequestMapping(value = "/login")
 public class LoginController {
 
-    @Autowired
-    UserService userService;
+    @Resource
+    private UserService userService;
 
-    @Autowired
-    HttpSession httpSession;
+    @Resource
+    private HttpSession httpSession;
 
-    @RequestMapping(value = "/login.html",method = RequestMethod.GET)
-    public String loginHTML(){
+    @RequestMapping(value = "/user.html",method = RequestMethod.GET)
+    public String user(){
         return "login";
     }
 

@@ -21,8 +21,12 @@ public class AliOssTool {
     private final static String BUCKETNAME = "husbandry";
     private final static String ENDPOINT = "http://husbandry.oss-cn-shanghai.aliyuncs.com/";
 
+    private OSSClient ossClient;
+
     @Autowired
-    OSSClient ossClient;
+    public AliOssTool(OSSClient ossClient) {
+        this.ossClient = ossClient;
+    }
 
     //将单个图片传入指定目录
     public String putImage(MultipartFile file,String nameSpace) throws ImageFormatException, IOException {

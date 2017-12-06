@@ -8,12 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 import xin.yiliya.pojo.RegisterUser;
 import xin.yiliya.service.UserService;
 
+import javax.annotation.Resource;
+
 @Controller
 @RequestMapping(value = "/user")
 public class RegisterUserController {
 
-    @Autowired
-    UserService userService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "/registerUser.html",method = RequestMethod.GET)
     public ModelAndView registerUserHTML(){

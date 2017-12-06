@@ -27,14 +27,14 @@
 		<nav>
 			<ul class="layui-nav">
 				<li class="layui-nav-item ">
-					<a href="" title="Husbandry">Husbandry</a>
+					<a href="" title="Husbandry" >Husbandry</a>
 				</li>
 				<template v-if="isLogin">
 					<li class="layui-nav-item">
 						<a href="<%=portPath%>register.html" title="注册">注册</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="登录">登录</a>
+						<a href="<%=portPath%>login/user.html" title="登录">登录</a>
 					</li>
 				</template>
  				<li class="layui-nav-item" v-else>

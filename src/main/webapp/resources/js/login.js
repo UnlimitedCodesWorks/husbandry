@@ -27,9 +27,6 @@ $(function() {
         $(".login_store_button").show();
     });
 
-    $(".login_tz").click(function() {
-        window.location.href = location.href;
-    });
 });
 
 $(window).resize(function() {

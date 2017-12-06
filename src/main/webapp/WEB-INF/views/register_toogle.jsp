@@ -18,8 +18,8 @@
 
 <body>
     <ul class="layui-nav layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 register_user_top">
-        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 register_user_webname">Husbandry</li>
-        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-xs-offset6 layui-col-sm-offset9 layui-col-md-offset10 register_user_top1">返回首页<span class="layui-icon">&#xe602;</span></li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 register_user_webname" onclick="location.href='<%=portPath%>index.html'">Husbandry</li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-xs-offset6 layui-col-sm-offset9 layui-col-md-offset10 register_user_top1" onclick="location.href='<%=portPath%>index.html'">返回首页<span class="layui-icon">&#xe602;</span></li>
     </ul>
     <div class="register_user_l"></div>
     <div class="register_user_bgimg"></div>
@@ -38,10 +38,7 @@
 </body>
 <script type="text/javascript">
     $(".register_toogle_user").click(function() {
-
-        window.location.href = "";
-
-        window.location.href = location.href;
+        window.location.href = "<%=portPath%>user/registerUser.html";
     });
     $(".register_toogle_store").click(function() {
         window.location.href = "<%=portPath%>store/register.html";
