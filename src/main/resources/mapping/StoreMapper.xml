@@ -297,11 +297,11 @@
   <resultMap id="getAllHotStore" type="xin.yiliya.pojo.StoreIndex">
     <id property="storeId" column="storeid" />
     <result property="storeName" column="store_name" />
-    <result property="headImg" column="head_img" />
+    <result property="headImg" column="logo_img" />
   </resultMap>
   <select id="getAllHotStore" resultMap="getAllHotStore">
     SELECT
-    storeid,store_name,head_img
+    storeid,store_name,logo_img
     FROM store
     WHERE status != 0
   </select>

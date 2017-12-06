@@ -165,7 +165,7 @@
 					</div>
 					<div class="layui-row row-in2">
 						<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${storeIndex.storeName}</a></div>
-						<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：${storeIndex.grade}分</div>
+						<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${storeIndex.grade==0}" >未评分</c:if><c:if test="${storeIndex.grade!=0}" >${storeIndex.grade}分</c:if></div>
 					</div>
 					<div class="layui-row row-in3">
 						<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${storeIndex.fans}关注</div>
