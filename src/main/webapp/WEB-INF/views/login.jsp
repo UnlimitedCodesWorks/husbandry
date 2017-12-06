@@ -3,7 +3,8 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-    String loginPath= request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/all/userLogin.do";
+    String loginPath= request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/login/userLogin.do";
+    String storeLoginPath = portPath+"login/storeLogin.do";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,11 +52,11 @@
                     </div>
                 </form>
                 <!-- 企业登录 -->
-                <form class="layui-form">
+                <form class="layui-form" action="<%=storeLoginPath%>" method="post">
                     <div class="layui-form-item layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 login_store_username">
                         <span class="layui-col-md3 layui-col-sm3 layui-col-xs3 login_store_username_text1">用户名：</span>
                         <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                    <input type="text" name="username" required lay-verify="required" placeholder="企业输入用户名" autocomplete="off" class="layui-input login_store_username_text2">
+                                    <input type="text" name="loginName" required lay-verify="required" placeholder="企业输入用户名" autocomplete="off" class="layui-input login_store_username_text2">
                                 </span>
 
                     </div>

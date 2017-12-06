@@ -72,28 +72,28 @@
 		<!-- 服务 -->
 		<div class="layui-container">
 			<div class="layui-row layui-col-space10">
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInLeft">
+				<a href="<%=portPath%>search/view.html?kind=1" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInLeft">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe601;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">保姆</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Nanny</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
+				<a href="<%=portPath%>search/view.html?kind=2" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe639;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">月嫂</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Maternity Matron</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
+				<a href="<%=portPath%>search/view.html?kind=3" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe692;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">涉外家政</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Foreign Domestic</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInRight">
+				<a href="<%=portPath%>search/view.html?kind=4" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInRight">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe6a6;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">钟点工</p></div>
@@ -102,28 +102,28 @@
 				</a>
 			</div>
 			<div class="layui-row layui-col-space10">
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInLeft">
+				<a href="<%=portPath%>search/view.html?kind=5" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInLeft">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe61e;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">老人陪护</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Aged Care</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
+				<a href="<%=portPath%>search/view.html?kind=6" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe767;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">病人陪护</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Patient Accompany</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
+				<a href="<%=portPath%>search/view.html?kind=7" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow flipInX">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe600;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">育婴师</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-en">Nursery Teacher</p></div>
 					</div>
 				</a>
-				<a href="#" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInRight">
+				<a href="<%=portPath%>search/view.html?kind=8" class="layui-col-md3 layui-col-sm3 layui-col-xs6 wow bounceInRight">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p><i class="iconfont">&#xe6a2;</i></p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="servive-title-cn">催乳师</p></div>

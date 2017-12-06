@@ -41,4 +41,10 @@
   <select id="selectCiidByCityId" resultType="java.lang.Integer" parameterType="java.lang.String">
     SELECT ciid FROM cities WHERE cityid = #{cityId,jdbcType=VARCHAR}
   </select>
+    <select id="selectProvinceIdByciid" resultType="java.lang.String" parameterType="java.lang.Integer">
+      SELECT
+      provinceid
+      FROM cities
+      WHERE ciid = #{ciid,jdbcType=INTEGER}
+    </select>
 </mapper>

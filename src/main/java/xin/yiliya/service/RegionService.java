@@ -18,5 +18,7 @@ public interface RegionService {
      Integer selectCiidByCityId(String CityId);
      //根据区级长id获取短id
      Integer selectAridByAreaId(String areaId);
+     //根据市级短id获取省级长id
+     String selectProvinceIdByciid(Integer ciid);
 
 }

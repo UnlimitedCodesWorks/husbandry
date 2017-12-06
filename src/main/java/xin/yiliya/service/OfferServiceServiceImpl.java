@@ -248,11 +248,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
 
     public PageInfo<OfferServiceSimple> getServicesByCityAndKind(
             Integer serviceKind, Integer ciid, int schema,int currentPage,int pageSize) {
-        PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list;
         float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
             default:
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -274,6 +274,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.PRICE_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
@@ -289,6 +290,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
                 break;
             case Rank.PRICE_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 PageHelper.orderBy("price desc");
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
@@ -304,6 +306,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
                 break;
             case Rank.GRADE_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -325,6 +328,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.GRADE_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -346,6 +350,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -367,6 +372,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -397,11 +403,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
 
     public PageInfo<OfferServiceSimple> getServicesByInput(
             String input,Integer serviceKind, Integer ciid, int schema, int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list;
         float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
             default:
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -423,6 +429,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.PRICE_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
@@ -438,6 +445,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
                 break;
             case Rank.PRICE_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 PageHelper.orderBy("price desc");
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
@@ -453,6 +461,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 }
                 break;
             case Rank.GRADE_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -474,6 +483,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.GRADE_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -495,6 +505,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_ASC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -516,6 +527,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 });
                 break;
             case Rank.SALES_DESC :
+                PageHelper.startPage(currentPage,pageSize);
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));

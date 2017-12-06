@@ -92,4 +92,8 @@ public class RegionServiceImpl implements RegionService {
     public Integer selectAridByAreaId(String areaId) {
         return areasMapper.selectAridByAreaId(areaId);
     }
+
+    public String selectProvinceIdByciid(Integer ciid) {
+        return citiesMapper.selectProvinceIdByciid(ciid);
+    }
 }

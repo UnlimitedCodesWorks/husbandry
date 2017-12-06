@@ -13,4 +13,6 @@ public interface CitiesMapper {
     List<Cities> selectAllCities();
 
     Integer selectCiidByCityId(String CityId);
+
+    String selectProvinceIdByciid(Integer ciid);
 }

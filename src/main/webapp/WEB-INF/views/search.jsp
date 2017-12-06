@@ -1,3 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,14 +24,14 @@
         <nav>
             <ul class="layui-nav">
                 <li class="layui-nav-item ">
-                    <a href="javascript:;" title="Husbandry">Husbandry</a>
+                    <a href="<%=portPath%>index.html" title="Husbandry">Husbandry</a>
                 </li>
                 <template v-if="isLogin">
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="注册">注册</a>
+						<a href="<%=portPath%>register.html" title="注册">注册</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="登录">登录</a>
+						<a href="<%=portPath%>login/user.html" title="登录">登录</a>
 					</li>
 				</template>
                 <li class="layui-nav-item" v-else>
@@ -67,13 +75,22 @@
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <span class="layui-col-md1 layui-col-sm2 layui-col-xs2">省份：</span>
                     <span class="layui-col-md2 layui-col-sm2 layui-col-xs4">
-                        <select  id="province" runat="server" onchange="selectprovince(this)" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_province">
+                        <select  id="province" runat="server" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_province">
+                            <c:set var="provinceId" value="${provinceId}" />
+                            <c:forEach var="province" items="${provinces}" >
+                                <option label="${province.value}" <c:if test="${province.key == provinceId}">selected</c:if> > ${province.key}</option>
+                            </c:forEach>
                         </select>
                     </span>
                     <span class="layui-col-md1 layui-col-sm2 layui-col-xs2">城市：</span>
-                    <span class="layui-col-md2 layui-col-sm2 layui-col-xs4"><select id="city" runat="server" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_city">
-                        
-                        </select></span>
+                    <span class="layui-col-md2 layui-col-sm2 layui-col-xs4">
+                        <select  id="city" runat="server" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_city">
+                            <c:set var="ciid" value="${ciid}" />
+                            <c:forEach var="city" items="${citys}">
+                                <option label="${city.city}" <c:if test="${city.ciid == ciid}">selected</c:if> >${city.ciid}</option>
+                            </c:forEach>
+                        </select>
+                    </span>
                 </div>
             </div>
         </div>
@@ -91,20 +108,24 @@
     </div>
     <!-- 具体项目 -->
     <div class="layui-row layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-sm-offset1 layui-col-xs10 layui-col-xs-offset1 search_main">
+        <c:if test="${offerServiceList!=null}">
+            <c:forEach var="offerService" items="${offerServiceList}">
         <ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">
             <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">
-                <img src="../../resources/images/house.jpg" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
+                <img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-                    <div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄200.00</div>
-                    <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">此价格高于平均价！</div>
+                    <div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
+                    <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise"><c:if test="${offerService.priceJudge ==true}">此价格高于平均价！</c:if> <c:if test="${offerService.priceJudge ==false}">此价格低于平均价！</c:if></div>
                 </div>
-                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">男士短袖t恤新款圆领宽松衣服夏季韩版潮流纯棉大码夏装体恤男装</div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${offerService.serviceName}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
-                    <div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">滨江何华峰服务公司</div>
-                    <div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score">10分</div>
+                    <div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">${offerService.store.storeName}</div>
+                    <div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score"><c:if test="${offerService.grade ==0}">未评分</c:if><c:if test="${offerService.grade !=0}">${offerService.grade}分</c:if></div>
                 </div>
             </ul>
         </ul>
+            </c:forEach>
+        </c:if>
     </div>
     <!-- 分页处理 -->
     <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12">
@@ -115,10 +136,76 @@
             <p>Husbandry-&copy2017</p>
         </footer>
     </div>
-    <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/layui.all.js"></script>
-    <script type="text/javascript" src="../../resources/js/search.js"></script>
-    <script type="text/javascript" src="../../resources/js/vue.js"></script>
-</body>
 
+</body>
+<script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../resources/layui.all.js"></script>
+<script type="text/javascript" src="../../resources/js/search.js"></script>
+<script type="text/javascript" src="../../resources/js/vue.js"></script>
+<script type="text/javascript">
+    var pages = ${pages};
+    var province = $("#province");
+    var city = $("#city");
+    var portPath = "<%=portPath%>";
+    var kind = getUrlParam("kind");
+    var content = getUrlParam("content");
+    var rank = getUrlParam("rank");
+    var ciid = getUrlParam("ciid");
+    function getUrlParam(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r!=null) return unescape(r[2]); return null; //返回参数值
+    }
+
+    layui.use('laypage', function() {
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'search_page' //注意，这里的 test1 是 ID，不用加 # 号
+            ,
+            count: pages //数据总数，从服务端得到
+            ,
+            limit: 1,
+            groups: 4
+        });
+    });
+    province.change(function (e) {
+        city.html("");
+        city.append('<option value="NONE" label="市" />');
+        var value = province.val();
+        $.ajax({
+            url :portPath + 'store/getCitys.do',
+            type : "post",
+            data:{
+                provinceId : value
+            },
+            dataType : "json",
+            success: function(data){
+                for(var i=0;i<data.length;i++){
+                    var node = '<option value="'+data[i].ciid+ '" label="'+data[i].city+'" />';
+                    city.append(node);
+                }
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    })
+    city.change(function (e) {
+        if(e.target.value !="NONE"){
+            var href = portPath+"search/view.html?";
+            if(kind!=null){
+                href += 'kind='+kind;
+            }else if(content !=null){
+                href += '&content='+content;
+            }else if(rank !=null){
+                href += '&rank='+rank;
+            }
+            href+='&ciid='+e.target.value;
+            location.href = href;
+        }
+    });
+</script>
 </html>
