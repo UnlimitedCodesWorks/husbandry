@@ -58,36 +58,36 @@
         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_classify1">
             <span class="layui-col-md1 layui-col-sm1 layui-col-xs12 search_classify">分类</span>
             <div class="layui-col-md11 layui-col-sm18 layui-col-xs24 search_classify_choose">
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">全部</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">保姆</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">钟点工</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">涉外家政</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">老人陪护</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">病人陪护</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">育婴师</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">催乳师</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">月嫂</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="0" >全部</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="1" >保姆</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="2" >月嫂</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="3" >涉外家政</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="4" >钟点工</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="5" >老人陪护</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="6" >病人陪护</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="7" >育婴师</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-kind="8" >催乳师</span>
             </div>
         </div>
         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area1">
             <span class="layui-col-md1 layui-col-sm1 layui-col-xs12 search_area">地区</span>
             <div class="layui-col-md11  layui-col-sm11 layui-col-xs24 search_area_choose">
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-                    <span class="layui-col-md1 layui-col-sm2 layui-col-xs2">省份：</span>
+                    <span class="layui-col-md1 layui-col-sm2 layui-col-xs2" style="font-size: 13px">省份：</span>
                     <span class="layui-col-md2 layui-col-sm2 layui-col-xs4">
-                        <select  id="province" runat="server" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_province">
+                        <select  id="province" runat="server" style="font-size: 13px" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_province">
                             <c:set var="provinceId" value="${provinceId}" />
                             <c:forEach var="province" items="${provinces}" >
-                                <option label="${province.value}" <c:if test="${province.key == provinceId}">selected</c:if> > ${province.key}</option>
+                                <option label="${province.value}"  <c:if test="${province.key == provinceId}">selected</c:if> > ${province.key}</option>
                             </c:forEach>
                         </select>
                     </span>
-                    <span class="layui-col-md1 layui-col-sm2 layui-col-xs2">城市：</span>
+                    <span class="layui-col-md1 layui-col-sm2 layui-col-xs2" style="font-size: 13px">城市：</span>
                     <span class="layui-col-md2 layui-col-sm2 layui-col-xs4">
-                        <select  id="city" runat="server" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_city">
+                        <select  id="city" runat="server" style="font-size: 13px" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_area_city">
                             <c:set var="ciid" value="${ciid}" />
                             <c:forEach var="city" items="${citys}">
-                                <option label="${city.city}" <c:if test="${city.ciid == ciid}">selected</c:if> >${city.ciid}</option>
+                                <option label="${city.city}"  <c:if test="${city.ciid == ciid}">selected</c:if> >${city.ciid}</option>
                             </c:forEach>
                         </select>
                     </span>
@@ -97,11 +97,12 @@
         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
             <span class="layui-col-md1 layui-col-sm1 layui-col-xs12 search_rank">排序</span>
             <div class="layui-col-md11 search_rank_choose">
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">综合排序</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">人气升序</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">人气降序</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">销量升序</span>
-                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3">销量降序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="5">综合降序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="4">综合升序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="1">评分降序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="0">评分升序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="3">销量降序</span>
+                <span class="layui-col-md1 layui-col-sm2 layui-col-xs3" data-rank="2">销量升序</span>
             </div>
         </div>
 
@@ -115,7 +116,7 @@
                 <img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
-                    <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise"><c:if test="${offerService.priceJudge ==true}">此价格高于平均价！</c:if> <c:if test="${offerService.priceJudge ==false}">此价格低于平均价！</c:if></div>
+                    <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise"><c:if test="${offerService.priceJudge ==true}">此价格高于市场价！</c:if> <c:if test="${offerService.priceJudge ==false}">此价格低于市场价！</c:if></div>
                 </div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${offerService.serviceName}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
@@ -149,15 +150,22 @@
     var portPath = "<%=portPath%>";
     var kind = getUrlParam("kind");
     var content = getUrlParam("content");
-    var rank = getUrlParam("rank");
-    var ciid = getUrlParam("ciid");
-    function getUrlParam(name)
-    {
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r!=null) return unescape(r[2]); return null; //返回参数值
-    }
+    var rank = "${rank}";
+    var ciid = "${ciid}";
+    var currentPage = 1;
+    $(".search_classify_choose span").each(function (index,element) {
+        var value = $(this).attr("data-kind");
+        if(kind == value){
+            $(this).css("color","rgb(0,150,136)");
+        }
+    });
+    $(".search_rank_choose span").each(function (index,element) {
+        var value = $(this).attr("data-rank");
+        if(rank == value){
+            $(this).css("color","rgb(0,150,136)");
+        }
 
+    });
     layui.use('laypage', function() {
         var laypage = layui.laypage;
 
@@ -169,6 +177,27 @@
             ,
             limit: 1,
             groups: 4
+            ,jump: function(obj, first) {
+                if(!first){
+                    currentPage = obj.curr;
+                    var href = portPath+"search/search.do?";
+                    if(kind !=null){
+                        href += 'kind='+kind;
+                    }
+                    if(ciid!=null){
+                        href += '&ciid='+ciid;
+                    }
+                    if(content !=null){
+                        href += '&content='+content;
+                    }
+                    if(rank!=null){
+                        href += '&rank='+rank;
+                    }
+                    href +='&currentPage='+currentPage;
+                    changePage(href);
+                }
+
+            }
         });
     });
     province.change(function (e) {
@@ -195,17 +224,212 @@
     })
     city.change(function (e) {
         if(e.target.value !="NONE"){
-            var href = portPath+"search/view.html?";
+            var href = portPath+"search/search.do?";
             if(kind!=null){
                 href += 'kind='+kind;
-            }else if(content !=null){
+            }
+            if(content !=null){
                 href += '&content='+content;
-            }else if(rank !=null){
+            }
+            if(rank !=null){
                 href += '&rank='+rank;
             }
             href+='&ciid='+e.target.value;
-            location.href = href;
+            currentPage = 1;
+            href+='&currentPage='+currentPage;
+            $.ajax({
+                url :href,
+                type : "get",
+                dataType : "json",
+                success: function(data){
+                    pages = data.pages;
+                    ciid = e.target.value;
+                    createOfferService(data);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
         }
     });
+    $(".search_classify_choose span").click(function () {
+        var kindId = $(this).attr("data-kind");
+        var href = portPath+"search/search.do?";
+        href+='kind='+kindId;
+        if(ciid!=null){
+            href += '&ciid='+ciid;
+        }
+        if(content !=null){
+            href += '&content='+content;
+        }
+        if(rank !=null){
+            href += '&rank='+rank;
+        }
+        currentPage = 1;
+        href+='&currentPage='+currentPage;
+        $.ajax({
+            url :href,
+            type : "get",
+            dataType : "json",
+            success: function(data){
+                pages = data.pages;
+                kind = kindId;
+                createOfferService(data);
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    });
+    $(".search_rank_choose span").click(function () {
+       var rankId =  $(this).attr("data-rank");
+       var href = portPath+"search/search.do?";
+        if(kind !=null){
+            href += 'kind='+kind;
+        }
+        if(ciid!=null){
+            href += '&ciid='+ciid;
+        }
+        if(content !=null){
+            href += '&content='+content;
+        }
+        href+='&rank='+rankId;
+        currentPage = 1;
+        href+='&currentPage='+currentPage;
+        $.ajax({
+            url :href,
+            type : "get",
+            dataType : "json",
+            success: function(data){
+                pages = data.pages;
+                rank = rankId;
+                createOfferService(data);
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    });
+    function getUrlParam(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r!=null) return unescape(r[2]); return null; //返回参数值
+    }
+    function changePage(href){
+        $.ajax({
+            url :href,
+            type : "get",
+            dataType : "json",
+            success: function(data){
+                pages = data.pages;
+                createOfferService1(data);
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+                currentPage = 1;
+            }
+        });
+    }
+    function createOfferService(data){
+        var searchDiv = $(".search_main:eq(0)");
+        searchDiv.html("");
+        $("#search_page").html("");
+        layui.use('laypage', function() {
+            var laypage = layui.laypage;
+
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'search_page' //注意，这里的 test1 是 ID，不用加 # 号
+                ,
+                count: pages //数据总数，从服务端得到
+                ,
+                limit: 1,
+                groups: 4
+                ,jump: function(obj, first) {
+                    if(!first){
+                        currentPage = obj.curr;
+                        var href = portPath+"search/search.do?";
+                        if(kind !=null){
+                            href += 'kind='+kind;
+                        }
+                        if(ciid!=null){
+                            href += '&ciid='+ciid;
+                        }
+                        if(content !=null){
+                            href += '&content='+content;
+                        }
+                        if(rank!=null){
+                            href += '&rank='+rank;
+                        }
+                        href +='&currentPage='+currentPage;
+                        changePage(href);
+                    }
+                }
+            });
+        });
+        for(var i=0;i<data.list.length;i++){
+            var priceJudge;
+            var grade;
+            if(data.list[i].priceJudge){
+                priceJudge = "此价格高于市场价!";
+            }else{
+                priceJudge = "此价格低于市场价!";
+            }
+            if(data.list[i].grade == 0){
+                grade = "未评分";
+            }else {
+                grade = data.list[i].grade;
+            }
+            var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">' +
+                '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
+                '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">'+priceJudge+'</div>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">'+data.list[i].serviceName+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">'+data.list[i].store.storeName+'</div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score">'+grade+'</div>\n' +
+                '</div>' +
+                '</ul>' +
+                '</ul>';
+            searchDiv.append(node);
+        }
+    }
+    function createOfferService1(data) {
+        var searchDiv = $(".search_main:eq(0)");
+        searchDiv.html("");
+        for (var i = 0; i < data.list.length; i++) {
+            var priceJudge;
+            var grade;
+            if (data.list[i].priceJudge) {
+                priceJudge = "此价格高于市场价!";
+            } else {
+                priceJudge = "此价格低于市场价!";
+            }
+            if (data.list[i].grade == 0) {
+                grade = "未评分";
+            } else {
+                grade = data.list[i].grade;
+            }
+            var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">' +
+                '<img src="' + data.list[i].serviceImg + '" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄' + data.list[i].price + '</div>' +
+                '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' + priceJudge + '</div>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">' + data.list[i].serviceName + '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">' + data.list[i].store.storeName + '</div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score">' + grade + '</div>\n' +
+                '</div>' +
+                '</ul>' +
+                '</ul>';
+            searchDiv.append(node);
+        }
+    }
 </script>
 </html>

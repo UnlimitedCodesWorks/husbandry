@@ -104,14 +104,6 @@ nav {
     color: #009688 !important;
 }
 
-.search_classify_choose :nth-child(1) {
-    color: #009688;
-}
-
-.search_rank_choose :nth-child(1) {
-    color: #009688;
-}
-
 .search_area_choose {
     height: 40px;
     line-height: 40px;
