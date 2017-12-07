@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -109,6 +110,8 @@
     </div>
     <!-- 具体项目 -->
     <div class="layui-row layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-sm-offset1 layui-col-xs10 layui-col-xs-offset1 search_main">
+        <c:set var="content" value="${content}" />
+        <c:set var="redContent" value="${redContent}" />
         <c:if test="${offerServiceList!=null}">
             <c:forEach var="offerService" items="${offerServiceList}">
         <ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">
@@ -118,9 +121,9 @@
                     <div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
                     <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise"><c:if test="${offerService.priceJudge ==true}">此价格高于市场价！</c:if> <c:if test="${offerService.priceJudge ==false}">此价格低于市场价！</c:if></div>
                 </div>
-                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${offerService.serviceName}</div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${fn:replace(offerService.serviceName,content,redContent)}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
-                    <div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">${offerService.store.storeName}</div>
+                    <div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">${fn:replace(offerService.store.storeName,content,redContent)}</div>
                     <div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score"><c:if test="${offerService.grade ==0}">未评分</c:if><c:if test="${offerService.grade !=0}">${offerService.grade}分</c:if></div>
                 </div>
             </ul>
@@ -149,10 +152,14 @@
     var city = $("#city");
     var portPath = "<%=portPath%>";
     var kind = getUrlParam("kind");
-    var content = getUrlParam("content");
+    var content = '${content}';
+    var redContent = "${redContent}";
     var rank = "${rank}";
     var ciid = "${ciid}";
     var currentPage = 1;
+    if(content.length !=0){
+        $(".search_input:eq(0)").val(content);
+    }
     $(".search_classify_choose span").each(function (index,element) {
         var value = $(this).attr("data-kind");
         if(kind == value){
@@ -371,6 +378,12 @@
         for(var i=0;i<data.list.length;i++){
             var priceJudge;
             var grade;
+            var serviceName = data.list[i].serviceName;
+            var storeName = data.list[i].store.storeName;
+            if(content.length!=0){
+                serviceName=serviceName.replace(content,redContent);
+                storeName=storeName.replace(content,redContent);
+            }
             if(data.list[i].priceJudge){
                 priceJudge = "此价格高于市场价!";
             }else{
@@ -388,9 +401,9 @@
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">'+priceJudge+'</div>' +
                 '</div>' +
-                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">'+data.list[i].serviceName+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">'+serviceName+'</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
-                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">'+data.list[i].store.storeName+'</div>' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">'+storeName+'</div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score">'+grade+'</div>\n' +
                 '</div>' +
                 '</ul>' +
@@ -404,6 +417,12 @@
         for (var i = 0; i < data.list.length; i++) {
             var priceJudge;
             var grade;
+            var serviceName = data.list[i].serviceName;
+            var storeName = data.list[i].store.storeName;
+            if(content.length!=0){
+                serviceName=serviceName.replace(content,redContent);
+                storeName=storeName.replace(content,redContent);
+            }
             if (data.list[i].priceJudge) {
                 priceJudge = "此价格高于市场价!";
             } else {
@@ -421,9 +440,9 @@
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄' + data.list[i].price + '</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' + priceJudge + '</div>' +
                 '</div>' +
-                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">' + data.list[i].serviceName + '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">' + serviceName + '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
-                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">' + data.list[i].store.storeName + '</div>' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">' + storeName+ '</div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score">' + grade + '</div>\n' +
                 '</div>' +
                 '</ul>' +

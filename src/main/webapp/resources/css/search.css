@@ -195,6 +195,10 @@ nav {
     float: right;
 }
 
+.red_font{
+    color:red;
+}
+
 footer {
     background: #393D49;
     height: 100px;

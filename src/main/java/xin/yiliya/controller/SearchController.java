@@ -63,6 +63,8 @@ public class SearchController {
         model.addAttribute("ciid",ciid);
         model.addAttribute("provinceId",provinceId);
         model.addAttribute("rank",rankId);
+        model.addAttribute("content",content);
+        model.addAttribute("redContent","<span class='red_font'>"+content+"</span>");
         return "search";
     }
 

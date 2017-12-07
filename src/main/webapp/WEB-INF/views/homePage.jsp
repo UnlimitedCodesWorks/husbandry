@@ -3,8 +3,9 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+	String searchPath = portPath + "search/view.html";
 %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,8 +57,9 @@
 		</div>
 		<!-- 搜索框 -->
 		<div class="layui-form-group">
-			<form class="layui-anim layui-anim-scaleSpring">
-				<input type="text" autocomplete="off" placeholder="请输入您要搜索的内容" required>
+			<form class="layui-anim layui-anim-scaleSpring" action="<%=searchPath%>">
+				<input type="hidden" name="kind" value="0" />
+				<input type="text" name="content" autocomplete="off" placeholder="请输入您要搜索的内容" required>
 				<button type="submit"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
