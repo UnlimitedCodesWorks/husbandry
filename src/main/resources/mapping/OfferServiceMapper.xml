@@ -300,9 +300,10 @@
   <select id="getServiceNameByInput" resultType="string" >
       SELECT
       service_name
-      FROM offerservice,servicespots
-      WHERE service_name LIKE '%${input}%'
+      FROM offerservice,servicespots,store
+      WHERE (service_name LIKE '%${input}%' OR store_name LIKE '%${input}%')
       and offerservice.offerserviceid = servicespots.offerservice_id
+      and offerservice.store_id = store.storeid
       and city_id = #{ciid,jdbcType=INTEGER}
       AND offerservice.`status` != -1
       AND offerservice.`status` != 0
@@ -327,8 +328,7 @@
     <if test="kind !=0">
       AND kind = #{kind,jdbcType=INTEGER}
     </if>
-    AND service_name LIKE '%${input}%'
-    OR store_name LIKE '%${input}%'
+    AND (service_name LIKE '%${input}%' OR store_name LIKE '%${input}%')
     AND city_id = #{ciid,jdbcType=INTEGER}
     AND offerservice.`status` != - 1
     AND offerservice.`status` != 0

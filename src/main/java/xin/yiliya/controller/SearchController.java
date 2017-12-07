@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.OfferServiceSimple;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.OfferServiceService;
@@ -15,6 +16,7 @@ import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/search",method = RequestMethod.GET)
@@ -60,7 +62,36 @@ public class SearchController {
         model.addAttribute("citys",regionService.getAllCitiesByProvince(provinceId));
         model.addAttribute("ciid",ciid);
         model.addAttribute("provinceId",provinceId);
+        model.addAttribute("rank",rankId);
+        model.addAttribute("content",content);
+        model.addAttribute("redContent","<span class='red_font'>"+content+"</span>");
         return "search";
     }
 
+    @RequestMapping(value = "/search.do",method = RequestMethod.GET)
+    @ResponseBody
+    public PageInfo<OfferServiceSimple> seachAjax(@RequestParam(value = "kind")Integer kind,
+                                              @RequestParam(value = "currentPage")Integer currentPage,
+                                              @RequestParam(value = "content",required = false) String content,
+                                              @RequestParam(value = "rank",required = false) Integer rank,
+                                              @RequestParam(value = "ciid",required = false) Integer ciid){
+        User user = (User) session.getAttribute("userBean");
+        Integer rankId = Rank.PRICE_DESC;
+        if(user!=null){
+            ciid = user.getCityId();
+        }else if(ciid==null){
+            //return "login";
+            ciid = 186;
+        }
+        if(rank!=null){
+            rankId = rank;
+        }
+        PageInfo<OfferServiceSimple> pageInfo;
+        if(content != null){
+            pageInfo = offerService.getServicesByInput(content, kind,ciid,rankId,currentPage,1);
+        }else{
+            pageInfo = offerService.getServicesByCityAndKind(kind,ciid,rankId,currentPage,1);
+        }
+        return pageInfo;
+    }
 }

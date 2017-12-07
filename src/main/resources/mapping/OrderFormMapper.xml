@@ -14,6 +14,10 @@
     </resultMap>
 
     <select id="getAllOrderFormRow" resultMap="Base_1">
-        SELECT * from problem,value where problem.problemid=value.problem_id AND problem.key=#{kind}
+        SELECT *
+        from
+        problem LEFT JOIN value
+        ON problem.problemid=value.problem_id
+        WHERE problem.key=#{kind}
     </select>
 </mapper>
