@@ -53,13 +53,13 @@
 		<div class="mask"></div>
 		<div class="reWow-wrap" v-show="isFocus">
 			<p class="bounceInLeft" v-bind:class="{reWow1: reWow1}">您可以搜索以下内容：</p>
-			<p class="bounceInRight" v-bind:class="{reWow1: reWow1}">服务名&nbsp&nbsp&nbsp&nbsp市级地名&nbsp&nbsp&nbsp&nbsp服务类名&nbsp&nbsp&nbsp&nbsp服务商名</p>
+			<p class="bounceInRight" v-bind:class="{reWow1: reWow1}">服务名&nbsp&nbsp&nbsp&nbsp服务商名</p>
 		</div>
 		<!-- 搜索框 -->
 		<div class="layui-form-group">
 			<form class="layui-anim layui-anim-scaleSpring" action="<%=searchPath%>">
 				<input type="hidden" name="kind" value="0" />
-				<input type="text" name="content" autocomplete="off" placeholder="请输入您要搜索的内容" required>
+				<input type="text" name="content" autocomplete="off" placeholder="请输入您要搜索的服务" required>
 				<button type="submit"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
@@ -67,7 +67,7 @@
 	<div class="layui-service-wrap">
 		<!-- 标题 -->
 		<div class="layui-title wow bounceInLeft">
-			<p class="title-cn">您可以从以下服务中<span>直接</span>查找</p>
+			<p class="title-cn">您也可以从以下服务类中<span>直接</span>查找</p>
 			<hr>
 			<p class="title-en">CHOOSE SERVICE YOU NEED TO FIND</p>
 		</div>
