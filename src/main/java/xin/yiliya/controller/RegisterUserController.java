@@ -25,7 +25,7 @@ public class RegisterUserController {
     @RequestMapping(value = "/registerUser.do",method = RequestMethod.POST)
     public String registerUserDo(RegisterUser registerUser){
         Boolean b=userService.userRegister(registerUser);
-        return "redirect:/all/login.html";
+        return "redirect:/login/user.html";
     }
 
 }

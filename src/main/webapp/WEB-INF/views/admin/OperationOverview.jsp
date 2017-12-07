@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +95,7 @@
                             <i class="fa fa-files-o"></i>
                             <span>商户管理</span>
                             <span class="pull-right-container">
-                                <span class="label label-primary pull-right">2</span>
+                                <span class="label label-primary pull-right">${unPassStoreNum}</span>
                             </span>
                         </a>
                         <ul class="treeview-menu">
@@ -183,16 +184,11 @@
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">每月订单成交量</h3>
-                                <form action="" method="">
-                                    <select class="selectpicker">
+                                    <select class="selectpicker" name="timeYear" id="orderSelect">
+                                        <option>2016</option>
                                         <option>2017</option>
-                                        <option>2018</option>
-                                        <option>2019</option>
-                                        <option>2020</option>
-                                        <option>2021</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary btn-xs">查询</button>
-                                </form>
+                                    <button type="button" class="btn btn-primary btn-xs" id="monthOrder">查询</button>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>
@@ -231,13 +227,13 @@
             var pieRegisterChart = new Chart(pieRegister);
             var PieRegisterData= [
               {
-                value    : 330,
+                value    : ${storeTotal},
                 color    : '#A4D3EE',
                 highlight: '#A4D3EE',
                 label    : '商户注册'
               },
               {
-                value    : 400,
+                value    : ${userTotal},
                 color    : '#8FBC8F',
                 highlight: '#8FBC8F',
                 label    : '客户注册'
@@ -272,79 +268,164 @@
             var pieIdentifyChart = new Chart(pieIdentify);
             var PieIdentifyData= [
               {
-                value    : 100,
+                value    : ${passStoreNum},
                 color    : '#5FB878',
                 highlight: '#5FB878',
                 label    : '已认证'
               },
               {
-                value    : 150,
+                value    : ${unPassStoreNum},
                 color    : '#f56954',
                 highlight: '#f56954',
                 label    : '未认证'
               }
             ];
             pieIdentifyChart.Doughnut(PieIdentifyData, pieOptions);
+
+
 //统计每月订单成交量 Line chart ******************************************************************
 
-            var lineChartData = {
-              labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
-              datasets: [
-                {
-                  label               : 'Electronics',
-                  fillColor           : 'rgba(60,141,188,0.9)',
-                  strokeColor         : 'rgba(60,141,188,0.8)',
-                  pointColor          : '#3b8bba',
-                  pointStrokeColor    : 'rgba(60,141,188,1)',
-                  pointHighlightFill  : '#fff',
-                  pointHighlightStroke: 'rgba(60,141,188,1)',
-                  data                : [65, 59, 80, 81, 56, 55, 40,100,78,89,90,67]
+            var portPath = "<%=portPath%>";
+
+            $.ajax({
+                url :portPath +'admin/nowMonthOrder.do',
+                type: "get",
+                async: false,
+                success: function(data){
+                    var lineChartData = {
+                        labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
+                        datasets: [
+                            {
+                                label               : 'Electronics',
+                                fillColor           : 'rgba(60,141,188,0.9)',
+                                strokeColor         : 'rgba(60,141,188,0.8)',
+                                pointColor          : '#3b8bba',
+                                pointStrokeColor    : 'rgba(60,141,188,1)',
+                                pointHighlightFill  : '#fff',
+                                pointHighlightStroke: 'rgba(60,141,188,1)',
+                                data                :  data
+                            }
+                        ]
+                    };
+
+                    var lineChartOptions = {
+                        //Boolean - If we should show the scale at all
+                        showScale               : true,
+                        //Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines      : false,
+                        //String - Colour of the grid lines
+                        scaleGridLineColor      : 'rgba(0,0,0,.05)',
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth      : 1,
+                        //Boolean - Whether to show horizontal lines (except X axis)
+                        scaleShowHorizontalLines: true,
+                        //Boolean - Whether to show vertical lines (except Y axis)
+                        scaleShowVerticalLines  : true,
+                        //Boolean - Whether the line is curved between points
+                        bezierCurve             : true,
+                        //Number - Tension of the bezier curve between points
+                        bezierCurveTension      : 0.3,
+                        //Boolean - Whether to show a dot for each point
+                        pointDot                : false,
+                        //Number - Radius of each point dot in pixels
+                        pointDotRadius          : 4,
+                        //Number - Pixel width of point dot stroke
+                        pointDotStrokeWidth     : 1,
+                        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                        pointHitDetectionRadius : 20,
+                        //Boolean - Whether to show a stroke for datasets
+                        datasetStroke           : true,
+                        //Number - Pixel width of dataset stroke
+                        datasetStrokeWidth      : 2,
+                        //Boolean - Whether to fill the dataset with a color
+                        datasetFill             : true,
+                        //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                        maintainAspectRatio     : true,
+                        //Boolean - whether to make the chart responsive to window resizing
+                        responsive              : true
+                    };
+
+                    var lineChartCanvas = $('.monthOrder').get(0).getContext('2d');
+                    var lineChart = new Chart(lineChartCanvas);
+                    var lineChartOptions = lineChartOptions;
+                    lineChartOptions.datasetFill = false;
+                    lineChart.Line(lineChartData, lineChartOptions);
                 }
-              ]
-            };
+            });
 
-            var lineChartOptions = {
-              //Boolean - If we should show the scale at all
-              showScale               : true,
-              //Boolean - Whether grid lines are shown across the chart
-              scaleShowGridLines      : false,
-              //String - Colour of the grid lines
-              scaleGridLineColor      : 'rgba(0,0,0,.05)',
-              //Number - Width of the grid lines
-              scaleGridLineWidth      : 1,
-              //Boolean - Whether to show horizontal lines (except X axis)
-              scaleShowHorizontalLines: true,
-              //Boolean - Whether to show vertical lines (except Y axis)
-              scaleShowVerticalLines  : true,
-              //Boolean - Whether the line is curved between points
-              bezierCurve             : true,
-              //Number - Tension of the bezier curve between points
-              bezierCurveTension      : 0.3,
-              //Boolean - Whether to show a dot for each point
-              pointDot                : false,
-              //Number - Radius of each point dot in pixels
-              pointDotRadius          : 4,
-              //Number - Pixel width of point dot stroke
-              pointDotStrokeWidth     : 1,
-              //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-              pointHitDetectionRadius : 20,
-              //Boolean - Whether to show a stroke for datasets
-              datasetStroke           : true,
-              //Number - Pixel width of dataset stroke
-              datasetStrokeWidth      : 2,
-              //Boolean - Whether to fill the dataset with a color
-              datasetFill             : true,
-                //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-              maintainAspectRatio     : true,
-              //Boolean - whether to make the chart responsive to window resizing
-              responsive              : true
-            };
+            var orderBtn=$("#monthOrder");
+            var orderSelect=$("#orderSelect");
+            orderBtn.click(function () {
+                $.ajax({
+                    url :portPath + 'admin/searchOrder.do',
+                    type : "post",
+                    data:{timeYear:orderSelect.val()},
+                    async: true,
+                    success: function(data){
+                        var lineChartData = {
+                            labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
+                            datasets: [
+                                {
+                                    label               : 'Electronics',
+                                    fillColor           : 'rgba(60,141,188,0.9)',
+                                    strokeColor         : 'rgba(60,141,188,0.8)',
+                                    pointColor          : '#3b8bba',
+                                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                                    pointHighlightFill  : '#fff',
+                                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                                    data                :  data
+                                }
+                            ]
+                        };
 
-            var lineChartCanvas = $('.monthOrder').get(0).getContext('2d');
-            var lineChart = new Chart(lineChartCanvas);
-            var lineChartOptions = lineChartOptions;
-            lineChartOptions.datasetFill = false;
-            lineChart.Line(lineChartData, lineChartOptions);
+                        var lineChartOptions = {
+                            //Boolean - If we should show the scale at all
+                            showScale               : true,
+                            //Boolean - Whether grid lines are shown across the chart
+                            scaleShowGridLines      : false,
+                            //String - Colour of the grid lines
+                            scaleGridLineColor      : 'rgba(0,0,0,.05)',
+                            //Number - Width of the grid lines
+                            scaleGridLineWidth      : 1,
+                            //Boolean - Whether to show horizontal lines (except X axis)
+                            scaleShowHorizontalLines: true,
+                            //Boolean - Whether to show vertical lines (except Y axis)
+                            scaleShowVerticalLines  : true,
+                            //Boolean - Whether the line is curved between points
+                            bezierCurve             : true,
+                            //Number - Tension of the bezier curve between points
+                            bezierCurveTension      : 0.3,
+                            //Boolean - Whether to show a dot for each point
+                            pointDot                : false,
+                            //Number - Radius of each point dot in pixels
+                            pointDotRadius          : 4,
+                            //Number - Pixel width of point dot stroke
+                            pointDotStrokeWidth     : 1,
+                            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                            pointHitDetectionRadius : 20,
+                            //Boolean - Whether to show a stroke for datasets
+                            datasetStroke           : true,
+                            //Number - Pixel width of dataset stroke
+                            datasetStrokeWidth      : 2,
+                            //Boolean - Whether to fill the dataset with a color
+                            datasetFill             : true,
+                            //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                            maintainAspectRatio     : true,
+                            //Boolean - whether to make the chart responsive to window resizing
+                            responsive              : true
+                        };
+
+                        var lineChartCanvas = $('.monthOrder').get(0).getContext('2d');
+                        var lineChart = new Chart(lineChartCanvas);
+                        var lineChartOptions = lineChartOptions;
+                        lineChartOptions.datasetFill = false;
+                        lineChart.Line(lineChartData, lineChartOptions);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
         })
     </script>
 </body>

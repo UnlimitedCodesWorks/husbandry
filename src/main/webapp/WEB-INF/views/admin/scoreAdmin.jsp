@@ -101,7 +101,7 @@
                             <i class="fa fa-files-o"></i>
                             <span>商户管理</span>
                             <span class="pull-right-container">
-                                <span class="label label-primary pull-right">2</span>
+                                <span class="label label-primary pull-right">${unPassStoreNum}</span>
                             </span>
                         </a>
                         <ul class="treeview-menu">

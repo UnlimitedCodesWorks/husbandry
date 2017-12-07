@@ -93,7 +93,7 @@
                             <i class="fa fa-files-o"></i>
                             <span>商户管理</span>
                             <span class="pull-right-container">
-                                <span class="label label-primary pull-right">2</span>
+                                <span class="label label-primary pull-right">${unPassStoreNum}</span>
                             </span>
                         </a>
                         <ul class="treeview-menu">
@@ -147,10 +147,6 @@
                             <div class="box-header with-border">
                                 <i class="fa fa-bar-chart-o"></i>
                                 <h3 class="box-title">家政系统实时市场价</h3>
-                                <div>
-                                    <i class="fa  fa-calendar-times-o"></i>
-                                    2017-11
-                                </div>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>
@@ -186,8 +182,9 @@
     <script src="../../../resources/js/jquery.flot.categories.js"></script>
     <!-- Page script -->
     <script>
+        var priceList=${priceList};
         var bar_data = {
-          data : [['保姆', 10], ['月嫂', 8], ['涉外家政', 4], ['钟点工', 13], ['老人陪护', 17], ['病人陪护', 9],['育婴师', 20],['催乳师', 20]],
+          data : [['保姆', priceList[0]], ['月嫂', priceList[1]], ['涉外家政', priceList[2]], ['钟点工', priceList[3]], ['老人陪护', priceList[4]], ['病人陪护', priceList[5]],['育婴师', priceList[6]],['催乳师', priceList[7]]],
           color: '#3c8dbc'
         }
         $.plot('#bar-chart', [bar_data], {

@@ -2,12 +2,17 @@ package xin.yiliya.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Admin;
 import xin.yiliya.service.AdminService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -37,8 +42,12 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/OperationOverview.html",method = RequestMethod.GET)
-    public String OperationOverviewHTML(){
+    public String OperationOverviewHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+            model.addAttribute("userTotal",adminService.getUserNum());
+            model.addAttribute("storeTotal",adminService.getStoreNum());
+            model.addAttribute("passStoreNum",adminService.getPassStoreNum());
             return "admin/OperationOverview";
         }
         else{
@@ -46,9 +55,38 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/nowMonthOrder.do",method = RequestMethod.GET)
+    @ResponseBody
+    public int[] nowMonthOrderDo(){
+        int[] result = new int[12];
+        Map<Integer,Integer> map =adminService.getOrderByNowYear(new Date());
+        for(Integer i:map.keySet()){
+            result[i-1]= map.get(i);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/searchOrder.do",method = RequestMethod.POST)
+    @ResponseBody
+    public int[] searchOrderDo(String timeYear){
+        Map<Integer,Integer> map = adminService.getOrderNumPerYear(timeYear);
+        int[] result = new int[12];
+        for(Integer i : map.keySet()) {
+            result[i-1] = map.get(i);
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/priceControll.html",method = RequestMethod.GET)
-    public String priceControllHTML(){
+    public String priceControllHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+            ArrayList list=new ArrayList();
+            Map<String,Float> priceMap=adminService.getRealTimeMarketPrice();
+            for(String key:priceMap.keySet()){
+                list.add(priceMap.get(key));
+            }
+            model.addAttribute("priceList",list);
             return "admin/priceControll";
         }
         else{
@@ -56,9 +94,11 @@ public class AdminController {
         }
     }
 
+
     @RequestMapping(value = "/scoreAdmin.html",method = RequestMethod.GET)
-    public String scoreAdminHTML(){
+    public String scoreAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             return "admin/priceControll";
         }
         else{
@@ -67,8 +107,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/serviceAdmin.html",method = RequestMethod.GET)
-    public String serviceAdminHTML(){
+    public String serviceAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             return "admin/serviceAdmin";
         }
         else{
@@ -77,8 +118,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/useStore.html",method = RequestMethod.GET)
-    public String useStoreHTML(){
+    public String useStoreHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             return "admin/useStore";
         }
         else{
@@ -86,13 +128,15 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
-    public String waitStore(){
-        if(httpSession.getAttribute("adminBean")!=null){
-            return "admin/waitStore";
-        }
-        else{
-            return "redirect:login.html";
-        }
-    }
+//    @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
+//    public String waitStore(Model model){
+//        if(httpSession.getAttribute("adminBean")!=null){
+//            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+//            model.addAttribute("waitStores",adminService.getUnpassStores());
+//            return "admin/waitStore";
+//        }
+//        else{
+//            return "redirect:login.html";
+//        }
+//    }
 }

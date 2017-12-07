@@ -29,7 +29,10 @@ public interface AdminService {
 
     //获取某年每月的订单成交量
     //返回一个Map对象，第一个参数为月份，第二个参数为订单成交量
-    Map<Integer,Integer> getOrderNumPerYear(Date time);
+    Map<Integer,Integer> getOrderNumPerYear(String time);
+
+    //初始进入获取今年每月的订单成交量
+    Map<Integer,Integer> getOrderByNowYear(Date date);
 
     //获取家政系统实时市场价
     //返回一个Map对象，第一个参数为服务类型名，第二参数为市场价

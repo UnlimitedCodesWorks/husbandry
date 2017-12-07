@@ -9,7 +9,7 @@ import xin.yiliya.pojo.Admin;
 import xin.yiliya.pojo.OfferServiceAdmin;
 import xin.yiliya.pojo.StoreAdmin;
 
-import javax.annotation.Resource;
+import javax.annotation.Resource;;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,9 +48,19 @@ public class AdminServiceImpl implements AdminService{
         return adminMapper.getPassStoreNum();
     }
 
-    public Map<Integer, Integer> getOrderNumPerYear(Date time) {
+    public Map<Integer, Integer> getOrderNumPerYear(String time) {
+        Map<Integer,Integer> orderMap = new LinkedHashMap<Integer, Integer>();
+        for(int i =0;i<12;i++){
+            String startTime = time + "-"+(i+1)+"-1";
+            String endTime = time + "-" +(i+1)+"-31";
+            orderMap.put(i+1,adminMapper.getOrderNumPerMonth(startTime,endTime));
+        }
+        return orderMap;
+    }
+
+    public Map<Integer,Integer> getOrderByNowYear(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
-        String nowTime = dateFormat.format(time);
+        String nowTime = dateFormat.format(date);
         Map<Integer,Integer> orderMap = new LinkedHashMap<Integer, Integer>();
         for(int i =0;i<12;i++){
             String startTime = nowTime + "-"+(i+1)+"-1";

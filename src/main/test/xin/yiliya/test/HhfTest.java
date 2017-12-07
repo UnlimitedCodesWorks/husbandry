@@ -2,6 +2,7 @@ package xin.yiliya.test;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
@@ -309,5 +311,16 @@ public class HhfTest {
 //        orderPeople.setSpId(15);
 //        int n=orderService.dispatcheServicePeople(orderPeople);
 //        System.out.print(n);
+
+        //获取某年每月的订单成交量
+//        Map<Integer,Integer> orderMap=adminService.getOrderNumPerYear("2016");
+//        System.out.print(JSON.toJSONString(orderMap,true));
+
+        //获取家政系统实时市场价
+//        Map<String, Float> servicePrice=adminService.getRealTimeMarketPrice();
+//        System.out.print(servicePrice);
+//        JSONObject myJson=JSONObject.fromObject(adminService.getRealTimeMarketPrice());
+//        System.out.print(myJson);
+
     }
 }
