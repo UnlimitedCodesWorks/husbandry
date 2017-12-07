@@ -22,4 +22,8 @@ public class ServiceServiceImpl implements ServiceService {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         return Float.parseFloat(decimalFormat.format(serviceMapper.getServiceKindPrice(serid)));
     }
+
+    public String getSerKindBySerId(Integer serid) {
+        return serviceMapper.getSerKindBySerId(serid);
+    }
 }

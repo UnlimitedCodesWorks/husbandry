@@ -14,6 +14,8 @@ public interface ServiceService {
     //返回：该服务的市场价
     float getServiceKindPrice(Integer serid);
 
-
+    //根据服务id获取服务名
+    //返回：该服务的服务名
+    String getSerKindBySerId(Integer serid);
 
 }
