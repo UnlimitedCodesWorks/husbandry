@@ -51,6 +51,12 @@
                             <f:input type="text" path="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input register_user_phone_text1"/>
                         </span>
                     </div>
+                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_email">
+                        <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_email_text">邮箱：</span>
+                        <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
+                            <f:input type="text" path="email" required="required" lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input register_user_email_text1"/>
+                        </span>
+                    </div>
                 </div>
                 <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_headimg ">
@@ -64,17 +70,27 @@
                     </div>
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_username">
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_username_text">昵称：</span>
-                        <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
+                        <span class="layui-col-md7 layui-col-sm8 layui-col-xs7">
                             <f:input type="text" path="userName" required="required" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input register_user_username_text1" />
                         </span>
                     </div>
-                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_email">
-                        <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_email_text">邮箱：</span>
-                        <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                            <f:input type="text" path="email" required="required" lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input register_user_email_text1"/>
+                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_address">
+                        <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_address_text">地址：</span>
+                        <span class="layui-col-md4 layui-col-sm4 layui-col-xs4">
+                                <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
+
+                                </select>
+                        </span>
+                        <span class="layui-col-md3 layui-col-sm4 layui-col-xs3">
+                            <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
+                                </select>
+                        </span>
+                        <span class="layui-col-md7 layui-col-sm8 layui-col-xs7 layui-col-xs-offset4 layui-col-md-offset3 layui-col-sm-offset4">
+                            <input type="text" required="required" lay-verify="required" placeholder="请输入您所在的社区" autocomplete="off" class="layui-input register_user_address_text1" >
                         </span>
                     </div>
                 </div>
+
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <button type="submit" class="layui-col-md4 layui-col-sm4  layui-col-xs12 layui-col-sm-offset4 layui-col-md-offset4 layui-btn layui-btn-primary register_user_success">完成注册</button>
                 </div>
