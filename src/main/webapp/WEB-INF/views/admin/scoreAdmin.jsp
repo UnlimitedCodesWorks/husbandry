@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="../../../resources/css/_all-skins.min.css">
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/layui.css">
     <style type="text/css">
         @media screen and (max-width: 768px) {
             .search {
@@ -201,25 +202,7 @@
                                     </form>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message">发送消息</button>
                                 </div>
-                                <nav class="pull-right" style="display: inline-block;">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <div id="scoreAdmin-page" style="float: right"></div>
                             </div>
                         </div>
                     </div>
@@ -269,8 +252,21 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../resources/js/demo.js"></script>
     <!-- page script -->
+    <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
         $(function(){
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+
+                //执行一个laypage实例
+                laypage.render({
+                    elem: 'scoreAdmin-page'
+                    ,count: 50 //数据总数，从服务端得到
+                    ,limit: 10
+                    ,theme: '#3c8dbc'
+                });
+            });
+
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
                 var $checkAllTh = $('<th><input type="checkbox" id="checkAll" name="checkAll" /></th>');

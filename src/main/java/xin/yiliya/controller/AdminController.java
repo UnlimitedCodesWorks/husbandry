@@ -99,7 +99,7 @@ public class AdminController {
     public String scoreAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
-            return "admin/priceControll";
+            return "admin/scoreAdmin";
         }
         else{
             return "redirect:login.html";
@@ -128,15 +128,15 @@ public class AdminController {
         }
     }
 
-//    @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
-//    public String waitStore(Model model){
-//        if(httpSession.getAttribute("adminBean")!=null){
-//            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+    @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
+    public String waitStore(Model model){
+        if(httpSession.getAttribute("adminBean")!=null){
+            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
 //            model.addAttribute("waitStores",adminService.getUnpassStores());
-//            return "admin/waitStore";
-//        }
-//        else{
-//            return "redirect:login.html";
-//        }
-//    }
+            return "admin/waitStore";
+        }
+        else{
+            return "redirect:login.html";
+        }
+    }
 }

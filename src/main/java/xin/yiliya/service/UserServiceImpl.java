@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
             User user=new User();
             BeanUtils.copyProperties(user,registerUser);
             user.setHeadImg(aliOssTool.putImage(registerUser.getHeadImg(),"user"));
+            user.setCityId(citiesMapper.selectCiidByCityId(registerUser.getCityId()));
             userMapper.insertSelective(user);
             return true;
         }catch (Exception e){

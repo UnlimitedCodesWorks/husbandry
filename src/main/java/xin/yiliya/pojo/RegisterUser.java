@@ -16,6 +16,12 @@ public class RegisterUser {
 
     private MultipartFile headImg;
 
+    private String community;
+
+    private String provinceId;
+
+    private String cityId;
+
     public String getRegistNum() {
         return registNum;
     }
@@ -64,4 +70,27 @@ public class RegisterUser {
         this.headImg = headImg;
     }
 
+    public String getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(String community) {
+        this.community = community;
+    }
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(String provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
 }

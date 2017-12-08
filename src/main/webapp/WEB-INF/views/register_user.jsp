@@ -31,7 +31,7 @@
     <div class="layui-row layui-col-md8 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset2 register_user_main">
         <div class="layui-col-md10 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset1 register_user_title"><span class="layui-icon">&#xe612;</span> 用户注册</div>
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-            <f:form class="layui-form" method="post" action="<%=registerPath%>" enctype="multipart/form-data">
+            <f:form class="layui-form" method="post" action="<%=registerPath%>" modelAttribute="registerUser" enctype="multipart/form-data">
                 <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_registernum">
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_registernum_text">用户名：</span>
@@ -77,16 +77,18 @@
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_address">
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_address_text">地址：</span>
                         <span class="layui-col-md4 layui-col-sm4 layui-col-xs4">
-                                <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
-
-                                </select>
+                            <f:select path="provinceId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="province">
+                                <f:option value="NONE" label="省" />
+                                <f:options items="${provinces}" />
+                            </f:select>
                         </span>
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs3">
-                            <select runat="server" lay-ignore class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
-                                </select>
+                            <f:select path="cityId" runat="server" lay-ignore="lay-ignore" class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="city">
+                                <f:option value="NONE" label="市" />
+                            </f:select>
                         </span>
                         <span class="layui-col-md7 layui-col-sm8 layui-col-xs7 layui-col-xs-offset4 layui-col-md-offset3 layui-col-sm-offset4">
-                            <input type="text" required="required" lay-verify="required" placeholder="请输入您所在的社区" autocomplete="off" class="layui-input register_user_address_text1" >
+                            <f:input path="community" type="text" required="required" lay-verify="required" placeholder="请输入您所在的社区" autocomplete="off" class="layui-input register_user_address_text1" />
                         </span>
                     </div>
                 </div>
@@ -100,6 +102,32 @@
     <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../resources/layui.all.js"></script>
     <script type="text/javascript" src="../../resources/js/register_user.js"></script>
+    <script type="text/javascript">
+        var province = $("#province");
+        var city = $("#city");
+        var portPath = "<%=portPath%>";
+        province.change(function (e) {
+            city.html("");
+            city.append('<option value="NONE" label="市" />');
+            var value = province.val();
+            $.ajax({
+                url :portPath +'user/getCitys.do',
+                type : "post",
+                data:{
+                    provinceId : value
+                },
+                dataType : "json",
+                success: function(data){
+                    for(var i=0;i<data.length;i++){
+                        var node = '<option value="'+data[i].cityId+ '" label="'+data[i].city+'" />';
+                        city.append(node);
+                    }
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>

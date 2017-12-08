@@ -24,6 +24,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/zoomify.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/layui.css">
     <style type="text/css">
         @media screen and (max-width: 768px) {
             .search {
@@ -194,25 +195,7 @@
                                     <button type="button" class="btn btn-primary">同意</button>
                                     <button type="button" class="btn btn-danger">拒绝</button>
                                 </div>
-                                <nav class="pull-right" style="display: inline-block;">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <div id="serviceAdmin-page" style="float: right"></div>
                             </div>
                         </div>
                     </div>
@@ -260,7 +243,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="range" class="col-sm-3 control-label">服务范围</label>
+                                        <label class="col-sm-3 control-label">服务范围</label>
                                         <div class="col-sm-8 col-xs-12 input-group">
                                             <input class="form-control" class="range" value="浙江省杭州市" readonly>
                                             <input class="form-control" class="range" value="浙江省温州市" readonly>
@@ -275,7 +258,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="characteristic" class="col-sm-12 control-label" style="text-align: center;">服务特色</label>
+                                        <label class="col-sm-12 control-label" style="text-align: center;">服务特色</label>
                                         <div class="col-sm-12 col-xs-12" style="margin-bottom: 5px;">
                                             <img src="../../../resources//images/鸣哥.jpg" style="width: 100%;">
                                         </div>
@@ -307,10 +290,23 @@
     <script src="../../../resources/js/demo.js"></script>
     <!-- page script -->
     <script src="../../../resources/js/zoomify.min.js"></script>
+    <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
         $(function(){
             $('#check img').zoomify({
                 easing: "ease"
+            });
+
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+
+                //执行一个laypage实例
+                laypage.render({
+                    elem: 'serviceAdmin-page'
+                    ,count: 50 //数据总数，从服务端得到
+                    ,limit: 10
+                    ,theme: '#3c8dbc'
+                });
             });
 
             function initTableCheckbox() {
