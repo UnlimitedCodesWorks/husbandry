@@ -118,13 +118,13 @@
             <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">
                 <img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-                    <div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
-                    <div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise"><c:if test="${offerService.priceJudge ==true}">此价格高于市场价！</c:if> <c:if test="${offerService.priceJudge ==false}">此价格低于市场价！</c:if></div>
+                    <div class="layui-col-md4 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
+                    <div class="layui-col-md8 layui-col-sm7 layui-col-xs7 search_price_noise">市场价：200<c:if test="${offerService.priceJudge ==true}"><i class="iconfont price_high">&#xe702;</i><div class="price_high1">高于市场价</div></c:if> <c:if test="${offerService.priceJudge ==false}"><i class="iconfont price_low">&#xe6e5;</i><div class="price_low1">低于市场价</div></c:if></div>
                 </div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${fn:replace(offerService.serviceName,content,redContent)}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
-                    <div class="layui-col-md8 layui-col-sm8 layui-col-xs8 search_company">${fn:replace(offerService.store.storeName,content,redContent)}</div>
-                    <div class="layui-col-md4 layui-col-sm4 layui-col-xs4 search_score"><c:if test="${offerService.grade ==0}">未评分</c:if><c:if test="${offerService.grade !=0}">${offerService.grade}分</c:if></div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company">${fn:replace(offerService.store.storeName,content,redContent)}</div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_score"><c:if test="${offerService.grade !=0}">未评分</c:if><c:if test="${offerService.grade ==0}">${offerService.grade}分<span class="search_score_peoplenum" >(125人评分)</span></c:if></div>
                 </div>
             </ul>
         </ul>

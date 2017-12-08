@@ -126,11 +126,12 @@ nav {
 
 .search_main_ul_ul {
     height: 100%;
+    border:1px solid #cccccc;
 }
 
 .search_main_ul_ul:hover {
-    border: 1px solid #5FB878;
-    box-sizing: content-box;
+    border-color:#5FB878;
+
 }
 
 .search_main_ul_img {
@@ -152,13 +153,48 @@ nav {
 .search_price_noise {
     font-size: 5px;
     color: red;
+    position: relative;
+    text-align: right;
+    padding-right:10px;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
     float: left;
+    font-size: 14px;
     font-weight: bold;
 }
-
+.price_high1{
+    position: absolute;
+    height: 20px;
+    padding-left:5px;
+    padding-right: 5px;
+    bottom: -15px;
+    right: -30px;
+    font-size: 8px;
+    font-weight: normal;
+    color: #ce563f;
+    line-height: 20px;
+    border:1px solid;
+    text-align: center;
+    opacity: 0;
+    -webkit-transition: opacity 0.5s;
+}
+.price_low1{
+    position: absolute;
+    height: 20px;
+    padding-left:5px;
+    padding-right: 5px;
+    bottom: -15px;
+    right: -30px;
+    font-size: 8px;
+    font-weight: normal;
+    color: #ce563f;
+    line-height: 20px;
+    border:1px solid;
+    text-align: center;
+    opacity: 0;
+    -webkit-transition: opacity 0.5s;
+}
 .search_service {
     padding-left: 10px;
     font-size: 14px;
@@ -186,9 +222,13 @@ nav {
 
 .search_score {
     font-size: 13px;
-    text-align: center;
+    text-align: right;
+    padding-right:10px;
     color: #FF5722;
     font-weight: bold;
+}
+.search_score_peoplenum{
+    color: #cccccc;
 }
 
 #search_page {
@@ -211,3 +251,18 @@ footer p {
     text-align: center;
     padding-top: 50px;
 }
+@font-face {
+    font-family: 'iconfont';  /* project id 492639 */
+    src: url('http://at.alicdn.com/t/font_492639_yr0z98yde0q6ko6r.eot');
+    src: url('http://at.alicdn.com/t/font_492639_yr0z98yde0q6ko6r.eot?#iefix') format('embedded-opentype'),
+    url('http://at.alicdn.com/t/font_492639_yr0z98yde0q6ko6r.woff') format('woff'),
+    url('http://at.alicdn.com/t/font_492639_yr0z98yde0q6ko6r.ttf') format('truetype'),
+    url('http://at.alicdn.com/t/font_492639_yr0z98yde0q6ko6r.svg#iconfont') format('svg');
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-weight: normal;
+    font-size:13.5px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
