@@ -95,7 +95,7 @@ public class HhfTest {
 //        System.out.print(b);
 
         //用户登录
-//        User user=userService.userLogin("12345","12345");
+//        User user=userService.userLogin("1111","1111");
 //        System.out.print(JSON.toJSONString(user,true));
 
         //修改我的信息

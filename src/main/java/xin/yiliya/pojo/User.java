@@ -27,6 +27,10 @@ public class User {
 
     private String community;
 
+    private String city;
+
+    private String province;
+
     private Cities cities;
 
     public Integer getUserid() {
@@ -131,5 +135,21 @@ public class User {
 
     public void setCities(Cities cities) {
         this.cities = cities;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }
