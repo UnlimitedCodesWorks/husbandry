@@ -55,6 +55,14 @@
         </div>
     </div>
     <!-- 标题栏 -->
+    <div class="layui-row layui-col-md10 layui-col-xs10 layui-col-sm10 layui-col-md-offset1 layui-col-xs-offset1 layui-col-sm-offset1">
+        <div class="layui-col-md12 layui-col-xs12 layui-col-sm12 search_show">
+            <span class="layui-breadcrumb layui-col-md12 layui-col-sm12 layui-col-xs12" lay-separator=">">
+                <a href="">家政</a>
+                <a href="" class="search_searchtext">杭州何华峰保姆服务</a>
+            </span>
+        </div>
+    </div>
     <div class=" layui-row layui-col-md10 layui-col-xs10 layui-col-sm10 layui-col-md-offset1 layui-col-xs-offset1 layui-col-sm-offset1 search_title ">
         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_classify1">
             <span class="layui-col-md1 layui-col-sm1 layui-col-xs12 search_classify">分类</span>
@@ -449,6 +457,19 @@
                 '</ul>';
             searchDiv.append(node);
         }
+        $(".price_high").mouseover(function () {
+            $(".price_high1").css("opacity","1");
+        });
+        $(".price_high").mouseleave(function () {
+            $(".price_high1").css("opacity","0");
+        });
+        $(".price_low").mouseover(function () {
+            $(".price_low1").css("opacity","1");
+        });
+        $(".price_low").mouseleave(function () {
+            $(".price_low1").css("opacity","0");
+        });
+
     }
     function createOfferService1(data) {
         var searchDiv = $(".search_main:eq(0)");
@@ -490,6 +511,19 @@
                 '</ul>';
             searchDiv.append(node);
         }
+        $(".price_high").mouseover(function () {
+            $(".price_high1").css("opacity","1");
+        });
+        $(".price_high").mouseleave(function () {
+            $(".price_high1").css("opacity","0");
+        });
+        $(".price_low").mouseover(function () {
+            $(".price_low1").css("opacity","1");
+        });
+        $(".price_low").mouseleave(function () {
+            $(".price_low1").css("opacity","0");
+        });
+
     }
 </script>
 </html>
