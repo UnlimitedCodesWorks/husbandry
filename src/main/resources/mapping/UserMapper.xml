@@ -16,6 +16,23 @@
     <result column="community" jdbcType="VARCHAR" property="community" />
   </resultMap>
 
+  <resultMap id="BaseResultMap1" type="xin.yiliya.pojo.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="regist_num" jdbcType="VARCHAR" property="registNum" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birth" jdbcType="TIMESTAMP" property="birth" />
+    <result column="community" jdbcType="VARCHAR" property="community" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     userid, regist_num, password, user_name, phone, email, head_img, city_id, introduce, 
     sex, birth, community
@@ -176,8 +193,13 @@
     where userid = #{userid,jdbcType=INTEGER}
   </update>
 
-  <select id="userLogin" resultMap="BaseResultMap">
-    select * from `user` WHERE regist_num=#{num} AND password=md5(#{pass})
+  <select id="userLogin" resultMap="BaseResultMap1">
+    select `user`.*,provinces.province,cities.city
+    from `user`,cities,provinces WHERE regist_num=#{num}
+    AND password=md5(#{pass})
+    and `user`.city_id=cities.ciid
+    and cities.provinceid=provinces.provinceid
+
   </select>
 
   <select id="selectUserIdByRegistNum" resultType="java.lang.Integer">
