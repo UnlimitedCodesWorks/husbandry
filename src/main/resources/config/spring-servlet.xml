@@ -41,6 +41,7 @@ mvc:annotation-driven默认加载很多的参数绑定方法，
             <mvc:mapping path="/userResident/*"/>
             <!-- /search路径下的所有页面 -->
             <mvc:mapping path="/search/*"/>
+            <mvc:mapping path="/serviceForm/*" />
             <bean class="xin.yiliya.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
 

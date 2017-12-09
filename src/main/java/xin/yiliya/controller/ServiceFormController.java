@@ -5,10 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import xin.yiliya.pojo.User;
 import xin.yiliya.service.OrderFormService;
 import xin.yiliya.service.ServiceService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/serviceForm",method = RequestMethod.GET)
@@ -20,10 +22,15 @@ public class ServiceFormController {
     @Resource
     private ServiceService serviceService;
 
+    @Resource
+    private HttpSession session;
+
     @RequestMapping(value = "/view.html",method = RequestMethod.GET)
     public String serviceFormView(@RequestParam(value = "kind")Integer kind,
                                    @RequestParam(value = "serviceId")Integer serviceId,
                                   Model model){
+        User user = (User) session.getAttribute("userBean");
+        model.addAttribute("user",user);
         model.addAttribute("serviceForm",orderFormService.getAllOrderFormRow(kind));
         model.addAttribute("serviceName",serviceService.getSerKindBySerId(kind));
         model.addAttribute("serviceId",serviceId);

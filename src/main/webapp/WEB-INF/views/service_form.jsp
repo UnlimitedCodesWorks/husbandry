@@ -24,21 +24,21 @@
         <nav>
             <ul class="layui-nav">
                 <li class="layui-nav-item ">
-                    <a href="<%=portPath%>index.html" title="Husbandry">Husbandry</a>
+                    <a href="<%=portPath%>index.html" title="Husbandry" >Husbandry</a>
                 </li>
                 <template v-if="isLogin">
-					<li class="layui-nav-item">
-						<a href="<%=portPath%>register.html" title="注册">注册</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="<%=portPath%>login/user.html" title="登录">登录</a>
-					</li>
-				</template>
+                    <li class="layui-nav-item">
+                        <a href="<%=portPath%>register.html" title="注册">注册</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="<%=portPath%>login/user.html" title="登录">登录</a>
+                    </li>
+                </template>
                 <li class="layui-nav-item" v-else>
-                    <a href="javascript:;"><img src="../../resources/images/user.png" class="layui-nav-img">何华峰</a>
+                    <a href="<%=portPath%>userResident/information.html"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
-                        <dd><a href="javascript:;">登出</a></dd>
+                        <dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+                        <dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -65,7 +65,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">${problem.proName}</label>
                                 <c:forEach var="value" items="${problem.values}">
-                                    <input type="radio"  value="${value.content}" title="${value.content}">
+                                    <input name="XXX" type="radio"  value="${value.content}" title="${value.content}">
                                 </c:forEach>
                             </div>
                         </c:if>
@@ -105,7 +105,7 @@
     </div>
 
     <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/layui.all.js"></script>
+    <script type="text/javascript" src="../../resources/layui.js"></script>
     <script type="text/javascript" src="../../resources/js/service_form.js"></script>
     <script type="text/javascript" src="../../resources/js/vue.js"></script>
 </body>
