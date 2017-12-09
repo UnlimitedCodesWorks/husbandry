@@ -21,20 +21,20 @@ $(function() {
 
 
 });
-$(function () {
+
 $(".price_high").mouseover(function () {
    $(".price_high1").css("opacity","1");
 });
 $(".price_high").mouseleave(function () {
     $(".price_high1").css("opacity","0");
 });
-    $(".price_low").mouseover(function () {
+$(".price_low").mouseover(function () {
         $(".price_low1").css("opacity","1");
     });
-    $(".price_low").mouseleave(function () {
+$(".price_low").mouseleave(function () {
         $(".price_low1").css("opacity","0");
     });
-});
+
 $(function() {
     $(".search_classify_choose span").click(function() {
         $(".search_classify_choose span").css("color", "black")

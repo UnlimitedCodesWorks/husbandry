@@ -80,6 +80,25 @@ nav {
     color: #999999;
 }
 
+.search_show{
+    height: 40px;
+    line-height: 40px;
+    font-size: 10px;
+    padding: 5px;
+}
+
+.search_show span:nth-child(2){
+    text-align: left;
+}
+
+font{
+    cursor: pointer;
+}
+
+font:hover{
+    color: #009688;
+}
+
 .search_classify1,
 .search_area1 {
     border-bottom: 1px dashed #e8e8e8;
