@@ -85,8 +85,8 @@ public class HhfTest {
 //        }
         //用户注册
 //        RegisterUser registerUser=new RegisterUser();
-//        registerUser.setRegistNum("12345");
-//        registerUser.setPassword("12345");
+//        registerUser.setRegistNum("2");
+//        registerUser.setPassword("2");
 //        registerUser.setEmail("12345");
 //        registerUser.setHeadImg(multipartFile1);
 //        registerUser.setPhone("1356777");
@@ -95,7 +95,7 @@ public class HhfTest {
 //        System.out.print(b);
 
         //用户登录
-//        User user=userService.userLogin("12345","12345");
+//        User user=userService.userLogin("1111","1111");
 //        System.out.print(JSON.toJSONString(user,true));
 
         //修改我的信息

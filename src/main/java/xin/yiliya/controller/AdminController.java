@@ -1,5 +1,7 @@
 package xin.yiliya.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Admin;
+import xin.yiliya.pojo.StoreAdmin;
 import xin.yiliya.service.AdminService;
 
 import javax.servlet.http.HttpSession;
@@ -132,7 +135,9 @@ public class AdminController {
     public String waitStore(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
-//            model.addAttribute("waitStores",adminService.getUnpassStores());
+            PageInfo<StoreAdmin> pageInfo=adminService.getUnpassStores(1,2);
+            model.addAttribute("waitStoreList",pageInfo.getList());
+            model.addAttribute("pages",pageInfo.getPages());
             return "admin/waitStore";
         }
         else{
