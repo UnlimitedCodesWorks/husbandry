@@ -23,13 +23,15 @@ public class OfferServiceSimple {
 
     private String price;
 
-    private String marketPrice;
+    private float marketPrice;
 
     private Boolean priceJudge;
 
     private Store store;
 
     private Integer markNum;
+
+    private xin.yiliya.pojo.Service kind;
 
     public Integer getGradeNum() {
         return gradeNum;
@@ -45,14 +47,6 @@ public class OfferServiceSimple {
 
     public void setMarkNum(Integer markNum) {
         this.markNum = markNum;
-    }
-
-    public String getMarketPrice() {
-        return marketPrice;
-    }
-
-    public void setMarketPrice(String marketPrice) {
-        this.marketPrice = marketPrice;
     }
 
     public Boolean getPriceJudge() {
@@ -94,8 +88,6 @@ public class OfferServiceSimple {
     public void setGrade(float grade) {
         this.grade = grade;
     }
-
-    private xin.yiliya.pojo.Service kind;
 
     public xin.yiliya.pojo.Service getKind() {
         return kind;
@@ -151,5 +143,13 @@ public class OfferServiceSimple {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public float getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(float marketPrice) {
+        this.marketPrice = marketPrice;
     }
 }

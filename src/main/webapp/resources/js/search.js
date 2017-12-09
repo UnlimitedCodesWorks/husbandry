@@ -2,7 +2,7 @@ $(function() {
 
     $(".search_input").bind('input propertychange', function() {
         var msg = $(".search_input").val();
-        $(".search_button1").text("搜索 “" + msg + "” 相关服务");
+        $(".search_button1").text("搜索 “" + msg + "” 相关服务和商家");
         $(".search_button1").show();
         if (msg == "") {
             $(".search_button1").hide();

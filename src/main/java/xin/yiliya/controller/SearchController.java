@@ -52,9 +52,9 @@ public class SearchController {
         provinceId = regionService.selectProvinceIdByciid(ciid);
         PageInfo<OfferServiceSimple> pageInfo;
         if(content != null){
-            pageInfo = offerService.getServicesByInput(content, kind,ciid,rankId ,1,1);
+            pageInfo = offerService.getServicesByInput(content, kind,ciid,rankId ,1,8);
         }else{
-            pageInfo = offerService.getServicesByCityAndKind(kind,ciid,rankId,1,1);
+            pageInfo = offerService.getServicesByCityAndKind(kind,ciid,rankId,1,8);
         }
         model.addAttribute("offerServiceList",pageInfo.getList());
         model.addAttribute("pages",pageInfo.getPages());
@@ -88,9 +88,9 @@ public class SearchController {
         }
         PageInfo<OfferServiceSimple> pageInfo;
         if(content != null){
-            pageInfo = offerService.getServicesByInput(content, kind,ciid,rankId,currentPage,1);
+            pageInfo = offerService.getServicesByInput(content, kind,ciid,rankId,currentPage,8);
         }else{
-            pageInfo = offerService.getServicesByCityAndKind(kind,ciid,rankId,currentPage,1);
+            pageInfo = offerService.getServicesByCityAndKind(kind,ciid,rankId,currentPage,8);
         }
         return pageInfo;
     }

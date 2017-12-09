@@ -249,7 +249,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     public PageInfo<OfferServiceSimple> getServicesByCityAndKind(
             Integer serviceKind, Integer ciid, int schema,int currentPage,int pageSize) {
         List<OfferServiceSimple> list;
-        float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
             default:
                 PageHelper.startPage(currentPage,pageSize);
@@ -259,6 +258,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -282,6 +283,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -298,6 +301,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -313,6 +318,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -335,6 +342,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -357,6 +366,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -379,6 +390,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -404,7 +417,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     public PageInfo<OfferServiceSimple> getServicesByInput(
             String input,Integer serviceKind, Integer ciid, int schema, int currentPage, int pageSize) {
         List<OfferServiceSimple> list;
-        float marketPrice = serviceService.getServiceKindPrice(serviceKind);
         switch (schema){
             default:
                 PageHelper.startPage(currentPage,pageSize);
@@ -414,6 +426,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -437,6 +451,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -453,6 +469,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -468,6 +486,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -490,6 +510,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -512,6 +534,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {
@@ -534,6 +558,8 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                     object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
+                    float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
+                    object.setMarketPrice(marketPrice);
                     if(marketPrice<Float.parseFloat(object.getPrice())){
                         object.setPriceJudge(true);
                     }else {

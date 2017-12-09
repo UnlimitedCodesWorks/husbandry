@@ -273,6 +273,10 @@
       <id property="storeid" column="storeid" />
       <result property="storeName" column="store_name" />
     </association>
+    <association property="kind" column="kind" javaType="xin.yiliya.pojo.Service">
+      <id property="serid" column="serid" />
+      <result property="serKind" column="serkind" />
+    </association>
   </resultMap>
   <select id="getServicesByCityAndKind" resultMap="getServicesByCityAndKind">
     SELECT
@@ -282,14 +286,19 @@
 	price,
 	store_id,
 	storeid,
-	store_name
+	store_name,
+    kind,
+    serid,
+    serkind
     FROM
 	offerservice,
 	servicespots,
-	store
+	store,
+    service
     WHERE
 	servicespots.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = store.storeid
+    AND offerservice.kind = service.serid
     <if test="kind !=0">
     AND kind = #{kind,jdbcType=INTEGER}
     </if>
@@ -317,14 +326,19 @@
 	price,
 	store_id,
 	storeid,
-	store_name
+	store_name,
+    kind,
+    serid,
+    serkind
     FROM
 	offerservice,
 	servicespots,
-	store
+	store,
+    service
     WHERE
 	servicespots.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = store.storeid
+    AND offerservice.kind = service.serid
     <if test="kind !=0">
       AND kind = #{kind,jdbcType=INTEGER}
     </if>
