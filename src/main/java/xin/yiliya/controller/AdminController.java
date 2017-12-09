@@ -1,12 +1,15 @@
 package xin.yiliya.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Admin;
+import xin.yiliya.pojo.StoreAdmin;
 import xin.yiliya.service.AdminService;
 
 import javax.servlet.http.HttpSession;
@@ -132,11 +135,17 @@ public class AdminController {
     public String waitStore(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
-            model.addAttribute("waitStoreList",adminService.getUnpassStores(1,10).getList());
+            model.addAttribute("waitStoreList",adminService.getUnpassStores(1,2).getList());
+            model.addAttribute("pages",adminService.getUnpassStores(1,2).getPages());
             return "admin/waitStore";
         }
         else{
             return "redirect:login.html";
         }
+    }
+
+    @RequestMapping(value = "/waitStore.do",method = RequestMethod.GET)
+    public PageInfo<StoreAdmin> waitStorePage(@RequestParam(value = "currentPage")Integer currentPage){
+        return adminService.getUnpassStores(currentPage,2);
     }
 }

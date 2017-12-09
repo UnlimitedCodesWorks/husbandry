@@ -180,14 +180,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <c:if test="${empty waitStoreList}">
+                                                <tr>
+                                                    <td colspan="5" align="center"><b>没有未认证的厂商</b></td>
+                                                </tr>
+                                            </c:if>
                                             <c:if test="${waitStoreList!=null}">
-                                                <c:forEach var="waitStore" items="waitStoreList">
+                                                <c:forEach var="waitStore" items="${waitStoreList}">
                                                     <tr>
                                                         <td class="select"><c:out value="${waitStore.storeName}"/></td>
                                                         <td class="select"><c:out value="${waitStore.phone}"/></td>
                                                         <td class="select"><c:out value="${waitStore.email}"/></td>
                                                         <td class="select"><c:out value="${waitStore.detailInfo}"/></td>
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
+                                                        <td><a href="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </c:if>
@@ -195,8 +200,14 @@
                                     </table>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <button type="button" class="btn btn-primary">同意</button>
-                                    <button type="button" class="btn btn-danger">拒绝</button>
+                                    <c:if test="${empty waitStoreList}">
+                                        <button type="button" class="btn btn-primary" id="agree" disabled>同意</button>
+                                        <button type="button" class="btn btn-danger" id="refuse" disabled>拒绝</button>
+                                    </c:if>
+                                    <c:if test="${!empty waitStoreList}">
+                                        <button type="button" class="btn btn-primary" id="agree">同意</button>
+                                        <button type="button" class="btn btn-danger" id="refuse">拒绝</button>
+                                    </c:if>
                                 </div>
                                 <div id="waitStore-page" style="float: right"></div>
                             </div>
@@ -241,6 +252,9 @@
     <script src="../../../resources/js/zoomify.min.js"></script>
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
+        var pages=${pages};
+        var portPath = "<%=portPath%>";
+        var currentPage = 1;
         $(function(){
             $('#check img').zoomify({
                 easing: "ease"
@@ -252,11 +266,34 @@
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'waitStore-page'
-                    ,count: 50 //数据总数，从服务端得到
-                    ,limit: 10
+                    ,count: 2*pages //数据总数，从服务端得到
+                    ,limit: 2
                     ,theme: '#3c8dbc'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            currentPage = obj.curr;
+                            var href = portPath+"admin/waitStore.do?currentPage="+currentPage;
+                            changePage(href);
+                        }
+                    }
                 });
             });
+
+            function changePage(href) {
+                $.ajax({
+                    url :href,
+                    type : "get",
+                    dataType : "json",
+                    success: function(data){
+                        pages=data.pages;
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                        currentPage = 1;
+                    }
+                });
+            }
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
