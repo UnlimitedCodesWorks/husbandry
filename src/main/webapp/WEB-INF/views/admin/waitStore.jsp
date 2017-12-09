@@ -2,10 +2,7 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
-<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,31 +177,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%--<tr>--%>
-                                                <%--<td class="select">华峰国际有限公司</td>--%>
-                                                <%--<td class="select">13333333333</td>--%>
-                                                <%--<td class="select">888888@gmail.com</td>--%>
-                                                <%--<td class="select">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias cum sed deserunt, qui quisquam tempora aliquam rerum, doloribus tenetur quaerat blanditiis vitae architecto, velit autem. Accusamus animi exercitationem cupiditate nemo. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis dolore odit amet, laboriosam odio, commodi labore excepturi laborum molestiae, quasi iste sapiente quo itaque illo. Sit id saepe ipsum neque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam dolorem molestias natus asperiores. Minima officiis quibusdam, soluta debitis numquam! Eligendi alias, quae omnis quasi suscipit a delectus impedit quo veniam.</td>--%>
-                                                <%--<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>--%>
-                                            <%--</tr>--%>
-                                            <%--<tr>--%>
-                                                <%--<td class="select">华峰国际有限公司非洲分公司</td>--%>
-                                                <%--<td class="select">15555555555</td>--%>
-                                                <%--<td class="select">123456@gmail.com</td>--%>
-                                                <%--<td class="select">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia sint illo tempora, numquam distinctio, delectus. Ut consectetur cupiditate tempora vel possimus asperiores iure suscipit id, quisquam, ex, eveniet accusantium consequuntur.</td>--%>
-                                                <%--<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>--%>
-                                            <%--</tr>--%>
-                                            <c:if test="${waitStoreList!=null}">
-                                                <c:forEach var="waitStore" items="waitStoreList">
-                                                    <tr>
-                                                        <td class="select"><c:out value="${waitStore.storeName}"/></td>
-                                                        <td class="select"><c:out value="${waitStore.phone}"/></td>
-                                                        <td class="select"><c:out value="${waitStore.email}"/></td>
-                                                        <td class="select"><c:out value="${waitStore.detailInfo}"/></td>
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </c:if>
+                                            <tr>
+                                                <td class="select">华峰国际有限公司</td>
+                                                <td class="select">13333333333</td>
+                                                <td class="select">888888@gmail.com</td>
+                                                <td class="select">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias cum sed deserunt, qui quisquam tempora aliquam rerum, doloribus tenetur quaerat blanditiis vitae architecto, velit autem. Accusamus animi exercitationem cupiditate nemo. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis dolore odit amet, laboriosam odio, commodi labore excepturi laborum molestiae, quasi iste sapiente quo itaque illo. Sit id saepe ipsum neque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam dolorem molestias natus asperiores. Minima officiis quibusdam, soluta debitis numquam! Eligendi alias, quae omnis quasi suscipit a delectus impedit quo veniam.</td>
+                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="select">华峰国际有限公司非洲分公司</td>
+                                                <td class="select">15555555555</td>
+                                                <td class="select">123456@gmail.com</td>
+                                                <td class="select">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia sint illo tempora, numquam distinctio, delectus. Ut consectetur cupiditate tempora vel possimus asperiores iure suscipit id, quisquam, ex, eveniet accusantium consequuntur.</td>
+                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -255,10 +241,6 @@
     <script src="../../../resources/js/zoomify.min.js"></script>
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
-        var pages=${pages};
-        alert(pages);
-        var portPath = "<%=portPath%>";
-        var currentPage = 1;
         $(function(){
             $('#check img').zoomify({
                 easing: "ease"
@@ -270,35 +252,11 @@
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'waitStore-page'
-                    ,count: pages*2 //数据总数，从服务端得到
-                    ,limit: 2
+                    ,count: 50 //数据总数，从服务端得到
+                    ,limit: 10
                     ,theme: '#3c8dbc'
-//                    ,groups: 4
-//                    ,jump: function(obj, first){
-//                        if(!first){
-//                            currentPage = obj.curr;
-//                            var href = portPath+"admin/waitStore.do?currentPage="+currentPage;
-//                            changePage(href);
-//                        }
-//                    }
                 });
             });
-
-//            function changePage(href) {
-//                $.ajax({
-//                    url :href,
-//                    type : "get",
-//                    dataType : "json",
-//                    success: function(data){
-//                        pages=data.pages;
-//
-//                    },
-//                    error: function(jqXHR){
-//                        alert("发生错误：" + jqXHR.status);
-//                        currentPage = 1;
-//                    }
-//                });
-//            }
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
