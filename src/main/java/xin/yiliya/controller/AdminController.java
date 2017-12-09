@@ -132,7 +132,7 @@ public class AdminController {
     public String waitStore(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
-//            model.addAttribute("waitStores",adminService.getUnpassStores());
+            model.addAttribute("waitStoreList",adminService.getUnpassStores(1,10).getList());
             return "admin/waitStore";
         }
         else{
