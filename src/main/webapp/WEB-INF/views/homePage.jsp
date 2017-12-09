@@ -39,10 +39,10 @@
 					</li>
 				</template>
  				<li class="layui-nav-item" v-else>
-    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">何华峰无耻老贼</a>
+    				<a href="javascript:;"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
     				<dl class="layui-nav-child">
-      					<dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
-      					<dd><a href="javascript:;">登出</a></dd>
+      					<dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+      					<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
     				</dl>
  	 			</li>
 			</ul>
@@ -185,4 +185,7 @@
 		<p>Husbandry-&copy2017</p>
 	</footer>
 </body>
+<script>
+	var loginStatus = ${loginStatus};
+</script>
 </html>

@@ -31,6 +31,12 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping(value = "/exit",method = RequestMethod.GET)
+    public String exit(){
+        httpSession.invalidate();
+        return "redirect:/index.html";
+    }
+
     @RequestMapping(value = "/userLogin.do",method = RequestMethod.POST)
     public String userLoginDo(String username,String password){
         User user=userService.userLogin(username,password);

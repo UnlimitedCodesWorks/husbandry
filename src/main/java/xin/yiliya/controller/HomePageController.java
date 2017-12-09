@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.StoreIndex;
+import xin.yiliya.pojo.User;
 import xin.yiliya.service.StoreService;
 import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -21,10 +23,18 @@ public class HomePageController {
     @Resource
     private StoreService storeService;
 
+    @Resource
+    private HttpSession session;
+
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
         List<StoreIndex> storeIndexList = storeService.getAllHotStore(Rank.SALES_DESC);
         model.addAttribute("storeIndexList",storeIndexList);
+        User user = (User) session.getAttribute("userBean");
+        Boolean loginStatus;
+        loginStatus = user == null;
+        model.addAttribute("user",user);
+        model.addAttribute("loginStatus",loginStatus);
         return "homePage";
     }
 

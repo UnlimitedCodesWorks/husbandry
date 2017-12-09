@@ -15,7 +15,9 @@ import xin.yiliya.service.RegionService;
 import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -40,12 +42,10 @@ public class SearchController {
         User user = (User) session.getAttribute("userBean");
         String provinceId;
         Integer rankId = Rank.PRICE_DESC;
-        if(user!=null){
+        if(ciid ==null){
             ciid = user.getCityId();
-        }else if(ciid==null){
-            //return "login";
-            ciid = 186;
         }
+        model.addAttribute("user",user);
         if(rank!=null){
             rankId = rank;
         }
@@ -74,14 +74,12 @@ public class SearchController {
                                               @RequestParam(value = "currentPage")Integer currentPage,
                                               @RequestParam(value = "content",required = false) String content,
                                               @RequestParam(value = "rank",required = false) Integer rank,
-                                              @RequestParam(value = "ciid",required = false) Integer ciid){
+                                              @RequestParam(value = "ciid",required = false) Integer ciid,
+                                                  HttpServletResponse response) throws IOException {
         User user = (User) session.getAttribute("userBean");
         Integer rankId = Rank.PRICE_DESC;
-        if(user!=null){
+        if(ciid ==null){
             ciid = user.getCityId();
-        }else if(ciid==null){
-            //return "login";
-            ciid = 186;
         }
         if(rank!=null){
             rankId = rank;

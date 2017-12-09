@@ -36,10 +36,10 @@
 					</li>
 				</template>
                 <li class="layui-nav-item" v-else>
-                    <a href="javascript:;"><img src="../../resources/images/user.png" class="layui-nav-img">何华峰</a>
+                    <a href="javascript:;"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
-                        <dd><a href="javascript:;">登出</a></dd>
+                        <dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+                        <dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -143,7 +143,7 @@
 
 </body>
 <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../resources/layui.all.js"></script>
+<script type="text/javascript" src="../../resources/layui.js"></script>
 <script type="text/javascript" src="../../resources/js/search.js"></script>
 <script type="text/javascript" src="../../resources/js/vue.js"></script>
 <script type="text/javascript">
@@ -157,6 +157,28 @@
     var rank = "${rank}";
     var ciid = "${ciid}";
     var currentPage = 1;
+
+    document.onkeydown = keyevent;
+
+    function keyevent(){
+        var content = $(".search_input:eq(0)").val();
+        if(event.keyCode==13&&content.length!=0){
+            var href = portPath+"search/view.html?";
+            if(kind !=null){
+                href += 'kind='+kind;
+            }
+            if(ciid!=null){
+                href += '&ciid='+ciid;
+            }
+            if(rank !=null){
+                href += '&rank='+rank;
+            }
+            href += '&content='+content;
+            location.href = href;
+        }
+
+
+    }
     if(content.length !=0){
         $(".search_input:eq(0)").val(content);
     }

@@ -1,4 +1,14 @@
 $(function() {
+    layui.use('element', function(){
+        //实例化element
+        var element = layui.element;
+        //初始化动态元素
+        element.init();
+        //tab切换监听
+        element.on('tab(demo)',function (data) {
+            console.log(data);
+        });
+    });
 
     $(".search_input").bind('input propertychange', function() {
         var msg = $(".search_input").val();
@@ -8,6 +18,8 @@ $(function() {
             $(".search_button1").hide();
         }
     });
+
+
 });
 $(function () {
 $(".price_high").mouseover(function () {
