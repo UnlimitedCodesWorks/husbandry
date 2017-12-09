@@ -28,7 +28,7 @@
 		<nav>
 			<ul class="layui-nav">
 				<li class="layui-nav-item ">
-					<a href="" title="Husbandry" >Husbandry</a>
+					<a href="<%=portPath%>index.html" title="Husbandry" >Husbandry</a>
 				</li>
 				<template v-if="isLogin">
 					<li class="layui-nav-item">
@@ -39,7 +39,7 @@
 					</li>
 				</template>
 				<li class="layui-nav-item" v-else>
-					<a href="javascript:;"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<a href="<%=portPath%>userResident/information.html"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
 					<dl class="layui-nav-child">
 						<dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
