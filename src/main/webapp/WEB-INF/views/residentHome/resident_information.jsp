@@ -83,13 +83,13 @@
     				<h3><i class="iconfont title">&#xe60d;</i> 个人资料</h3>
     				<hr class="layui-bg-green">
     				<div class="layui-container">
-    					<form class="layui-form"  action="<%=updatePath%>">
+    					<f:form  class="layui-form" modelAttribute="updateUser"  action="<%=updatePath%>" method="post">
     						<!-- 昵称 -->
     						<div class="layui-form-item">
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">昵称：</label>
 	    							<div class="layui-input-block">
-	      								<input  type="text" name="userName" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
+	      								<f:input path="userName" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
 	    							</div>
 	    						</div>
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -103,7 +103,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">登记号：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled>
+	      								<f:input path="registNum" required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled="disabled" />
 	    							</div>
 	    						</div>
     						</div>
@@ -112,7 +112,7 @@
     							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12">
 	    							<label class="layui-form-label">我的签名：</label>
 	    							<div class="layui-input-block">
-										<textarea  name=introduce" placeholder="请输入内容" class="layui-textarea" required="required" lay-verify="required" style="resize:none;"  ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
+										<textarea  name="introduce"  placeholder="请输入内容" class="layui-textarea" required="required" lay-verify="required" style="resize:none;"   ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
 	    							</div>
 	    						</div>
   							</div>
@@ -120,9 +120,9 @@
   							<div class="layui-form-item">
     							<label class="layui-form-label">性别：</label>
     							<div class="layui-input-block">
-									<input type="radio" name="sex" value="男" title="男"  <c:if test="${user.sex =='男'}">checked</c:if> >
-      								<input type="radio" name="sex" value="女" title="女"  <c:if test="${user.sex =='女'}">checked</c:if> >
-      								<input type="radio" name="sex" value="保密" title="保密"  <c:if test="${user.sex =='保密'}">checked</c:if> >
+									<input type="radio" name="sex" value="男" title="男" <c:if test="${user.sex=='男'}">checked</c:if>  />
+      								<input type="radio" name="sex" value="女" title="女" <c:if test="${user.sex=='女'}">checked</c:if>  />
+      								<input type="radio" name="sex" value="保密" title="保密" <c:if test="${user.sex=='保密'}">checked</c:if> />
     							</div>
   							</div>
   							<!-- 出生日期 -->
@@ -130,7 +130,7 @@
 								<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 									<label class="layui-form-label">出生日期：</label>
 									<div class="layui-input-block">
-										<input type="text" name="birth" class="layui-input" id="date" required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birth}" />" />
+										<f:input path="birth"  class="layui-input" id="date" required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off" value="${format.format(user.birth)}" />
 									</div>
 								</div>
 							</div>
@@ -139,7 +139,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">所处社区：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="community" required  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
+	      								<f:input  path="community" required="required"  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
 	    							</div>
 	    						</div>
     						</div>
@@ -148,7 +148,7 @@
     							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
     								<label class="layui-form-label">所在地：</label>
     								<div class="layui-input-block">
-    									<select  required="required" lay-verify="required" id="province" lay-filter="province">
+    									<select name="provinceId" required="required" lay-verify="required" id="province" lay-filter="province">
 											<option value="">省</option>
 											<c:set var="provinceId" value="${user.cities.provinces.provinceId}" />
 											<c:forEach var="province" items="${provinces}" >
@@ -157,7 +157,7 @@
 										</select>
 									</div>
 									<div class="layui-input-block">
-										<select  required="required" lay-verify="required" id="city" lay-filter="city" >
+										<select name="cityId"  required="required" lay-verify="required" id="city" lay-filter="city" >
 											<option value="">市</option>
 											<c:set var="cityId" value="${user.cities.cityId}" />
 											<c:forEach var="city" items="${cities}">
@@ -175,7 +175,7 @@
      								</button>
     							</div>
   							</div>
-    					</form>
+    					</f:form>
     				</div>
     			</div>
     			<!-- 账号安全 -->

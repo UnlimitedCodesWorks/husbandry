@@ -191,7 +191,6 @@ jQuery(document).ready(function($) {
 		//实例化form
   		var form = layui.form;
         form.on('select(province)', function(data){
-			console.log(data.value);
             var value = data.value;
             $.ajax({
                 url :portPath +'user/getCitys.do',

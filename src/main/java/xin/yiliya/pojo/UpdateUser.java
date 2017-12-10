@@ -20,6 +20,8 @@ public class UpdateUser {
 
     private String cityId;
 
+    private String provinceId;
+
     private MultipartFile headImg;
 
     private String headLink;
@@ -124,5 +126,13 @@ public class UpdateUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(String provinceId) {
+        this.provinceId = provinceId;
     }
 }

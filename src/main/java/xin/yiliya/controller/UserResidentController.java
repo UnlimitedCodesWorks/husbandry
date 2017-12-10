@@ -1,8 +1,10 @@
 package xin.yiliya.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,10 +15,11 @@ import xin.yiliya.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping(value = "/userResident")
-public class UserResidentController {
+public class UserResidentController extends BaseController {
 
     @Resource
     private HttpSession session;
@@ -35,6 +38,7 @@ public class UserResidentController {
         model.addAttribute("provinces",regionService.getAllProvinces());
         String provinceId = user.getCities().getProvinces().getProvinceId();
         model.addAttribute("cities",regionService.getAllCitiesByProvince(provinceId));
+        model.addAttribute("format",new SimpleDateFormat("yyyy-MM-dd"));
         return "residentHome/resident_information";
     }
 
@@ -67,8 +71,9 @@ public class UserResidentController {
     }
 
     @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
-    @ResponseBody
-    public Boolean updateUser(UpdateUser updateUser){
-        return userService.userMyInfoUpdate(updateUser);
+    public String updateUser(@ModelAttribute("updateUser") UpdateUser updateUser){
+        System.out.println(JSON.toJSONString(updateUser,true));
+        userService.userMyInfoUpdate(updateUser);
+        return "redirect:/userResident/information.html";
     }
 }
