@@ -4,6 +4,7 @@
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 	String updatePath = portPath+"userResident/updateHeadImg.do";
+	String formPath = portPath+"userResident/updateUser.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -83,7 +84,7 @@
     				<h3><i class="iconfont title">&#xe60d;</i> 个人资料</h3>
     				<hr class="layui-bg-green">
     				<div class="layui-container">
-    					<f:form  class="layui-form" modelAttribute="updateUser"  action="<%=updatePath%>" method="post">
+    					<f:form  class="layui-form" modelAttribute="updateUser"  action="<%=formPath%>" method="post">
     						<!-- 昵称 -->
     						<div class="layui-form-item">
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -130,7 +131,7 @@
 								<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 									<label class="layui-form-label">出生日期：</label>
 									<div class="layui-input-block">
-										<f:input path="birth"  class="layui-input" id="date" required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off" value="${format.format(user.birth)}" />
+										<input name="birth"  class="layui-input" id="date" required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off"  <c:if test="${user.birth!=null}">value="${format.format(user.birth)}"</c:if>  />
 									</div>
 								</div>
 							</div>
@@ -214,7 +215,6 @@
 					</button>
 				</div>
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
-					<p>请选择一张图片</p>
 					<img id="head-img" src="${user.headImg}" >
 				</div>
 			</div>
@@ -227,36 +227,7 @@
 <script>
     var portPath = "<%=portPath%>";
     var city = $("#city");
-	$("#icon-submit").click(function (e) {
-	    var formData = new FormData($("#uploadForm"));
-        $('#head-img-wrap').find('> img').cropper('getCroppedCanvas').toBlob(function (blob) {
-			var mime = blob.type;
-			var suffix = mime.split("/")[1];
-			var fileName = "blobImage."+suffix;
-            formData.append("headImg",blob,fileName);
-            formData.append("registNum","${user.registNum}");
-            formData.append("headLink","${user.headImg}");
-            $.ajax({
-                type:"post",
-                url:"<%=updatePath%>",
-                cache: false,
-                processData: false,
-                contentType: false,
-                data:formData,
-                success:function(data){
-                    if(data){
-                        location.replace(location.href);
-					}else{
-                        alert("服务器错误!");
-					}
-
-                },
-                error:function(XMLHttpRequest, textStatus, errorThrown, data){
-                    alert(errorThrown);
-                }
-            });
-        });
-
-    });
+    var registNum = "${user.registNum}";
+    var headImg = "${user.headImg}";
 </script>
 </html>

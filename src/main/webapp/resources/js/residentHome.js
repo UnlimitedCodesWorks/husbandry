@@ -126,6 +126,7 @@ jQuery(document).ready(function($) {
   		});
 	});
 
+	var cropper;
 	layui.use('layer', function(){
   		var layer = layui.layer;
   		$(".check-progress").click(function(event) {
@@ -156,6 +157,16 @@ jQuery(document).ready(function($) {
   				anim: 2,
   				content: $('#head')
 			});
+            if(cropper == undefined) {
+                cropper = $('#head-img-wrap img').cropper({
+                    aspectRatio: 1 / 1,
+                    // minContainerWidth: 500,
+                    crop: function(data) {
+                        // Output the result data for cropping image.
+                    }
+                });
+            }
+            cropper.cropper('reset').cropper('replace',initHead);
   		});
 
   		$(".refund-reason").click(function(event) {
@@ -234,26 +245,52 @@ jQuery(document).ready(function($) {
 		var windowURL = window.URL || window.webkitURL;
 		var dataURL;
 		var $img = $("#head-img");
-		console.log(fileObj.files)
 		if(fileObj && fileObj.files && fileObj.files[0]){
 			dataURL = windowURL.createObjectURL(fileObj.files[0]);
 			$img.attr('src',dataURL);
 			//cropper
-			$('#head-img-wrap img').cropper({
-  				aspectRatio: 1 / 1,
-  					crop: function(data) {
-    				// Output the result data for cropping image.
-  				}
-			});
-			$('#head-img-wrap img').cropper('replace', dataURL);
+            $.fn.cropper;
+            cropper.cropper('reset').cropper('replace',dataURL);
 		}
 		else{
 			dataURL = $file.val();
-			var imgObj = document.getElementById("#head-img");
+			var imgObj = $("#head-img");
 			imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
 			imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
 		}
 	});
+
+    $("#icon-submit").click(function (e) {
+        var formData = new FormData($("#uploadForm"));
+        $('#head-img-wrap').find('> img').cropper('getCroppedCanvas').toBlob(function (blob) {
+            var mime = blob.type;
+            var suffix = mime.split("/")[1];
+            var fileName = "blobImage."+suffix;
+            formData.append("headImg",blob,fileName);
+            formData.append("registNum",registNum);
+            formData.append("headLink",headImg);
+            $.ajax({
+                type:"post",
+                url:"<%=updatePath%>",
+                cache: false,
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function(data){
+                    if(data){
+                        location.replace(location.href);
+                    }else{
+                        alert("服务器错误!");
+                    }
+
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown, data){
+                    alert(errorThrown);
+                }
+            });
+        });
+
+    });
 
 	//particles
 	particlesJS("particles-js", {

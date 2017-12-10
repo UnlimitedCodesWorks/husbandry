@@ -46,6 +46,7 @@ public class UserResidentController extends BaseController {
     public String security(Model model){
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
+        model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_security";
     }
 
@@ -53,6 +54,7 @@ public class UserResidentController extends BaseController {
     public String order(Model model){
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
+        model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_order";
     }
 
@@ -60,6 +62,7 @@ public class UserResidentController extends BaseController {
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
+        model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
     }
 
@@ -67,6 +70,7 @@ public class UserResidentController extends BaseController {
     public String refund(Model model){
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
+        model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_refund";
     }
 
@@ -76,6 +80,13 @@ public class UserResidentController extends BaseController {
         return "redirect:/userResident/information.html";
     }
 
+    @RequestMapping(value = "/updateSecurity.do",method = RequestMethod.POST)
+    public String updateSecurity(@ModelAttribute("updateUser") UpdateUser updateUser){
+        User user = (User) session.getAttribute("userBean");
+        updateUser.setRegistNum(user.getRegistNum());
+        userService.userMyInfoUpdate(updateUser);
+        return "redirect:/userResident/security.html";
+    }
     @RequestMapping(value = "/updateHeadImg.do",method = RequestMethod.POST)
     @ResponseBody
     public Boolean updateHeadImg(UpdateUser updateUser){
