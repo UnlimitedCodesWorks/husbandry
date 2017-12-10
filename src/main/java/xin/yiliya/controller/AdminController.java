@@ -145,7 +145,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/waitStore.do",method = RequestMethod.GET)
+    @ResponseBody
     public PageInfo<StoreAdmin> waitStorePage(@RequestParam(value = "currentPage")Integer currentPage){
         return adminService.getUnpassStores(currentPage,2);
     }
+
+    @RequestMapping(value = "/AptitudePictures.do",method =RequestMethod.GET )
+    public void getAptitudePicturesDo(@RequestParam(value = "storeId")Integer storeId, Model model){
+        model.addAttribute("pictures",adminService.getAptitudeByStoreId(storeId));
+    }
+
 }

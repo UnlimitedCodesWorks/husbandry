@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -169,7 +170,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <!-- 表格 -->
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="waitTable">
                                         <thead>
                                             <tr>
                                                 <th style="width: 15%;">商户名称</th>
@@ -192,7 +193,7 @@
                                                         <td class="select"><c:out value="${waitStore.phone}"/></td>
                                                         <td class="select"><c:out value="${waitStore.email}"/></td>
                                                         <td class="select"><c:out value="${waitStore.detailInfo}"/></td>
-                                                        <td><a href="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td>
+                                                        <td><a href="<%=portPath%>admin/AptitudePictures.do?storeId=${waitStore.storeId}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </c:if>
@@ -223,9 +224,10 @@
                                 <h4 class="modal-title" id="checkLabel" style="font-weight: bold;">厂商资质</h4>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <img src="../../../resources/images/鸣哥.jpg" style="width: 100%;">
-                                    <img src="../../../resources/images/backloginimg.jpg" style="width: 100%;">
+                                <div id="aptitudeDiv">
+                                    <%--<c:forEach var="i" begin="0" end="${fn:length(pictures)}-1" step="1">--%>
+                                        <img src="${pictures[0]}" style="width: 100%;"/>
+                                    <%--</c:forEach>--%>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -287,6 +289,7 @@
                     dataType : "json",
                     success: function(data){
                         pages=data.pages;
+                        createWaitStores(data);
                     },
                     error: function(jqXHR){
                         alert("发生错误：" + jqXHR.status);
@@ -295,6 +298,36 @@
                 });
             }
 
+            function createWaitStores(data) {
+                var table=$('#waitTable');
+                table.find('thead').remove();
+                table.find('tbody').remove();
+                var theadNode='<thead>' +
+                                 '<tr>' +
+                                    '<th style="width: 15%;">商户名称</th>' +
+                                    '<th style="width: 10%;">商户电话</th>' +
+                                    '<th style="width: 10%;">商户邮箱</th>' +
+                                    '<th style="width: 55%;">厂商详细信息</th>' +
+                                    '<th style="width: 10%;">厂商资质</th>' +
+                                 '</tr>' +
+                              '</thead><tbody>'
+                table.append(theadNode);
+                for(var i=0;i<data.list.length;i++){
+                    var storeName=data.list[i].storeName;
+                    var phone=data.list[i].phone;
+                    var email=data.list[i].email;
+                    var detailInfo=data.list[i].detailInfo;
+                    var storeId=data.list[i].storeId;
+                    var node='<tr><td class="select">'+storeName+
+                        '</td><td class="select">'+phone+
+                        '</td><td class="select">'+email+
+                        '</td><td class="select">'+detailInfo+
+                        '</td><td><a href="'+portPath+'admin/AptitudePictures.do?storeId="'+storeId+' type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td></tr>'
+                    table.append(node);
+                }
+                table.append('</tbody>');
+                initTableCheckbox();
+            }
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
                 var $checkAllTh = $('<th><input type="checkbox" id="checkAll" name="checkAll" /></th>');
@@ -302,20 +335,20 @@
                 $thr.prepend($checkAllTh);
                 /*“全选/反选”复选框*/
                 var $checkAll = $thr.find('input');
-                $checkAll.click(function(event){
+                $checkAll.click(function (event) {
                     /*将所有行的选中状态设成全选框的选中状态*/
-                    $tbr.find('input').prop('checked',$(this).prop('checked'));
+                    $tbr.find('input').prop('checked', $(this).prop('checked'));
                     /*并调整所有选中行的CSS样式*/
                     if ($(this).prop('checked')) {
                         $tbr.find('input').parent().parent().addClass('info');
-                    } else{
+                    } else {
                         $tbr.find('input').parent().parent().removeClass('info');
                     }
                     /*阻止向上冒泡，以防再次触发点击操作*/
                     event.stopPropagation();
                 });
                 /*点击全选框所在单元格时也触发全选框的点击操作*/
-                $checkAllTh.click(function(){
+                $checkAllTh.click(function () {
                     $(this).find('input').click();
                 });
                 var $tbr = $('table tbody tr');
@@ -324,20 +357,36 @@
                 /*每一行都在最前面插入一个选中复选框的单元格*/
                 $tbr.prepend($checkItemTd);
                 /*点击每一行的选中复选框时*/
-                $tbr.find('input').click(function(event){
+                $tbr.find('input').click(function (event) {
                     /*调整选中行的CSS样式*/
                     $(this).parent().parent().toggleClass('info');
                     /*如果已经被选中行的行数等于表格的数据行数，将全选框设为选中状态，否则设为未选中状态*/
-                    $checkAll.prop('checked',$tbr.find('input:checked').length == $tbr.length ? true : false);
+                    $checkAll.prop('checked', $tbr.find('input:checked').length == $tbr.length ? true : false);
                     /*阻止向上冒泡，以防再次触发点击操作*/
                     event.stopPropagation();
                 });
                 /*点击每一行时也触发该行的选中操作*/
-                $tbr2.click(function(){
+                $tbr2.click(function () {
                     $(this).parent().find('input').click();
                 });
             }
             initTableCheckbox();
+
+//            var aptitudeDiv=$('#aptitudeDiv');
+//            $.ajax({
+//                url :portPath + 'admin/AptitudePictures.do',
+//                type : "get",
+//                success: function(data){
+//                    for(var i=0;i<data.length;i++){
+//                        aptitudeDiv.find("img").remove();
+//                        var node="<img src='"+data[i]+"' style=\"width: 100%;\">"
+//                        aptitudeDiv.append(node);
+//                    }
+//                },
+//                error: function(jqXHR){
+//                    alert("发生错误：" + jqXHR.status);
+//                }
+//            });
         });
     </script>
 </body>
