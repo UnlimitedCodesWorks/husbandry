@@ -72,8 +72,13 @@ public class UserResidentController extends BaseController {
 
     @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
     public String updateUser(@ModelAttribute("updateUser") UpdateUser updateUser){
-        System.out.println(JSON.toJSONString(updateUser,true));
         userService.userMyInfoUpdate(updateUser);
         return "redirect:/userResident/information.html";
+    }
+
+    @RequestMapping(value = "/updateHeadImg.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean updateHeadImg(UpdateUser updateUser){
+        return userService.userMyInfoUpdate(updateUser);
     }
 }

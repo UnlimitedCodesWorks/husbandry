@@ -3,7 +3,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-	String updatePath = portPath+"userResident/updateUser.do";
+	String updatePath = portPath+"userResident/updateHeadImg.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -209,21 +209,54 @@
 					</a>
 				</div>
 				<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
-					<button class="layui-btn">
+					<button class="layui-btn" id="icon-submit" >
 						<i class="iconfont">&#xe62b;</i> 修改
 					</button>
 				</div>
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
 					<p>请选择一张图片</p>
-					<img id="head-img">
+					<img id="head-img" src="${user.headImg}" >
 				</div>
 			</div>
 		</div>
 	</div>
+	<form id="uploadForm" enctype="multipart/form-data">
 
+	</form>
 </body>
 <script>
     var portPath = "<%=portPath%>";
     var city = $("#city");
+	$("#icon-submit").click(function (e) {
+	    var formData = new FormData($("#uploadForm"));
+        $('#head-img-wrap').find('> img').cropper('getCroppedCanvas').toBlob(function (blob) {
+			var mime = blob.type;
+			var suffix = mime.split("/")[1];
+			var fileName = "blobImage."+suffix;
+            formData.append("headImg",blob,fileName);
+            formData.append("registNum","${user.registNum}");
+            formData.append("headLink","${user.headImg}");
+            $.ajax({
+                type:"post",
+                url:"<%=updatePath%>",
+                cache: false,
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function(data){
+                    if(data){
+                        location.replace(location.href);
+					}else{
+                        alert("服务器错误!");
+					}
+
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown, data){
+                    alert(errorThrown);
+                }
+            });
+        });
+
+    });
 </script>
 </html>
