@@ -229,5 +229,6 @@
     var city = $("#city");
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
+    var initHead = "${user.headImg}";
 </script>
 </html>
