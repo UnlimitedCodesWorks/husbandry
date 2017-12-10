@@ -5,7 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
+import xin.yiliya.service.RegionService;
+import xin.yiliya.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,10 +21,20 @@ public class UserResidentController {
     @Resource
     private HttpSession session;
 
+    @Resource
+    private RegionService regionService;
+
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/information.html",method = RequestMethod.GET)
     public String information(Model model){
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
+        model.addAttribute("updateUser",new UpdateUser());
+        model.addAttribute("provinces",regionService.getAllProvinces());
+        String provinceId = user.getCities().getProvinces().getProvinceId();
+        model.addAttribute("cities",regionService.getAllCitiesByProvince(provinceId));
         return "residentHome/resident_information";
     }
 
@@ -50,5 +64,11 @@ public class UserResidentController {
         User user = (User) session.getAttribute("userBean");
         model.addAttribute("user",user);
         return "residentHome/resident_refund";
+    }
+
+    @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean updateUser(UpdateUser updateUser){
+        return userService.userMyInfoUpdate(updateUser);
     }
 }

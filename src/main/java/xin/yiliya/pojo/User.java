@@ -19,8 +19,6 @@ public class User {
 
     private Integer cityId;
 
-    private Cities city;
-
     private String introduce;
 
     private String sex;
@@ -125,14 +123,6 @@ public class User {
 
     public void setCities(Cities cities) {
         this.cities = cities;
-    }
-
-    public Cities getCity() {
-        return city;
-    }
-
-    public void setCity(Cities city) {
-        this.city = city;
     }
 
     public Integer getCityId() {

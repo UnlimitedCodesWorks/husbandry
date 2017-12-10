@@ -29,7 +29,7 @@
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="birth" jdbcType="TIMESTAMP" property="birth" />
     <result column="community" jdbcType="VARCHAR" property="community" />
-    <association property="city" column="city_id" javaType="xin.yiliya.pojo.Cities">
+    <association property="cities" column="city_id" javaType="xin.yiliya.pojo.Cities">
       <id property="cityId" column="ciid" />
       <result property="city" column="city" />
       <result property="cityId" column="cityid" />

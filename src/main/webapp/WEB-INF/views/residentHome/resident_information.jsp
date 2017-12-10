@@ -3,6 +3,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+	String updatePath = portPath+"userResident/updateUser.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -56,7 +57,7 @@
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><h2>个人中心</h2></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，${user.userName}</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：${user.city.provinces.province}&nbsp${user.city.city}&nbsp${user.community}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：${user.cities.provinces.province}&nbsp${user.cities.city}&nbsp${user.community}</p></div>
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">${user.introduce}</p></div>
 					</div>
 				</div>
@@ -82,18 +83,18 @@
     				<h3><i class="iconfont title">&#xe60d;</i> 个人资料</h3>
     				<hr class="layui-bg-green">
     				<div class="layui-container">
-    					<form class="layui-form" action="">
+    					<form class="layui-form"  action="<%=updatePath%>">
     						<!-- 昵称 -->
     						<div class="layui-form-item">
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">昵称：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}">
+	      								<input  type="text" name="userName" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
 	    							</div>
 	    						</div>
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<div class="layui-input-block">
-	      								<p class="name-log">注：昵称要遵循XXXX格式</p>
+	      								<p class="name-log">注：昵称不能用标点符号格式</p>
 	    							</div>
 	    						</div>
     						</div>
@@ -111,7 +112,7 @@
     							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12">
 	    							<label class="layui-form-label">我的签名：</label>
 	    							<div class="layui-input-block">
-										<textarea placeholder="请输入内容" class="layui-textarea" required lay-verify="required" style="resize:none;" ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
+										<textarea  name=introduce" placeholder="请输入内容" class="layui-textarea" required="required" lay-verify="required" style="resize:none;"  ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
 	    							</div>
 	    						</div>
   							</div>
@@ -119,9 +120,9 @@
   							<div class="layui-form-item">
     							<label class="layui-form-label">性别：</label>
     							<div class="layui-input-block">
-									<input type="radio" name="sex" value="男" title="男" <c:if test="${user.sex=='男'}">checked</c:if>  >
-      								<input type="radio" name="sex" value="女" title="女" <c:if test="${user.sex=='女'}">checked</c:if> >
-      								<input type="radio" name="sex" value="保密" title="保密" <c:if test="${user.sex=='保密'}">checked</c:if> >
+									<input type="radio" name="sex" value="男" title="男"  <c:if test="${user.sex =='男'}">checked</c:if> >
+      								<input type="radio" name="sex" value="女" title="女"  <c:if test="${user.sex =='女'}">checked</c:if> >
+      								<input type="radio" name="sex" value="保密" title="保密"  <c:if test="${user.sex =='保密'}">checked</c:if> >
     							</div>
   							</div>
   							<!-- 出生日期 -->
@@ -129,8 +130,7 @@
 								<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 									<label class="layui-form-label">出生日期：</label>
 									<div class="layui-input-block">
-										<input type="text" class="layui-input" id="date" required lay-verify="required" placeholder="请选择出生日期
-										" autocomplete="off" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birth}" />" />
+										<input type="text" name="birth" class="layui-input" id="date" required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birth}" />" />
 									</div>
 								</div>
 							</div>
@@ -139,7 +139,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">所处社区：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}">
+	      								<input type="text" name="community" required  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
 	    							</div>
 	    						</div>
     						</div>
@@ -148,17 +148,21 @@
     							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
     								<label class="layui-form-label">所在地：</label>
     								<div class="layui-input-block">
-    									<select name="" required lay-verify="required" id="province">
+    									<select  required="required" lay-verify="required" id="province" lay-filter="province">
 											<option value="">省</option>
-											<option value="1">浙江</option>
+											<c:set var="provinceId" value="${user.cities.provinces.provinceId}" />
+											<c:forEach var="province" items="${provinces}" >
+												<option value="${province.key}"  <c:if test="${province.key == provinceId}">selected</c:if> > ${province.value}</option>
+											</c:forEach>
 										</select>
 									</div>
 									<div class="layui-input-block">
-										<select name="" required lay-verify="required" id="city">
+										<select  required="required" lay-verify="required" id="city" lay-filter="city" >
 											<option value="">市</option>
-											<option value="1">杭州</option>
-											<option value="2">温州</option>
-											<option value="3">台州</option>
+											<c:set var="cityId" value="${user.cities.cityId}" />
+											<c:forEach var="city" items="${cities}">
+												<option value="${city.cityId}"  <c:if test="${city.cityId == cityId}">selected</c:if> >${city.city}</option>
+											</c:forEach>
 										</select>
     								</div>
     							</div>
@@ -218,4 +222,8 @@
 	</div>
 
 </body>
+<script>
+    var portPath = "<%=portPath%>";
+    var city = $("#city");
+</script>
 </html>

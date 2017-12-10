@@ -40,8 +40,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -55,8 +53,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -70,8 +66,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -85,8 +79,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -100,8 +92,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -115,8 +105,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -130,8 +118,6 @@ jQuery(document).ready(function($) {
     		limit: 4,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
-    			console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-    			console.log(obj.limit); //得到每页显示的条数
     			//首次不执行
     			if(!first){
       				//do something
@@ -204,6 +190,29 @@ jQuery(document).ready(function($) {
 	layui.use('form', function(){
 		//实例化form
   		var form = layui.form;
+        form.on('select(province)', function(data){
+			console.log(data.value);
+            city.html("");
+            city.append('<option value="" label="市" />');
+            var value = data.value;
+            $.ajax({
+                url :portPath +'user/getCitys.do',
+                type : "post",
+                data:{
+                    provinceId : value
+                },
+                dataType : "json",
+                success: function(data){
+                    for(var i=0;i<data.length;i++){
+                        var node = '<option value="'+data[i].cityId+ '" label="'+data[i].city+'" />';
+                        city.append(node);
+                    }
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        });
 	});
 
 	$(".head-mask").hover(function() {
