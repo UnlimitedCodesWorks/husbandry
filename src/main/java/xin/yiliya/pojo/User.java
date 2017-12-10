@@ -19,6 +19,8 @@ public class User {
 
     private Integer cityId;
 
+    private Cities city;
+
     private String introduce;
 
     private String sex;
@@ -26,10 +28,6 @@ public class User {
     private Date birth;
 
     private String community;
-
-    private String city;
-
-    private String province;
 
     private Cities cities;
 
@@ -89,14 +87,6 @@ public class User {
         this.headImg = headImg == null ? null : headImg.trim();
     }
 
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
     public String getIntroduce() {
         return introduce;
     }
@@ -137,19 +127,19 @@ public class User {
         this.cities = cities;
     }
 
-    public String getCity() {
+    public Cities getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(Cities city) {
         this.city = city;
     }
 
-    public String getProvince() {
-        return province;
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 }

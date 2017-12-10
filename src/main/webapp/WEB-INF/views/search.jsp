@@ -58,8 +58,10 @@
     <div class="layui-row layui-col-md10 layui-col-xs10 layui-col-sm10 layui-col-md-offset1 layui-col-xs-offset1 layui-col-sm-offset1">
         <div class="layui-col-md12 layui-col-xs12 layui-col-sm12 search_show">
             <span class="layui-breadcrumb layui-col-md12 layui-col-sm12 layui-col-xs12" lay-separator=">">
-                <a href="">家政</a>
-                <a href="" class="search_searchtext">杭州何华峰保姆服务</a>
+                <a href="<%=portPath%>index.html">家政</a>
+                <c:if test="${content.length()!=0}">
+                    <a href="" class="search_searchtext">${content}</a>
+                </c:if>
             </span>
         </div>
     </div>

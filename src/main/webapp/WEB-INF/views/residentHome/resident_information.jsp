@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,14 +55,14 @@
 				<div class="layui-col-md10 layui-col-sm8 layui-col-xs8">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><h2>个人中心</h2></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，何华峰无耻老贼</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：浙江省&nbsp杭州市&nbsp浙江科技学院东和公寓5幢</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste numquam labore, est voluptates impedit architecto eos eius corporis, id beatae tempore in, iusto. Animi totam blanditiis a, doloremque commodi placeat!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam culpa enim omnis repellat architecto natus.</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，${user.userName}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：${user.city.provinces.province}&nbsp${user.city.city}&nbsp${user.community}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">${user.introduce}</p></div>
 					</div>
 				</div>
 				<div class="layui-col-md2 layui-col-sm4 layui-col-xs4">
 					<span class="head-wrap">
-						<img src="http://t.cn/RCzsdCq">
+						<img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
 						<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
 					</span>
 				</div>
@@ -87,7 +88,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">昵称：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}">
 	    							</div>
 	    						</div>
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -101,7 +102,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">登记号：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" value="1234233-3435" autocomplete="off" class="layui-input" disabled>
+	      								<input type="text" name="" required  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled>
 	    							</div>
 	    						</div>
     						</div>
@@ -110,7 +111,7 @@
     							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12">
 	    							<label class="layui-form-label">我的签名：</label>
 	    							<div class="layui-input-block">
-	      								<textarea placeholder="请输入内容" class="layui-textarea" required lay-verify="required" style="resize:none;"></textarea>
+										<textarea placeholder="请输入内容" class="layui-textarea" required lay-verify="required" style="resize:none;" ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
 	    							</div>
 	    						</div>
   							</div>
@@ -118,9 +119,9 @@
   							<div class="layui-form-item">
     							<label class="layui-form-label">性别：</label>
     							<div class="layui-input-block">
-      								<input type="radio" name="sex" value="男" title="男">
-      								<input type="radio" name="sex" value="女" title="女">
-      								<input type="radio" name="sex" value="保密" title="保密" checked>
+									<input type="radio" name="sex" value="男" title="男" <c:if test="${user.sex=='男'}">checked</c:if>  >
+      								<input type="radio" name="sex" value="女" title="女" <c:if test="${user.sex=='女'}">checked</c:if> >
+      								<input type="radio" name="sex" value="保密" title="保密" <c:if test="${user.sex=='保密'}">checked</c:if> >
     							</div>
   							</div>
   							<!-- 出生日期 -->
@@ -129,7 +130,7 @@
 									<label class="layui-form-label">出生日期：</label>
 									<div class="layui-input-block">
 										<input type="text" class="layui-input" id="date" required lay-verify="required" placeholder="请选择出生日期
-										" autocomplete="off">
+										" autocomplete="off" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birth}" />" />
 									</div>
 								</div>
 							</div>
@@ -138,7 +139,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">所处社区：</label>
 	    							<div class="layui-input-block">
-	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input">
+	      								<input type="text" name="" required  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}">
 	    							</div>
 	    						</div>
     						</div>
@@ -212,7 +213,9 @@
 					<p>请选择一张图片</p>
 					<img id="head-img">
 				</div>
+			</div>
 		</div>
 	</div>
+
 </body>
 </html>

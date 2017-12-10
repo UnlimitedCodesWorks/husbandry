@@ -11,16 +11,19 @@ import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
 import xin.yiliya.tool.AliOssTool;
 
+import javax.annotation.Resource;
+
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired
-    AliOssTool aliOssTool;
 
-    @Autowired
-    UserMapper userMapper;
+    @Resource
+    private AliOssTool aliOssTool;
 
-    @Autowired
-    CitiesMapper citiesMapper;
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private CitiesMapper citiesMapper;
 
     public Boolean userRegister(RegisterUser registerUser){
         try{
@@ -30,6 +33,8 @@ public class UserServiceImpl implements UserService{
             BeanUtils.copyProperties(user,registerUser);
             user.setHeadImg(aliOssTool.putImage(registerUser.getHeadImg(),"user"));
             user.setCityId(citiesMapper.selectCiidByCityId(registerUser.getCityId()));
+            user.setIntroduce("暂无简介");
+            user.setSex("保密");
             userMapper.insertSelective(user);
             return true;
         }catch (Exception e){
