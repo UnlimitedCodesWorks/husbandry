@@ -192,8 +192,6 @@ jQuery(document).ready(function($) {
   		var form = layui.form;
         form.on('select(province)', function(data){
 			console.log(data.value);
-            city.html("");
-            city.append('<option value="" label="市" />');
             var value = data.value;
             $.ajax({
                 url :portPath +'user/getCitys.do',
@@ -203,10 +201,15 @@ jQuery(document).ready(function($) {
                 },
                 dataType : "json",
                 success: function(data){
-                    for(var i=0;i<data.length;i++){
-                        var node = '<option value="'+data[i].cityId+ '" label="'+data[i].city+'" />';
+                    city.html("");
+                    city.append('<option value="">市</option>');
+                    var selected = '<option value="'+data[0].cityId+ '" selected>'+data[0].city+'</option>';
+                    city.append(selected);
+                    for(var i=1;i<data.length-1;i++){
+                        var node = '<option value="'+data[i].cityId+ '">'+data[i].city+'</option>';
                         city.append(node);
                     }
+                    form.render('select');
                 },
                 error: function(jqXHR){
                     alert("发生错误：" + jqXHR.status);
