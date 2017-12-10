@@ -3,6 +3,8 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+	String updatePath = portPath+"userResident/updateHeadImg.do";
+	String formPath = portPath+"userResident/updateSecurity.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -17,6 +19,7 @@
 	<script src="../../../resources/js/residentHome.js"></script>
 	<script src="../../../resources/js/particles.min.js"></script>
 	<script src="../../../resources/js/cropper.js"></script>
+	<script src="../../../resources/js/md5.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/residentHome.css">
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/cropper.css">
@@ -54,14 +57,14 @@
 				<div class="layui-col-md10 layui-col-sm8 layui-col-xs8">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><h2>个人中心</h2></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，何华峰无耻老贼</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：浙江省&nbsp杭州市&nbsp浙江科技学院东和公寓5幢</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste numquam labore, est voluptates impedit architecto eos eius corporis, id beatae tempore in, iusto. Animi totam blanditiis a, doloremque commodi placeat!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam culpa enim omnis repellat architecto natus.</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，${user.userName}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：${user.cities.provinces.province}&nbsp${user.cities.city}&nbsp${user.community}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">${user.introduce}</p></div>
 					</div>
 				</div>
 				<div class="layui-col-md2 layui-col-sm4 layui-col-xs4">
 					<span class="head-wrap">
-						<img src="http://t.cn/RCzsdCq">
+						<img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
 						<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
 					</span>
 				</div>
@@ -85,12 +88,12 @@
     				<hr class="layui-bg-green">
     				<!-- 绑定邮箱 -->
     				<div class="layui-container email">
-    					<form class="layui-form" action="">
+    					<form  class="layui-form" action="<%=formPath%>" method="post">
 	    					<div class="layui-form-item">
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<label class="layui-form-label">邮箱：</label>
 		    						<div class="layui-input-block">
-		      							<input type="text" name="" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+		      							<input type="text" name="email" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input" value="${user.email}">
 		    						</div>
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -102,7 +105,7 @@
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<div class="layui-input-block">
-		      							<p class="error">邮箱格式错误</p>
+		      							<p class="error" style="display: none">邮箱格式错误</p>
 		    						</div>
 		    					</div>
 	    					</div>
@@ -112,12 +115,12 @@
     				<hr class="layui-bg-green">
     				<!-- 绑定手机 -->
     				<div class="layui-container tel">
-    					<form class="layui-form" action="">
+						<form  class="layui-form" action="<%=formPath%>" method="post">
 	    					<div class="layui-form-item">
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<label class="layui-form-label">手机号：</label>
 		    						<div class="layui-input-block">
-		      							<input type="text" name="" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+		      							<input type="text" name="phone" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="${user.phone}">
 		    						</div>
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -129,7 +132,7 @@
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<div class="layui-input-block">
-		      							<p class="error">手机格式错误</p>
+		      							<p class="error" style="display: none" >手机格式错误</p>
 		    						</div>
 		    					</div>
 	    					</div>
@@ -139,18 +142,18 @@
     				<hr class="layui-bg-green">
     				<!-- 修改密码 -->
     				<div class="layui-container password">
-    					<form class="layui-form" action="">
+						<form  class="layui-form" action="<%=formPath%>" method="post">
     						<!-- 原密码 -->
 	    					<div class="layui-form-item">
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<label class="layui-form-label">原密码：</label>
 		    						<div class="layui-input-block">
-		      							<input type="password" name="" required  lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+		      							<input type="password"  required  lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input" id="oldPassword">
 		    						</div>
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<div class="layui-input-block">
-		      							<p>原密码错误</p>
+		      							<p class="error" style="display: none">原密码错误</p>
 		    						</div>
 		    					</div>
 	    					</div>
@@ -159,12 +162,12 @@
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<label class="layui-form-label">新密码：</label>
 		    						<div class="layui-input-block">
-		      							<input type="password" name="" required  lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+		      							<input type="password" name="password" required  lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input" id="password">
 		    						</div>
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<div class="layui-input-block">
-		      							<p>密码不得小于x位</p>
+		      							<p class="error" style="display: none">密码不得小于x位</p>
 		    						</div>
 		    					</div>
 	    					</div>
@@ -173,12 +176,12 @@
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<label class="layui-form-label">确认密码：</label>
 		    						<div class="layui-input-block">
-		      							<input type="password" name="" required  lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input">
+		      							<input type="password"  required  lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input" id="rePassword">
 		    						</div>
 		    					</div>
 		    					<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 		    						<div class="layui-input-block">
-		      							<p>两次输入的密码不一致</p>
+		      							<p class="error" style="display: none">两次输入的密码不一致</p>
 		    						</div>
 		    					</div>
 	    					</div>
@@ -190,7 +193,7 @@
      								</button>
     							</div>
   							</div>
-    					</form>
+						</form>
     				</div>
     			</div>
     			<!-- 我的订单 -->
@@ -205,6 +208,9 @@
   			</div>
 		</div>
 	</div>
+	<form id="uploadForm" enctype="multipart/form-data">
+
+	</form>
 	<footer>
 		<p>Husbandry-&copy2017</p>
 	</footer>
@@ -231,5 +237,32 @@
 				</div>
 		</div>
 	</div>
+	</div>
 </body>
+<script>
+    var registNum = "${user.registNum}";
+    var headImg = "${user.headImg}";
+    var userPassword = "${user.password}";
+	var oldPassword = $("#oldPassword");
+	var password = $("#password");
+	var rePassword = $("#rePassword");
+	oldPassword.blur(function (e) {
+		var value = hex_md5($(this).val());
+		if(value != userPassword){
+		    $(".error:eq(2)").show();
+		}else {
+            $(".error:eq(2)").hide();
+		}
+    });
+	rePassword.blur(function (e) {
+		var passwordVal = password.val();
+		var rePasswordVal = rePassword.val();
+		if(passwordVal != rePasswordVal){
+		    $(".error:eq(4)").show();
+		}else {
+            $(".error:eq(4)").hide();
+		}
+
+    })
+</script>
 </html>

@@ -54,14 +54,14 @@
 				<div class="layui-col-md10 layui-col-sm8 layui-col-xs8">
 					<div class="layui-row row-in">
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><h2>个人中心</h2></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，何华峰无耻老贼</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：浙江省&nbsp杭州市&nbsp浙江科技学院东和公寓5幢</p></div>
-						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste numquam labore, est voluptates impedit architecto eos eius corporis, id beatae tempore in, iusto. Animi totam blanditiis a, doloremque commodi placeat!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam culpa enim omnis repellat architecto natus.</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p>您好，${user.userName}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="address">住址：${user.cities.provinces.province}&nbsp${user.cities.city}&nbsp${user.community}</p></div>
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><p class="autograph">${user.introduce}</p></div>
 					</div>
 				</div>
 				<div class="layui-col-md2 layui-col-sm4 layui-col-xs4">
 					<span class="head-wrap">
-						<img src="http://t.cn/RCzsdCq">
+						<img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
 						<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
 					</span>
 				</div>
@@ -390,5 +390,13 @@
 				</div>
 		</div>
 	</div>
+	</div>
+		<form id="uploadForm" enctype="multipart/form-data">
+
+		</form>
 </body>
+<script>
+    var registNum = "${user.registNum}";
+    var headImg = "${user.headImg}";
+</script>
 </html>
