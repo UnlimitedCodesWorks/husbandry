@@ -228,6 +228,12 @@ jQuery(document).ready(function($) {
 	});
 
 	//选择图片
+    var cropper = $('#head-img-wrap img').cropper({
+        aspectRatio: 1 / 1,
+        crop: function(data) {
+            // Output the result data for cropping image.
+        }
+    });
 	$("#btn-upload").change(function(event) {
 		var $file = $(this);
 		var fileObj = $file[0];
@@ -239,13 +245,8 @@ jQuery(document).ready(function($) {
 			dataURL = windowURL.createObjectURL(fileObj.files[0]);
 			$img.attr('src',dataURL);
 			//cropper
-			$('#head-img-wrap img').cropper({
-  				aspectRatio: 1 / 1,
-  					crop: function(data) {
-    				// Output the result data for cropping image.
-  				}
-			});
-			$('#head-img-wrap img').cropper('replace', dataURL);
+            $.fn.cropper;
+            cropper.cropper('reset').cropper('replace',dataURL);
 		}
 		else{
 			dataURL = $file.val();
@@ -254,6 +255,11 @@ jQuery(document).ready(function($) {
 			imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
 		}
 	});
+
+	$("#head .layui-btn").click(function(event) {
+		//获取canvas
+        var canvas = cropper.cropper('getCroppedCanvas');
+    });
 
 	//particles
 	particlesJS("particles-js", {
