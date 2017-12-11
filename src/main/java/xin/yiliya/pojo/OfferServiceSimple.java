@@ -152,4 +152,5 @@ public class OfferServiceSimple {
     public void setMarketPrice(float marketPrice) {
         this.marketPrice = marketPrice;
     }
+
 }

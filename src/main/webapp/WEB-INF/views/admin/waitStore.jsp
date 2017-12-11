@@ -254,6 +254,7 @@
     <script src="../../../resources/js/zoomify.min.js"></script>
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
+        var input='${input}';
         var pages=${pages};
         var portPath = "<%=portPath%>";
         var currentPage = 1;
@@ -275,8 +276,17 @@
                     ,jump: function(obj, first){
                         if(!first){
                             currentPage = obj.curr;
-                            var href = portPath+"admin/waitStore.do?currentPage="+currentPage;
-                            changePage(href);
+//                            var href = portPath+"admin/waitStore.do?currentPage="+currentPage;
+                            var href=portPath+"admin/waitStore.do?";
+                            if(input=='none'){
+                                href+='currentPage='+currentPage;
+                                changePage(href);
+                            }
+                            else{
+                                href+='input='+input;
+                                href +='&currentPage='+currentPage;
+                                changePage(href);
+                            }
                         }
                     }
                 });
@@ -329,27 +339,7 @@
                 }
                 table.append('</tbody>');
                 initTableCheckbox();
-                var aptitudeDiv=$('#aptitudeDiv')
-                $(".aptitudeBtn").click(function () {
-                    var storeId=$(this).parent().parent().children("td").eq(1).html();
-                    alert(storeId);
-                    $.ajax({
-                        url :portPath + 'admin/AptitudePictures.do',
-                        type : "post",
-                        data:{storeId:storeId},
-                        async: true,
-                        success: function(data){
-                            aptitudeDiv.find("img").remove();
-                            for(var i=0;i<data.length;i++){
-                                var node='<img src="'+data[i]+'" style="width: 100%;">';
-                                aptitudeDiv.append(node);
-                            }
-                        },
-                        error: function(jqXHR){
-                            alert("发生错误：" + jqXHR.status);
-                        }
-                    });
-                });
+                getAptitudeImg();
             }
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -395,26 +385,67 @@
             }
             initTableCheckbox();
 
-            var aptitudeDiv=$('#aptitudeDiv')
-            $(".aptitudeBtn").click(function () {
-                var storeId=$(this).parent().parent().children("td").eq(1).html();
-                alert(storeId);
-                $.ajax({
-                    url :portPath + 'admin/AptitudePictures.do',
-                    type : "post",
-                    data:{storeId:storeId},
-                    async: true,
-                    success: function(data){
-                        aptitudeDiv.find("img").remove();
-                        for(var i=0;i<data.length;i++){
-                            var node='<img src="'+data[i]+'" style="width: 100%;">';
-                            aptitudeDiv.append(node);
+            function getAptitudeImg() {
+                var aptitudeDiv=$('#aptitudeDiv')
+                $(".aptitudeBtn").click(function () {
+                    var storeId=$(this).parent().parent().children("td").eq(1).html();
+                    $.ajax({
+                        url :portPath + 'admin/AptitudePictures.do',
+                        type : "post",
+                        data:{storeId:storeId},
+                        async: true,
+                        success: function(data){
+                            aptitudeDiv.find("img").remove();
+                            for(var i=0;i<data.length;i++){
+                                var node='<img src="'+data[i]+'" style="width: 100%;">';
+                                aptitudeDiv.append(node);
+                            }
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
                         }
-                    },
+                    });
+                });
+            }
+            getAptitudeImg();
+
+            $('#agree').click(function () {
+//                console.log($("tbody input:checked"));
+                var checked=$("tbody input:checked");
+                var agree=[];
+                checked.each(function () {
+                    agree.push($(this).parent().parent().children("td").eq(1).html());
+                })
+                $.ajax({
+                    url :portPath + 'admin/agree.do',
+                    type : "get",
+                    traditional: true,
+                    data:{agreeStoreId:agree},
+                    async: false,
                     error: function(jqXHR){
                         alert("发生错误：" + jqXHR.status);
                     }
                 });
+                window.location.href="/admin/waitStore.html";
+            });
+
+            $('#refuse').click(function () {
+                var checked=$("tbody input:checked");
+                var refuse=[];
+                checked.each(function () {
+                    refuse.push($(this).parent().parent().children("td").eq(1).html());
+                })
+                $.ajax({
+                    url :portPath + 'admin/refuse.do',
+                    type : "get",
+                    traditional: true,
+                    data:{refuseStoreId:refuse},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/waitStore.html";
             });
         });
     </script>

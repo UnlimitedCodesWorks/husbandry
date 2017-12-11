@@ -137,6 +137,7 @@ public class AdminController {
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("waitStoreList",adminService.getUnpassStores(1,2).getList());
             model.addAttribute("pages",adminService.getUnpassStores(1,2).getPages());
+            model.addAttribute("input","none");
             return "admin/waitStore";
         }
         else{
@@ -146,15 +147,22 @@ public class AdminController {
 
     @RequestMapping(value = "/waitStore.do",method = RequestMethod.GET)
     @ResponseBody
-    public PageInfo<StoreAdmin> waitStorePage(@RequestParam(value = "currentPage")Integer currentPage){
-        return adminService.getUnpassStores(currentPage,2);
+    public PageInfo<StoreAdmin> waitStorePage(@RequestParam(value = "input",required = false)String input,
+                                              @RequestParam(value = "currentPage")Integer currentPage){
+        if(input=="none"){
+            return adminService.getUnpassStores(currentPage,2);
+        }
+        else{
+            return adminService.getUnpassStores(input,currentPage,2);
+        }
     }
 
     @RequestMapping(value = "/search.do",method = RequestMethod.POST)
-    public String searchWaitStore(@RequestParam(required = false,defaultValue = "")String input,Model model){
+    public String searchWaitStore(@RequestParam(required = false)String input,Model model){
         model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
         model.addAttribute("waitStoreList",adminService.getUnpassStores(input,1,2).getList());
         model.addAttribute("pages",adminService.getUnpassStores(input.trim(),1,2).getPages());
+        model.addAttribute("input",input);
         return "admin/waitStore";
     }
 
@@ -164,4 +172,21 @@ public class AdminController {
         return adminService.getAptitudeByStoreId(storeId);
     }
 
+    @RequestMapping(value = "/agree.do",method = RequestMethod.GET)
+    public String agreeWaitStoreDo(@RequestParam(value = "agreeStoreId")String storeId){
+        String[] ids=storeId.split("[^0123456789.]+");
+        for(String s:ids){
+            adminService.passStore(Integer.parseInt(s));
+        }
+        return "redirect:waitStore.html";
+    }
+
+    @RequestMapping(value = "/refuse.do",method = RequestMethod.GET)
+    public String refuseWaitStoreDo(@RequestParam(value = "refuseStoreId")String storeId){
+        String[] ids=storeId.split("[^0123456789.]+");
+        for(String s:ids){
+            adminService.refuseStore(Integer.parseInt(s));
+        }
+        return "redirect:waitStore.html";
+    }
 }

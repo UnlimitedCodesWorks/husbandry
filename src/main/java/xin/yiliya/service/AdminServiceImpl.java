@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.AdminMapper;
 import xin.yiliya.dao.ServiceMapper;
+import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.pojo.Admin;
 import xin.yiliya.pojo.OfferServiceAdmin;
 import xin.yiliya.pojo.StoreAdmin;
@@ -24,6 +25,9 @@ public class AdminServiceImpl implements AdminService{
 
     @Resource
     private ServiceMapper serviceMapper;
+
+    @Resource
+    private StoreMapper storeMapper;
 
     @Resource
     private EvaluateStoreService evaluateStoreService;
@@ -87,6 +91,16 @@ public class AdminServiceImpl implements AdminService{
     public Boolean passStore(Integer storeId) {
         try {
             adminMapper.passStore(storeId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Boolean refuseStore(Integer storeId) {
+        try{
+            storeMapper.deleteByPrimaryKey(storeId);
             return true;
         }catch (Exception e){
             e.printStackTrace();

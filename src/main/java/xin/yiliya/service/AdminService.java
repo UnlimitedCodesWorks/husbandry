@@ -46,6 +46,10 @@ public interface AdminService {
     //返回：商户是否认证通过的布尔值
     Boolean passStore(Integer storeId);
 
+    //商户认证拒绝
+    //返回：商户是否认证拒绝的布尔值
+    Boolean refuseStore(Integer storeId);
+
     //查看厂商资质图片
     //返回：该厂商资质图片链接
     String[] getAptitudeByStoreId(Integer storeId);
