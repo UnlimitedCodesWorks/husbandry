@@ -242,7 +242,6 @@
 <script>
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
-    var initHead = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
     var userPassword = "${user.password}";
 	var oldPassword = $("#oldPassword");

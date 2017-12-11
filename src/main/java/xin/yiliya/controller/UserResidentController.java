@@ -60,7 +60,7 @@ public class UserResidentController extends BaseController {
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
         Integer userId = user.getUserid();
-        int pageSize = 1;
+        int pageSize = 10;
         PageInfo<OrderShow> allOrders = orderService.getAllUserOrder(userId,1,pageSize);
         model.addAttribute("allOrders",allOrders.getList());
         model.addAttribute("allOrderPages",allOrders.getPages());
@@ -83,6 +83,7 @@ public class UserResidentController extends BaseController {
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
+
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
@@ -131,7 +132,7 @@ public class UserResidentController extends BaseController {
     public PageInfo<OrderShow> getOrders(Integer currentPage, Integer schema){
         User user = (User) session.getAttribute("userBean");
         Integer userId = user.getUserid();
-        int pageSize = 1;
+        int pageSize = 10;
         PageInfo<OrderShow> pageInfo;
         switch (schema){
             default:

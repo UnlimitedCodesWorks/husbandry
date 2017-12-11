@@ -33,24 +33,18 @@ public class UserConcernServiceImpl implements UserConcernService{
     public PageInfo<OfferServiceSimple> userConcernServices(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list=offerServiceMapper.getAllUserConcernServices(userId);
-        PageInfo<OfferServiceSimple> info=new PageInfo<OfferServiceSimple>(list);
-        return info;
+        return new PageInfo<OfferServiceSimple>(list);
     }
 
     public PageInfo<StoreInfo> userConcernStores(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<StoreInfo> list=storeMapper.getAllUserConcernStores(userId);
-        PageInfo<StoreInfo> info=new PageInfo<StoreInfo>(list);
-        return info;
+        return new PageInfo<StoreInfo>(list);
     }
 
     public Boolean concernServiceJudgement(ConcernServiceKey key) {
         try{
-            if(concernServiceMapper.concernServiceJudgement(key)!=0){
-                return true;
-            }else{
-                return false;
-            }
+            return concernServiceMapper.concernServiceJudgement(key) != 0;
         }catch (Exception e){
             return false;
         }
@@ -58,11 +52,7 @@ public class UserConcernServiceImpl implements UserConcernService{
 
     public Boolean concernStoreJudgement(ConcernStoreKey key) {
         try{
-            if(concernStoreMapper.concernStoreJudgement(key)!=0){
-                return true;
-            }else {
-                return false;
-            }
+            return concernStoreMapper.concernStoreJudgement(key) != 0;
         }catch (Exception e){
             return false;
         }

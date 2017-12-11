@@ -215,7 +215,6 @@
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
-    var initHead = "${user.headImg}";
 
 
     layui.use('laypage', function() {

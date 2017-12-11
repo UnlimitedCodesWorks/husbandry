@@ -618,7 +618,7 @@
 				    line = "<p>订单状态：已完成</p>";
 				    buttons ='<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
                         '<button class="layui-btn layui-btn-danger delete">' +
-                        '<i class="iconfont">&#xe614;</i> 删除订单' +
+                        '<i class="iconfont">&#xe615;</i> 删除订单' +
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm8 layui-col-xs12 fill">' +
