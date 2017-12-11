@@ -127,11 +127,21 @@
     from store
     where regist_num = #{RegistNum,jdbcType=VARCHAR}
   </select>
-  <select id="selectAllByLogin" resultMap="LoginResultMap">
+  <resultMap id="selectAllByLogin" type="xin.yiliya.pojo.Store">
+    <id property="storeid" column="storeid" />
+    <result property="registNum" column="regist_num" />
+  </resultMap>
+  <select id="selectAllByLogin" resultMap="selectAllByLogin">
+    select
+    storeid,regist_num
+    from store
+    where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectStoreInfo" resultMap="LoginResultMap" parameterType="java.lang.String">
     select
     <include refid="Login_Column_List" />
     from store,areas,cities,provinces
-    where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+    where regist_num = #{loginName,jdbcType=VARCHAR}
     and area_id = arid and areas.cityid = cities.cityid and cities.provinceid = provinces.provinceid
   </select>
   <select id="selectStoreSimpleByStoreId" resultMap="selectStoreSimpleByStoreId" parameterType="java.lang.Integer">

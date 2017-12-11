@@ -81,6 +81,10 @@ public class StoreServiceImpl implements StoreService {
         return storeMapper.selectAllByLogin(loginName,realPassword);
     }
 
+    public Store getStoreInfo(String loginName) {
+        return storeMapper.selectStoreInfo(loginName);
+    }
+
     public Boolean update(UpdateStore updateStore) {
         try{
             String password = updateStore.getPassword();
