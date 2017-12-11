@@ -96,7 +96,7 @@
 					  		<!-- 全部订单 -->
 					    	<div class="layui-tab-item layui-show tab3-1">
 					    		<div class="layui-container">
-									<c:if test="${allOrders==null}">
+									<c:if test="${empty allOrders}">
 										<!-- 无订单 -->
 										<div class="no-service">
 											<p>您还没有预约过任何服务，快去预约吧！</p>
@@ -140,8 +140,70 @@
 													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-danger refund">
+																<button class="layui-btn layui-btn-danger delete">
 																	<i class="iconfont">&#xe614;</i> 删除订单
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm8 layui-col-xs12 fill">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:if>
+					    		</div>
+								<div id="all-page1"></div>
+					    	</div>
+					    	<!-- 待派遣 -->
+					    	<div class="layui-tab-item tab3-1">
+					    		<div class="layui-container">
+									<c:if test="${empty dispatchedOrders}">
+										<!-- 无订单 -->
+										<div class="no-service">
+											<p>您还没有预约过任何服务，快去预约吧！</p>
+										</div>
+									</c:if>
+					    			<c:if test="${dispatchedOrders!=null}">
+										<c:forEach var="order" items="${dispatchedOrders}">
+											<div class="order-wrap">
+												<hr>
+												<!-- 公司名&关注 -->
+												<div class="layui-row layui-col-space10 row1">
+													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
+														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<p>订单状态：待派遣</p>
+													</div>
+													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
+														<button class="layui-btn">
+															<i class="iconfont">&#xe611;</i> 关注服务
+														</button>
+													</div>
+												</div>
+												<div class="layui-row layui-col-space10 row2">
+													<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
+														<img src="${order.offerService.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
+													</div>
+													<!-- 服务名&描述 -->
+													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
+														<div class="layui-row row2-1 layui-col-space10">
+															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
+																<a href="javascrapt:">${order.offerService.serviceName}</a>
+															</div>
+															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
+																<p>￥${order.offerService.price}</p>
+															</div>
+															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
+																<p>${order.offerService.introduce}</p>
+															</div>
+														</div>
+													</div>
+													<!-- 按钮组 -->
+													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
+														<div class="layui-row layui-col-space10 row2-2">
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-danger refund">
+																	<i class="iconfont">&#xe614;</i> 撤销订单
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
@@ -158,183 +220,147 @@
 										</c:forEach>
 									</c:if>
 					    		</div>
-					    	</div>
-					    	<!-- 待派遣 -->
-					    	<div class="layui-tab-item tab3-1">
-					    		<div class="layui-container">
-					    			<div class="order-wrap">
-					    				<hr>
-					    				<!-- 公司名&关注 -->
-					    				<div class="layui-row layui-col-space10 row1">
-					    					<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-					    						<a href="javascrapt:">华峰国际有限公司</a>
-					    						<p>订单状态：待派遣</p>
-					    					</div>
-					    					<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-					    						<button class="layui-btn">
-					    							<i class="iconfont">&#xe611;</i> 关注服务
-					    						</button>
-					    					</div>
-					    				</div>
-					    				<div class="layui-row layui-col-space10 row2">
-					    					<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-					    						<img src="../../../resources/images/家居9.jpg">
-					    					</div>
-					    					<!-- 服务名&描述 -->
-					    					<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
-					    						<div class="layui-row row2-1 layui-col-space10">
-					    							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-					    								<a href="javascrapt:">何华峰南美洲风格马杀鸡服务</a>
-					    							</div>
-					    							<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-					    								<p>￥1200.00</p>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-					    								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id odit provident, nihil ad quis debitis, ipsam dicta libero, voluptates, explicabo non. Modi et eum reprehenderit odit, quis neque ipsum repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa soluta vitae voluptatum fugit quas nesciunt, praesentium provident nam minima, sed voluptate cum voluptatem, qui possimus in, iure facilis quam esse!</p>
-					    							</div>
-					    						</div>
-					    					</div>
-					    					<!-- 按钮组 -->
-					    					<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
-					    						<div class="layui-row layui-col-space10 row2-2">
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-danger refund">
-					    								 	<i class="iconfont">&#xe614;</i> 撤销订单
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-normal check-progress">
-					    									<i class="iconfont">&#xe608;</i> 查看服务进展
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12 fill">
-					    							</div>
-					    						</div>
-					    					</div>
-					    				</div>
-					    			</div>
-					    			<div id="all-page2"></div>
-					    		</div>
+								<div id="all-page2"></div>
 					    	</div>
 					    	<!-- 待确认 -->
 					    	<div class="layui-tab-item tab3-1">
 					    		<div class="layui-container">
-					    			<div class="order-wrap">
-					    				<hr>
-					    				<!-- 公司名&关注 -->
-					    				<div class="layui-row layui-col-space10 row1">
-					    					<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-					    						<a href="javascrapt:">华峰国际有限公司</a>
-					    						<p>订单状态：待确认</p>
-					    					</div>
-					    					<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-					    						<button class="layui-btn">
-					    							<i class="iconfont">&#xe611;</i> 关注服务
-					    						</button>
-					    					</div>
-					    				</div>
-					    				<div class="layui-row layui-col-space10 row2">
-					    					<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-					    						<img src="../../../resources/images/家居9.jpg">
-					    					</div>
-					    					<!-- 服务名&描述 -->
-					    					<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
-					    						<div class="layui-row row2-1 layui-col-space10">
-					    							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-					    								<a href="javascrapt:">马杀鸡服务</a>
-					    							</div>
-					    							<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-					    								<p>￥1200.00</p>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-					    								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id odit provident, nihil ad quis debitis, ipsam dicta libero, voluptates, explicabo non. Modi et eum reprehenderit odit, quis neque ipsum repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa soluta vitae voluptatum fugit quas nesciunt, praesentium provident nam minima, sed voluptate cum voluptatem, qui possimus in, iure facilis quam esse!</p>
-					    							</div>
-					    						</div>
-					    					</div>
-					    					<!-- 按钮组 -->
-					    					<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
-					    						<div class="layui-row layui-col-space10 row2-2">
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-danger refund">
-					    									<i class="iconfont">&#xe614;</i> 撤销订单
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-normal check-progress">
-					    									<i class="iconfont">&#xe608;</i> 查看服务进展
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-primary">
-					    									<i class="iconfont confirm">&#xe6e2;</i> 确认订单
-					    								</button>
-					    							</div>
-					    						</div>
-					    					</div>
-					    				</div>
-					    			</div>
-					    			<div id="all-page3"></div>
+									<c:if test="${empty confirmedOrders}">
+										<!-- 无订单 -->
+										<div class="no-service">
+											<p>您还没有预约过任何服务，快去预约吧！</p>
+										</div>
+									</c:if>
+					    			<c:if test="${confirmedOrders!=null}">
+										<c:forEach var="order" items="${confirmedOrders}">
+											<div class="order-wrap">
+												<hr>
+												<!-- 公司名&关注 -->
+												<div class="layui-row layui-col-space10 row1">
+													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
+														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<p>订单状态：待确认</p>
+													</div>
+													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
+														<button class="layui-btn">
+															<i class="iconfont">&#xe611;</i> 关注服务
+														</button>
+													</div>
+												</div>
+												<div class="layui-row layui-col-space10 row2">
+													<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
+														<img src="${order.offerService.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
+													</div>
+													<!-- 服务名&描述 -->
+													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
+														<div class="layui-row row2-1 layui-col-space10">
+															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
+																<a href="javascrapt:">${order.offerService.serviceName}</a>
+															</div>
+															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
+																<p>￥${order.offerService.price}</p>
+															</div>
+															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
+																<p>${order.offerService.introduce}</p>
+															</div>
+														</div>
+													</div>
+													<!-- 按钮组 -->
+													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
+														<div class="layui-row layui-col-space10 row2-2">
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-danger refund">
+																	<i class="iconfont">&#xe614;</i> 撤销订单
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-normal check-progress">
+																	<i class="iconfont">&#xe608;</i> 查看服务进展
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-primary">
+																	<i class="iconfont confirm">&#xe6e2;</i> 确认订单
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:if>
 					    		</div>
+								<div id="all-page3"></div>
 					    	</div>
 					    	<!-- 待评价 -->
 					    	<div class="layui-tab-item tab3-1">
 					    		<div class="layui-container">
-					    			<div class="order-wrap">
-					    				<hr>
-					    				<!-- 公司名&关注 -->
-					    				<div class="layui-row layui-col-space10 row1">
-					    					<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-					    						<a href="javascrapt:">华峰国际有限公司</a>
-					    						<p>订单状态：已确认</p>
-					    					</div>
-					    					<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-					    						<button class="layui-btn">
-					    							<i class="iconfont">&#xe611;</i> 关注服务
-					    						</button>
-					    					</div>
-					    				</div>
-					    				<div class="layui-row layui-col-space10 row2">
-					    					<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-					    						<img src="../../../resources/images/家居9.jpg">
-					    					</div>
-					    					<!-- 服务名&描述 -->
-					    					<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
-					    						<div class="layui-row row2-1 layui-col-space10">
-					    							<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-					    								<a href="javascrapt:">马杀鸡服务</a>
-					    							</div>
-					    							<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-					    								<p>￥1200.00</p>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-					    								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id odit provident, nihil ad quis debitis, ipsam dicta libero, voluptates, explicabo non. Modi et eum reprehenderit odit, quis neque ipsum repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa soluta vitae voluptatum fugit quas nesciunt, praesentium provident nam minima, sed voluptate cum voluptatem, qui possimus in, iure facilis quam esse!</p>
-					    							</div>
-					    						</div>
-					    					</div>
-					    					<!-- 按钮组 -->
-					    					<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
-					    						<div class="layui-row layui-col-space10 row2-2">
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-danger delete">
-					    									<i class="iconfont">&#xe615;</i> 删除订单
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-normal check-progress">
-					    									<i class="iconfont">&#xe608;</i> 查看服务进展
-					    								</button>
-					    							</div>
-					    							<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-					    								<button class="layui-btn layui-btn-primary">
-					    									<i class="iconfont evaluate">&#xe62b;</i> 评价
-					    								</button>
-					    							</div>
-					    						</div>
-					    					</div>
-					    				</div>
-					    			</div>
-					    			<div id="all-page4"></div>
+									<c:if test="${empty remarkedOrders}">
+										<!-- 无订单 -->
+										<div class="no-service">
+											<p>您还没有预约过任何服务，快去预约吧！</p>
+										</div>
+									</c:if>
+					    			<c:if test="${remarkedOrders!=null}">
+										<c:forEach var="order" items="${remarkedOrders}">
+											<div class="order-wrap">
+												<hr>
+												<!-- 公司名&关注 -->
+												<div class="layui-row layui-col-space10 row1">
+													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
+														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<p>订单状态：已确认</p>
+													</div>
+													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
+														<button class="layui-btn">
+															<i class="iconfont">&#xe611;</i> 关注服务
+														</button>
+													</div>
+												</div>
+												<div class="layui-row layui-col-space10 row2">
+													<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
+														<img src="${order.offerService.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
+													</div>
+													<!-- 服务名&描述 -->
+													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
+														<div class="layui-row row2-1 layui-col-space10">
+															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
+																<a href="javascrapt:">${order.offerService.serviceName}</a>
+															</div>
+															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
+																<p>￥${order.offerService.price}</p>
+															</div>
+															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
+																<p>${order.offerService.introduce}</p>
+															</div>
+														</div>
+													</div>
+													<!-- 按钮组 -->
+													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
+														<div class="layui-row layui-col-space10 row2-2">
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-danger delete">
+																	<i class="iconfont">&#xe615;</i> 删除订单
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-normal check-progress">
+																	<i class="iconfont">&#xe608;</i> 查看服务进展
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-primary">
+																	<i class="iconfont evaluate">&#xe62b;</i> 评价
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:if>
 					    		</div>
+								<div id="all-page4"></div>
 					    	</div>
 					  	</div>
 					</div>
@@ -458,5 +484,134 @@
     var updatePath = "<%=updatePath%>";
     var initHead = "${user.headImg}";
     var allOrderPages = "${allOrderPages}";
+    var dispatchedOrderPages = "${dispatchedOrderPages}";
+    var confirmedOrderPages = "${confirmedOrderPages}";
+    var remarkedOrderPages = "${remarkedOrderPages}";
+    var pageSize = "${pageSize}";
+    var portPath = "<%=portPath%>";
+
+
+    function createOrders(data) {
+        for(var i=0;i<data.list.length;i++){
+            var status = data.list[i].status;
+            var line;
+            var container;
+            var buttons;
+            switch (status){
+				case 5:
+				    container = $(".layui-container:eq(1)");
+				    container.html("");
+				    line = "<p>订单状态：已完成</p>";
+				    buttons ='<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-danger delete">' +
+                        '<i class="iconfont">&#xe614;</i> 删除订单' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm8 layui-col-xs12 fill">' +
+                        '</div>';
+				    break;
+				case 0:
+                    container = $(".layui-container:eq(2)");
+                    container.html("");
+                    line = "<p>订单状态：待派遣</p>";
+                    buttons='<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-danger refund">' +
+                        '<i class="iconfont">&#xe614;</i> 撤销订单' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<i class="iconfont">&#xe608;</i> 查看服务进展' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12 fill">' +
+                        '</div>';
+				    break;
+				case 1:
+                    container = $(".layui-container:eq(3)");
+                    container.html("");
+                    line = "<p>订单状态：待确认</p>";
+                    buttons = '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-danger refund">' +
+                        '<i class="iconfont">&#xe614;</i> 撤销订单' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<i class="iconfont">&#xe608;</i> 查看服务进展' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-primary">' +
+                        '<i class="iconfont confirm">&#xe6e2;</i> 确认订单' +
+                        '</button>' +
+                        '</div>';
+                    break;
+				case 2:
+                    container = $(".layui-container:eq(4)");
+                    container.html("");
+                    line = "<p>订单状态：待评价</p>";
+                    buttons = '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-danger delete">' +
+                        '<i class="iconfont">&#xe615;</i> 删除订单' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<i class="iconfont">&#xe608;</i> 查看服务进展' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
+                        '<button class="layui-btn layui-btn-primary">' +
+                        '<i class="iconfont evaluate">&#xe62b;</i> 评价' +
+                        '</button>' +
+                        '</div>';
+                    break;
+			}
+            var node = '<div class="order-wrap">' +
+                '<hr>' +
+                '<!-- 公司名&关注 -->' +
+                '<div class="layui-row layui-col-space10 row1">' +
+                '<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">' +
+                '<a href="javascrapt:">'+data.list[i].storeInfo.storeName+'</a>' +
+                line +
+                '</div>' +
+                '<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">' +
+                '<button class="layui-btn">' +
+                '<i class="iconfont">&#xe611;</i> 关注服务' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '<div class="layui-row layui-col-space10 row2">' +
+                '<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">' +
+                '<img src="'+data.list[i].offerService.serviceImg+'" onerror="this.src=\'../../../resources/images/家居9.jpg\'">' +
+                '</div>' +
+                '<!-- 服务名&描述 -->' +
+                '<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">' +
+                '<div class="layui-row row2-1 layui-col-space10">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">' +
+                '<a href="javascrapt:">'+data.list[i].offerService.serviceName+'</a>' +
+                '</div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">' +
+                '<p>￥'+data.list[i].offerService.price+'</p>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
+                '<p>'+data.list[i].offerService.introduce+'</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<!-- 按钮组 -->' +
+                '<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">' +
+                '<div class="layui-row layui-col-space10 row2-2">' +
+                 buttons+
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            container.append(node);
+
+		}
+
+    }
 </script>
 </html>

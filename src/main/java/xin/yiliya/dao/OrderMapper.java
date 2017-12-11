@@ -51,4 +51,6 @@ public interface OrderMapper {
     Integer updateOrder(Order order);
 
     Integer userDeleteOrder(Integer orderId);
+
+    Integer updateOrderDone(@Param(value = "serviceId") Integer serviceId,@Param(value = "userId") Integer userId);
 }

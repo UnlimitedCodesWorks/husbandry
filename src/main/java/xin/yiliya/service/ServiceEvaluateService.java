@@ -44,4 +44,9 @@ public interface ServiceEvaluateService {
     //返回：该月每天的评分记录
     ServiceEvalutePerMonth getGradePerMonthBySeviceId(Integer serviceId,String serviceName,Date time);
 
+    //判断用户是否有评论资格
+    //返回：true为有，false为无
+    Boolean ReviewQualification(Integer serviceId,Integer userId);
+
+
 }

@@ -33,4 +33,7 @@ public interface EvaluateServiceMapper {
 
     int getGradeNumByServiceId(Integer serviceId);
 
+    int ReviewQualification(@Param(value = "serviceId") Integer serviceId,@Param(value = "userId") Integer userId);
+
+
 }

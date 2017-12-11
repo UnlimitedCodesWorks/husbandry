@@ -5,10 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import xin.yiliya.pojo.OrderShow;
 import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
@@ -62,11 +59,23 @@ public class UserResidentController extends BaseController {
     public String order(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
-        PageInfo<OrderShow> allOrders = orderService.getAllUserOrder(user.getUserid(),1,1);
+        Integer userId = user.getUserid();
+        int pageSize = 1;
+        PageInfo<OrderShow> allOrders = orderService.getAllUserOrder(userId,1,pageSize);
         model.addAttribute("allOrders",allOrders.getList());
         model.addAttribute("allOrderPages",allOrders.getPages());
+        PageInfo<OrderShow> dispatchedOrders = orderService.getAllUserSendOrder(userId,1,pageSize);
+        model.addAttribute("dispatchedOrders",dispatchedOrders.getList());
+        model.addAttribute("dispatchedOrderPages",dispatchedOrders.getPages());
+        PageInfo<OrderShow> confirmedOrders = orderService.getAllUserSureOrder(userId,1,pageSize);
+        model.addAttribute("confirmedOrders",confirmedOrders.getList());
+        model.addAttribute("confirmedOrderPages",confirmedOrders.getPages());
+        PageInfo<OrderShow> remarkedOrders = orderService.getAllUserAssessOrder(userId,1,pageSize);
+        model.addAttribute("remarkedOrders",remarkedOrders.getList());
+        model.addAttribute("remarkedOrderPages",remarkedOrders.getPages());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
+        model.addAttribute("pageSize",pageSize);
         return "residentHome/resident_order";
     }
 
@@ -115,5 +124,32 @@ public class UserResidentController extends BaseController {
         User user = (User) session.getAttribute("userBean");
         updateUser.setRegistNum(user.getRegistNum());
         return userService.userMyInfoUpdate(updateUser);
+    }
+
+    @RequestMapping(value = "/getOrders.do",method = RequestMethod.POST)
+    @ResponseBody
+    public PageInfo<OrderShow> getOrders(Integer currentPage, Integer schema){
+        User user = (User) session.getAttribute("userBean");
+        Integer userId = user.getUserid();
+        int pageSize = 1;
+        PageInfo<OrderShow> pageInfo;
+        switch (schema){
+            default:
+                pageInfo = orderService.getAllUserOrder(userId,currentPage,pageSize);
+                break;
+            case 0:
+                pageInfo = orderService.getAllUserOrder(userId,currentPage,pageSize);
+                break;
+            case 1:
+                pageInfo = orderService.getAllUserSendOrder(userId,currentPage,pageSize);
+                break;
+            case 2:
+                pageInfo = orderService.getAllUserSureOrder(userId,currentPage,pageSize);
+                break;
+            case 3:
+                pageInfo = orderService.getAllUserAssessOrder(userId,currentPage,pageSize);
+                break;
+        }
+        return pageInfo;
     }
 }

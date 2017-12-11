@@ -340,7 +340,12 @@
         </set>
         where orderid = #{orderid,jdbcType=INTEGER}
     </update>
-    
+    <update id="updateOrderDone">
+        UPDATE order
+        SET status = 5
+        WHERE service_id = #{serviceId,jdbcType=INTEGER} AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
     <delete id="userDeleteOrder" parameterType="Integer">
         DELETE FROM `order` WHERE `order`.orderid=#{orderId}
     </delete>

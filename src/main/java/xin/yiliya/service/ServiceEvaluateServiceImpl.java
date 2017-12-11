@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.EserviceUserMapper;
 import xin.yiliya.dao.EvaluateServiceMapper;
+import xin.yiliya.dao.OrderMapper;
 import xin.yiliya.pojo.EvaluateService;
 import xin.yiliya.pojo.ServiceEvalutePerDay;
 import xin.yiliya.pojo.ServiceEvalutePerMonth;
@@ -31,10 +32,14 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
     @Resource
     private EserviceUserService eserviceUserService;
 
+    @Resource
+    private OrderMapper orderMapper;
+
     public Integer addEvaluate(EvaluateService evaluateService) {
         try {
             evaluateService.setTime(new Date());
             evaluateService.setPraise(0);
+            orderMapper.updateOrderDone(evaluateService.getServiceId(),evaluateService.getUserId());
             evaluateServiceMapper.insertSelective(evaluateService);
             return evaluateService.getEvaluateserviceid();
         }catch (Exception e){
@@ -130,5 +135,10 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
             e.printStackTrace();
         }
         return serviceEvalutePerMonth;
+    }
+
+    public Boolean ReviewQualification(Integer serviceId, Integer userId) {
+        int count = evaluateServiceMapper.ReviewQualification(serviceId,userId);
+        return count > 0;
     }
 }

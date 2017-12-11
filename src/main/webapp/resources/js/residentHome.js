@@ -36,52 +36,108 @@ jQuery(document).ready(function($) {
   		//全部订单
   		laypage.render({
     		elem: 'all-page1', //注意，这里是ID，不用加 # 号
-    		count: 100, //数据总数，从服务端得到
-    		limit: 4,
+    		count: allOrderPages*pageSize, //数据总数，从服务端得到
+    		limit: pageSize,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
     			//首次不执行
     			if(!first){
-      				//do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:0
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
     			}
   			}
   		});
   		//待派遣
   		laypage.render({
     		elem: 'all-page2', //注意，这里是ID，不用加 # 号
-    		count: 100, //数据总数，从服务端得到
-    		limit: 4,
+    		count: dispatchedOrderPages*pageSize, //数据总数，从服务端得到
+    		limit: pageSize,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
     			//首次不执行
     			if(!first){
-      				//do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:1
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
     			}
   			}
   		});
   		//待确认
   		laypage.render({
     		elem: 'all-page3', //注意，这里是ID，不用加 # 号
-    		count: 100, //数据总数，从服务端得到
-    		limit: 4,
+    		count: confirmedOrderPages*pageSize, //数据总数，从服务端得到
+    		limit: pageSize,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
     			//首次不执行
     			if(!first){
-      				//do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:2
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
     			}
   			}
   		});
   		//待评价
   		laypage.render({
     		elem: 'all-page4', //注意，这里是ID，不用加 # 号
-    		count: 100, //数据总数，从服务端得到
-    		limit: 4,
+    		count: remarkedOrderPages*pageSize, //数据总数，从服务端得到
+    		limit: pageSize,
     		jump: function(obj, first){
     			//obj包含了当前分页的所有参数，比如：
     			//首次不执行
     			if(!first){
-      				//do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:3
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
     			}
   			}
   		});

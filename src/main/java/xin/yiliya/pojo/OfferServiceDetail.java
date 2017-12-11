@@ -40,6 +40,8 @@ public class OfferServiceDetail {
 
     private Boolean priceJudgement;
 
+    private Boolean ReviewQualification;
+
     public Integer getSerid() {
         return serid;
     }
@@ -182,5 +184,13 @@ public class OfferServiceDetail {
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public Boolean getReviewQualification() {
+        return ReviewQualification;
+    }
+
+    public void setReviewQualification(Boolean reviewQualification) {
+        ReviewQualification = reviewQualification;
     }
 }
