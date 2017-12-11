@@ -13,8 +13,12 @@ public interface StoreService {
     Integer register(RegisterStore store);
 
     // 厂商登录
-    //返回：厂商的实体Bean
+    //返回：厂商的id和账号
     Store login(String loginName, String password);
+
+    //获取厂商个人信息
+    //返回：厂商的个人信息Bean
+    Store getStoreInfo(String loginName);
 
     //厂商修改个人信息
     //返回：一个修改是否成功的布尔值

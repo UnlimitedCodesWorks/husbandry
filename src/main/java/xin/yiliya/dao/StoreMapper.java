@@ -21,6 +21,8 @@ public interface StoreMapper {
     
     Store selectAllByLogin(@Param(value = "loginName") String loginName,@Param(value = "password") String password);
 
+    Store selectStoreInfo(String loginName);
+
     Integer selectIdByRegistNum(String RegistNum);
 
     int updateByPrimaryKeySelective(Store record);
