@@ -6,6 +6,7 @@ import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import xin.yiliya.pojo.OrderCancel;
 import xin.yiliya.pojo.OrderShow;
 import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
@@ -16,6 +17,7 @@ import xin.yiliya.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/userResident")
@@ -83,7 +85,6 @@ public class UserResidentController extends BaseController {
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
-
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
@@ -93,6 +94,12 @@ public class UserResidentController extends BaseController {
     public String refund(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
+        Integer userId = user.getUserid();
+        int pageSize = 10;
+        PageInfo<OrderCancel> orderCancels = orderService.getAllUserCancelOrder(userId,1,pageSize);
+        model.addAttribute("orderCancels",orderCancels.getList());
+        model.addAttribute("orderCancelPages",orderCancels.getPages());
+        model.addAttribute("pageSize",pageSize);
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_refund";
@@ -152,5 +159,13 @@ public class UserResidentController extends BaseController {
                 break;
         }
         return pageInfo;
+    }
+    @RequestMapping(value = "/getOrderCancel.do",method = RequestMethod.POST)
+    @ResponseBody
+    public List<OrderCancel> getOrderCancel(Integer currentPage){
+        User user = (User) session.getAttribute("userBean");
+        int pageSize = 10;
+        Integer userId = user.getUserid();
+        return orderService.getAllUserCancelOrder(userId,currentPage,pageSize).getList();
     }
 }
