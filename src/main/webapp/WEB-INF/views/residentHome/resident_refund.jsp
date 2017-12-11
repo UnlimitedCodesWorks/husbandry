@@ -216,5 +216,24 @@
     var headImg = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
     var initHead = "${user.headImg}";
+
+
+    layui.use('laypage', function() {
+        var laypage = layui.laypage;
+        //执行一个laypage实例
+        //退款详情
+        laypage.render({
+            elem: 'refund-page', //这里是ID，不用加 # 号
+            count: 100, //数据总数，从服务端得到
+            limit: 4,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+                    //do something
+                }
+            }
+        });
+    });
 </script>
 </html>

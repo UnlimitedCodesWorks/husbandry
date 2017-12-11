@@ -141,7 +141,7 @@
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
 																<button class="layui-btn layui-btn-danger delete">
-																	<i class="iconfont">&#xe614;</i> 删除订单
+																	<i class="iconfont">&#xe615;</i> 删除订单
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm8 layui-col-xs12 fill">
@@ -153,7 +153,7 @@
 										</c:forEach>
 									</c:if>
 					    		</div>
-								<div id="all-page1"></div>
+								<div id="all-page1" class="order-page"></div>
 					    	</div>
 					    	<!-- 待派遣 -->
 					    	<div class="layui-tab-item tab3-1">
@@ -220,7 +220,7 @@
 										</c:forEach>
 									</c:if>
 					    		</div>
-								<div id="all-page2"></div>
+								<div id="all-page2" class="order-page"></div>
 					    	</div>
 					    	<!-- 待确认 -->
 					    	<div class="layui-tab-item tab3-1">
@@ -290,7 +290,7 @@
 										</c:forEach>
 									</c:if>
 					    		</div>
-								<div id="all-page3"></div>
+								<div id="all-page3" class="order-page"></div>
 					    	</div>
 					    	<!-- 待评价 -->
 					    	<div class="layui-tab-item tab3-1">
@@ -360,7 +360,7 @@
 										</c:forEach>
 									</c:if>
 					    		</div>
-								<div id="all-page4"></div>
+								<div id="all-page4" class="order-page"></div>
 					    	</div>
 					  	</div>
 					</div>
@@ -489,6 +489,120 @@
     var remarkedOrderPages = "${remarkedOrderPages}";
     var pageSize = "${pageSize}";
     var portPath = "<%=portPath%>";
+
+
+    layui.use('laypage', function() {
+        var laypage = layui.laypage;
+        //执行一个laypage实例
+        //全部订单
+        laypage.render({
+            elem: 'all-page1', //注意，这里是ID，不用加 # 号
+            count: allOrderPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:0
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        });
+        //待派遣
+        laypage.render({
+            elem: 'all-page2', //注意，这里是ID，不用加 # 号
+            count: dispatchedOrderPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:1
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        });
+        //待确认
+        laypage.render({
+            elem: 'all-page3', //注意，这里是ID，不用加 # 号
+            count: confirmedOrderPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:2
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        });
+        //待评价
+        laypage.render({
+            elem: 'all-page4', //注意，这里是ID，不用加 # 号
+            count: remarkedOrderPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrders.do",
+                        data: {
+                            currentPage:obj.curr,
+                            schema:3
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        });
+    });
 
 
     function createOrders(data) {
