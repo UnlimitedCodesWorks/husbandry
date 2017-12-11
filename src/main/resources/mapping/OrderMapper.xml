@@ -148,7 +148,7 @@
         WHERE service_id=offerserviceid
         AND store_id=storeid
         AND `order`.user_id=#{userId}
-        AND `order`.`status`!=3 AND `order`.`status`!=4
+        AND `order`.`status`=5
         ORDER BY start_time DESC
     </select>
 

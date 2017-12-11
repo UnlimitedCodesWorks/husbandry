@@ -160,11 +160,11 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">商户认证</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/search.do" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <input type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
+                                        <input type="text" name="input" class="form-control" placeholder="请输入商户名" autocomplete="off"/>
                                     </div>
-                                    <button type="button" class="btn btn-primary search">搜索</button>
+                                    <button type="submit" class="btn btn-primary search">搜索</button>
                                 </form>
                             </div>
                             <div class="box-body">
@@ -183,17 +183,18 @@
                                         <tbody>
                                             <c:if test="${empty waitStoreList}">
                                                 <tr>
-                                                    <td colspan="5" align="center"><b>没有未认证的厂商</b></td>
+                                                    <td colspan="5" align="center"><b>没有该类型厂商</b></td>
                                                 </tr>
                                             </c:if>
                                             <c:if test="${waitStoreList!=null}">
                                                 <c:forEach var="waitStore" items="${waitStoreList}">
                                                     <tr>
+                                                        <td hidden="hidden"><c:out value="${waitStore.storeId}"/></td>
                                                         <td class="select"><c:out value="${waitStore.storeName}"/></td>
                                                         <td class="select"><c:out value="${waitStore.phone}"/></td>
                                                         <td class="select"><c:out value="${waitStore.email}"/></td>
                                                         <td class="select"><c:out value="${waitStore.detailInfo}"/></td>
-                                                        <td><a href="<%=portPath%>admin/AptitudePictures.do?storeId=${waitStore.storeId}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td>
+                                                        <td><button type="button" class="btn btn-primary aptitudeBtn" data-toggle="modal" data-target="#check">查看</button></td>
                                                     </tr>
                                                 </c:forEach>
                                             </c:if>
@@ -226,7 +227,6 @@
                             <div class="modal-body">
                                 <div id="aptitudeDiv">
                                     <%--<c:forEach var="i" begin="0" end="${fn:length(pictures)}-1" step="1">--%>
-                                        <img src="${pictures[0]}" style="width: 100%;"/>
                                     <%--</c:forEach>--%>
                                 </div>
                             </div>
@@ -287,6 +287,7 @@
                     url :href,
                     type : "get",
                     dataType : "json",
+                    async:true,
                     success: function(data){
                         pages=data.pages;
                         createWaitStores(data);
@@ -318,15 +319,37 @@
                     var email=data.list[i].email;
                     var detailInfo=data.list[i].detailInfo;
                     var storeId=data.list[i].storeId;
-                    var node='<tr><td class="select">'+storeName+
+                    var node='<tr><td hidden="hidden">'+storeId+
+                        '</td><td class="select">'+storeName+
                         '</td><td class="select">'+phone+
                         '</td><td class="select">'+email+
                         '</td><td class="select">'+detailInfo+
-                        '</td><td><a href="'+portPath+'admin/AptitudePictures.do?storeId="'+storeId+' type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</a></td></tr>'
+                        '</td><td><button type="button" class="btn btn-primary aptitudeBtn" data-toggle="modal" data-target="#check">查看</button></td></tr>'
                     table.append(node);
                 }
                 table.append('</tbody>');
                 initTableCheckbox();
+                var aptitudeDiv=$('#aptitudeDiv')
+                $(".aptitudeBtn").click(function () {
+                    var storeId=$(this).parent().parent().children("td").eq(1).html();
+                    alert(storeId);
+                    $.ajax({
+                        url :portPath + 'admin/AptitudePictures.do',
+                        type : "post",
+                        data:{storeId:storeId},
+                        async: true,
+                        success: function(data){
+                            aptitudeDiv.find("img").remove();
+                            for(var i=0;i<data.length;i++){
+                                var node='<img src="'+data[i]+'" style="width: 100%;">';
+                                aptitudeDiv.append(node);
+                            }
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
             }
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -372,21 +395,27 @@
             }
             initTableCheckbox();
 
-//            var aptitudeDiv=$('#aptitudeDiv');
-//            $.ajax({
-//                url :portPath + 'admin/AptitudePictures.do',
-//                type : "get",
-//                success: function(data){
-//                    for(var i=0;i<data.length;i++){
-//                        aptitudeDiv.find("img").remove();
-//                        var node="<img src='"+data[i]+"' style=\"width: 100%;\">"
-//                        aptitudeDiv.append(node);
-//                    }
-//                },
-//                error: function(jqXHR){
-//                    alert("发生错误：" + jqXHR.status);
-//                }
-//            });
+            var aptitudeDiv=$('#aptitudeDiv')
+            $(".aptitudeBtn").click(function () {
+                var storeId=$(this).parent().parent().children("td").eq(1).html();
+                alert(storeId);
+                $.ajax({
+                    url :portPath + 'admin/AptitudePictures.do',
+                    type : "post",
+                    data:{storeId:storeId},
+                    async: true,
+                    success: function(data){
+                        aptitudeDiv.find("img").remove();
+                        for(var i=0;i<data.length;i++){
+                            var node='<img src="'+data[i]+'" style="width: 100%;">';
+                            aptitudeDiv.append(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
         });
     </script>
 </body>

@@ -150,9 +150,18 @@ public class AdminController {
         return adminService.getUnpassStores(currentPage,2);
     }
 
-    @RequestMapping(value = "/AptitudePictures.do",method =RequestMethod.GET )
-    public void getAptitudePicturesDo(@RequestParam(value = "storeId")Integer storeId, Model model){
-        model.addAttribute("pictures",adminService.getAptitudeByStoreId(storeId));
+    @RequestMapping(value = "/search.do",method = RequestMethod.POST)
+    public String searchWaitStore(@RequestParam(required = false,defaultValue = "")String input,Model model){
+        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+        model.addAttribute("waitStoreList",adminService.getUnpassStores(input,1,2).getList());
+        model.addAttribute("pages",adminService.getUnpassStores(input.trim(),1,2).getPages());
+        return "admin/waitStore";
+    }
+
+    @RequestMapping(value = "/AptitudePictures.do",method =RequestMethod.POST )
+    @ResponseBody
+    public String[] getAptitudePicturesDo(Integer storeId){
+        return adminService.getAptitudeByStoreId(storeId);
     }
 
 }
