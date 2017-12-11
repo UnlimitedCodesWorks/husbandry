@@ -94,98 +94,64 @@
     				<h3><i class="iconfont title">&#xe614;</i> 退款详情</h3>
     				<hr class="layui-bg-green">
     				<div class="layui-container">
-    					<div class="refund-wrap">
-    						<hr>
-    						<!-- 公司名&关注 -->
-    						<div class="layui-row layui-col-space10 row1">
-    							<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">
-    								<a href="javascrapt:">华峰国际有限公南美洲分公司</a>
-    								<p>退款状态：退款中</p>
-    							</div>
-    							<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-					    			<button class="layui-btn">
-					    				<i class="iconfont">&#xe611;</i> 关注服务
-					    			</button>
-					    		</div>
-					    		<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-					    			<button class="layui-btn layui-btn-danger refund-reason">
-					    				<i class="iconfont">&#xe614;</i> 退款原因
-					    			</button>
-					    		</div>
-    						</div>
-    						<div class="layui-row layui-col-space10 row2">
-    							<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-    								<img src="../../../resources/images/家居9.jpg">
-    							</div>
-    							<!-- 服务名&描述 -->
-    							<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">
-    								<div class="layui-row row2-1 layui-col-space10">
-    									<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">
-					    					<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">何华峰马杀鸡服务</a>
-					    					<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：3301051204</p>
-					    				</div>
-					    				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">
-					    					<p>退款金额：￥1200/小时</p>
-					    				</div>
-					    				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-					    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id odit provident, nihil ad quis debitis, ipsam dicta libero, voluptates, explicabo non. Modi et eum reprehenderit odit, quis neque ipsum repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa soluta vitae voluptatum fugit quas nesciunt, praesentium provident nam minima, sed voluptate cum voluptatem, qui possimus in, iure facilis quam esse!</p>
-					    				</div>
-    								</div>
-    							</div>
-    						</div>
-    					</div>
-    					<div class="refund-wrap">
-    						<hr>
-    						<!-- 公司名&关注 -->
-    						<div class="layui-row layui-col-space10 row1">
-    							<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">
-    								<a href="javascrapt:">华峰国际有限公南美洲分公司</a>
-    								<p>退款状态：退款中</p>
-    							</div>
-    							<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-					    			<button class="layui-btn">
-					    				<i class="iconfont">&#xe611;</i> 关注服务
-					    			</button>
-					    		</div>
-					    		<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-					    			<button class="layui-btn layui-btn-danger refund-reason">
-					    				<i class="iconfont">&#xe614;</i> 退款原因
-					    			</button>
-					    		</div>
-    						</div>
-    						<div class="layui-row layui-col-space10 row2">
-    							<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-    								<img src="../../../resources/images/家居9.jpg">
-    							</div>
-    							<!-- 服务名&描述 -->
-    							<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">
-    								<div class="layui-row row2-1 layui-col-space10">
-    									<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">
-					    					<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">何华峰马杀鸡服务</a>
-					    					<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：3301051204</p>
-					    				</div>
-					    				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">
-					    					<p>退款金额：￥1200/小时</p>
-					    				</div>
-					    				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-					    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id odit provident, nihil ad quis debitis, ipsam dicta libero, voluptates, explicabo non. Modi et eum reprehenderit odit, quis neque ipsum repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa soluta vitae voluptatum fugit quas nesciunt, praesentium provident nam minima, sed voluptate cum voluptatem, qui possimus in, iure facilis quam esse!</p>
-					    				</div>
-    								</div>
-    							</div>
-    						</div>
-    					</div>
-    					<div id="refund-page"></div>
+						<c:if test="${orderCancels!=null}">
+							<c:forEach var="order" items="${orderCancels}">
+								<div class="refund-wrap">
+									<hr>
+									<!-- 公司名&关注 -->
+									<div class="layui-row layui-col-space10 row1">
+										<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">
+											<a href="javascrapt:">${order.storeInfo.storeName}</a>
+											<c:if test="${order.status==3}">
+												<p>退款状态：退款中</p>
+											</c:if>
+											<c:if test="${order.status==4}">
+												<p>退款状态：退款成功</p>
+											</c:if>
+										</div>
+										<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
+											<button class="layui-btn">
+												<i class="iconfont">&#xe611;</i> 关注服务
+											</button>
+										</div>
+										<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
+											<button class="layui-btn layui-btn-danger refund-reason">
+												<i class="iconfont">&#xe614;</i> 退款原因
+											</button>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10 row2">
+										<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
+											<img src="${order.offerService.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
+										</div>
+										<!-- 服务名&描述 -->
+										<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">
+											<div class="layui-row row2-1 layui-col-space10">
+												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">
+													<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">${order.offerService.serviceName}</a>
+													<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：${order.orderNumber}</p>
+												</div>
+												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">
+													<p>退款金额：￥${order.offerService.price}</p>
+												</div>
+												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
+													<p>${order.offerService.introduce}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
+
     				</div>
     			</div>
+					<div id="refund-page"></div>
   			</div>
 		</div>
 	</div>
 	<form id="uploadForm" enctype="multipart/form-data">
 
 	</form>
-	<footer>
-		<p>Husbandry-&copy2017</p>
-	</footer>
 	<div class="particles-wrap">
 		<div id="particles-js"></div>
 	</div>
@@ -209,13 +175,19 @@
 		</div>
 	</div>
 	</div>
+	</div>
+	<footer>
+		<p>Husbandry-&copy2017</p>
+	</footer>
 
 </body>
 <script>
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
-
+    var orderCancelPages = "${orderCancelPages}";
+    var pageSize = "${pageSize}";
+    var portPath = "<%=portPath%>";
 
     layui.use('laypage', function() {
         var laypage = layui.laypage;
@@ -223,16 +195,85 @@
         //退款详情
         laypage.render({
             elem: 'refund-page', //这里是ID，不用加 # 号
-            count: 100, //数据总数，从服务端得到
-            limit: 4,
+            count: orderCancelPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
             jump: function(obj, first){
                 //obj包含了当前分页的所有参数，比如：
                 //首次不执行
                 if(!first){
-                    //do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getOrderCancel.do",
+                        data: {
+                            currentPage:obj.curr,
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createOrders(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
                 }
             }
         });
     });
+
+    function createOrders(data) {
+        var container = $(".layui-container:eq(1)");
+        var line;
+        for(var i=0;i<data.length;i++){
+            if(data[i].status==3){
+                line = '<p>退款状态：退款中</p>';
+            }else if(data[i].status ==4){
+                line = '<p>退款状态：退款成功</p>';
+            }
+
+            container.html("");
+            var node = '<div class="refund-wrap">' +
+                '<hr>' +
+                '<!-- 公司名&关注 -->' +
+                '<div class="layui-row layui-col-space10 row1">' +
+                '<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">' +
+                '<a href="javascrapt:">'+data[i].storeInfo.storeName+'</a>' +
+                line+
+                '</div>' +
+                '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +
+                '<button class="layui-btn">' +
+                '<i class="iconfont">&#xe611;</i> 关注服务' +
+                '</button>' +
+                '</div>' +
+                '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +
+                '<button class="layui-btn layui-btn-danger refund-reason">' +
+                '<i class="iconfont">&#xe614;</i> 退款原因' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '<div class="layui-row layui-col-space10 row2">' +
+                '<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">' +
+                '<img src="'+data[i].offerService.serviceImg+'" onerror="this.src=\'../../../resources/images/家居9.jpg\'">' +
+                '</div>' +
+                '<!-- 服务名&描述 -->' +
+                '<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">' +
+                '<div class="layui-row row2-1 layui-col-space10">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">' +
+                '<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">'+data[i].offerService.serviceName+'</a>' +
+                '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：'+data[i].orderNumber+'</p>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">' +
+                '<p>退款金额：￥'+data[i].offerService.price+'</p>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
+                '<p>'+data[i].offerService.introduce+'</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            container.append(node);
+		}
+
+
+    }
 </script>
 </html>
