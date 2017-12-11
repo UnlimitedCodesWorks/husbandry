@@ -1,6 +1,7 @@
 package xin.yiliya.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.yiliya.pojo.OrderShow;
 import xin.yiliya.pojo.UpdateUser;
 import xin.yiliya.pojo.User;
+import xin.yiliya.service.OrderService;
 import xin.yiliya.service.RegionService;
 import xin.yiliya.service.UserService;
 
@@ -29,6 +32,9 @@ public class UserResidentController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private OrderService orderService;
 
     @RequestMapping(value = "/information.html",method = RequestMethod.GET)
     public String information(Model model){
@@ -56,6 +62,9 @@ public class UserResidentController extends BaseController {
     public String order(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
+        PageInfo<OrderShow> allOrders = orderService.getAllUserOrder(user.getUserid(),1,1);
+        model.addAttribute("allOrders",allOrders.getList());
+        model.addAttribute("allOrderPages",allOrders.getPages());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_order";

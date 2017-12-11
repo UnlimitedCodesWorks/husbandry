@@ -207,7 +207,7 @@
   </resultMap>
   <select id="userLogin" resultMap="userLogin">
     SELECT
-    regist_num
+    userid,regist_num
     FROM `user`
     WHERE regist_num=#{num} AND password=md5(#{pass})
   </select>

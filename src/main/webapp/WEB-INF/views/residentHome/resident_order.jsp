@@ -96,10 +96,67 @@
 					  		<!-- 全部订单 -->
 					    	<div class="layui-tab-item layui-show tab3-1">
 					    		<div class="layui-container">
-					    			<!-- 无订单 -->
-					    			<div class="no-service">
-					    				<p>您还没有预约过任何服务，快去预约吧！</p>
-					    			</div>
+									<c:if test="${allOrders==null}">
+										<!-- 无订单 -->
+										<div class="no-service">
+											<p>您还没有预约过任何服务，快去预约吧！</p>
+										</div>
+									</c:if>
+					    			<c:if test="${allOrders!=null}">
+										<c:forEach var="order" items="${allOrders}">
+											<div class="order-wrap">
+												<hr>
+												<!-- 公司名&关注 -->
+												<div class="layui-row layui-col-space10 row1">
+													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
+														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+															<p>订单状态：已完成</p>
+													</div>
+													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
+														<button class="layui-btn">
+															<i class="iconfont">&#xe611;</i> 关注服务
+														</button>
+													</div>
+												</div>
+												<div class="layui-row layui-col-space10 row2">
+													<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
+														<img src="${order.offerService.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
+													</div>
+													<!-- 服务名&描述 -->
+													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
+														<div class="layui-row row2-1 layui-col-space10">
+															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
+																<a href="javascrapt:">${order.offerService.serviceName}</a>
+															</div>
+															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
+																<p>￥${order.offerService.price}</p>
+															</div>
+															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
+																<p>${order.offerService.introduce}</p>
+															</div>
+														</div>
+													</div>
+													<!-- 按钮组 -->
+													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
+														<div class="layui-row layui-col-space10 row2-2">
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-danger refund">
+																	<i class="iconfont">&#xe614;</i> 删除订单
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
+																<button class="layui-btn layui-btn-normal check-progress">
+																	<i class="iconfont">&#xe608;</i> 查看服务进展
+																</button>
+															</div>
+															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12 fill">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:if>
 					    		</div>
 					    	</div>
 					    	<!-- 待派遣 -->
@@ -400,5 +457,6 @@
     var headImg = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
     var initHead = "${user.headImg}";
+    var allOrderPages = "${allOrderPages}";
 </script>
 </html>
