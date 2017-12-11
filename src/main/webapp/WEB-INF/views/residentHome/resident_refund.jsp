@@ -3,6 +3,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+	String updatePath = portPath+"userResident/updateHeadImg.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -203,15 +204,17 @@
 					</button>
 				</div>
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
-					<p>请选择一张图片</p>
 					<img id="head-img">
 				</div>
 		</div>
 	</div>
 	</div>
+
 </body>
 <script>
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
+    var updatePath = "<%=updatePath%>";
+    var initHead = "${user.headImg}";
 </script>
 </html>

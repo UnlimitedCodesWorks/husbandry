@@ -33,10 +33,11 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/information.html",method = RequestMethod.GET)
     public String information(Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         model.addAttribute("provinces",regionService.getAllProvinces());
-        String provinceId = user.getCities().getProvinces().getProvinceId();
+        String provinceId = newUser.getCities().getProvinces().getProvinceId();
         model.addAttribute("cities",regionService.getAllCitiesByProvince(provinceId));
         model.addAttribute("format",new SimpleDateFormat("yyyy-MM-dd"));
         return "residentHome/resident_information";
@@ -45,7 +46,8 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/security.html",method = RequestMethod.GET)
     public String security(Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_security";
     }
@@ -53,7 +55,8 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/order.html",method = RequestMethod.GET)
     public String order(Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_order";
     }
@@ -61,7 +64,8 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/focus.html",method = RequestMethod.GET)
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
     }
@@ -69,7 +73,8 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/refund.html",method = RequestMethod.GET)
     public String refund(Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_refund";
     }
@@ -87,9 +92,19 @@ public class UserResidentController extends BaseController {
         userService.userMyInfoUpdate(updateUser);
         return "redirect:/userResident/security.html";
     }
+    @RequestMapping(value = "/updatePassword.do",method = RequestMethod.POST)
+    public String updatePassword(@ModelAttribute("updateUser") UpdateUser updateUser){
+        User user = (User) session.getAttribute("userBean");
+        updateUser.setRegistNum(user.getRegistNum());
+        userService.userMyInfoUpdate(updateUser);
+        session.invalidate();
+        return "redirect:/login/user.html";
+    }
     @RequestMapping(value = "/updateHeadImg.do",method = RequestMethod.POST)
     @ResponseBody
     public Boolean updateHeadImg(UpdateUser updateUser){
+        User user = (User) session.getAttribute("userBean");
+        updateUser.setRegistNum(user.getRegistNum());
         return userService.userMyInfoUpdate(updateUser);
     }
 }

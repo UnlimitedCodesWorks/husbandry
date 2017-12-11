@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.OrderFormService;
 import xin.yiliya.service.ServiceService;
+import xin.yiliya.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -25,12 +26,16 @@ public class ServiceFormController {
     @Resource
     private HttpSession session;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/view.html",method = RequestMethod.GET)
     public String serviceFormView(@RequestParam(value = "kind")Integer kind,
                                    @RequestParam(value = "serviceId")Integer serviceId,
                                   Model model){
         User user = (User) session.getAttribute("userBean");
-        model.addAttribute("user",user);
+        User newUser = userService.getUserInfo(user.getRegistNum());
+        model.addAttribute("user",newUser);
         model.addAttribute("serviceForm",orderFormService.getAllOrderFormRow(kind));
         model.addAttribute("serviceName",serviceService.getSerKindBySerId(kind));
         model.addAttribute("serviceId",serviceId);

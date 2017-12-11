@@ -201,18 +201,27 @@
     where userid = #{userid,jdbcType=INTEGER}
   </update>
 
-  <select id="userLogin" resultMap="BaseResultMap1">
-    select
-    `user`.*,provinces.*,cities.*
-    from `user`,cities,provinces
+  <resultMap id="userLogin" type="xin.yiliya.pojo.User">
+    <id property="userid" column="userid" />
+    <result property="registNum" column="regist_num" />
+  </resultMap>
+  <select id="userLogin" resultMap="userLogin">
+    SELECT
+    regist_num
+    FROM `user`
     WHERE regist_num=#{num} AND password=md5(#{pass})
-    and `user`.city_id=cities.ciid
-    and cities.provinceid=provinces.provinceid
-
   </select>
 
   <select id="selectUserIdByRegistNum" resultType="java.lang.Integer">
     SELECT userid FROM user WHERE regist_num=#{registNum}
   </select>
+    <select id="getUserInfo" resultMap="BaseResultMap1" parameterType="java.lang.String">
+    select
+    `user`.*,provinces.*,cities.*
+    from `user`,cities,provinces
+    WHERE regist_num=#{registNum}
+    and `user`.city_id=cities.ciid
+    and cities.provinceid=provinces.provinceid
+    </select>
 
 </mapper>

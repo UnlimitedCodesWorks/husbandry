@@ -215,7 +215,7 @@
 					</button>
 				</div>
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
-					<img id="head-img" src="${user.headImg}" >
+					<img id="head-img" >
 				</div>
 			</div>
 		</div>
@@ -226,6 +226,7 @@
 </body>
 <script>
     var portPath = "<%=portPath%>";
+    var updatePath = "<%=updatePath%>";
     var city = $("#city");
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";

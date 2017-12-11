@@ -271,7 +271,7 @@ jQuery(document).ready(function($) {
             formData.append("headLink",headImg);
             $.ajax({
                 type:"post",
-                url:"<%=updatePath%>",
+                url:updatePath,
                 cache: false,
                 processData: false,
                 contentType: false,

@@ -12,6 +12,7 @@ import xin.yiliya.pojo.OfferServiceSimple;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.OfferServiceService;
 import xin.yiliya.service.RegionService;
+import xin.yiliya.service.UserService;
 import xin.yiliya.tool.Rank;
 
 import javax.annotation.Resource;
@@ -33,6 +34,9 @@ public class SearchController {
     @Resource
     private RegionService regionService;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/view.html",method = RequestMethod.GET)
     public String searchView(@RequestParam(value = "kind")Integer kind,
                              @RequestParam(value = "content",required = false) String content,
@@ -40,12 +44,13 @@ public class SearchController {
                              @RequestParam(value = "ciid",required = false) Integer ciid,
                              Model model){
         User user = (User) session.getAttribute("userBean");
+        User newUser = userService.getUserInfo(user.getRegistNum());
         String provinceId;
         Integer rankId = Rank.PRICE_DESC;
         if(ciid ==null){
-            ciid = user.getCityId();
+            ciid = newUser.getCityId();
         }
-        model.addAttribute("user",user);
+        model.addAttribute("user",newUser);
         if(rank!=null){
             rankId = rank;
         }
@@ -77,9 +82,10 @@ public class SearchController {
                                               @RequestParam(value = "ciid",required = false) Integer ciid,
                                                   HttpServletResponse response) throws IOException {
         User user = (User) session.getAttribute("userBean");
+        User newUser = userService.getUserInfo(user.getRegistNum());
         Integer rankId = Rank.PRICE_DESC;
         if(ciid ==null){
-            ciid = user.getCityId();
+            ciid = newUser.getCityId();
         }
         if(rank!=null){
             rankId = rank;

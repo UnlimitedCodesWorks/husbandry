@@ -68,4 +68,8 @@ public class UserServiceImpl implements UserService{
             return false;
         }
     }
+
+    public User getUserInfo(String registNum) {
+        return userMapper.getUserInfo(registNum);
+    }
 }

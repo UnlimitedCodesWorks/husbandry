@@ -5,6 +5,7 @@
 	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 	String updatePath = portPath+"userResident/updateHeadImg.do";
 	String formPath = portPath+"userResident/updateSecurity.do";
+	String passwordPath = portPath+"userResident/updatePassword.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -142,7 +143,7 @@
     				<hr class="layui-bg-green">
     				<!-- 修改密码 -->
     				<div class="layui-container password">
-						<form  class="layui-form" action="<%=formPath%>" method="post">
+						<form  class="layui-form" action="<%=passwordPath%>" method="post">
     						<!-- 原密码 -->
 	    					<div class="layui-form-item">
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -232,7 +233,6 @@
 					</button>
 				</div>
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
-					<p>请选择一张图片</p>
 					<img id="head-img">
 				</div>
 		</div>
@@ -242,6 +242,8 @@
 <script>
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
+    var initHead = "${user.headImg}";
+    var updatePath = "<%=updatePath%>";
     var userPassword = "${user.password}";
 	var oldPassword = $("#oldPassword");
 	var password = $("#password");

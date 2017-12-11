@@ -18,4 +18,7 @@ public interface UserService {
     //修改个人信息(我的信息、账号安全)
     Boolean userMyInfoUpdate(UpdateUser updateUser);
 
+    //获取个人信息
+    User getUserInfo(String registNum);
+
 }
