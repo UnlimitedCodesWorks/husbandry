@@ -92,33 +92,26 @@
     				<hr class="layui-bg-green">
     				<!-- 关注的服务 -->
     				<div class="layui-container">
-    					<div class="layui-row layui-col-space10">
+    					<div class="layui-row layui-col-space10" id="serviceContainer">
+							<c:if test="${concernedServices!=null}">
+							<c:forEach var="service" items="${concernedServices}">
     						<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-    							<div class="layui-row row-in" title="马杀鸡服务">
-    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../../resources/images/201291810101174356.jpg"></div>
+    							<div class="layui-row row-in" title="${service.serviceName}">
+    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+										<img src="${service.serviceImg}" onerror="this.src='../../../resources/images/201291810101174356.jpg'">
+									</div>
     								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">马杀鸡服务</a></div>
-										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
+										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">${service.serviceName}</a></div>
+										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}分</c:if></div>
 									</div>
 									<div class="layui-row row-in3">
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${service.serviceFans}关注</div>
+										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${service.markNum}笔交易</div>
 									</div>
     							</div>
     						</div>
-    						<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-    							<div class="layui-row row-in" title="华峰服务">
-    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../../resources/images/家居9.jpg"></div>
-    								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">华峰服务</a></div>
-										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：9.5分</div>
-									</div>
-									<div class="layui-row row-in3">
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-									</div>
-    							</div>
-    						</div>
+							</c:forEach>
+							</c:if>
     					</div>
     					<div class="layui-row layui-col-space10">
     					</div>
@@ -204,6 +197,7 @@
     var updatePath = "<%=updatePath%>";
     var portPath = "<%=portPath%>";
     var concernedStorePages = "${concernedStorePages}";
+    var concernedServicePages = "${concernedServicePages}";
     var pageSize = "${pageSize}";
 
 
@@ -213,13 +207,27 @@
         //关注的服务
         laypage.render({
             elem: 'service-page', //这里是ID，不用加 # 号
-            count: 100, //数据总数，从服务端得到
-            limit: 4,
+            count: concernedServicePages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
             jump: function(obj, first){
                 //obj包含了当前分页的所有参数，比如：
                 //首次不执行
                 if(!first){
                     //do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getConcernService.do",
+                        data: {
+                            currentPage:obj.curr
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createServices(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
                 }
             }
         });
@@ -280,6 +288,36 @@
                 '</div>';
 		    container.append(node);
 		}
+    }
+
+    function createServices(data) {
+        var container = $("#serviceContainer");
+        container.html("");
+        for(var i=0;i<data.length;i++){
+            var grade = data[i].grade;
+            var gradeNode;
+            if(grade==0){
+                gradeNode = "未评分";
+            }else {
+                gradeNode = grade+"分";
+            }
+            var node = '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">' +
+                '<div class="layui-row row-in" title="'+data[i].serviceName+'">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                '<img src="'+data[i].serviceImg+'" onerror="this.src=\'../../../resources/images/201291810101174356.jpg\'">' +
+                '</div>' +
+                '<div class="layui-row row-in2">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">'+data[i].serviceName+'</a></div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+gradeNode+'</div>' +
+                '</div>' +
+                '<div class="layui-row row-in3">' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].serviceFans+'关注</div>' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].markNum+'笔交易</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            container.append(node);
+        }
     }
 </script>
 </html>
