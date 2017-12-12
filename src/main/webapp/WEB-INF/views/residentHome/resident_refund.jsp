@@ -136,22 +136,24 @@
 												</div>
 												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 													<p>${order.offerService.introduce}</p>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
 						</c:if>
-
     				</div>
-    			</div>
+    				</div>
 					<div id="refund-page"></div>
+				</div>
   			</div>
 		</div>
 	</div>
-		<footer>
-			<p>Husbandry-&copy2017</p>
-		</footer>
+	</div>
+	<footer>
+		<p>Husbandry-&copy2017</p>
+	</footer>
 	<form id="uploadForm" enctype="multipart/form-data">
 
 	</form>
@@ -179,7 +181,6 @@
 	</div>
 	</div>
 	</div>
-
 </body>
 <script>
     var registNum = "${user.registNum}";
