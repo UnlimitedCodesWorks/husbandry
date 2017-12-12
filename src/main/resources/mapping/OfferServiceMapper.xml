@@ -348,4 +348,12 @@
     AND offerservice.`status` != 0
   </select>
 
+  <select id="getServiceOfFans" parameterType="Integer" resultType="Integer">
+    SELECT COUNT(*) As serviceFans from concernservice WHERE service_id=#{offerServiceId}
+  </select>
+
+  <select id="getServiceOfMarkNum" parameterType="Integer" resultType="Integer">
+    SELECT COUNT(*) AS markNum FROM `order` WHERE service_id=#{offerServiceId} AND `status`=2
+  </select>
+
 </mapper>

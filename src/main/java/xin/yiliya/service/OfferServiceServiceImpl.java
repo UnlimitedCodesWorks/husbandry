@@ -61,7 +61,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     @Resource
     private ServiceService serviceService;
 
-    public Integer addService(OfferServiceAdd offerServiceAdd,Boolean ifTemplate) {
+    public Integer addService(OfferServiceAdd offerServiceAdd, Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
             BeanUtils.copyProperties(offerService,offerServiceAdd);

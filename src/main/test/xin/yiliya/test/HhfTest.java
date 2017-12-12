@@ -131,7 +131,7 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户关注的服务
-//        PageInfo<OfferServiceSimple> info=userConcernService.userConcernServices(15,1,2);
+//        PageInfo<OfferServiceSimple> info=userConcernService.userConcernServices(2,1,2);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户关注的供应商

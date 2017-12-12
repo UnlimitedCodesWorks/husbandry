@@ -11,6 +11,11 @@ import java.util.List;
 
 @Repository
 public interface OfferServiceMapper {
+
+    int getServiceOfFans(Integer offerServiceId);
+
+    int getServiceOfMarkNum(Integer offerServiceId);
+
     int deleteByPrimaryKey(Integer offerserviceid);
 
     int insert(OfferService record);

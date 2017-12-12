@@ -39,6 +39,11 @@ public class UserConcernServiceImpl implements UserConcernService{
     public PageInfo<OfferServiceSimple> userConcernServices(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list=offerServiceMapper.getAllUserConcernServices(userId);
+        for(OfferServiceSimple offerServiceSimple:list){
+            Integer offerServiceId=offerServiceSimple.getOfferServiceId();
+            offerServiceSimple.setMarkNum(offerServiceMapper.getServiceOfMarkNum(offerServiceId));
+            offerServiceSimple.setServiceFans(offerServiceMapper.getServiceOfFans(offerServiceId));
+        }
         return new PageInfo<OfferServiceSimple>(list);
     }
 

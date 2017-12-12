@@ -31,6 +31,8 @@ public class OfferServiceSimple {
 
     private Integer markNum;
 
+    private Integer serviceFans;
+
     private xin.yiliya.pojo.Service kind;
 
     public Integer getGradeNum() {
@@ -153,4 +155,11 @@ public class OfferServiceSimple {
         this.marketPrice = marketPrice;
     }
 
+    public Integer getServiceFans() {
+        return serviceFans;
+    }
+
+    public void setServiceFans(Integer serviceFans) {
+        this.serviceFans = serviceFans;
+    }
 }
