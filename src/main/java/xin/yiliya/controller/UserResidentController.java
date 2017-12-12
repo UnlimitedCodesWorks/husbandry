@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import xin.yiliya.pojo.*;
 import xin.yiliya.service.OrderService;
 import xin.yiliya.service.RegionService;
+import xin.yiliya.service.UserConcernService;
 import xin.yiliya.service.UserService;
 
 import javax.annotation.Resource;
@@ -31,6 +32,9 @@ public class UserResidentController extends BaseController {
 
     @Resource
     private OrderService orderService;
+
+    @Resource
+    private UserConcernService userConcernService;
 
     @RequestMapping(value = "/information.html",method = RequestMethod.GET)
     public String information(Model model){
@@ -85,6 +89,12 @@ public class UserResidentController extends BaseController {
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
+        Integer userId = user.getUserid();
+        int pageSize =1;
+        PageInfo<StoreIndex> concernedStores = userConcernService.userConcernStores(userId,1,pageSize);
+        model.addAttribute("concernedStores",concernedStores.getList());
+        model.addAttribute("concernedStorePages",concernedStores.getPages());
+        model.addAttribute("pageSize",pageSize);
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
@@ -185,5 +195,20 @@ public class UserResidentController extends BaseController {
     public List<ServicePeople> getOrderServicePeople(Integer orderId){
         return orderService.getOrderServicePeople(orderId,1,0).getList();
     }
+
+    @RequestMapping(value = "/confirmOrder.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean confirmOrder(Integer orderId){
+        return orderService.userSureToOrder(orderId);
+    }
+
+    @RequestMapping(value = "/getConcernStore.do",method = RequestMethod.POST)
+    @ResponseBody
+    public List<StoreIndex> getConcernStore(Integer currentPage){
+        User user = (User) session.getAttribute("userBean");
+        int pageSize = 1;
+        return userConcernService.userConcernStores(user.getUserid(),currentPage,pageSize).getList();
+    }
+
 
 }

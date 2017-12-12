@@ -132,33 +132,26 @@
     				<hr class="layui-bg-green">
     				<!-- 关注的服务商 -->
     				<div class="layui-container">
-    					<div class="layui-row layui-col-space10">
+    					<div class="layui-row layui-col-space10" id="storeContainer">
+							<c:if test="${concernedStores!=null}">
+							<c:forEach var="store" items="${concernedStores}">
     						<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-    							<div class="layui-row row-in" title="华峰国际有限公司">
-    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../../resources/images/201291810101174356.jpg"></div>
+    							<div class="layui-row row-in" title="${store.storeName}">
+    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+										<img src="${store.headImg}" onerror="this.src='../../../resources/images/201291810101174356.jpg'">
+									</div>
     								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
-										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
+										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${store.storeName}</a></div>
+										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${store.grade==0}" >未评分</c:if><c:if test="${store.grade!=0}" >${store.grade}分</c:if></div>
 									</div>
 									<div class="layui-row row-in3">
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${store.fans}关注</div>
+										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${store.markNum}笔交易</div>
 									</div>
     							</div>
     						</div>
-    						<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-    							<div class="layui-row row-in" title="华峰国际有限公司非洲分公司">
-    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../../resources/images/家居9.jpg"></div>
-    								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司非洲分公司</a></div>
-										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：9.5分</div>
-									</div>
-									<div class="layui-row row-in3">
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-										<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
-									</div>
-    							</div>
-    						</div>
+							</c:forEach>
+							</c:if>
     					</div>
     					<div class="layui-row layui-col-space10">
     					</div>
@@ -209,6 +202,9 @@
     var registNum = "${user.registNum}";
     var headImg = "${user.headImg}";
     var updatePath = "<%=updatePath%>";
+    var portPath = "<%=portPath%>";
+    var concernedStorePages = "${concernedStorePages}";
+    var pageSize = "${pageSize}";
 
 
     layui.use('laypage', function() {
@@ -230,16 +226,60 @@
         //关注的服务商
         laypage.render({
             elem: 'store-page', //这里是ID，不用加 # 号
-            count: 100, //数据总数，从服务端得到
-            limit: 4,
+            count: concernedStorePages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
             jump: function(obj, first){
                 //obj包含了当前分页的所有参数，比如：
                 //首次不执行
                 if(!first){
                     //do something
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getConcernStore.do",
+                        data: {
+                            currentPage:obj.curr
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createStores(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
                 }
             }
         });
     });
+
+    function createStores(data) {
+		var container = $("#storeContainer");
+		container.html("");
+		for(var i=0;i<data.length;i++){
+		    var grade = data[i].grade;
+		    var gradeNode;
+		    if(grade==0){
+		        gradeNode = "未评分";
+			}else {
+		        gradeNode = grade+"分";
+			}
+		    var node = '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">' +
+                '<div class="layui-row row-in" title="'+data[i].storeName+'">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                '<img src="'+data[i].headImg+'" onerror="this.src=\'../../../resources/images/201291810101174356.jpg\'">' +
+                '</div>' +
+                '<div class="layui-row row-in2">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">'+data[i].storeName+'</a></div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+gradeNode+'</div>' +
+                '</div>' +
+                '<div class="layui-row row-in3">' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].fans+'关注</div>' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].markNum+'笔交易</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+		    container.append(node);
+		}
+    }
 </script>
 </html>

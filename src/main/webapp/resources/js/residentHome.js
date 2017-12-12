@@ -101,7 +101,7 @@ jQuery(document).ready(function($) {
         $(".delete").click(function(event) {
             var value = $(this).attr("data-orderId");
             layer.confirm('您确定要删除该订单吗？', {
-                btn: ['确定','关闭'] //按钮
+                btn: ['确定','关闭'] //按钮d
             }, function(){
                 $.ajax({
                     type: "POST",
@@ -113,6 +113,36 @@ jQuery(document).ready(function($) {
                     success: function(data){
                         if(data){
                             layer.msg("已删除",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+
+        });
+
+        $(".orderConfirm").click(function(event) {
+            var value = $(this).attr("data-orderId");
+            layer.confirm('确认订单？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"userResident/confirmOrder.do",
+                    data: {
+                        orderId:value
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("已确认",{
                                 time: 1000
                             });
                             setTimeout("location.replace(location.href)",1000);

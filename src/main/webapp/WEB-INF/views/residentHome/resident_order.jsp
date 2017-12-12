@@ -88,9 +88,9 @@
     				<div class="layui-tab layui-tab-card">
   						<ul class="layui-tab-title">
     						<li class="layui-this">全部订单</li>
-    						<li>待派遣 <span class="layui-badge">1</span></li>
-    						<li>待确认 <span class="layui-badge">1</span></li>
-    						<li>待评价 <span class="layui-badge">1</span></li>
+    						<li>待派遣 <c:if test="${dispatchedOrderNum!=0}"><span class="layui-badge">${dispatchedOrderNum}</span></c:if></li>
+    						<li>待确认 <c:if test="${confirmedOrderNum!=0}"><span class="layui-badge">${confirmedOrderNum}</span></c:if></li>
+    						<li>待评价 <c:if test="${remarkedOrderNum!=0}"><span class="layui-badge">${remarkedOrderNum}</span></c:if></li>
   						</ul>
 					  	<div class="layui-tab-content">
 					  		<!-- 全部订单 -->
@@ -279,7 +279,7 @@
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-primary" data-orderId="${order.orderid}" >
+																<button class="layui-btn layui-btn-primary orderConfirm" data-orderId="${order.orderid}" >
 																	<i class="iconfont confirm">&#xe6e2;</i> 确认订单
 																</button>
 															</div>
@@ -629,7 +629,7 @@
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-primary" data-orderId="'+orderId+'" >' +
+                        '<button class="layui-btn layui-btn-primary orderConfirm" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont confirm">&#xe6e2;</i> 确认订单' +
                         '</button>' +
                         '</div>';
@@ -763,28 +763,100 @@
                     }
                 });
             });
+            $(".orderConfirm").click(function(event) {
+                var value = $(this).attr("data-orderId");
+                layer.confirm('确认订单？', {
+                    btn: ['确定','关闭'] //按钮d
+                }, function(){
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/confirmOrder.do",
+                        data: {
+                            orderId:value
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            if(data){
+                                layer.msg("已确认",{
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            }
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }, function(){
+                    //dosomething
+                });
+
+            });
         });
     }
 
     function createServicePeople(data) {
         var container = $("#service-container");
         container.html("");
-        var node = '<!-- 状态 -->' +
-            '<div class="state layui-row">' +
-            '<hr class="layui-bg-green">' +
-            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail" id="process1" style="background: #009688;"><p style="color: #fff">派遣中</p></div>' +
-            '</div>' +
-            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail" id="process2"><p>已到达目的地</p></div>' +
-            '</div>' +
-            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail" id="process3"><p>订单交易成功</p></div>' +
-            '</div>' +
-            '</div>' +
-            '<hr>' +
-            '<!-- 员工 -->' +
-            '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+        var status = data[0].orderStatus;
+        var node;
+        switch (status){
+			case 0:
+                node = '<!-- 状态 -->' +
+                    '<div class="state layui-row">' +
+                    '<hr class="layui-bg-green">' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process1" style="background: #009688;"><p style="color: #fff">派遣中</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process2"><p>已到达目的地</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process3"><p>订单交易成功</p></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<hr>' +
+                    '<!-- 员工 -->' +
+                    '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+				break;
+			case 1:
+                node = '<!-- 状态 -->' +
+                    '<div class="state layui-row">' +
+                    '<hr class="layui-bg-green">' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process1" ><p >派遣中</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process2" style="background: #009688;"><p style="color: #fff">已到达目的地</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process3"><p>订单交易成功</p></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<hr>' +
+                    '<!-- 员工 -->' +
+                    '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+			    break;
+			case 2:
+                node = '<!-- 状态 -->' +
+                    '<div class="state layui-row">' +
+                    '<hr class="layui-bg-green">' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process1" ><p >派遣中</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process2" ><p >已到达目的地</p></div>' +
+                    '</div>' +
+                    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+                    '<div class="state-detail" id="process3" style="background: #009688;"><p style="color: #fff">订单交易成功</p></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<hr>' +
+                    '<!-- 员工 -->' +
+                    '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+			    break;
+		}
+
 		for(var i=0;i<data.length;i++){
 			 node += '<div class="staff-wrap">' +
                  '<div class="staff layui-row row1 layui-col-space10">' +
