@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<script src="../../resources/js/jquery-3.2.1.min.js"></script>
+	<script src="../../resources/layui.js"></script>
+	<script src="../../resources/js/vue.js"></script>
+	<script src="../../resources/js/serviceShow.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../resources/css/serviceShow.css">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<title>智慧社区-服务详情</title>
+</head>
+<body>
+	<header>
+		<!-- 导航栏 -->
+		<nav>
+			<ul class="layui-nav">
+				<li class="layui-nav-item ">
+					<a href="javascript:;" title="Husbandry">Husbandry</a>
+				</li>
+				<template v-if="isLogin">
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="注册">注册</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="登录">登录</a>
+					</li>
+				</template>
+ 				<li class="layui-nav-item" v-else>
+    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">何华峰无耻老贼</a>
+    				<dl class="layui-nav-child">
+      					<dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
+      					<dd><a href="javascript:;">登出</a></dd>
+    				</dl>
+ 	 			</li>
+			</ul>
+		</nav>
+	</header>
+	<div class="layui-container" id="wrap">
+		<!-- 头部信息 -->
+		<div class="wrap-head">
+			<hr style="margin: 30px 0;">
+			<div class="row layui-row layui-col-space10">
+				<!-- 左 -->
+				<div class="layui-col-md8 layui-col-sm8 layui-col-xs12">
+					<div class="row-in layui-row layui-col-space10">
+						<!-- 左-左 -->
+						<div class="layui-col-md6 layui-col-sm8 layui-col-xs12">
+							<div class="row-in2 layui-row layui-col-space15">
+								<!-- 服务名 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<h2>华峰国际有限公司保姆服务</h2>
+								</div>
+								<!-- 发布时间&浏览数 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<div class="row-in-in layui-row layui-col-space10">
+										<div class="layui-col-md6 layui-col-sm12 layui-col-xs4">
+											<p>2017-12-08发布</p>
+										</div>
+										<div class="layui-col-md6 layui-col-sm12 layui-col-xs8">
+											<p>111次浏览</p>
+										</div>
+									</div>
+								</div>
+								<!-- 服务类别 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<p><i class="iconfont">&#xe603;</i> 类&emsp;&emsp;别：<span>保姆服务</span></p>
+								</div>
+								<!-- 负责人 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<p><i class="iconfont">&#xe645;</i> 负&ensp;责&ensp;人：<span>何华峰</span></p>
+								</div>
+							</div>
+						</div>
+						<!-- 左-右 -->
+						<div class="layui-col-md6 layui-col-sm4 layui-col-xs12">
+							<div class="row-in3 layui-row layui-col-space15">
+								<!-- 价格 -->
+								<div class="price-wrap layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<p class="price"><i class="iconfont">&#xe616;</i> 2000元/小时</p>
+								</div>
+								<!-- 价位判断 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<p class="warning"><i class="iconfont">&#xe6a4;</i> 该价格高于市场价</p>
+									<p class="normal"><i class="iconfont">&#xe626;</i> 该价格正常</p>
+								</div>
+								<!-- 评分 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<el-rate
+    									v-model="value"
+  										disabled
+				  						show-score
+				  						text-color="#ff9900"
+				  						score-template="9.0"
+				  						:colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+				  					</el-rate>
+								</div>
+								<!-- 评价数&交易量 -->
+								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+									<div class="row-in-in layui-row layui-col-space10">
+										<div class="layui-col-md4 layui-col-sm12 layui-col-xs4">
+											<p>评价数：<span>99</span></p>
+										</div>
+										<div class="layui-col-md8 layui-col-sm12 layui-col-xs8">
+											<p>已完成的订单数：<span>100</span></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 左-下 -->
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="padding-top: 25px;">
+							<div class="row-in4 layui-row layui-col-space10">
+								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+									<button class="layui-btn layui-btn-primary">
+									<i class="iconfont">&#xe6c9;</i> 预约
+									</button>
+								</div>
+								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+									<button class="layui-btn">
+									<i class="iconfont">&#xe611;</i> 关注服务
+									</button>
+								</div>
+								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+									<button class="layui-btn layui-btn-danger">
+									<i class="iconfont">&#xe66e;</i> 投诉
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 右 -->
+				<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+					<div class="row-in5 layui-row layui-col-space10">
+						<!-- LOGO -->
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+							<div class="img-wrap">
+								<img src="../../resources/images/家居9.jpg">
+							</div>
+						</div>
+						<!-- 服务商名 -->
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+							<a href="javascrapt:" title="华峰国际有限公司"><h3 style="text-align: center;font-weight: bold;">华峰国际有限公司</h3></a>
+						</div>
+						<!-- 注册时间 -->
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+							<p><i class="iconfont">&#xe6a9;</i> 注册于：<span>2017-11-30</span></p>
+						</div>
+						<!-- 已服务次数 -->
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+							<p><i class="iconfont">&#xe69a;</i> 已服务：<span>111</span>次</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr style="margin-top: 30px;margin-bottom: 20px;">
+			<div class="layui-container">
+				<p class="area"><i class="iconfont">&#xe6a3;</i> 服务区域：<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem earum ratione velit, ea quasi, odit fugit voluptatem sapiente dicta officia culpa! Molestias nihil, error velit molestiae at deleniti inventore totam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat expedita possimus quo labore sed laborum asperiores, unde molestiae illum laboriosam, praesentium dolorum magni voluptatem minus deserunt fugit omnis, aut?</span></p>
+			</div>
+		</div>
+		<!-- 详细信息&用户评价 -->
+		<div class="wrap-body">
+			<div class="layui-tab layui-tab-brief">
+  				<ul class="layui-tab-title">
+    				<li class="layui-this"><i class="iconfont">&#xe64c;</i> 详细信息</li>
+    				<li><i class="iconfont">&#xe694;</i> 用户评价</li>
+  				</ul>
+  				<div class="layui-tab-content">
+  					<!-- 详细信息 -->
+    				<div class="layui-tab-item layui-show tab1">
+    					<div class="layui-fuild">
+							<!-- 服务介绍 -->
+    						<div class="introduce box">
+    							<h3><i class="iconfont">&#xe60e;</i>服务介绍</h3>
+    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error perspiciatis aliquid voluptatem velit, eos accusantium. Voluptas animi, harum architecto enim minus quis dolores saepe rem fugit, dicta, atque id officiis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, sequi, sit. Vero voluptates, cumque nihil quam modi doloribus ratione adipisci sint qui quae ut distinctio. Laudantium veniam neque quae saepe.</p>
+    						</div>
+    						<!-- 服务特色 -->
+    						<div class="characteristic box">
+    							<h3><i class="iconfont">&#xe6c2;</i>服务特色</h3>
+    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, voluptas numquam libero voluptatibus dolorem non saepe maiores ipsa vitae veniam fuga reprehenderit unde eveniet aspernatur ut sunt illo! Tempora, earum.</p>
+    							<div class="layui-row layui-col-space10 layui-fuild">
+    								<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
+  									<div class="layui-col-md4"><img src="../../resources/images/家居1.jpg"></div>
+  									<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
+    							</div>
+    							<div class="layui-row layui-col-space10 layui-fuild">
+    								<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
+  									<div class="layui-col-md4"><img src="../../resources/images/家居1.jpg"></div>
+  									<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
+    							</div>
+    						</div>
+    						<!-- 注意事项 -->
+    						<div class="notice box">
+    							<h3><i class="iconfont">&#xe629;</i>注意事项</h3>
+    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolore maiores ducimus doloribus, fugiat quae corporis iste non, odit, aliquid dicta maxime quo expedita minima voluptate nulla! Illo, consequatur ab!</p>
+    						</div>
+    					</div>
+    				</div>
+    				<!-- 用户评论 -->
+   					<div class="layui-tab-item tab2">
+   						<h3>用户评论</h3>
+   						<form class="layui-form sort" action="">
+	   						<select name="mode" lay-filter="mode">
+	  							<option value="1">按时间排序</option>
+	  							<option value="2">按热度排序</option>
+							</select>
+						</form>
+   						<hr>
+   						<div class="layui-fluid" style="padding: 20px;background: #efefef;">
+   							<form class="layui-form" id="comment" action="" style="position: relative;cursor: text;">
+   								<p style="font-size: 18px;color: #a8a8a8;position: absolute;left: 10px;top: 5px;"><i class="iconfont">&#xe62b;</i> 发表评论</p>
+      							<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
+  							</form>
+   						</div>
+   						<div class="layui-fliud comment-wrap">
+   							<!-- 评论 -->
+   							<hr>
+   							<div class="row layui-row layui-col-space10">
+   								<!-- 主评人头像 -->
+   								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
+   									<div class="head-wrap">
+   										<img src="http://t.cn/RCzsdCq">
+   									</div>
+   								</div>
+   								<!-- 主容器 -->
+   								<div class="layui-col-md10 layui-col-sm10">
+   									<!-- 主评人内容 -->
+   									<div class="row-in1 layui-row layui-col-space10">
+   										<div class="layui-col-md12 layui-col-sm12">
+   											<h4>何华峰</h4>
+   											<a href="javascrapt:">删除评论</a>
+   											<el-rate
+    											v-model="3.0"
+  												disabled
+				  								show-score
+				  								text-color="#ff9900"
+				  								score-template="6.0"
+				  								:colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+				  								style="float: right;">
+				  							</el-rate>
+   										</div>
+   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi praesentium numquam facilis laboriosam consectetur officia eligendi pariatur rerum, provident ad sit iure cupiditate quisquam est esse cum magni? Fuga, optio.</div>
+   										<div class="layui-col-md12 layui-col-sm12">
+   											<p>2017-12-12</p>
+   											<span class="layui-breadcrumb" lay-separator="|">
+  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (60)</a>
+  												<a href="javascrapt:" class="reply">回复</a>
+											</span>
+   										</div>
+   									</div>
+   									<!-- 回复 -->
+   									<hr>
+   									<div class="row-in2 layui-row layui-col-space10">
+   										<!-- 回复人头像 -->
+   										<div class="layui-col-md1 layui-col-sm2">
+   											<div class="head-wrap-sub">
+   												<img src="http://t.cn/RCzsdCq">
+   											</div>
+   										</div>
+   										<!-- 容器 -->
+   										<div class="layui-col-md11 layui-col-sm10">
+   											<!-- 回复人内容 -->
+   											<div class="row-in-in layui-row layui-col-space10">
+   												<div class="layui-col-md6 layui-col-sm6">
+   													<h4>洪欣</h4>
+   													<a href="javascrapt:">删除评论</a>
+   												</div>
+   												<div class="layui-col-md12 layui-col-sm12">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur temporibus quidem ab cumque est nihil debitis, perferendis quis expedita amet nulla quae sapiente explicabo obcaecati dolores. Delectus, optio maiores minus.</div>
+   												<div class="layui-col-md12 layui-col-sm12">
+   													<p>2017-12-12</p>
+   												</div>
+   											</div>
+   										</div>
+   									</div>
+   									<div class="reply-page"></div>
+   								</div>
+   							</div>
+   							<div id="comment-page"></div>
+   						</div>
+   					</div>
+  				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<p>Husbandry-&copy2017</p>
+	</footer>
+	<!-- 评论 -->
+	<div id="comment-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 style="margin-bottom: 0px;">发表评论</h2>
+			<el-rate
+    			v-model="value"
+				text-color="#ff9900"
+				:colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+				style="float: right;margin-top: 10px;">
+			</el-rate>
+			<hr>
+			<form class="layui-form" action="">
+  				<div class="layui-form-item layui-form-text">
+      				<textarea placeholder="请输入您想要发表的评论" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
+      				<p>至少输入X个字</p>
+      				<button type="button" class="layui-btn" lay-submit id="comment-submit">提交</button>
+  				</div>
+  			</form>
+		</div>
+	</div>
+	<!-- 回复 -->
+	<div id="reply-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">回复</h2>
+			<hr>
+			<form class="layui-form" action="">
+  				<div class="layui-form-item layui-form-text">
+      				<textarea placeholder="请输入您想要回复的内容" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
+      				<p>至少输入X个字</p>
+      				<button class="layui-btn" lay-submit id="reply-submit">回复</button>
+  				</div>
+  			</form>
+		</div>
+	</div>
+</body>
+</html>

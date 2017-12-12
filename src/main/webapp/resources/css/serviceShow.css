@@ -1,0 +1,298 @@
+header {
+	position: relative;
+	width: 100%;
+	z-index: 3;
+}
+
+nav {
+	position: fixed;
+	width: inherit;
+	top: 0;
+	left: 0;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 482629 */
+  src: url('http://at.alicdn.com/t/font_482629_ab08m1b2asltmx6r.eot');
+  src: url('http://at.alicdn.com/t/font_482629_ab08m1b2asltmx6r.eot?#iefix') format('embedded-opentype'),
+  url('http://at.alicdn.com/t/font_482629_ab08m1b2asltmx6r.woff') format('woff'),
+  url('http://at.alicdn.com/t/font_482629_ab08m1b2asltmx6r.ttf') format('truetype'),
+  url('http://at.alicdn.com/t/font_482629_ab08m1b2asltmx6r.svg#iconfont') format('svg');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-nav-item:nth-child(2) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(3) {
+	float: right;
+}
+
+.layui-nav-item:nth-child(4) {
+	float: right;
+}
+
+#wrap {
+	padding-top: 60px;
+}
+
+.wrap-head .row-in2 h2 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.wrap-head .row-in2 .row-in-in p {
+	color: #a8a8a8;
+}
+
+.wrap-head .row-in2 span {
+	padding-left: 10px;
+}
+
+.wrap-head .row-in3 .price-wrap {
+	height: 47px;
+}
+
+.wrap-head .row-in3 .price {
+	font-size: 18px;
+	line-height: 47px;
+	color: #5FB878;
+	font-weight: bold;
+}
+
+.wrap-head .row-in3 .price i {
+	font-size: 18px;
+}
+
+.wrap-head .row-in3 .warning {
+	color: red;
+	display: block;
+}
+
+.wrap-head .row-in3 .warning i {
+	font-size: 16px;
+}
+
+.wrap-head .row-in3 .normal {
+	color: green;
+	display: none;
+}
+
+.wrap-head .row-in3 .normal i {
+	font-size: 16px;
+}
+
+.wrap-head .row-in3 .row-in-in {
+	color: #a8a8a8;
+}
+
+.wrap-head .row-in4 button {
+	width: 100%;
+}
+
+.wrap-head .row-in5 .img-wrap {
+	width: 50%;
+	margin: 0 auto;
+	height: 100px;
+}
+
+.wrap-head .row-in5 .img-wrap img {
+	width: 100%;
+	height: 100%;
+}
+
+.wrap-head .row-in5 p {
+	color: #a8a8a8;
+	text-align: center;
+}
+
+.wrap-head .row-in5 i {
+	color: #5FB878;
+}
+
+.wrap-head .area i {
+	font-size: 18px;
+	color: #1E9FFF;
+}
+
+.wrap-head .area {
+	font-size: 16px;
+}
+
+.wrap-body .tab1 {
+	padding-bottom: 150px;
+}
+
+.wrap-body .tab1 .characteristic img {
+	width: 100%;
+}
+
+.wrap-body .tab1 .box {
+	padding-top: 50px;
+}
+
+.wrap-body .tab1 .introduce {
+	padding-top: 20px;
+}
+
+.wrap-body .tab1 h3 {
+	color: #5FB878;
+	font-weight: bold;
+	font-size: 22px;
+	letter-spacing: 8px;
+}
+
+.wrap-body .tab1 h3 i {
+	font-size: 22px;
+}
+
+.wrap-body .tab1 p {
+	padding-top: 10px;
+}
+
+.wrap-body .tab1 .characteristic .layui-row{
+	padding-top: 15px;
+}
+
+.wrap-body .tab2 .comment-wrap {
+	padding-bottom: 150px;
+}
+
+.wrap-body .tab2 .row {
+	padding-top: 20px;
+}
+
+.wrap-body .tab2 h3 {
+	font-size: 18px;
+	height: 38px;
+	line-height: 38px;
+	display: inline-block;
+	color: #a8a8a8;
+}
+
+.wrap-body .tab2 .sort {
+	display: inline-block;
+	float: right;
+}
+
+.wrap-body .tab2 .row .head-wrap {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.wrap-body .tab2 .row .head-wrap img {
+	width: 100%;
+}
+
+.wrap-body .tab2 .row .row-in1 h4 {
+	font-size: 18px;
+	font-weight: bold;
+	display: inline-block;
+	padding-right: 20px;
+}
+
+.wrap-body .tab2 .row .row-in1 p {
+	color: #a8a8a8;
+	display: inline-block;
+}
+
+.wrap-body .tab2 .row .row-in1 .layui-breadcrumb {
+	float: right;
+	display: inline-block;
+}
+
+.wrap-body .tab2 .row .head-wrap-sub {
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	overflow: hidden;
+}
+
+.wrap-body .tab2 .row .head-wrap-sub img {
+	width: 100%;
+}
+
+.wrap-body .tab2 .row .row-in2 {
+	padding-top: 10px;
+}
+
+.wrap-body .tab2 .row .row-in2 h4 {
+	font-size: 18px;
+	font-weight: bold;
+	display: inline-block;
+	padding-right: 20px;
+}
+
+.wrap-body .tab2 .row .row-in2 p {
+	color: #a8a8a8;
+}
+
+#comment-page {
+	padding-top: 10px;
+	float: right;
+}
+
+.reply-page {
+	padding-top: 10px;
+	float: right;
+}
+
+.layui-laypage-reply a {
+	border: none;
+}
+
+footer {
+	background: #393D49;
+	height: 100px;
+	position: relative;
+	z-index: 2;
+}
+
+footer p{
+	color: #fff;
+	text-align: center;
+	padding-top: 50px;
+}
+
+#comment-modal {
+	display: none;
+}
+
+#reply-modal {
+	display: none;
+}
+
+.modal h2 {
+	color: #009688;
+	margin: 10px;
+	display: inline-block;
+}
+
+.modal textarea {
+	resize: none;
+}
+
+.modal .layui-form-item p {
+	display: inline-block;
+	color: #a8a8a8;
+	margin-top: 5px;
+}
+
+.modal .layui-form-item button {
+	float: right;
+	margin-top: 5px;
+}
