@@ -200,7 +200,7 @@
                                     <form style="display: inline-block;">
                                         <button type="submit" class="btn btn-danger">红色警告</button>
                                     </form>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message">发送消息</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
                                 </div>
                                 <div id="scoreAdmin-page" style="float: right"></div>
                             </div>
@@ -234,6 +234,40 @@
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模态框-0提示 -->
+                <div class="modal fade bs-example-modal-sm" id="0-notice" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>请至少选择一个商户</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模态框->1 -->
+                <div class="modal fade bs-example-modal-sm" id="1-notice" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>只能选择一个商店进行消息发送</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -310,6 +344,19 @@
                 });
             }
             initTableCheckbox();
+
+            $('#handleNews').click(function () {
+                var checked=$("tbody input:checked");
+                if(checked.length==0){
+                    $("#0-notice").modal("show");
+                }
+                else if(checked.length>1){
+                    $("#1-notice").modal("show");
+                }
+                else{
+                    $("#message").modal("show");
+                }
+            });
         });
     </script>
 </body>

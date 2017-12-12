@@ -88,9 +88,9 @@
     				<div class="layui-tab layui-tab-card">
   						<ul class="layui-tab-title">
     						<li class="layui-this">全部订单</li>
-    						<li>待派遣</li>
-    						<li>待确认</li>
-    						<li>待评价</li>
+    						<li>待派遣 <span class="layui-badge">1</span></li>
+    						<li>待确认 <span class="layui-badge">1</span></li>
+    						<li>待评价 <span class="layui-badge">1</span></li>
   						</ul>
 					  	<div class="layui-tab-content">
 					  		<!-- 全部订单 -->
@@ -773,13 +773,13 @@
             '<div class="state layui-row">' +
             '<hr class="layui-bg-green">' +
             '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail"><p>派遣中</p></div>' +
+            '<div class="state-detail" id="process1" style="background: #009688;"><p style="color: #fff">派遣中</p></div>' +
             '</div>' +
             '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail"><p>已到达目的地</p></div>' +
+            '<div class="state-detail" id="process2"><p>已到达目的地</p></div>' +
             '</div>' +
             '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
-            '<div class="state-detail"><p>订单交易成功</p></div>' +
+            '<div class="state-detail" id="process3"><p>订单交易成功</p></div>' +
             '</div>' +
             '</div>' +
             '<hr>' +
