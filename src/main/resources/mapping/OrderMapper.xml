@@ -305,6 +305,12 @@
     <select id="getOrderByOrderId" parameterType="Integer" resultMap="Base">
         SELECT * FROM `order` WHERE orderid=#{orderId}
     </select>
+    <select id="getCancelReason" resultType="string" parameterType="java.lang.Integer">
+        SELECT
+        reason
+        FROM cancel
+        WHERE cancelid = #{cancelId,jdbcType=INTEGER}
+    </select>
 
     <update id="updateOrder" parameterType="xin.yiliya.pojo.Order">
         update `order`

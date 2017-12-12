@@ -90,12 +90,26 @@ jQuery(document).ready(function($) {
   		});
 
   		$(".refund-reason").click(function(event) {
-  			layer.open({
-  				type: 0,
-  				title: '退款理由',
-  				anim: 2,
-  				content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error dolorum voluptate, at obcaecati, aspernatur tempore esse suscipit sint asperiores dignissimos saepe quas excepturi ullam quasi quisquam aliquid! Minus, laboriosam quia!'
-			});
+  			var value = $(this).attr("data-refundId");
+            $.ajax({
+                type: "POST",
+                url: portPath+"userResident/getCancelReason.do",
+                data: {
+                    cancelId:value
+                },
+                dataType: "json",
+                success: function(data){
+                    layer.open({
+                        type: 0,
+                        title: '退款理由',
+                        anim: 2,
+                        content: data
+                    });
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
   		});
 
         $(".delete").click(function(event) {

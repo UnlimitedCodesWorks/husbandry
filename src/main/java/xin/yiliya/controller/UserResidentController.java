@@ -90,7 +90,7 @@ public class UserResidentController extends BaseController {
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getRegistNum());
         Integer userId = user.getUserid();
-        int pageSize =1;
+        int pageSize =12;
         PageInfo<StoreIndex> concernedStores = userConcernService.userConcernStores(userId,1,pageSize);
         model.addAttribute("concernedStores",concernedStores.getList());
         model.addAttribute("concernedStorePages",concernedStores.getPages());
@@ -206,9 +206,14 @@ public class UserResidentController extends BaseController {
     @ResponseBody
     public List<StoreIndex> getConcernStore(Integer currentPage){
         User user = (User) session.getAttribute("userBean");
-        int pageSize = 1;
+        int pageSize = 12;
         return userConcernService.userConcernStores(user.getUserid(),currentPage,pageSize).getList();
     }
 
+    @RequestMapping(value = "/getCancelReason.do",method = RequestMethod.POST)
+    @ResponseBody
+    public String getCancelReason(Integer cancelId){
+        return orderService.getCancelReason(cancelId);
+    }
 
 }

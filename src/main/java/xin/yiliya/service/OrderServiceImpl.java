@@ -105,6 +105,10 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+    public String getCancelReason(Integer cancelId) {
+        return orderMapper.getCancelReason(cancelId);
+    }
+
     public PageInfo<OrderSimple> getAllStoreHandleOrder(Integer storeId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<OrderSimple> list=orderMapper.getAllStoreHandleOrder(storeId);

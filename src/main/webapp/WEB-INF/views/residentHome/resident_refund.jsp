@@ -115,7 +115,7 @@
 											</button>
 										</div>
 										<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-											<button class="layui-btn layui-btn-danger refund-reason">
+											<button class="layui-btn layui-btn-danger refund-reason" data-refundId="${order.cancel.cancelid}">
 												<i class="iconfont">&#xe614;</i> 退款原因
 											</button>
 										</div>
@@ -149,6 +149,9 @@
   			</div>
 		</div>
 	</div>
+		<footer>
+			<p>Husbandry-&copy2017</p>
+		</footer>
 	<form id="uploadForm" enctype="multipart/form-data">
 
 	</form>
@@ -176,9 +179,6 @@
 	</div>
 	</div>
 	</div>
-	<footer>
-		<p>Husbandry-&copy2017</p>
-	</footer>
 
 </body>
 <script>
@@ -245,7 +245,7 @@
                 '</button>' +
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +
-                '<button class="layui-btn layui-btn-danger refund-reason">' +
+                '<button class="layui-btn layui-btn-danger refund-reason" data-refundId="'+data[i].cancel.cancelid+'">' +
                 '<i class="iconfont">&#xe614;</i> 退款原因' +
                 '</button>' +
                 '</div>' +
