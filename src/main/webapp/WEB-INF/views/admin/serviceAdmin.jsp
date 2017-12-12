@@ -2,7 +2,10 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +53,7 @@
                         <li class="user user-menu">
                             <a>
                                 <img src="../../../resources/images/admin.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Super Admin</span>
+                                <span class="hidden-xs">超级管理员</span>
                             </a>
                         </li>
                         <li>
@@ -67,7 +70,7 @@
                         <img src="../../../resources/images/admin.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Super Admin</p>
+                        <p>超级管理员</p>
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -141,7 +144,7 @@
         <div class="content-wrapper">
             <section class="content-header">
               <h1>
-                HusBanDry
+                Husbandry
                 <small>Service Admin</small>
               </h1>
               <ol class="breadcrumb">
@@ -156,17 +159,17 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">服务管理</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/serviceSearch.do" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <input type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
+                                        <input name="input" type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
                                     </div>
-                                    <button type="button" class="btn btn-primary search">搜索</button>
+                                    <button type="submit" class="btn btn-primary search">搜索</button>
                                 </form>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <!-- 表格 -->
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="serviceTable">
                                         <thead>
                                             <tr>
                                                 <th>商户名称</th>
@@ -176,24 +179,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="select">华峰国际有限公司</td>
-                                                <td class="select">华峰服务</td>
-                                                <td class="select">大保健</td>
-                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="select">华峰国际有限公司非洲分公司</td>
-                                                <td class="select">华峰非洲服务</td>
-                                                <td class="select">奆保健</td>
-                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
-                                            </tr>
+                                            <c:if test="${empty serviceStoreList}">
+                                                <tr>
+                                                    <td colspan="5" align="center"><b>没有该类型厂商</b></td>
+                                                </tr>
+                                            </c:if>
+                                            <c:if test="${serviceStoreList!=null}">
+                                                <c:forEach var="serviceStore" items="${serviceStoreList}">
+                                                    <tr>
+                                                        <td hidden="hidden"><c:out value="${serviceStore.offerServiceId}"/></td>
+                                                        <td class="select"><c:out value="${serviceStore.store.storeName}"/></td>
+                                                        <td class="select"><c:out value="${serviceStore.serviceName}"/></td>
+                                                        <td class="select"><c:out value="${serviceStore.service.serKind}"/></td>
+                                                        <td><button type="button" class="btn btn-primary serviceBtn" data-toggle="modal" data-target="#check">查看</button></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <button type="button" class="btn btn-primary">同意</button>
-                                    <button type="button" class="btn btn-danger">拒绝</button>
+                                    <c:if test="${empty serviceStoreList}">
+                                        <button type="button" class="btn btn-primary" disabled>同意</button>
+                                        <button type="button" class="btn btn-danger" disabled>拒绝</button>
+                                    </c:if>
+                                    <c:if test="${!empty serviceStoreList}">
+                                        <button type="button" class="btn btn-primary">同意</button>
+                                        <button type="button" class="btn btn-danger">拒绝</button>
+                                    </c:if>
                                 </div>
                                 <div id="serviceAdmin-page" style="float: right"></div>
                             </div>
@@ -245,10 +258,10 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">服务范围</label>
                                         <div class="col-sm-8 col-xs-12 input-group">
-                                            <input class="form-control" class="range" value="浙江省杭州市" readonly>
-                                            <input class="form-control" class="range" value="浙江省温州市" readonly>
-                                            <input class="form-control" class="range" value="浙江省台州市" readonly>
-                                            <input class="form-control" class="range" value="浙江省金华市" readonly>
+                                            <input class="form-control" class="range" value="浙江省杭州市" readonly/>
+                                            <input class="form-control" class="range" value="浙江省温州市" readonly/>
+                                            <input class="form-control" class="range" value="浙江省台州市" readonly/>
+                                            <input class="form-control" class="range" value="浙江省金华市" readonly/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -292,6 +305,10 @@
     <script src="../../../resources/js/zoomify.min.js"></script>
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
+        var input='${input}';
+        var pages=${pages};
+        var portPath = "<%=portPath%>";
+        var currentPage = 1;
         $(function(){
             $('#check img').zoomify({
                 easing: "ease"
@@ -303,11 +320,75 @@
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'serviceAdmin-page'
-                    ,count: 50 //数据总数，从服务端得到
-                    ,limit: 10
+                    ,count: 2*pages //数据总数，从服务端得到
+                    ,limit: 2
                     ,theme: '#3c8dbc'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first) {
+                            currentPage = obj.curr;
+                            var href = portPath + "admin/serviceAdmin.do?";
+                            if (input == 'none') {
+                                href += 'currentPage=' + currentPage;
+                                changePage(href);
+                            }
+                            else {
+                                href += 'input=' + input;
+                                href += '&currentPage=' + currentPage;
+                                changePage(href);
+                            }
+                        }
+                    }
                 });
             });
+
+            function changePage(href) {
+                $.ajax({
+                    url :href,
+                    type : "get",
+                    dataType : "json",
+                    async:true,
+                    success: function(data){
+                        pages=data.pages;
+                        createServiceStores(data);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                        currentPage = 1;
+                    }
+                });
+            }
+
+            function createServiceStores(data) {
+                var table=$('#serviceTable');
+                table.find('thead').remove();
+                table.find('tbody').remove();
+                var theadNode='<thead>' +
+                                 '<tr>' +
+                                   '<th>商户名称</th>' +
+                                   '<th>服务名称</th>' +
+                                   '<th>服务类型</th>' +
+                                   '<th>服务详细信息</th>' +
+                                 '</tr>' +
+                                '</thead><tbody>';
+                table.append(theadNode);
+                for(var i=0;i<data.list.length;i++){
+                    var offerServiceId=data.list[i].offerServiceId;
+                    var storeName=data.list[i].store.storeName;
+                    var serviceName=data.list[i].serviceName;
+                    var kind=data.list[i].service.serKind;
+                    var node='<tr><td hidden="hidden">'+offerServiceId+
+                        '</td><td class="select">'+storeName+
+                        '</td><td class="select">'+serviceName+
+                        '</td><td class="select">'+kind+
+                        '</td><td><button type="button" class="btn btn-primary serviceBtn" data-toggle="modal" data-target="#check">查看</button>' +
+                        '</td></tr>';
+                    table.append(node);
+                }
+                table.append('</tbody>');
+                initTableCheckbox();
+                getServiceDetail();
+            }
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -352,6 +433,11 @@
                 });
             }
             initTableCheckbox();
+            
+            function getServiceDetail() {
+
+            }
+            getServiceDetail();
         });
     </script>
 </body>

@@ -2,7 +2,10 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +52,7 @@
                         <li class="user user-menu">
                             <a>
                                 <img src="../../../resources/images/admin.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Super Admin</span>
+                                <span class="hidden-xs">超级管理员</span>
                             </a>
                         </li>
                         <li>
@@ -66,7 +69,7 @@
                         <img src="../../../resources/images/admin.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Super Admin</p>
+                        <p>超级管理员</p>
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -140,7 +143,7 @@
         <div class="content-wrapper">
             <section class="content-header">
               <h1>
-                HusBanDry
+                Husbandry
                 <small>Score Admin</small>
               </h1>
               <ol class="breadcrumb">
@@ -288,6 +291,10 @@
     <!-- page script -->
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
+        var input='${input}';
+        var pages=${pages};
+        var portPath = "<%=portPath%>";
+        var currentPage = 1;
         $(function(){
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
@@ -295,9 +302,10 @@
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'scoreAdmin-page'
-                    ,count: 50 //数据总数，从服务端得到
-                    ,limit: 10
+                    ,count: pages*2 //数据总数，从服务端得到
+                    ,limit: 2
                     ,theme: '#3c8dbc'
+
                 });
             });
 

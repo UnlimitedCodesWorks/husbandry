@@ -4,6 +4,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -52,7 +53,7 @@
                         <li class="user user-menu">
                             <a>
                                 <img src="../../../resources/images/admin.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Super Admin</span>
+                                <span class="hidden-xs">超级管理员</span>
                             </a>
                         </li>
                         <li>
@@ -69,7 +70,7 @@
                         <img src="../../../resources/images/admin.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Super Admin</p>
+                        <p>超级管理员</p>
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -143,7 +144,7 @@
         <div class="content-wrapper">
             <section class="content-header">
               <h1>
-                HusBanDry
+                Husbandry
                 <small>Use store</small>
               </h1>
               <ol class="breadcrumb">
@@ -192,7 +193,7 @@
                                                         <td><c:out value="${useStore.phone}"/></td>
                                                         <td><c:out value="${useStore.email}"/></td>
                                                         <td><c:out value="${useStore.detailInfo}"/></td>
-                                                        <td><c:out value="${useStore.registTime}"/></td>
+                                                        <td><fmt:formatDate value="${useStore.registTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                                     </tr>
                                                 </c:forEach>
                                             </c:if>
@@ -200,8 +201,14 @@
                                     </table>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <button type="button" class="btn btn-danger" id="cancel">撤销厂商资格</button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
+                                    <c:if test="${empty useStoreList}">
+                                        <button type="button" class="btn btn-danger" id="cancel" disabled>撤销厂商资格</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews" disabled>发送消息</button>
+                                    </c:if>
+                                    <c:if test="${!empty useStoreList}">
+                                        <button type="button" class="btn btn-danger" id="cancel">撤销厂商资格</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
+                                    </c:if>
                                 </div>
                                 <div id="useStore-page" style="float: right"></div>
                             </div>

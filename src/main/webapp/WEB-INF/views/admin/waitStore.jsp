@@ -54,7 +54,7 @@
                         <li class="user user-menu">
                             <a>
                                 <img src="../../../resources/images/admin.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Super Admin</span>
+                                <span class="hidden-xs">超级管理员</span>
                             </a>
                         </li>
                         <li>
@@ -71,7 +71,7 @@
                         <img src="../../../resources/images/admin.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Super Admin</p>
+                        <p>超级管理员</p>
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
         <div class="content-wrapper">
             <section class="content-header">
               <h1>
-                HusBanDry
+                Husbandry
                 <small>Wait store</small>
               </h1>
               <ol class="breadcrumb">

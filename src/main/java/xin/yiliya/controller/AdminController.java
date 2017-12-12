@@ -1,5 +1,6 @@
 package xin.yiliya.controller;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Admin;
+import xin.yiliya.pojo.OfferServiceAdmin;
 import xin.yiliya.pojo.StoreAdmin;
 import xin.yiliya.service.AdminService;
 
@@ -113,11 +115,35 @@ public class AdminController {
     public String serviceAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+            model.addAttribute("serviceStoreList",adminService.getUnpassServices(1,2).getList());
+            model.addAttribute("pages",adminService.getUnpassServices(1,2).getPages());
+            model.addAttribute("input","none");
             return "admin/serviceAdmin";
         }
         else{
             return "redirect:login.html";
         }
+    }
+
+    @RequestMapping(value = "/serviceAdmin.do",method = RequestMethod.GET)
+    @ResponseBody
+    public PageInfo<OfferServiceAdmin> serviceAdminPage(@RequestParam(value = "input",required = false)String input,
+                                                        @RequestParam(value = "currentPage")Integer currentPage){
+        if(input=="none"){
+            return adminService.getUnpassServices(currentPage,2);
+        }
+        else{
+            return adminService.getUnpassServices(input,currentPage,2);
+        }
+    }
+
+    @RequestMapping(value = "/serviceSearch.do",method = RequestMethod.POST)
+    public String searchService(@RequestParam(required = false)String input,Model model){
+        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+        model.addAttribute("serviceStoreList",adminService.getUnpassServices(input.trim(),1,2).getList());
+        model.addAttribute("pages",adminService.getUnpassServices(input.trim(),1,2).getPages());
+        model.addAttribute("input",input.trim());
+        return "admin/serviceAdmin";
     }
 
     @RequestMapping(value = "/useStore.html",method = RequestMethod.GET)
