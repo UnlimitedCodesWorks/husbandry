@@ -16,6 +16,8 @@
     <result column="sp_remark" jdbcType="VARCHAR" property="spRemark" />
     <result column="sp_otherinfo" jdbcType="VARCHAR" property="spOtherinfo" />
     <result column="up_time" jdbcType="TIMESTAMP" property="upTime" />
+    <result property="orderStatus" column="status" jdbcType="INTEGER" />
+    <result property="serviceName" column="service_name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     servicepeopleid, store_id, sp_head, sp_name, sp_sex, sp_birth, sp_height, sp_weight, 
@@ -208,7 +210,18 @@
   </select>
 
   <select id="getServicePeopleByOrderId" parameterType="Integer" resultMap="BaseResultMap">
-    SELECT servicepeople.* FROM servicepeople,orderpeople WHERE sp_id=servicepeople.servicepeopleid AND order_id=#{orderId}
+    SELECT
+	servicepeople.*,`order`.`status`,offerservice.service_name
+    FROM
+	servicepeople,
+	orderpeople,
+	`order`,
+	offerservice
+    WHERE
+	sp_id = servicepeople.servicepeopleid
+    AND orderpeople.order_id = `order`.orderid
+    AND `order`.service_id = offerservice.offerserviceid
+    AND order_id = #{orderId}
   </select>
 
 </mapper>

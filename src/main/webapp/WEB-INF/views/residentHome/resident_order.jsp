@@ -140,7 +140,7 @@
 													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-danger delete">
+																<button class="layui-btn layui-btn-danger delete" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe615;</i> 删除订单
 																</button>
 															</div>
@@ -202,12 +202,12 @@
 													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-danger refund">
+																<button class="layui-btn layui-btn-danger refund" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe614;</i> 撤销订单
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress">
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
@@ -269,17 +269,17 @@
 													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-danger refund">
+																<button class="layui-btn layui-btn-danger refund" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe614;</i> 撤销订单
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress">
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-primary">
+																<button class="layui-btn layui-btn-primary" data-orderId="${order.orderid}" >
 																	<i class="iconfont confirm">&#xe6e2;</i> 确认订单
 																</button>
 															</div>
@@ -339,12 +339,12 @@
 													<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
 														<div class="layui-row layui-col-space10 row2-2">
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-danger delete">
+																<button class="layui-btn layui-btn-danger delete" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe615;</i> 删除订单
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress">
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
@@ -382,62 +382,7 @@
 	</div>
 	<!-- 服务进展 -->
 	<div id="service-progress">
-		<div class="layui-fluid">
-			<!-- 状态 -->
-			<div class="state layui-row">
-				<hr class="layui-bg-green">
-				<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">
-					<div class="state-detail"><p>派遣中</p></div>
-				</div>
-				<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">
-					<div class="state-detail"><p>已到达目的地</p></div>
-				</div>
-				<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">
-					<div class="state-detail"><p>订单交易成功</p></div>
-				</div>
-			</div>
-			<hr>
-			<!-- 员工 -->
-			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>
-			<div class="staff-wrap">
-				<div class="staff layui-row row1 layui-col-space10">
-					<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 img-wrap">
-						<img src="http://t.cn/RCzsdCq">
-					</div>
-					<div class="layui-col-md8 layui-col-sm12 layui-col-xs12">
-						<div class="layui-row row2 layui-col-space10">
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">姓名：何华峰</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">年龄：22</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">性别：男</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">体重：80kg</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">身高：190cm</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">民族：大和民族</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">联系电话：13333333333</p>
-							<p class="layui-col-md12 layui-col-sm12 layui-col-xs12">其他说明：Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam animi aliquam ex mollitia id maxime, ipsa rem fugit delectus optio molestiae alias facere dicta eius nostrum, voluptates molestias quod doloribus!</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<hr>
-			<div class="staff-wrap">
-				<div class="staff layui-row row1 layui-col-space10">
-					<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 img-wrap">
-						<img src="http://t.cn/RCzsdCq">
-					</div>
-					<div class="layui-col-md8 layui-col-sm12 layui-col-xs12">
-						<div class="layui-row row2 layui-col-space10">
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">姓名：何华峰</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">年龄：22</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">性别：男</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">体重：80kg</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">身高：190cm</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">民族：大和民族</p>
-							<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">联系电话：13333333333</p>
-							<p class="layui-col-md12 layui-col-sm12 layui-col-xs12">其他说明：Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam animi aliquam ex mollitia id maxime, ipsa rem fugit delectus optio molestiae alias facere dicta eius nostrum, voluptates molestias quod doloribus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor vero, eius sint, itaque eum voluptate, consequatur quibusdam quo ratione dolores iure animi laudantium, natus neque quia vel provident perspiciatis sed.</p>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="layui-fluid" id="service-container" >
 		</div>
 	</div>
 	<!-- 撤销订单 -->
@@ -445,13 +390,11 @@
 		<div class="layui-fluid">
 			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">退款理由</h2>
 			<hr>
-			<form class="layui-form" action="">
   				<div class="layui-form-item layui-form-text">
-      				<textarea placeholder="请输入您的退款理由" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
-      				<p>至少输入X个字</p>
-      				<button class="layui-btn" lay-submit>提交</button>
+      				<textarea placeholder="请输入您的退款理由" required lay-verify="required" class="layui-textarea" rows="6" id="cancelReason" ></textarea>
+      				<p>至多输入300个字</p>
+      				<button id="cancelButton" class="layui-btn" lay-submit>提交</button>
   				</div>
-  			</form>
 		</div>
 	</div>
 	<!-- 头像 -->
@@ -604,10 +547,40 @@
         });
     });
 
+    //撤销提交
+    $("#cancelButton").click(function (e) {
+        var value = $(this).attr("data-orderId");
+        var reason = $("#cancelReason").val();
+        if(reason.length!=0){
+            $.ajax({
+                type: "POST",
+                url: portPath+"userResident/cancelOrder.do",
+                data: {
+                    orderId:value,
+                    reason:reason
+                },
+                dataType: "json",
+                success: function(data){
+                    if(data){
+                        layer.msg("撤销成功",{
+                            time: 1000
+                        });
+                        setTimeout("location.replace(location.href)",1000);
+                    }
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        }
+
+
+    });
 
     function createOrders(data) {
         for(var i=0;i<data.list.length;i++){
             var status = data.list[i].status;
+            var orderId = data.list[i].orderid;
             var line;
             var container;
             var buttons;
@@ -617,7 +590,7 @@
 				    container.html("");
 				    line = "<p>订单状态：已完成</p>";
 				    buttons ='<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-danger delete">' +
+                        '<button class="layui-btn layui-btn-danger delete" data-orderId="'+orderId+'">' +
                         '<i class="iconfont">&#xe615;</i> 删除订单' +
                         '</button>' +
                         '</div>' +
@@ -629,12 +602,12 @@
                     container.html("");
                     line = "<p>订单状态：待派遣</p>";
                     buttons='<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-danger refund">' +
+                        '<button class="layui-btn layui-btn-danger refund" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe614;</i> 撤销订单' +
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
@@ -646,17 +619,17 @@
                     container.html("");
                     line = "<p>订单状态：待确认</p>";
                     buttons = '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-danger refund">' +
+                        '<button class="layui-btn layui-btn-danger refund" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe614;</i> 撤销订单' +
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-primary">' +
+                        '<button class="layui-btn layui-btn-primary" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont confirm">&#xe6e2;</i> 确认订单' +
                         '</button>' +
                         '</div>';
@@ -666,12 +639,12 @@
                     container.html("");
                     line = "<p>订单状态：待评价</p>";
                     buttons = '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-danger delete">' +
+                        '<button class="layui-btn layui-btn-danger delete" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe615;</i> 删除订单' +
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress">' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
@@ -725,6 +698,168 @@
             container.append(node);
 
 		}
+		layui.use('layer', function() {
+            var layer = layui.layer;
+            $(".delete").click(function (event) {
+                var value = $(this).attr("data-orderId");
+                layer.confirm('您确定要删除该订单吗？', {
+                    btn: ['确定', '关闭'] //按钮
+                }, function () {
+                    $.ajax({
+                        type: "POST",
+                        url: portPath + "userResident/deleteOrder.do",
+                        data: {
+                            orderId: value
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                layer.msg("已删除", {
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)", 1000);
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                }, function () {
+                    //dosomething
+                });
+
+            });
+            $(".refund").click(function (event) {
+                $("#cancelButton").attr("data-orderId", $(this).attr("data-orderId"));
+                layer.open({
+                    type: 1,
+                    title: '撤销订单',
+                    area: layerWidth,
+                    anim: 2,
+                    content: $('#refund')
+                });
+            });
+            $(".check-progress").click(function(event) {
+                var value = $(this).attr("data-orderId");
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"userResident/getOrderServicePeople.do",
+                    data: {
+                        orderId:value
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        createServicePeople(data);
+                        layer.open({
+                            type: 1,
+                            title:''+data[0].serviceName+ '服务进展状态',
+                            area: layerWidth,
+                            anim: 2,
+                            content: $('#service-progress')
+                        });
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+        });
+    }
+
+    function createServicePeople(data) {
+        var container = $("#service-container");
+        container.html("");
+        var node = '<!-- 状态 -->' +
+            '<div class="state layui-row">' +
+            '<hr class="layui-bg-green">' +
+            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+            '<div class="state-detail"><p>派遣中</p></div>' +
+            '</div>' +
+            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+            '<div class="state-detail"><p>已到达目的地</p></div>' +
+            '</div>' +
+            '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">' +
+            '<div class="state-detail"><p>订单交易成功</p></div>' +
+            '</div>' +
+            '</div>' +
+            '<hr>' +
+            '<!-- 员工 -->' +
+            '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+		for(var i=0;i<data.length;i++){
+			 node += '<div class="staff-wrap">' +
+                 '<div class="staff layui-row row1 layui-col-space10">' +
+                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 img-wrap">' +
+                 '<img src="'+data[i].spHead+'" onerror="this.src=\"http://t.cn/RCzsdCq\" " >' +
+                 '</div>' +
+                 '<div class="layui-col-md8 layui-col-sm12 layui-col-xs12">' +
+                 '<div class="layui-row row2 layui-col-space10">' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">姓名：'+data[i].spName+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">年龄：'+jsGetAge(data[i].spBirth)+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">性别：'+data[i].spSex+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">体重：'+data[i].spWeight+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">身高：'+data[i].spHeight+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">民族：'+data[i].spNation+'</p>' +
+                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">联系电话：'+data[i].spPhone+'</p>' +
+                 '<p class="layui-col-md12 layui-col-sm12 layui-col-xs12">其他说明：'+data[i].spOtherinfo+'</p>' +
+                 '</div>' +
+                 '</div>' +
+                 '</div>' +
+                 '</div>' +
+                 '<hr>';
+		}
+		container.append(node);
+    }
+
+    /*根据出生日期算出年龄*/
+    function jsGetAge(strBirthday){
+        var returnAge;
+        var strBirthdayArr=strBirthday.split("-");
+        var birthYear = strBirthdayArr[0];
+        var birthMonth = strBirthdayArr[1];
+        var birthDay = strBirthdayArr[2];
+
+        d = new Date();
+        var nowYear = d.getFullYear();
+        var nowMonth = d.getMonth() + 1;
+        var nowDay = d.getDate();
+
+        if(nowYear == birthYear){
+            returnAge = 0;//同年 则为0岁
+        }
+        else{
+            var ageDiff = nowYear - birthYear ; //年之差
+            if(ageDiff > 0){
+                if(nowMonth == birthMonth) {
+                    var dayDiff = nowDay - birthDay;//日之差
+                    if(dayDiff < 0)
+                    {
+                        returnAge = ageDiff - 1;
+                    }
+                    else
+                    {
+                        returnAge = ageDiff ;
+                    }
+                }
+                else
+                {
+                    var monthDiff = nowMonth - birthMonth;//月之差
+                    if(monthDiff < 0)
+                    {
+                        returnAge = ageDiff - 1;
+                    }
+                    else
+                    {
+                        returnAge = ageDiff ;
+                    }
+                }
+            }
+            else
+            {
+                returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+            }
+        }
+
+        return returnAge;//返回周岁年龄
 
     }
 </script>

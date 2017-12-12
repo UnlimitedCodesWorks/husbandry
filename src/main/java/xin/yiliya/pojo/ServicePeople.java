@@ -31,6 +31,10 @@ public class ServicePeople {
 
     private Date upTime;
 
+    private Integer orderStatus;
+
+    private String serviceName;
+
     public Integer getServicepeopleid() {
         return servicepeopleid;
     }
@@ -141,5 +145,21 @@ public class ServicePeople {
 
     public void setSpTemplatename(String spTemplatename) {
         this.spTemplatename = spTemplatename;
+    }
+
+    public Integer getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }

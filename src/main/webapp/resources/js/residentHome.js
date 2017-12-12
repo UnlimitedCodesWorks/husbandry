@@ -34,16 +34,32 @@ jQuery(document).ready(function($) {
 	layui.use('layer', function(){
   		var layer = layui.layer;
   		$(".check-progress").click(function(event) {
-  			layer.open({
-  				type: 1,
-  				title: 'XXXX服务进展状态',
-  				area: layerWidth,
-  				anim: 2,
-  				content: $('#service-progress')
-			});
+  			var value = $(this).attr("data-orderId");
+            $.ajax({
+                type: "POST",
+                url: portPath+"userResident/getOrderServicePeople.do",
+                data: {
+                    orderId:value
+                },
+                dataType: "json",
+                success: function(data){
+                    createServicePeople(data);
+                    layer.open({
+                        type: 1,
+                        title: ''+data[0].serviceName+'服务进展状态',
+                        area: layerWidth,
+                        anim: 2,
+                        content: $('#service-progress')
+                    });
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
   		});
 
   		$(".refund").click(function(event) {
+            $("#cancelButton").attr("data-orderId",$(this).attr("data-orderId"));
   			layer.open({
   				type: 1,
   				title: '撤销订单',
@@ -82,17 +98,35 @@ jQuery(document).ready(function($) {
 			});
   		});
 
-  		$(".delete").click(function(event) {
-  			layer.confirm('您确定要删除该订单吗？', {
-  				btn: ['确定','关闭'] //按钮
-			}, function(){
-  				layer.msg("已删除",{
-  					time: 1000
-  				});
-			}, function(){
-				//dosomething
-			});
-  		});
+        $(".delete").click(function(event) {
+            var value = $(this).attr("data-orderId");
+            layer.confirm('您确定要删除该订单吗？', {
+                btn: ['确定','关闭'] //按钮
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"userResident/deleteOrder.do",
+                    data: {
+                        orderId:value
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("已删除",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+
+        });
 	});
 
 	var nav = new Vue({
@@ -307,4 +341,5 @@ jQuery(document).ready(function($) {
 		},
 		"retina_detect": true
 	});
+
 });

@@ -6,8 +6,6 @@ public class Cancel {
 
     private Integer cancelid;
 
-    private Integer userId;
-
     private String reason;
 
     private Integer orderId;
@@ -20,14 +18,6 @@ public class Cancel {
 
     public void setCancelid(Integer cancelid) {
         this.cancelid = cancelid;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getReason() {

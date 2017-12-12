@@ -58,7 +58,6 @@
         </association>
         <association property="cancel" javaType="xin.yiliya.pojo.Cancel">
             <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
-            <result column="userId" jdbcType="INTEGER" property="userId" />
             <result column="reason" jdbcType="VARCHAR" property="reason" />
             <result column="order_id" jdbcType="VARCHAR" property="orderId" />
         </association>
@@ -117,7 +116,7 @@
     <sql id="BaseCancel">
         orderid,order_number,service_id,`order`.user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
-        offerservice.`status` AS state,storeid,store_name,cancelid,cancel.user_id AS userId,reason,
+        offerservice.`status` AS state,storeid,store_name,cancelid,reason,
         order_id
     </sql>
 
@@ -179,7 +178,7 @@
         WHERE cancel.order_id=`order`.orderid
         AND `order`.service_id=offerservice.offerserviceid
         AND store_id=store.storeid
-        AND cancel.user_id=#{userId}
+        AND `order`.user_id=#{userId}
         ORDER BY cancel.cancel_time DESC
     </select>
 
@@ -237,9 +236,6 @@
             <if test="cancelid != null">
                 cancelid,
             </if>
-            <if test="userId != null">
-                user_id,
-            </if>
             <if test="reason != null">
                 reason,
             </if>
@@ -253,9 +249,6 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cancelid != null">
                 #{cancelid,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
             </if>
             <if test="reason != null">
                 #{reason,jdbcType=VARCHAR},

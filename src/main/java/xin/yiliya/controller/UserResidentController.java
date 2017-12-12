@@ -6,10 +6,7 @@ import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import xin.yiliya.pojo.OrderCancel;
-import xin.yiliya.pojo.OrderShow;
-import xin.yiliya.pojo.UpdateUser;
-import xin.yiliya.pojo.User;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.OrderService;
 import xin.yiliya.service.RegionService;
 import xin.yiliya.service.UserService;
@@ -69,12 +66,15 @@ public class UserResidentController extends BaseController {
         PageInfo<OrderShow> dispatchedOrders = orderService.getAllUserSendOrder(userId,1,pageSize);
         model.addAttribute("dispatchedOrders",dispatchedOrders.getList());
         model.addAttribute("dispatchedOrderPages",dispatchedOrders.getPages());
+        model.addAttribute("dispatchedOrderNum",dispatchedOrders.getTotal());
         PageInfo<OrderShow> confirmedOrders = orderService.getAllUserSureOrder(userId,1,pageSize);
         model.addAttribute("confirmedOrders",confirmedOrders.getList());
         model.addAttribute("confirmedOrderPages",confirmedOrders.getPages());
+        model.addAttribute("confirmedOrderNum",confirmedOrders.getTotal());
         PageInfo<OrderShow> remarkedOrders = orderService.getAllUserAssessOrder(userId,1,pageSize);
         model.addAttribute("remarkedOrders",remarkedOrders.getList());
         model.addAttribute("remarkedOrderPages",remarkedOrders.getPages());
+        model.addAttribute("remarkedOrderNum",remarkedOrders.getTotal());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         model.addAttribute("pageSize",pageSize);
@@ -168,4 +168,22 @@ public class UserResidentController extends BaseController {
         Integer userId = user.getUserid();
         return orderService.getAllUserCancelOrder(userId,currentPage,pageSize).getList();
     }
+    @RequestMapping(value = "/deleteOrder.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean deleteOrder(Integer orderId){
+        return orderService.userDeleteOrder(orderId);
+    }
+
+    @RequestMapping(value = "/cancelOrder.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean cancelOrder(Cancel cancel){
+        return orderService.userCancelToOrder(cancel);
+    }
+
+    @RequestMapping(value = "/getOrderServicePeople.do",method = RequestMethod.POST)
+    @ResponseBody
+    public List<ServicePeople> getOrderServicePeople(Integer orderId){
+        return orderService.getOrderServicePeople(orderId,1,0).getList();
+    }
+
 }
