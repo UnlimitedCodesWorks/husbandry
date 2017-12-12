@@ -124,11 +124,44 @@ public class AdminController {
     public String useStoreHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+            model.addAttribute("useStoreList",adminService.getPassStores(1,2).getList());
+            model.addAttribute("pages",adminService.getPassStores(1,2).getPages());
+            model.addAttribute("input","none");
             return "admin/useStore";
         }
         else{
             return "redirect:login.html";
         }
+    }
+
+    @RequestMapping(value = "/useStore.do",method = RequestMethod.GET)
+    @ResponseBody
+    public PageInfo<StoreAdmin> useStorePage(@RequestParam(value = "input",required = false)String input,
+                                             @RequestParam(value = "currentPage")Integer currentPage){
+        if(input=="none"){
+            return adminService.getPassStores(currentPage,2);
+        }
+        else{
+            return adminService.getPassStores(input,currentPage,2);
+        }
+    }
+
+    @RequestMapping(value = "/storeSearch.do",method = RequestMethod.POST)
+    public String searchUseStore(@RequestParam(required = false)String input,Model model){
+        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+        model.addAttribute("useStoreList",adminService.getPassStores(input.trim(),1,2).getList());
+        model.addAttribute("pages",adminService.getPassStores(input.trim(),1,2).getPages());
+        model.addAttribute("input",input.trim());
+        return "admin/useStore";
+    }
+
+    @RequestMapping(value = "/cancelStore.do",method = RequestMethod.GET)
+    public String cancelStoreDo(@RequestParam(value = "cancelStoreId")String storeId){
+        String[] ids=storeId.split("[^0123456789.]+");
+        for(String s:ids){
+            adminService.cancelStore(Integer.parseInt(s));
+        }
+        return "redirect:useStore.html";
     }
 
     @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
@@ -160,9 +193,9 @@ public class AdminController {
     @RequestMapping(value = "/search.do",method = RequestMethod.POST)
     public String searchWaitStore(@RequestParam(required = false)String input,Model model){
         model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
-        model.addAttribute("waitStoreList",adminService.getUnpassStores(input,1,2).getList());
+        model.addAttribute("waitStoreList",adminService.getUnpassStores(input.trim(),1,2).getList());
         model.addAttribute("pages",adminService.getUnpassStores(input.trim(),1,2).getPages());
-        model.addAttribute("input",input);
+        model.addAttribute("input",input.trim());
         return "admin/waitStore";
     }
 

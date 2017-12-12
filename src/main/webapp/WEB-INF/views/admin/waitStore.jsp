@@ -321,7 +321,7 @@
                                     '<th style="width: 55%;">厂商详细信息</th>' +
                                     '<th style="width: 10%;">厂商资质</th>' +
                                  '</tr>' +
-                              '</thead><tbody>'
+                              '</thead><tbody>';
                 table.append(theadNode);
                 for(var i=0;i<data.list.length;i++){
                     var storeName=data.list[i].storeName;

@@ -2,7 +2,10 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,17 +158,17 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">商户操作</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/storeSearch.do" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <input type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
+                                        <input name="input" type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
                                     </div>
-                                    <button type="button" class="btn btn-primary search">搜索</button>
+                                    <button type="submit" class="btn btn-primary search">搜索</button>
                                 </form>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <!-- 表格 -->
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="useTable">
                                         <thead>
                                             <tr>
                                                 <th style="width: 15%;">商户名称</th>
@@ -176,26 +179,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>华峰国际有限公司</td>
-                                                <td>13333333333</td>
-                                                <td>888888@gmail.com</td>
-                                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias cum sed deserunt, qui quisquam tempora aliquam rerum, doloribus tenetur quaerat blanditiis vitae architecto, velit autem. Accusamus animi exercitationem cupiditate nemo. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis dolore odit amet, laboriosam odio, commodi labore excepturi laborum molestiae, quasi iste sapiente quo itaque illo. Sit id saepe ipsum neque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam dolorem molestias natus asperiores. Minima officiis quibusdam, soluta debitis numquam! Eligendi alias, quae omnis quasi suscipit a delectus impedit quo veniam.</td>
-                                                <td>2017-12-03</td>
-                                            </tr>
-                                            <tr>
-                                                <td>华峰国际有限公司非洲分公司</td>
-                                                <td>15555555555</td>
-                                                <td>123456@gmail.com</td>
-                                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ullam quae ad, laborum iusto blanditiis labore animi vitae voluptate, veniam nam quod deleniti, error placeat consequuntur! Dolore, error quae tempore! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia sint illo tempora, numquam distinctio, delectus. Ut consectetur cupiditate tempora vel possimus asperiores iure suscipit id, quisquam, ex, eveniet accusantium consequuntur.</td>
-                                                <td>2017-11-23</td>
-                                            </tr>
+                                            <c:if test="${empty useStoreList}">
+                                                <tr>
+                                                    <td colspan="5" align="center"><b>没有该类型厂商</b></td>
+                                                </tr>
+                                            </c:if>
+                                            <c:if test="${useStoreList!=null}">
+                                                <c:forEach items="${useStoreList}" var="useStore">
+                                                    <tr>
+                                                        <td hidden="hidden"><c:out value="${useStore.storeId}"/></td>
+                                                        <td><c:out value="${useStore.storeName}"/></td>
+                                                        <td><c:out value="${useStore.phone}"/></td>
+                                                        <td><c:out value="${useStore.email}"/></td>
+                                                        <td><c:out value="${useStore.detailInfo}"/></td>
+                                                        <td><c:out value="${useStore.registTime}"/></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <button type="button" class="btn btn-danger">撤销厂商资格</button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message">发送消息</button>
+                                    <button type="button" class="btn btn-danger" id="cancel">撤销厂商资格</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message" id="handleNews">发送消息</button>
                                 </div>
                                 <div id="useStore-page" style="float: right"></div>
                             </div>
@@ -249,6 +255,10 @@
     <!-- page script -->
     <script src="../../../resources/layui.js"></script>
     <script type="text/javascript">
+        var input='${input}';
+        var pages=${pages};
+        var portPath = "<%=portPath%>";
+        var currentPage = 1;
         $(function(){
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
@@ -256,11 +266,77 @@
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'useStore-page'
-                    ,count: 50 //数据总数，从服务端得到
-                    ,limit: 10
+                    ,count: 2*pages //数据总数，从服务端得到
+                    ,limit: 2
                     ,theme: '#3c8dbc'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            currentPage = obj.curr;
+                            var href=portPath+"admin/useStore.do?";
+                            if(input=='none'){
+                                href+='currentPage='+currentPage;
+                                changePage(href);
+                            }
+                            else{
+                                href+='input='+input;
+                                href +='&currentPage='+currentPage;
+                                changePage(href);
+                            }
+                        }
+                    }
                 });
             });
+
+            function changePage(href) {
+                $.ajax({
+                    url :href,
+                    type : "get",
+                    dataType : "json",
+                    async:true,
+                    success: function(data){
+                        pages=data.pages;
+                        createUseStores(data);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                        currentPage = 1;
+                    }
+                });
+            }
+            
+            function createUseStores(data) {
+                var table=$('#useTable');
+                table.find('thead').remove();
+                table.find('tbody').remove();
+                var theadNode='<thead>' +
+                                  '<tr>' +
+                                    '<th style="width: 15%;">商户名称</th>' +
+                                    '<th style="width: 10%;">商户电话</th>' +
+                                    '<th style="width: 10%;">商户邮箱</th>' +
+                                    '<th style="width: 55%;">厂商详细信息</th>' +
+                                    '<th style="width: 10%;">注册时间</th>' +
+                                  '</tr>' +
+                               '</thead><tbody>';
+                table.append(theadNode);
+                for(var i=0;i<data.list.length;i++){
+                    var storeName=data.list[i].storeName;
+                    var phone=data.list[i].phone;
+                    var email=data.list[i].email;
+                    var detailInfo=data.list[i].detailInfo;
+                    var registerTime=data.list[i].registTime;
+                    var storeId=data.list[i].storeId;
+                    var node='<tr><td hidden="hidden">'+storeId+
+                        '</td><td>'+storeName+
+                        '</td><td>'+phone+
+                        '</td><td>'+email+
+                        '</td><td>'+detailInfo+
+                        '</td><td>'+registerTime+'</td></tr>';
+                    table.append(node);
+                }
+                table.append('</tbody>');
+                initTableCheckbox();
+            }
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -304,6 +380,33 @@
                 });
             }
             initTableCheckbox();
+
+            $('#cancel').click(function () {
+                var checked=$("tbody input:checked");
+                var cancel=[];
+                checked.each(function () {
+                    cancel.push($(this).parent().parent().children("td").eq(1).html());
+                })
+                $.ajax({
+                    url :portPath +'admin/cancelStore.do',
+                    type : "get",
+                    traditional: true,
+                    data:{cancelStoreId:cancel},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/useStore.html";
+            });
+
+            $('#handleNews').click(function () {
+                var checked=$("tbody input:checked");
+                if(checked.length>1){
+                    alert("只能选择一个商店进行消息发送");
+
+                }
+            });
         });
     </script>
 </body>
