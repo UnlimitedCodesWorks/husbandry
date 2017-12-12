@@ -13,7 +13,7 @@ public interface UserConcernService {
 
     //获取客户关注的供应商
     //参数：客户id     可分页
-     PageInfo<StoreInfo> userConcernStores(Integer userId,int currentPage, int pageSize);
+     PageInfo<StoreIndex> userConcernStores(Integer userId,int currentPage, int pageSize);
 
     //判断用户是否关注了该服务
     Boolean concernServiceJudgement(ConcernServiceKey key);

@@ -31,7 +31,7 @@ public interface StoreMapper {
 
     StoreSimple selectStoreSimpleByStoreId(Integer storeId);
 
-    List<StoreInfo> getAllUserConcernStores(Integer userId);
+    List<StoreIndex> getAllUserConcernStores(Integer userId);
 
     List<StoreIndex> getAllHotStore();
 

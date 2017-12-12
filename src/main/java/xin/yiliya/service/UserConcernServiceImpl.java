@@ -29,6 +29,12 @@ public class UserConcernServiceImpl implements UserConcernService{
     @Resource
     private ConcernStoreMapper concernStoreMapper;
 
+    @Resource
+    private EvaluateStoreService evaluateStoreService;
+
+    @Resource
+    private OrderService orderService;
+
 
     public PageInfo<OfferServiceSimple> userConcernServices(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
@@ -36,10 +42,16 @@ public class UserConcernServiceImpl implements UserConcernService{
         return new PageInfo<OfferServiceSimple>(list);
     }
 
-    public PageInfo<StoreInfo> userConcernStores(Integer userId, int currentPage, int pageSize) {
+    public PageInfo<StoreIndex> userConcernStores(Integer userId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
-        List<StoreInfo> list=storeMapper.getAllUserConcernStores(userId);
-        return new PageInfo<StoreInfo>(list);
+        List<StoreIndex> list=storeMapper.getAllUserConcernStores(userId);
+        for(StoreIndex storeIndex:list){
+            Integer storeId = storeIndex.getStoreId();
+            storeIndex.setFans(storeMapper.getFansByStoreId(storeId));
+            storeIndex.setGrade(evaluateStoreService.getGradeByStoreId(storeId));
+            storeIndex.setMarkNum(orderService.getStoreServiceFinish(storeId));
+        }
+        return new PageInfo<StoreIndex>(list);
     }
 
     public Boolean concernServiceJudgement(ConcernServiceKey key) {

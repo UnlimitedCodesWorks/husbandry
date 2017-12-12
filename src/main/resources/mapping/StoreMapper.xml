@@ -64,27 +64,6 @@
     </association>
   </resultMap>
 
-  <resultMap id="InfoConcern" type="xin.yiliya.pojo.StoreInfo">
-    <id column="storeid" jdbcType="INTEGER" property="storeid" />
-    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="detail_info" jdbcType="VARCHAR" property="detailInfo" />
-    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
-    <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
-    <association property="areas" column="area_id" javaType="xin.yiliya.pojo.Areas">
-      <id column="arid" jdbcType="INTEGER" property="arid" />
-      <result column="area" jdbcType="VARCHAR" property="area" />
-      <association property="city" column="cityid" javaType="xin.yiliya.pojo.Cities">
-        <id column="ciid" jdbcType="INTEGER" property="ciid" />
-        <result column="city" jdbcType="VARCHAR" property="city" />
-        <association property="provinces" column="provinceid" javaType="xin.yiliya.pojo.Provinces">
-          <id column="proid" jdbcType="INTEGER" property="proid" />
-          <result column="province" jdbcType="VARCHAR" property="province" />
-        </association>
-      </association>
-    </association>
-  </resultMap>
-
   <resultMap id="selectStoreSimpleByStoreId" type="xin.yiliya.pojo.StoreSimple">
     <id property="storeid" column="storeid" jdbcType="VARCHAR" />
     <result property="headImg" column="head_img" jdbcType="VARCHAR" />
@@ -108,11 +87,7 @@
     storeid, store_name,email,detail_info, head_img,
     logo_img,COUNT(*) as fans,arid,area,ciid,city,proid,province
   </sql>
-  
-  <sql id="User_Concern_Store">
-    storeid, store_name,email,detail_info, head_img,
-    logo_img,arid,area,ciid,city,proid,province
-  </sql>
+
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="InfoResultMap">
     select 
@@ -296,13 +271,19 @@
       status = #{status,jdbcType=INTEGER}
     where storeid = #{storeid,jdbcType=INTEGER}
   </update>
-
+  <resultMap id="InfoConcern" type="xin.yiliya.pojo.StoreIndex">
+    <id property="storeId" column="storeid" />
+    <result property="storeName" column="store_name" />
+    <result property="headImg" column="logo_img" />
+  </resultMap>
+  <sql id="User_Concern_Store">
+    storeid,store_name,logo_img
+  </sql>
   <select id="getAllUserConcernStores" resultMap="InfoConcern">
-    select
+    SELECT
     <include refid="User_Concern_Store" />
-    from store,areas,cities,provinces,concernstore
-    where concernstore.user_id=#{userId} and concernstore.store_id = store.storeid
-    and area_id = arid and areas.cityid = cities.cityid and cities.provinceid = provinces.provinceid
+    FROM store
+    WHERE status != 0
   </select>
   <resultMap id="getAllHotStore" type="xin.yiliya.pojo.StoreIndex">
     <id property="storeId" column="storeid" />
