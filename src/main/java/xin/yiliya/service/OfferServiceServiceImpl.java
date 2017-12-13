@@ -240,6 +240,16 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return offerServiceDetail;
     }
 
+    public Boolean increaseViewNumByServiceId(Integer serviceId) {
+        try {
+            offerServiceMapper.increaseViewNumByServiceId(serviceId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId) {
         OfferServiceTemplate offerServiceTemplate = offerServiceTemplateMapper.selectByPrimaryKey(templateId);
         offerServiceTemplate.setOfferServiceDetail(getOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));

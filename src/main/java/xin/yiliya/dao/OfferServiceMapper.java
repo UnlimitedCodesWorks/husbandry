@@ -28,6 +28,8 @@ public interface OfferServiceMapper {
 
     int updateByPrimaryKey(OfferService record);
 
+    int increaseViewNumByServiceId(Integer serviceId);
+
     String getLinkByServiceId(Integer serviceId);
 
     List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId);

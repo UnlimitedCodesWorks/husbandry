@@ -125,7 +125,7 @@
         <c:if test="${offerServiceList!=null}">
             <c:forEach var="offerService" items="${offerServiceList}">
         <ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">
-            <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">
+            <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href='<%=portPath%>service/detail/${offerService.offerServiceId}'" >
                 <img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <div class="layui-col-md4 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
@@ -427,6 +427,7 @@
             var grade;
             var serviceName = data.list[i].serviceName;
             var storeName = data.list[i].store.storeName;
+            var path = portPath+"service/detail/"+data.list[i].offerServiceId;
             if(content.length!=0){
                 serviceName=serviceName.replace(content,redContent);
                 storeName=storeName.replace(content,redContent);
@@ -443,7 +444,7 @@
                 grade = data.list[i].grade;
             }
             var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
-                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href=\''+path+'\'">' +
                 '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
@@ -481,6 +482,7 @@
             var grade;
             var serviceName = data.list[i].serviceName;
             var storeName = data.list[i].store.storeName;
+            var path = portPath+"service/detail/"+data.list[i].offerServiceId;
             if(content.length!=0){
                 serviceName=serviceName.replace(content,redContent);
                 storeName=storeName.replace(content,redContent);
@@ -497,7 +499,7 @@
                 grade = data.list[i].grade;
             }
             var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
-                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href=\''+path+'\'" >' +
                 '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
@@ -527,5 +529,6 @@
         });
 
     }
+
 </script>
 </html>

@@ -101,7 +101,7 @@
 										<img src="${service.serviceImg}" onerror="this.src='../../../resources/images/201291810101174356.jpg'">
 									</div>
     								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">${service.serviceName}</a></div>
+										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="<%=portPath%>service/detail/${service.offerServiceId}" class="service-title">${service.serviceName}</a></div>
 										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}分</c:if></div>
 									</div>
 									<div class="layui-row row-in3">
@@ -296,6 +296,7 @@
         for(var i=0;i<data.length;i++){
             var grade = data[i].grade;
             var gradeNode;
+            var href= portPath+"service/detail/"+data[i].offerServiceId;
             if(grade==0){
                 gradeNode = "未评分";
             }else {
@@ -307,7 +308,7 @@
                 '<img src="'+data[i].serviceImg+'" onerror="this.src=\'../../../resources/images/201291810101174356.jpg\'">' +
                 '</div>' +
                 '<div class="layui-row row-in2">' +
-                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">'+data[i].serviceName+'</a></div>' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="'+href+'" class="service-title">'+data[i].serviceName+'</a></div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+gradeNode+'</div>' +
                 '</div>' +
                 '<div class="layui-row row-in3">' +

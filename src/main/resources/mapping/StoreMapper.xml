@@ -67,12 +67,13 @@
   <resultMap id="selectStoreSimpleByStoreId" type="xin.yiliya.pojo.StoreSimple">
     <id property="storeid" column="storeid" jdbcType="VARCHAR" />
     <result property="headImg" column="head_img" jdbcType="VARCHAR" />
+    <result property="storeName" column="store_name" jdbcType="VARCHAR" />
     <result property="registTime" column="regist_time" jdbcType="TIMESTAMP" />
     <result property="serviceNum" column="service_num" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="selectStoreSimpleByStoreId">
-    storeid,head_img,regist_time,COUNT(*) as service_num
+    storeid,store_name,head_img,regist_time,COUNT(*) as service_num
   </sql>
   <sql id="Base_Column_List">
     storeid, regist_num, password, store_name, phone, email, area_id, detail_info, head_img, 

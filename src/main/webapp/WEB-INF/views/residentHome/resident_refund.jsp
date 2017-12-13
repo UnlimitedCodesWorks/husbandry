@@ -110,7 +110,7 @@
 											</c:if>
 										</div>
 										<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-											<button class="layui-btn">
+											<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 												<i class="iconfont">&#xe611;</i> 关注服务
 											</button>
 										</div>
@@ -128,7 +128,7 @@
 										<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">
 											<div class="layui-row row2-1 layui-col-space10">
 												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">
-													<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">${order.offerService.serviceName}</a>
+													<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}" class="layui-col-md6 layui-col-sm6 layui-col-xs12">${order.offerService.serviceName}</a>
 													<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：${order.orderNumber}</p>
 												</div>
 												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">
@@ -230,7 +230,7 @@
             }else if(data[i].status ==4){
                 line = '<p>退款状态：退款成功</p>';
             }
-
+			var href= portPath+"service/detail/"+data[i].offerService.offerserviceid;
             container.html("");
             var node = '<div class="refund-wrap">' +
                 '<hr>' +
@@ -241,7 +241,7 @@
                 line+
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +
-                '<button class="layui-btn">' +
+                '<button class="layui-btn" onclick="location.href=\''+href+'\'">' +
                 '<i class="iconfont">&#xe611;</i> 关注服务' +
                 '</button>' +
                 '</div>' +
@@ -259,7 +259,7 @@
                 '<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">' +
                 '<div class="layui-row row2-1 layui-col-space10">' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">' +
-                '<a href="javascrapt:" class="layui-col-md6 layui-col-sm6 layui-col-xs12">'+data[i].offerService.serviceName+'</a>' +
+                '<a href="'+href+'" class="layui-col-md6 layui-col-sm6 layui-col-xs12">'+data[i].offerService.serviceName+'</a>' +
                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：'+data[i].orderNumber+'</p>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">' +

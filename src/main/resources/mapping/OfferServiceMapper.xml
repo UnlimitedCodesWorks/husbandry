@@ -39,8 +39,9 @@
     <result property="notice" column="notice" jdbcType="LONGNVARCHAR"/>
     <result property="peoplePhone" column="people_phone" jdbcType="VARCHAR" />
     <result property="price" column="price" jdbcType="VARCHAR" />
-    <result property="kind" column="service_name" jdbcType="VARCHAR" />
+    <result property="kind" column="serkind" jdbcType="VARCHAR" />
     <result property="serid" column="serid" jdbcType="INTEGER" />
+    <result property="viewNum" column="view_num" jdbcType="INTEGER" />
     <collection property="serviceSpecial"  column="offerserviceid" ofType="xin.yiliya.pojo.ServiceSpecial" >
       <id property="spid" column="spid" />
       <result property="specialImg" column="special_img" />
@@ -54,8 +55,8 @@
     people_phone, introduce, notice, status
   </sql>
   <sql id="offerServiceDetail">
-    offerserviceid,service_name,service_img,price,publish_time,people_phone,introduce,notice,
-    service_name,special_img,store_id,spid,serid
+    offerserviceid,service_name,service_img,price,publish_time,people_phone,introduce,notice,view_num,
+    serkind,special_img,store_id,spid,serid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -81,6 +82,7 @@
     WHERE
     offerserviceid = #{serviceId,jdbcType=INTEGER} and offerservice.kind = service.serid
     and offerservice.offerserviceid = servicespecial.offerservice_id
+    and offerservice.status = 1
   </select>
   <resultMap id="getCitiesByServiceId" type="xin.yiliya.pojo.Cities">
     <id property="ciid" column="ciid" />
@@ -97,7 +99,9 @@
     ciid,cityid,city,cities.provinceid as cprovinceid,provinces.proid,provinces.provinceid,provinces.province
     FROM servicespots,cities,provinces
     WHERE
-    servicespots.city_id = cities.ciid and servicespots.offerservice_id = #{serviceId}
+    servicespots.city_id = cities.ciid
+    AND cities.provinceid = provinces.provinceid
+    AND servicespots.offerservice_id = #{serviceId,jdbcType=INTEGER}
   </select>
   <select id="getLinkByServiceId" resultType="string" parameterType="java.lang.Integer">
     SELECT
@@ -254,6 +258,11 @@
       notice = #{notice,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where offerserviceid = #{offerserviceid,jdbcType=INTEGER}
+  </update>
+  <update id="increaseViewNumByServiceId" parameterType="java.lang.Integer">
+    UPDATE offerservice
+    set view_num = view_num+1
+    WHERE offerserviceid = #{serviceId,jdbcType=INTEGER}
   </update>
 
   <select id="getAllUserConcernServices" resultMap="BaseMap">

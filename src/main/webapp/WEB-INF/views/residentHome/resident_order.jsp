@@ -113,7 +113,7 @@
 															<p>订单状态：已完成</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-														<button class="layui-btn">
+														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 															<i class="iconfont">&#xe611;</i> 关注服务
 														</button>
 													</div>
@@ -126,7 +126,7 @@
 													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
 														<div class="layui-row row2-1 layui-col-space10">
 															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-																<a href="javascrapt:">${order.offerService.serviceName}</a>
+																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
 																<p>￥${order.offerService.price}</p>
@@ -175,7 +175,7 @@
 														<p>订单状态：待派遣</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-														<button class="layui-btn">
+														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 															<i class="iconfont">&#xe611;</i> 关注服务
 														</button>
 													</div>
@@ -188,7 +188,7 @@
 													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
 														<div class="layui-row row2-1 layui-col-space10">
 															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-																<a href="javascrapt:">${order.offerService.serviceName}</a>
+																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
 																<p>￥${order.offerService.price}</p>
@@ -242,7 +242,7 @@
 														<p>订单状态：待确认</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-														<button class="layui-btn">
+														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 															<i class="iconfont">&#xe611;</i> 关注服务
 														</button>
 													</div>
@@ -255,7 +255,7 @@
 													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
 														<div class="layui-row row2-1 layui-col-space10">
 															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-																<a href="javascrapt:">${order.offerService.serviceName}</a>
+																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
 																<p>￥${order.offerService.price}</p>
@@ -312,7 +312,7 @@
 														<p>订单状态：已确认</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
-														<button class="layui-btn">
+														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 															<i class="iconfont">&#xe611;</i> 关注服务
 														</button>
 													</div>
@@ -325,7 +325,7 @@
 													<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">
 														<div class="layui-row row2-1 layui-col-space10">
 															<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">
-																<a href="javascrapt:">${order.offerService.serviceName}</a>
+																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
 																<p>￥${order.offerService.price}</p>
@@ -576,7 +576,6 @@
 
 
     });
-
     function createOrders(data) {
         for(var i=0;i<data.list.length;i++){
             var status = data.list[i].status;
@@ -584,6 +583,7 @@
             var line;
             var container;
             var buttons;
+            var href= portPath+"service/detail/"+data.list[i].offerService.offerserviceid;
             switch (status){
 				case 5:
 				    container = $(".layui-container:eq(1)");
@@ -664,7 +664,7 @@
                 line +
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">' +
-                '<button class="layui-btn">' +
+                '<button class="layui-btn" onclick="location.href=\''+href+'\'" >' +
                 '<i class="iconfont">&#xe611;</i> 关注服务' +
                 '</button>' +
                 '</div>' +
@@ -677,7 +677,7 @@
                 '<div class="layui-col-md7 layui-col-sm8 layui-col-xs12">' +
                 '<div class="layui-row row2-1 layui-col-space10">' +
                 '<div class="layui-col-md8 layui-col-sm8 layui-col-xs12 service-wrap">' +
-                '<a href="javascrapt:">'+data.list[i].offerService.serviceName+'</a>' +
+                '<a href="'+href+'">'+data.list[i].offerService.serviceName+'</a>' +
                 '</div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">' +
                 '<p>￥'+data.list[i].offerService.price+'</p>' +

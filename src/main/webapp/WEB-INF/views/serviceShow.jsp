@@ -1,3 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,23 +28,23 @@
 		<nav>
 			<ul class="layui-nav">
 				<li class="layui-nav-item ">
-					<a href="javascript:;" title="Husbandry">Husbandry</a>
+					<a href="<%=portPath%>index.html" title="Husbandry" >Husbandry</a>
 				</li>
 				<template v-if="isLogin">
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="注册">注册</a>
+						<a href="<%=portPath%>register.html" title="注册">注册</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="登录">登录</a>
+						<a href="<%=portPath%>login/user.html" title="登录">登录</a>
 					</li>
 				</template>
- 				<li class="layui-nav-item" v-else>
-    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">何华峰无耻老贼</a>
-    				<dl class="layui-nav-child">
-      					<dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
-      					<dd><a href="javascript:;">登出</a></dd>
-    				</dl>
- 	 			</li>
+				<li class="layui-nav-item" v-else>
+					<a href="<%=portPath%>userResident/information.html"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<dl class="layui-nav-child">
+						<dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
+					</dl>
+				</li>
 			</ul>
 		</nav>
 	</header>
@@ -52,26 +61,26 @@
 							<div class="row-in2 layui-row layui-col-space15">
 								<!-- 服务名 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<h2>华峰国际有限公司保姆服务</h2>
+									<h2>${service.serviceName}</h2>
 								</div>
 								<!-- 发布时间&浏览数 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
 									<div class="row-in-in layui-row layui-col-space10">
 										<div class="layui-col-md6 layui-col-sm12 layui-col-xs4">
-											<p>2017-12-08发布</p>
+											<p><fmt:formatDate value="${service.publishTime}" pattern="yyyy-MM-dd" />发布</p>
 										</div>
 										<div class="layui-col-md6 layui-col-sm12 layui-col-xs8">
-											<p>111次浏览</p>
+											<p>${service.viewNum}次浏览</p>
 										</div>
 									</div>
 								</div>
 								<!-- 服务类别 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p><i class="iconfont">&#xe603;</i> 类&emsp;&emsp;别：<span>保姆服务</span></p>
+									<p><i class="iconfont">&#xe603;</i> 类&emsp;&emsp;别：<span>${service.kind}服务</span></p>
 								</div>
 								<!-- 负责人 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p><i class="iconfont">&#xe645;</i> 负&ensp;责&ensp;人：<span>何华峰</span></p>
+									<p><i class="iconfont">&#xe645;</i> 负&ensp;责&ensp;人 电 话：<span>${service.peoplePhone}</span></p>
 								</div>
 							</div>
 						</div>
@@ -80,21 +89,25 @@
 							<div class="row-in3 layui-row layui-col-space15">
 								<!-- 价格 -->
 								<div class="price-wrap layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p class="price"><i class="iconfont">&#xe616;</i> 2000元/小时</p>
+									<p class="price"><i class="iconfont">&#xe616;</i> ${service.price}元/小时</p>
 								</div>
 								<!-- 价位判断 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p class="warning"><i class="iconfont">&#xe6a4;</i> 该价格高于市场价</p>
-									<p class="normal"><i class="iconfont">&#xe626;</i> 该价格正常</p>
+									<c:if test="${service.priceJudgement}">
+										<p class="warning"><i class="iconfont">&#xe6a4;</i> 该价格高于市场价</p>
+									</c:if>
+									<c:if test="${!service.priceJudgement}">
+										<p class="normal"><i class="iconfont">&#xe626;</i> 该价格正常</p>
+									</c:if>
 								</div>
 								<!-- 评分 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
 									<el-rate
-    									v-model="value"
+    									v-model="${service.grade/2}"
   										disabled
 				  						show-score
 				  						text-color="#ff9900"
-				  						score-template="9.0"
+				  						score-template="<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}</c:if>"
 				  						:colors="['#99A9BF', '#F7BA2A', '#FF9900']">
 				  					</el-rate>
 								</div>
@@ -102,10 +115,10 @@
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
 									<div class="row-in-in layui-row layui-col-space10">
 										<div class="layui-col-md4 layui-col-sm12 layui-col-xs4">
-											<p>评价数：<span>99</span></p>
+											<p>评价数：<span>${service.markNum}</span></p>
 										</div>
 										<div class="layui-col-md8 layui-col-sm12 layui-col-xs8">
-											<p>已完成的订单数：<span>100</span></p>
+											<p>已完成的订单数：<span>${service.orderNum}</span></p>
 										</div>
 									</div>
 								</div>
@@ -139,27 +152,33 @@
 						<!-- LOGO -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
 							<div class="img-wrap">
-								<img src="../../resources/images/家居9.jpg">
+								<img src="${service.store.headImg}" onerror="this.src='../../resources/images/家居9.jpg'">
 							</div>
 						</div>
 						<!-- 服务商名 -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-							<a href="javascrapt:" title="华峰国际有限公司"><h3 style="text-align: center;font-weight: bold;">华峰国际有限公司</h3></a>
+							<a href="javascrapt:" title="${service.store.storeName}"><h3 style="text-align: center;font-weight: bold;">${service.store.storeName}</h3></a>
 						</div>
 						<!-- 注册时间 -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-							<p><i class="iconfont">&#xe6a9;</i> 注册于：<span>2017-11-30</span></p>
+							<p><i class="iconfont">&#xe6a9;</i> 注册于：<span><fmt:formatDate value="${service.store.registTime}" pattern="yyyy-MM-dd" /></span></p>
 						</div>
 						<!-- 已服务次数 -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-							<p><i class="iconfont">&#xe69a;</i> 已服务：<span>111</span>次</p>
+							<p><i class="iconfont">&#xe69a;</i> 服务数量：<span>${service.store.serviceNum}</span>个</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<hr style="margin-top: 30px;margin-bottom: 20px;">
 			<div class="layui-container">
-				<p class="area"><i class="iconfont">&#xe6a3;</i> 服务区域：<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem earum ratione velit, ea quasi, odit fugit voluptatem sapiente dicta officia culpa! Molestias nihil, error velit molestiae at deleniti inventore totam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat expedita possimus quo labore sed laborum asperiores, unde molestiae illum laboriosam, praesentium dolorum magni voluptatem minus deserunt fugit omnis, aut?</span></p>
+				<p class="area"><i class="iconfont">&#xe6a3;</i> 服务区域：
+					<c:if test="${service.cities!=null}">
+					<c:forEach var="city" items="${service.cities}">
+					<span>${city.provinces.province} ${city.city}</span>
+					</c:forEach>
+					</c:if>
+				</p>
 			</div>
 		</div>
 		<!-- 详细信息&用户评价 -->
@@ -176,27 +195,23 @@
 							<!-- 服务介绍 -->
     						<div class="introduce box">
     							<h3><i class="iconfont">&#xe60e;</i>服务介绍</h3>
-    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error perspiciatis aliquid voluptatem velit, eos accusantium. Voluptas animi, harum architecto enim minus quis dolores saepe rem fugit, dicta, atque id officiis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, sequi, sit. Vero voluptates, cumque nihil quam modi doloribus ratione adipisci sint qui quae ut distinctio. Laudantium veniam neque quae saepe.</p>
+    							<p>${service.introduce}</p>
     						</div>
     						<!-- 服务特色 -->
     						<div class="characteristic box">
     							<h3><i class="iconfont">&#xe6c2;</i>服务特色</h3>
-    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, voluptas numquam libero voluptatibus dolorem non saepe maiores ipsa vitae veniam fuga reprehenderit unde eveniet aspernatur ut sunt illo! Tempora, earum.</p>
     							<div class="layui-row layui-col-space10 layui-fuild">
-    								<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
-  									<div class="layui-col-md4"><img src="../../resources/images/家居1.jpg"></div>
-  									<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
-    							</div>
-    							<div class="layui-row layui-col-space10 layui-fuild">
-    								<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
-  									<div class="layui-col-md4"><img src="../../resources/images/家居1.jpg"></div>
-  									<div class="layui-col-md4"><img src="../../resources/images/家居9.jpg"></div>
+									<c:if test="${service.serviceSpecial!=null}">
+										<c:forEach var="serviceImg" items="${service.serviceSpecial}">
+											<div class="layui-col-md4"><img src="${serviceImg.specialImg}" onerror="this.src='../../resources/images/家居9.jpg'"></div>
+										</c:forEach>
+									</c:if>
     							</div>
     						</div>
     						<!-- 注意事项 -->
     						<div class="notice box">
     							<h3><i class="iconfont">&#xe629;</i>注意事项</h3>
-    							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolore maiores ducimus doloribus, fugiat quae corporis iste non, odit, aliquid dicta maxime quo expedita minima voluptate nulla! Illo, consequatur ab!</p>
+    							<p>${service.notice}</p>
     						</div>
     					</div>
     				</div>

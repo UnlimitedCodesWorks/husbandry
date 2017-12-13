@@ -11,6 +11,8 @@ public class StoreSimple {
 
     private String headImg;
 
+    private String storeName;
+
     public Integer getStoreid() {
         return storeid;
     }
@@ -41,5 +43,13 @@ public class StoreSimple {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

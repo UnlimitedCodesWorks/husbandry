@@ -38,6 +38,8 @@ public class OfferServiceDetail {
 
     private Integer orderNum;
 
+    private Integer viewNum;
+
     private Boolean priceJudgement;
 
     private Boolean ReviewQualification;
@@ -192,5 +194,13 @@ public class OfferServiceDetail {
 
     public void setReviewQualification(Boolean reviewQualification) {
         ReviewQualification = reviewQualification;
+    }
+
+    public Integer getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
     }
 }
