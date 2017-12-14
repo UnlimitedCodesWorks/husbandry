@@ -128,14 +128,21 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="padding-top: 25px;">
 							<div class="row-in4 layui-row layui-col-space10">
 								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
-									<button class="layui-btn layui-btn-primary">
+									<button class="layui-btn layui-btn-primary" onclick="location.href='<%=portPath%>serviceForm/view.html?kind=${service.serid}&serviceId=${service.offerserviceid}'">
 									<i class="iconfont">&#xe6c9;</i> 预约
 									</button>
 								</div>
-								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
-									<button class="layui-btn">
-									<i class="iconfont">&#xe611;</i> 关注服务
-									</button>
+								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12" id="concern-container">
+									<c:if test="${!ifConcern}">
+										<button class="layui-btn" onclick="concernService()">
+											<i class="iconfont">&#xe611;</i> 关注服务
+										</button>
+									</c:if>
+									<c:if test="${ifConcern}">
+										<button class="layui-btn" onclick="unconcernService()" >
+											<i class="iconfont">&#xe611;</i> 取消关注
+										</button>
+									</c:if>
 								</div>
 								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
 									<button class="layui-btn layui-btn-danger">
@@ -226,21 +233,29 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</form>
    						<hr>
    						<div class="layui-fluid" style="padding: 20px;background: #efefef;">
+							<c:if test="${ifComment}">
    							<form class="layui-form" id="comment" action="" style="position: relative;cursor: text;">
    								<p style="font-size: 18px;color: #a8a8a8;position: absolute;left: 10px;top: 5px;"><i class="iconfont">&#xe62b;</i> 发表评论</p>
       							<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
   							</form>
+							</c:if>
+							<c:if test="${!ifComment}">
+								<form class="layui-form" id="comment1" action="" style="position: relative;cursor: text;">
+									<p style="font-size: 18px;color: #a8a8a8;position: absolute;left: 10px;top: 5px;"><i class="iconfont">&#xe62b;</i> 你已经评价过或未预约该服务，故无法发表评论</p>
+									<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
+								</form>
+							</c:if>
    						</div>
-   						<div class="layui-fliud comment-wrap">
+   						<div class="layui-fliud comment-wrap" id="commet-container">
    							<!-- 评论 -->
-   							<hr>
                             <c:if test="${evaluates!=null}">
                                 <c:forEach var="evaluate" items="${evaluates}">
+									<hr>
    							<div class="row layui-row layui-col-space10">
    								<!-- 主评人头像 -->
    								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
    									<div class="head-wrap">
-   										<a href="<%=portPath%>userResident/information.html"> <img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
+   										<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"> <img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
    									</div>
    								</div>
    								<!-- 主容器 -->
@@ -248,36 +263,31 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<!-- 主评人内容 -->
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
-   											<a href="<%=portPath%>userResident/information.html"><h4>${evaluate.user.userName}</h4></a>
-   											<a href="javascrapt:">删除评论</a>
-   											<el-rate
-    											v-model="${evaluate.grade/2}"
-  												disabled
-				  								show-score
-				  								text-color="#ff9900"
-				  								score-template="${evaluate.grade}"
-				  								:colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-				  								style="float: right;">
+   											<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"><h4>${evaluate.user.userName}</h4></a>
+											<c:set var="userId" value="${user.userid}" />
+											<c:set var="replyId" value="${evaluate.user.userId}" />
+   											<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteEvaluate(${evaluate.evaluateserviceid})">删除评论</a></c:if>
+   											<el-rate v-model="${evaluate.grade/2}" disabled show-score text-color="#ff9900" score-template="${evaluate.grade}" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" style="float: right;">
 				  							</el-rate>
    										</div>
    										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">${evaluate.content}</div>
    										<div class="layui-col-md12 layui-col-sm12">
    											<p><fmt:formatDate value="${evaluate.time}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
    											<span class="layui-breadcrumb" lay-separator="|">
-  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (${evaluate.praise})</a>
-  												<a href="javascrapt:" class="reply">回复</a>
+  												<a href="javascript:void(0);" onclick="support(${evaluate.evaluateserviceid},${evaluate.praise},this)" class="good"><i class="iconfont">&#xe60a;</i> (${evaluate.praise})</a>
+  												<a href="javascript:void(0);" onclick="reply(${evaluate.evaluateserviceid})" class="reply">回复</a>
 											</span>
    										</div>
    									</div>
    									<!-- 回复 -->
-   									<hr>
                                     <c:if test="${evaluate.eserviceUsers!=null}">
                                         <c:forEach var="eserviceEvaluate" items="${evaluate.eserviceUsers}">
+											<hr>
    									<div class="row-in2 layui-row layui-col-space10">
    										<!-- 回复人头像 -->
    										<div class="layui-col-md1 layui-col-sm2">
    											<div class="head-wrap-sub">
-   												<img src="${eserviceEvaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
+   												<a href="<%=portPath%>userResident/information/${eserviceEvaluate.user.userId}"> <img src="${eserviceEvaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
    											</div>
    										</div>
    										<!-- 容器 -->
@@ -285,8 +295,10 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    											<!-- 回复人内容 -->
    											<div class="row-in-in layui-row layui-col-space10">
    												<div class="layui-col-md6 layui-col-sm6">
-   													<a href="javascrapt:"><h4>${eserviceEvaluate.user.userName}</h4></a>
-   													<a href="javascrapt:">删除评论</a>
+   													<a href="<%=portPath%>userResident/information/${eserviceEvaluate.user.userId}"><h4>${eserviceEvaluate.user.userName}</h4></a>
+													<c:set var="userId" value="${user.userid}" />
+													<c:set var="replyId" value="${eserviceEvaluate.user.userId}" />
+													<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteReply(${eserviceEvaluate.eserviceuserid})">删除评论</a></c:if>
    												</div>
    												<div class="layui-col-md12 layui-col-sm12">${eserviceEvaluate.content}</div>
    												<div class="layui-col-md12 layui-col-sm12">
@@ -295,8 +307,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    											</div>
    										</div>
    									</div>
-   									<div class="reply-page"></div>
                                         </c:forEach>
+										<div class="reply-page" data-pages="${evaluate.eservicePages}" data-evaluateId="${evaluate.evaluateserviceid}"></div>
                                     </c:if>
    								</div>
    							</div>
@@ -328,7 +340,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<form class="layui-form" action="">
   				<div class="layui-form-item layui-form-text">
       				<textarea placeholder="请输入您想要发表的评论" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
-      				<p>至少输入X个字</p>
+      				<p>至多输入300个字</p>
       				<button type="button" class="layui-btn" lay-submit id="comment-submit">提交</button>
   				</div>
   			</form>
@@ -341,9 +353,9 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<hr>
 			<form class="layui-form" action="">
   				<div class="layui-form-item layui-form-text">
-      				<textarea placeholder="请输入您想要回复的内容" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
+      				<textarea placeholder="请输入您想要回复的内容" required lay-verify="required" class="layui-textarea" rows="6" id="reply-content"></textarea>
       				<p>至多输入300个字</p>
-      				<button class="layui-btn" lay-submit id="reply-submit">回复</button>
+      				<button class="layui-btn" lay-submit id="reply-submit" >回复</button>
   				</div>
   			</form>
 		</div>
@@ -353,5 +365,365 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var evaluatePages = "${evaluatePages}";
     var pageSize = "${pageSize}";
 	var sonPageSize = "${sonPageSize}";
+	var portPath = '<%=portPath%>';
+    var userId = "${user.userid}";
+    var serviceId = "${service.offerserviceid}";
+    var schema = true;
+
+	function support(evaluateId,praise,e) {
+        $.ajax({
+            type: "POST",
+            url: portPath+"service/support.do",
+            data: {
+                evaluateId:evaluateId
+            },
+            dataType: "json",
+            success: function(data){
+                praise++;
+				if(data){
+				    $(e).html('<i class="iconfont">&#xe60a;</i> ('+praise+')');
+				}
+				$(e).removeAttr("onclick");
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    }
+
+    function reply(evaluateId) {
+		$("#reply-submit").attr("data-evaluateId",evaluateId);
+        if($(window).width()>=768) {
+            layerWidth = '50%';
+        }
+        else {
+            layerWidth = '80%';
+        }
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '回复',
+                area: layerWidth,
+                anim: 2,
+                content: $('#reply-modal')
+            });
+        });
+    }
+
+    $("#reply-submit").click(function () {
+		var value = $(this).attr("data-evaluateId");
+		var content = $("#reply-content").val();
+		if(content.length!=0){
+            layui.use('layer', function() {
+                var layer = layui.layer;
+            $.ajax({
+                type: "POST",
+                url: portPath+"service/replyEvaluate.do",
+                data: {
+                    eserviceId:value,
+					userId:${user.userid},
+					content:content
+                },
+                dataType: "json",
+                success: function(data){
+                    layer.msg("回复成功",{
+                        time: 1000
+                    });
+                    setTimeout("location.replace(location.href)",1000);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+			});
+		}
+    });
+
+	function concernService () {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要关注该服务吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"service/concernService.do",
+                    data: {
+                        serviceId:serviceId,
+                        userId:userId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("关注成功",{
+                                time: 1000
+                            });
+                            var node ='<button class="layui-btn" onclick="unconcernService()">' +
+                                '<i class="iconfont">&#xe611;</i> 取消关注' +
+                                '</button>';
+                            $("#concern-container").html(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+
+   function unconcernService() {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要取消关注该服务吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"service/unConcernService.do",
+                    data: {
+                        serviceId:serviceId,
+                        userId:userId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("取消关注成功",{
+                                time: 1000
+                            });
+                            var node ='<button class="layui-btn" onclick="concernService()">' +
+                                '<i class="iconfont">&#xe611;</i> 关注服务' +
+                                '</button>';
+                            $("#concern-container").html(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+	function deleteEvaluate(evaluateId) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要删除该评论吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"service/deleteEvaluate.do",
+                    data: {
+                        evaluateId:evaluateId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("删除成功",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+    function deleteReply(replyId) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要删除该评论吗？', {
+                btn: ['确定', '关闭'] //按钮d
+            }, function () {
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"service/deleteReply.do",
+                    data: {
+                        replyId:replyId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("删除成功",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+
+    function createEvaluates(data) {
+	    var container = $("#commet-container");
+	    container.html("");
+		for(var i=0;i<data.length;i++){
+		    var userHref = portPath+"userResident/information/"+data[i].user.userId;
+		    var replyId = data[i].user.userId;
+		    var evaluateId = data[i].evaluateserviceid;
+		    var deleteNode="";
+		    if(userId ==replyId){
+		        deleteNode = '<a href="javascript:void(0)" onclick="deleteEvaluate('+evaluateId+')">删除评论</a>';
+            }
+		    var node = '<hr>' +
+                    '<div class="row layui-row layui-col-space10">' +
+                    '<!-- 主评人头像 -->' +
+                    '<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">' +
+                    '<div class="head-wrap">' +
+                    '<a href="'+userHref+'"> <img src="'+data[i].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                    '</div>' +
+                    '</div>' +
+                    '<!-- 主容器 -->' +
+                    '<div class="layui-col-md10 layui-col-sm10">' +
+                    '<!-- 主评人内容 -->' +
+                    '<div class="row-in1 layui-row layui-col-space10">' +
+                    '<div class="layui-col-md12 layui-col-sm12">' +
+                    '<a href="'+userHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
+                    deleteNode+'<el-rate v-model="'+(data[i].grade/2)+'" disabled show-score text-color="#ff9900" score-template="'+data[i].grade+'" :colors="[\'#99A9BF\', \'#F7BA2A\', \'#FF9900\']" style="float: right;"> </el-rate>'+
+                    '</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">'+data[i].content+'</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12">' +
+                    '<p>'+data[i].time+'</p>' +
+                    '<span class="layui-breadcrumb" lay-separator="|"  >' +
+                    '<a href="javascript:void(0);" onclick="support('+data[i].evaluateserviceid+','+data[i].praise+',this)" class="good"><i class="iconfont">&#xe60a;</i> ('+data[i].praise+')</a>' +
+                    '<a href="javascript:void(0);" onclick="reply('+data[i].evaluateserviceid+')" class="reply">回复</a>' +
+                    '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<!-- 回复 -->' ;
+		    for(var j=0;j<data[i].eserviceUsers.length;j++){
+                var euserHref = portPath+"userResident/information/"+data[i].eserviceUsers[j].user.userId;
+                var ereplyId = data[i].eserviceUsers[j].user.userId;
+                var edeleteNode="";
+                if(userId==ereplyId){
+                    edeleteNode = '<a href="javascript:void(0)" onclick="deleteReply('+data[i].eserviceUsers[j].eserviceuserid+')">删除评论</a>';
+				}
+		        node+=
+                    '<hr>' +
+                    '<div class="row-in2 layui-row layui-col-space10">' +
+                    '<!-- 回复人头像 -->' +
+                    '<div class="layui-col-md1 layui-col-sm2">' +
+                    '<div class="head-wrap-sub">' +
+                    '<a href="'+euserHref+'"> <img src="'+data[i].eserviceUsers[j].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                    '</div>' +
+                    '</div>' +
+                    '<!-- 容器 -->' +
+                    '<div class="layui-col-md11 layui-col-sm10">' +
+                    '<!-- 回复人内容 -->' +
+                    '<div class="row-in-in layui-row layui-col-space10">' +
+                    '<div class="layui-col-md6 layui-col-sm6">' +
+                    ' <a href="'+euserHref+'"><h4>'+data[i].eserviceUsers[j].user.userName+'</h4></a>' +
+                   	edeleteNode +
+                    '</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12">'+data[i].eserviceUsers[j].content+'</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12">' +
+                    '<p>'+data[i].eserviceUsers[j].time+'</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' ;
+
+			}
+			node+='<div class="reply-page" data-pages="'+data[i].eservicePages+'" data-evaluateId="'+data[i].evaluateserviceid+'"></div>'+'</div>' +
+                '</div>';
+		    container.append(node);
+		}
+        layui.use('element', function(){
+            //实例化element
+            var element = layui.element;
+            //初始化动态元素
+            element.init();
+        });
+        layui.use('laypage', function() {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            $('.reply-page').each(function () {
+                var node = $(this);
+                var container = node.prev();
+                var pages = $(this).attr("data-pages");
+                var evaluateId = $(this).attr("data-evaluateId");
+                laypage.render({
+                    elem: node //注意，这里的 test1 是 ID，不用加 # 号
+                    ,count: pages*sonPageSize //数据总数，从服务端得到
+                    ,limit: sonPageSize
+                    ,theme: 'reply'
+                    ,container:container
+                    ,evaluateId:evaluateId
+                    ,jump: function(obj, first){
+                        //首次不执行
+                        if(!first){
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"service/getAllReplyByEvaluateId.do",
+                                data: {
+                                    evaluateId:obj.evaluateId,
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createReplys(data,obj.container);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    function createReplys(data,container) {
+	    container.html("");
+		for(var i=0;i<data.length;i++){
+            var euserHref = portPath+"userResident/information/"+data[i].user.userId;
+            var ereplyId = data[i].user.userId;
+            var edeleteNode="";
+            if(userId==ereplyId){
+                edeleteNode = '<a href="javascript:void(0)" onclick="deleteReply('+data[i].eserviceuserid+')">删除评论</a>';
+            }
+            var node=
+                '<div class="row-in2 layui-row layui-col-space10">' +
+                '<!-- 回复人头像 -->' +
+                '<div class="layui-col-md1 layui-col-sm2">' +
+                '<div class="head-wrap-sub">' +
+                '<a href="'+euserHref+'"> <img src="'+data[i].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                '</div>' +
+                '</div>' +
+                '<!-- 容器 -->' +
+                '<div class="layui-col-md11 layui-col-sm10">' +
+                '<!-- 回复人内容 -->' +
+                '<div class="row-in-in layui-row layui-col-space10">' +
+                '<div class="layui-col-md6 layui-col-sm6">' +
+                ' <a href="'+euserHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
+                edeleteNode +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12">'+data[i].content+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12">' +
+                '<p>'+data[i].time+'</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' ;
+            container.append(node);
+		}
+    }
 </script>
 </html>

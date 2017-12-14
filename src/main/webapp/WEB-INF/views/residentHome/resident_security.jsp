@@ -76,7 +76,7 @@
     			<a href="<%=portPath%>userResident/information/${user.userid}"><li><i class="iconfont">&#xe64d;</i> 我的信息</li></a>
     			<li class="layui-this"><i class="iconfont">&#xe643;</i> 账号安全</li>
     			<a href="<%=portPath%>userResident/order.html"><li><i class="iconfont">&#xe6c1;</i> 我的订单</li></a>
-    			<a href="<%=portPath%>userResident/focus.html"><li><i class="iconfont">&#xe611;</i> 我关注的</li></a>
+    			<a href="<%=portPath%>userResident/focus/${user.userid}"><li><i class="iconfont">&#xe611;</i> 我关注的</li></a>
     			<a href="<%=portPath%>userResident/refund.html"><li><i class="iconfont">&#xe614;</i> 退款详情</li></a>
   			</ul>
   			<div class="layui-tab-content">

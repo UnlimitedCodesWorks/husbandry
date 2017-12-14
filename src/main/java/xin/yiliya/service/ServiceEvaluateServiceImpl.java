@@ -44,6 +44,7 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
             evaluateServiceMapper.insertSelective(evaluateService);
             return evaluateService.getEvaluateserviceid();
         }catch (Exception e){
+            e.printStackTrace();
             return 0;
         }
     }
@@ -72,6 +73,7 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
             PageInfo<EserviceUser> eserviceUsers = eserviceUserService.getAllReplyByEvaluateId(reply.getEvaluateserviceid(),1,sonPageSize);
             reply.setEserviceUsers(eserviceUsers.getList());
             reply.setEservicePages(eserviceUsers.getPages());
+            reply.setOrderNum(orderMapper.getOrderNum(serviceId,reply.getUser().getUserId()));
         }
         return new PageInfo<EvaluateService>(list);
     }
