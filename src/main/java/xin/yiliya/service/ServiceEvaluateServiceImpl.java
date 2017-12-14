@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import xin.yiliya.dao.EserviceUserMapper;
 import xin.yiliya.dao.EvaluateServiceMapper;
 import xin.yiliya.dao.OrderMapper;
+import xin.yiliya.pojo.EserviceUser;
 import xin.yiliya.pojo.EvaluateService;
 import xin.yiliya.pojo.ServiceEvalutePerDay;
 import xin.yiliya.pojo.ServiceEvalutePerMonth;
@@ -68,7 +69,9 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
         }
         List<EvaluateService> list = evaluateServiceMapper.getAllEvaluateByServiceId(serviceId);
         for(EvaluateService reply:list){
-            reply.setEserviceUsers(eserviceUserService.getAllReplyByEvaluateId(reply.getEvaluateserviceid(),1,sonPageSize).getList());
+            PageInfo<EserviceUser> eserviceUsers = eserviceUserService.getAllReplyByEvaluateId(reply.getEvaluateserviceid(),1,sonPageSize);
+            reply.setEserviceUsers(eserviceUsers.getList());
+            reply.setEservicePages(eserviceUsers.getPages());
         }
         return new PageInfo<EvaluateService>(list);
     }

@@ -234,11 +234,13 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    						<div class="layui-fliud comment-wrap">
    							<!-- 评论 -->
    							<hr>
+                            <c:if test="${evaluates!=null}">
+                                <c:forEach var="evaluate" items="${evaluates}">
    							<div class="row layui-row layui-col-space10">
    								<!-- 主评人头像 -->
    								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
    									<div class="head-wrap">
-   										<img src="http://t.cn/RCzsdCq">
+   										<img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
    									</div>
    								</div>
    								<!-- 主容器 -->
@@ -246,34 +248,36 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<!-- 主评人内容 -->
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
-   											<h4>何华峰</h4>
+   											<h4>${evaluate.user.userName}</h4>
    											<a href="javascrapt:">删除评论</a>
    											<el-rate
-    											v-model="3.0"
+    											v-model="${evaluate.grade/2}"
   												disabled
 				  								show-score
 				  								text-color="#ff9900"
-				  								score-template="6.0"
+				  								score-template="${evaluate.grade}"
 				  								:colors="['#99A9BF', '#F7BA2A', '#FF9900']"
 				  								style="float: right;">
 				  							</el-rate>
    										</div>
-   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi praesentium numquam facilis laboriosam consectetur officia eligendi pariatur rerum, provident ad sit iure cupiditate quisquam est esse cum magni? Fuga, optio.</div>
+   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">${evaluate.content}</div>
    										<div class="layui-col-md12 layui-col-sm12">
-   											<p>2017-12-12</p>
+   											<p><fmt:formatDate value="${evaluate.time}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
    											<span class="layui-breadcrumb" lay-separator="|">
-  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (60)</a>
+  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (${evaluate.praise})</a>
   												<a href="javascrapt:" class="reply">回复</a>
 											</span>
    										</div>
    									</div>
    									<!-- 回复 -->
    									<hr>
+                                    <c:if test="${evaluate.eserviceUsers!=null}">
+                                        <c:forEach var="eserviceEvaluate" items="${evaluate.eserviceUsers}">
    									<div class="row-in2 layui-row layui-col-space10">
    										<!-- 回复人头像 -->
    										<div class="layui-col-md1 layui-col-sm2">
    											<div class="head-wrap-sub">
-   												<img src="http://t.cn/RCzsdCq">
+   												<img src="${eserviceEvaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
    											</div>
    										</div>
    										<!-- 容器 -->
@@ -281,20 +285,24 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    											<!-- 回复人内容 -->
    											<div class="row-in-in layui-row layui-col-space10">
    												<div class="layui-col-md6 layui-col-sm6">
-   													<h4>洪欣</h4>
+   													<h4>${eserviceEvaluate.user.userName}</h4>
    													<a href="javascrapt:">删除评论</a>
    												</div>
-   												<div class="layui-col-md12 layui-col-sm12">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur temporibus quidem ab cumque est nihil debitis, perferendis quis expedita amet nulla quae sapiente explicabo obcaecati dolores. Delectus, optio maiores minus.</div>
+   												<div class="layui-col-md12 layui-col-sm12">${eserviceEvaluate.content}</div>
    												<div class="layui-col-md12 layui-col-sm12">
-   													<p>2017-12-12</p>
+   													<p><fmt:formatDate value="${eserviceEvaluate.time}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
    												</div>
    											</div>
    										</div>
    									</div>
    									<div class="reply-page"></div>
+                                        </c:forEach>
+                                    </c:if>
    								</div>
    							</div>
-   							<div id="comment-page"></div>
+                                </c:forEach>
+                            </c:if>
+                            <div id="comment-page"></div>
    						</div>
    					</div>
   				</div>
@@ -332,11 +340,16 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<form class="layui-form" action="">
   				<div class="layui-form-item layui-form-text">
       				<textarea placeholder="请输入您想要回复的内容" required lay-verify="required" class="layui-textarea" rows="6"></textarea>
-      				<p>至少输入X个字</p>
+      				<p>至多输入300个字</p>
       				<button class="layui-btn" lay-submit id="reply-submit">回复</button>
   				</div>
   			</form>
 		</div>
 	</div>
 </body>
+<script>
+    var evaluatePages = "${evaluatePages}";
+    var pageSize = "${pageSize}";
+	var sonPageSize = "${sonPageSize}";
+</script>
 </html>

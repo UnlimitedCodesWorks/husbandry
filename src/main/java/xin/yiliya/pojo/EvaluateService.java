@@ -8,6 +8,8 @@ public class EvaluateService {
 
     private UserEvaluate user;
 
+    private List<EserviceUser> eserviceUsers;
+
     private Integer serviceId;
 
     private String content;
@@ -19,6 +21,8 @@ public class EvaluateService {
     private float grade;
 
     private Integer userId;
+
+    private Integer eservicePages;
 
     public Integer getUserId() {
         return userId;
@@ -36,8 +40,6 @@ public class EvaluateService {
     public void setGrade(float grade) {
         this.grade = grade;
     }
-
-    private List<EserviceUser> eserviceUsers;
 
     public List<EserviceUser> getEserviceUsers() {
         return eserviceUsers;
@@ -93,5 +95,13 @@ public class EvaluateService {
 
     public void setPraise(Integer praise) {
         this.praise = praise;
+    }
+
+    public Integer getEservicePages() {
+        return eservicePages;
+    }
+
+    public void setEservicePages(Integer eservicePages) {
+        this.eservicePages = eservicePages;
     }
 }

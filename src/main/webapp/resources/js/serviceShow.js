@@ -50,12 +50,10 @@ jQuery(document).ready(function($) {
 
     laypage.render({
       elem: 'comment-page' //注意，这里的 test1 是 ID，不用加 # 号
-      ,count: 40 //数据总数，从服务端得到
-      ,limit: 8
+      ,count: evaluatePages*pageSize //数据总数，从服务端得到
+      ,limit: pageSize
       ,jump: function(obj, first){
         //obj包含了当前分页的所有参数，比如：
-        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-        console.log(obj.limit); //得到每页显示的条数
         //首次不执行
         if(!first){
           //do something
