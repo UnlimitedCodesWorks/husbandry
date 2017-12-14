@@ -248,7 +248,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<!-- 主评人内容 -->
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
-   											<h4>${evaluate.user.userName}</h4>
+   											<a href="javascrapt:"><h4>${evaluate.user.userName}</h4></a>
    											<a href="javascrapt:">删除评论</a>
    											<el-rate
     											v-model="${evaluate.grade/2}"
@@ -285,7 +285,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    											<!-- 回复人内容 -->
    											<div class="row-in-in layui-row layui-col-space10">
    												<div class="layui-col-md6 layui-col-sm6">
-   													<h4>${eserviceEvaluate.user.userName}</h4>
+   													<a href="javascrapt:"><h4>${eserviceEvaluate.user.userName}</h4></a>
    													<a href="javascrapt:">删除评论</a>
    												</div>
    												<div class="layui-col-md12 layui-col-sm12">${eserviceEvaluate.content}</div>
@@ -302,8 +302,10 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    							</div>
                                 </c:forEach>
                             </c:if>
-                            <div id="comment-page"></div>
    						</div>
+						<div class="layui-fulid" style="height: 180px;">
+							<div id="comment-page"></div>
+						</div>
    					</div>
   				</div>
 			</div>
