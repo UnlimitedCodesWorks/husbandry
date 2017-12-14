@@ -223,7 +223,7 @@
 								<!-- 性别 -->
 								<div class="layui-form-item">
 									<label class="layui-form-label">性别：</label>
-									<div class="layui-input-block">
+									<div class="layui-input-block" style="line-height: 35px">
 										${user.sex}
 									</div>
 								</div>

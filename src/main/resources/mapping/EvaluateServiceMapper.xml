@@ -61,9 +61,9 @@
     </select>
     <select id="ReviewQualification" resultType="int">
       SELECT COUNT(*)
-      FROM order
+      FROM `order`
       WHERE service_id = #{serviceId,jdbcType=INTEGER} AND user_id = #{userId,jdbcType=INTEGER}
-      AND status = 2;
+      AND `status` = 2;
     </select>
     <insert id="insert" parameterType="xin.yiliya.pojo.EvaluateService">
     insert into evaluateservice (evaluateserviceid, user_id, service_id, 

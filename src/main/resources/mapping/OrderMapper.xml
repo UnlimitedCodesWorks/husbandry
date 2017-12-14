@@ -311,6 +311,12 @@
         FROM cancel
         WHERE cancelid = #{cancelId,jdbcType=INTEGER}
     </select>
+    <select id="getOrderNum" resultType="string">
+        SELECT
+        order_number
+        FROM `order`
+        WHERE service_id = #{serviceId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=INTEGER}
+    </select>
 
     <update id="updateOrder" parameterType="xin.yiliya.pojo.Order">
         update `order`
@@ -340,8 +346,8 @@
         where orderid = #{orderid,jdbcType=INTEGER}
     </update>
     <update id="updateOrderDone">
-        UPDATE order
-        SET status = 5
+        UPDATE `order`
+        SET `status` = 5
         WHERE service_id = #{serviceId,jdbcType=INTEGER} AND user_id = #{userId,jdbcType=INTEGER}
     </update>
 
