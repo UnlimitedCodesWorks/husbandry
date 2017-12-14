@@ -36,11 +36,21 @@ public class UserResidentController extends BaseController {
     @Resource
     private UserConcernService userConcernService;
 
-    @RequestMapping(value = "/information.html",method = RequestMethod.GET)
-    public String information(Model model){
+    @RequestMapping(value = "/information/{userId}",method = RequestMethod.GET)
+    public String information(@PathVariable("userId") Integer hrefUserId,Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getUserid());
-        model.addAttribute("user",newUser);
+        Integer userId = user.getUserid();
+        User newUser = userService.getUserInfo(hrefUserId);
+        Boolean ifCommon;
+        ifCommon = hrefUserId.equals(userId);
+        model.addAttribute("ifCommon",ifCommon);
+        if(ifCommon){
+            model.addAttribute("oldUser",newUser);
+            model.addAttribute("user",newUser);
+        }else {
+            model.addAttribute("oldUser",userService.getUserInfo(userId));
+            model.addAttribute("user",newUser);
+        }
         model.addAttribute("updateUser",new UpdateUser());
         model.addAttribute("provinces",regionService.getAllProvinces());
         String provinceId = newUser.getCities().getProvinces().getProvinceId();
@@ -85,20 +95,29 @@ public class UserResidentController extends BaseController {
         return "residentHome/resident_order";
     }
 
-    @RequestMapping(value = "/focus.html",method = RequestMethod.GET)
-    public String focus(Model model){
+    @RequestMapping(value = "/focus/{userId}",method = RequestMethod.GET)
+    public String focus(@PathVariable("userId") Integer hrefUserId,Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getUserid());
         Integer userId = user.getUserid();
+        User newUser = userService.getUserInfo(hrefUserId);
+        Boolean ifCommon;
+        ifCommon = hrefUserId.equals(userId);
+        model.addAttribute("ifCommon",ifCommon);
+        if(ifCommon){
+            model.addAttribute("oldUser",newUser);
+            model.addAttribute("user",newUser);
+        }else {
+            model.addAttribute("oldUser",userService.getUserInfo(userId));
+            model.addAttribute("user",newUser);
+        }
         int pageSize =12;
-        PageInfo<StoreIndex> concernedStores = userConcernService.userConcernStores(userId,1,pageSize);
+        PageInfo<StoreIndex> concernedStores = userConcernService.userConcernStores(hrefUserId,1,pageSize);
         model.addAttribute("concernedStores",concernedStores.getList());
         model.addAttribute("concernedStorePages",concernedStores.getPages());
-        PageInfo<OfferServiceSimple> concernedServices = userConcernService.userConcernServices(userId,1,pageSize);
+        PageInfo<OfferServiceSimple> concernedServices = userConcernService.userConcernServices(hrefUserId,1,pageSize);
         model.addAttribute("concernedServices",concernedServices.getList());
         model.addAttribute("concernedServicePages",concernedServices.getPages());
         model.addAttribute("pageSize",pageSize);
-        model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_focus";
     }

@@ -42,9 +42,9 @@
 					</li>
 				</template>
 				<li class="layui-nav-item" v-else>
-					<a href="<%=portPath%>userResident/information.html"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<a href="<%=portPath%>userResident/information/${oldUser.userid}"><img src="${oldUser.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${oldUser.userName}</a>
 					<dl class="layui-nav-child">
-						<dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>userResident/information/${oldUser.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
 				</li>
@@ -65,18 +65,26 @@
 				<div class="layui-col-md2 layui-col-sm4 layui-col-xs4">
 					<span class="head-wrap">
 						<img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
-						<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
+						<c:if test="${ifCommon}">
+							<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
+						</c:if>
 					</span>
 				</div>
 			</div>
 		</div>
 		<div class="layui-tab layui-tab-brief">
   			<ul class="layui-tab-title">
-    			<li class="layui-this"><i class="iconfont">&#xe64d;</i> 我的信息</li>
-    			<a href="<%=portPath%>userResident/security.html"><li><i class="iconfont">&#xe643;</i> 账号安全</li></a>
-    			<a href="<%=portPath%>userResident/order.html"><li><i class="iconfont">&#xe6c1;</i> 我的订单</li></a>
-    			<a href="<%=portPath%>userResident/focus.html"><li><i class="iconfont">&#xe611;</i> 我关注的</li></a>
-    			<a href="<%=portPath%>userResident/refund.html"><li><i class="iconfont">&#xe614;</i> 退款详情</li></a>
+				<c:if test="${ifCommon}">
+					<li class="layui-this"><i class="iconfont">&#xe64d;</i> 我的信息</li>
+					<a href="<%=portPath%>userResident/security.html"><li><i class="iconfont">&#xe643;</i> 账号安全</li></a>
+					<a href="<%=portPath%>userResident/order.html"><li><i class="iconfont">&#xe6c1;</i> 我的订单</li></a>
+					<a href="<%=portPath%>userResident/focus/${user.userid}"><li><i class="iconfont">&#xe611;</i> 我关注的</li></a>
+					<a href="<%=portPath%>userResident/refund.html"><li><i class="iconfont">&#xe614;</i> 退款详情</li></a>
+				</c:if>
+    			<c:if test="${!ifCommon}">
+					<li class="layui-this"><i class="iconfont">&#xe64d;</i> 他的信息</li>
+					<a href="<%=portPath%>userResident/focus/${user.userid}"><li><i class="iconfont">&#xe611;</i> 他关注的</li></a>
+				</c:if>
   			</ul>
   			<div class="layui-tab-content">
   				<!-- 我的信息 -->
@@ -84,6 +92,7 @@
     				<h3><i class="iconfont title">&#xe60d;</i> 个人资料</h3>
     				<hr class="layui-bg-green">
     				<div class="layui-container">
+						<c:if test="${ifCommon}">
     					<f:form  class="layui-form" modelAttribute="updateUser"  action="<%=formPath%>" method="post">
     						<!-- 昵称 -->
     						<div class="layui-form-item">
@@ -104,7 +113,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">登记号：</label>
 	    							<div class="layui-input-block">
-	      								<f:input path="registNum" required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled="disabled" />
+	      								<input name="registNum" required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled />
 	    							</div>
 	    						</div>
     						</div>
@@ -177,6 +186,90 @@
     							</div>
   							</div>
     					</f:form>
+						</c:if>
+						<c:if test="${!ifCommon}">
+								<!-- 昵称 -->
+								<div class="layui-form-item">
+									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+										<label class="layui-form-label">昵称：</label>
+										<div class="layui-input-block">
+											<input name="userName" required="required" disabled  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
+										</div>
+									</div>
+									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+										<div class="layui-input-block">
+											<p class="name-log">注：昵称不能用标点符号格式</p>
+										</div>
+									</div>
+								</div>
+								<!-- 登记号 -->
+								<div class="layui-form-item">
+									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+										<label class="layui-form-label">登记号：</label>
+										<div class="layui-input-block">
+											<input name="registNum"  required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled />
+										</div>
+									</div>
+								</div>
+								<!-- 我的签名 -->
+								<div class="layui-form-item layui-form-text">
+									<div class="layui-col-md8 layui-col-sm8 layui-col-xs12">
+										<label class="layui-form-label">我的签名：</label>
+										<div class="layui-input-block">
+											<textarea  name="introduce" disabled  placeholder="请输入内容" class="layui-textarea" required="required" lay-verify="required" style="resize:none;"   ><c:if test="${user.introduce!='暂无简介'}">${user.introduce}</c:if></textarea>
+										</div>
+									</div>
+								</div>
+								<!-- 性别 -->
+								<div class="layui-form-item">
+									<label class="layui-form-label">性别：</label>
+									<div class="layui-input-block">
+										${user.sex}
+									</div>
+								</div>
+								<!-- 出生日期 -->
+								<div class="layui-form-item">
+									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+										<label class="layui-form-label">出生日期：</label>
+										<div class="layui-input-block">
+											<input name="birth"  class="layui-input" disabled required="required" lay-verify="required" placeholder="请选择出生日期" autocomplete="off"  <c:if test="${user.birth!=null}">value="${format.format(user.birth)}"</c:if>  />
+										</div>
+									</div>
+								</div>
+								<!-- 所处社区 -->
+								<div class="layui-form-item">
+									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+										<label class="layui-form-label">所处社区：</label>
+										<div class="layui-input-block">
+											<input  name="community" required="required" disabled  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
+										</div>
+									</div>
+								</div>
+								<!-- 所在地 -->
+								<div class="layui-form-item">
+									<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+										<label class="layui-form-label">所在地：</label>
+										<div class="layui-input-block">
+											<select name="provinceId" required="required" disabled lay-verify="required"  lay-filter="province">
+												<option value="">省</option>
+												<c:set var="provinceId" value="${user.cities.provinces.provinceId}" />
+												<c:forEach var="province" items="${provinces}" >
+													<option value="${province.key}"  <c:if test="${province.key == provinceId}">selected</c:if> > ${province.value}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="layui-input-block">
+											<select name="cityId"  required="required" disabled lay-verify="required"  lay-filter="city"  >
+												<option value="">市</option>
+												<c:set var="cityId" value="${user.cities.cityId}" />
+												<c:forEach var="city" items="${cities}">
+													<option value="${city.cityId}"  <c:if test="${city.cityId == cityId}">selected</c:if> >${city.city}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+						</c:if>
     				</div>
     			</div>
     			<!-- 账号安全 -->

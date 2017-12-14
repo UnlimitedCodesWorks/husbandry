@@ -40,9 +40,9 @@
 					</li>
 				</template>
 				<li class="layui-nav-item" v-else>
-					<a href="<%=portPath%>userResident/information.html"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<a href="<%=portPath%>userResident/information/${oldUser.userid}"><img src="${oldUser.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${oldUser.userName}</a>
 					<dl class="layui-nav-child">
-						<dd><a href="<%=portPath%>userResident/information.html">个人中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>userResident/information/${oldUser.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
 				</li>
@@ -63,18 +63,26 @@
 				<div class="layui-col-md2 layui-col-sm4 layui-col-xs4">
 					<span class="head-wrap">
 						<img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
-						<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
+						<c:if test="${ifCommon}">
+							<span class="head-mask"><a href="javascrapt:">修改头像</a></span>
+						</c:if>
 					</span>
 				</div>
 			</div>
 		</div>
 		<div class="layui-tab layui-tab-brief">
   			<ul class="layui-tab-title">
-    			<a href="<%=portPath%>userResident/information.html"><li><i class="iconfont">&#xe64d;</i> 我的信息</li></a>
+				<c:if test="${ifCommon}">
+    			<a href="<%=portPath%>userResident/information/${user.userid}"><li><i class="iconfont">&#xe64d;</i> 我的信息</li></a>
     			<a href="<%=portPath%>userResident/security.html"><li><i class="iconfont">&#xe643;</i> 账号安全</li></a>
     			<a href="<%=portPath%>userResident/order.html"><li><i class="iconfont">&#xe6c1;</i> 我的订单</li></a>
     			<li class="layui-this"><i class="iconfont">&#xe611;</i> 我关注的</li>
     			<a href="<%=portPath%>userResident/refund.html"><li><i class="iconfont">&#xe614;</i> 退款详情</li></a>
+				</c:if>
+				<c:if test="${!ifCommon}">
+					<a href="<%=portPath%>userResident/information/${user.userid}"><li><i class="iconfont">&#xe64d;</i> 他的信息</li></a>
+					<li class="layui-this"><i class="iconfont">&#xe611;</i> 他关注的</li>
+				</c:if>
   			</ul>
   			<div class="layui-tab-content">
   				<!-- 我的信息 -->
