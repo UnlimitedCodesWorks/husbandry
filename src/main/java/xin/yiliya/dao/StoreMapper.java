@@ -37,4 +37,8 @@ public interface StoreMapper {
 
     Integer getFansByStoreId(Integer storeId);
 
+    String getHeadLinkByStoreId(Integer storeId);
+
+    String getLogoLinkByStoreId(Integer storeId);
+
 }

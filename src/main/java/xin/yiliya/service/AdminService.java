@@ -81,4 +81,9 @@ public interface AdminService {
     //输入商户名模糊搜索未认证的服务
     //返回:多个OfferSerivceAdmin对象，里面包含需要的各种信息
     PageInfo<OfferServiceAdmin> getUnpassServices(String input,int currentPage,int pageSize);
+
+    //服务认证通过
+    //返回是否通过的布尔值
+    Boolean passService(Integer offerServiceId);
+
 }

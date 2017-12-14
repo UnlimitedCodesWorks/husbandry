@@ -1,6 +1,5 @@
 package xin.yiliya.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.Admin;
 import xin.yiliya.pojo.OfferServiceAdmin;
+import xin.yiliya.pojo.OfferServiceDetail;
 import xin.yiliya.pojo.StoreAdmin;
 import xin.yiliya.service.AdminService;
+import xin.yiliya.service.OfferServiceService;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class AdminController {
 
     @Autowired
     HttpSession httpSession;
+
+    @Autowired
+    OfferServiceService offerServiceService;
 
     @RequestMapping(value = "/login.html",method = RequestMethod.GET)
     public String loginHTML(){
@@ -99,16 +103,39 @@ public class AdminController {
         }
     }
 
-
     @RequestMapping(value = "/scoreAdmin.html",method = RequestMethod.GET)
     public String scoreAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
             model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+            model.addAttribute("scoreStoreList",adminService.getStoresByGrade((float)10.1,1,2).getList());
+            model.addAttribute("pages",adminService.getStoresByGrade((float)10.1,1,2).getPages());
+            model.addAttribute("input","none");
             return "admin/scoreAdmin";
         }
         else{
             return "redirect:login.html";
         }
+    }
+
+    @RequestMapping(value = "/scoreAdmin.do",method = RequestMethod.GET)
+    @ResponseBody
+    public PageInfo<StoreAdmin> scoreAdminPage(@RequestParam(value = "input",required = false)String input,
+                                               @RequestParam(value = "currentPage")Integer currentPage){
+        if(input==null){
+            return adminService.getStoresByGrade((float)10.1,currentPage,2);
+        }
+        else{
+            return adminService.getStoresByGrade(Float.parseFloat(input.trim()),currentPage,2);
+        }
+    }
+
+    @RequestMapping(value = "/scoreSearch.do",method = RequestMethod.POST)
+    public String searchScore(@RequestParam(required = false)String input,Model model){
+        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+        model.addAttribute("scoreStoreList",adminService.getStoresByGrade(Float.parseFloat(input.trim()),1,2).getList());
+        model.addAttribute("pages",adminService.getStoresByGrade(Float.parseFloat(input.trim()),1,2).getPages());
+        model.addAttribute("input",input.trim());
+        return "admin/scoreAdmin";
     }
 
     @RequestMapping(value = "/serviceAdmin.html",method = RequestMethod.GET)
@@ -129,11 +156,11 @@ public class AdminController {
     @ResponseBody
     public PageInfo<OfferServiceAdmin> serviceAdminPage(@RequestParam(value = "input",required = false)String input,
                                                         @RequestParam(value = "currentPage")Integer currentPage){
-        if(input=="none"){
+        if(input==null){
             return adminService.getUnpassServices(currentPage,2);
         }
         else{
-            return adminService.getUnpassServices(input,currentPage,2);
+            return adminService.getUnpassServices(input.trim(),currentPage,2);
         }
     }
 
@@ -144,6 +171,30 @@ public class AdminController {
         model.addAttribute("pages",adminService.getUnpassServices(input.trim(),1,2).getPages());
         model.addAttribute("input",input.trim());
         return "admin/serviceAdmin";
+    }
+
+    @RequestMapping(value = "/serviceAgree.do",method = RequestMethod.GET)
+    public String agreeServiceDo(@RequestParam(value = "agreeServiceId")String offerServiceId){
+        String[] ids=offerServiceId.split("[^0123456789.]+");
+        for(String s:ids){
+            adminService.passService(Integer.parseInt(s));
+        }
+        return "redirect:serviceAdmin.html";
+    }
+
+    @RequestMapping(value="/serviceRefuse.do",method = RequestMethod.GET)
+    public String refuseServiceDo(@RequestParam(value = "refuseServiceId")String offerServiceId){
+        String[] ids=offerServiceId.split("[^0123456789.]+");
+        for(String s:ids){
+            offerServiceService.deleteService(Integer.parseInt(s));
+        }
+        return "redirect:waitStore.html";
+    }
+
+    @RequestMapping(value = "/serviceDetail.do",method = RequestMethod.POST)
+    @ResponseBody
+    public OfferServiceDetail getServiceDetailDo(Integer offerServiceId){
+        return offerServiceService.getOfferServiceDetailByServiceId(offerServiceId);
     }
 
     @RequestMapping(value = "/useStore.html",method = RequestMethod.GET)
@@ -164,11 +215,11 @@ public class AdminController {
     @ResponseBody
     public PageInfo<StoreAdmin> useStorePage(@RequestParam(value = "input",required = false)String input,
                                              @RequestParam(value = "currentPage")Integer currentPage){
-        if(input=="none"){
+        if(input==null){
             return adminService.getPassStores(currentPage,2);
         }
         else{
-            return adminService.getPassStores(input,currentPage,2);
+            return adminService.getPassStores(input.trim(),currentPage,2);
         }
     }
 
@@ -208,11 +259,11 @@ public class AdminController {
     @ResponseBody
     public PageInfo<StoreAdmin> waitStorePage(@RequestParam(value = "input",required = false)String input,
                                               @RequestParam(value = "currentPage")Integer currentPage){
-        if(input=="none"){
+        if(input==null){
             return adminService.getUnpassStores(currentPage,2);
         }
         else{
-            return adminService.getUnpassStores(input,currentPage,2);
+            return adminService.getUnpassStores(input.trim(),currentPage,2);
         }
     }
 

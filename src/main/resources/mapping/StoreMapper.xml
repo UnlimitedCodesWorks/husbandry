@@ -305,4 +305,10 @@
     FROM concernstore,store
     WHERE concernstore.store_id = store.storeid and storeid = #{storeId,jdbcType=INTEGER}
   </select>
+  <select id="getHeadLinkByStoreId" parameterType="java.lang.Integer" resultType="String">
+    SELECT head_img FROM store WHERE storeid=#{storeId}
+  </select>
+  <select id="getLogoLinkByStoreId" parameterType="java.lang.Integer" resultType="String">
+    SELECT logo_img FROM store WHERE storeid=#{storeId}
+  </select>
 </mapper>

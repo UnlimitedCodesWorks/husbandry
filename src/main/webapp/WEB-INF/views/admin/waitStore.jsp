@@ -203,8 +203,8 @@
                                 </div>
                                 <div style="display: inline-block;">
                                     <c:if test="${empty waitStoreList}">
-                                        <button type="button" class="btn btn-primary" id="agree" disabled>同意</button>
-                                        <button type="button" class="btn btn-danger" id="refuse" disabled>拒绝</button>
+                                        <button type="button" class="btn btn-primary" disabled>同意</button>
+                                        <button type="button" class="btn btn-danger" disabled>拒绝</button>
                                     </c:if>
                                     <c:if test="${!empty waitStoreList}">
                                         <button type="button" class="btn btn-primary" id="agree">同意</button>
@@ -386,7 +386,7 @@
             initTableCheckbox();
 
             function getAptitudeImg() {
-                var aptitudeDiv=$('#aptitudeDiv')
+                var aptitudeDiv=$('#aptitudeDiv');
                 $(".aptitudeBtn").click(function () {
                     var storeId=$(this).parent().parent().children("td").eq(1).html();
                     $.ajax({

@@ -52,4 +52,6 @@ public interface AdminMapper {
 
     List<OfferServiceAdmin> getUnpassServicesBySearch(@Param(value = "input") String input);
 
+    int passService(Integer offerServiceId);
+
 }

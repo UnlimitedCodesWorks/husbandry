@@ -202,8 +202,8 @@
                                 </div>
                                 <div style="display: inline-block;">
                                     <c:if test="${empty useStoreList}">
-                                        <button type="button" class="btn btn-danger" id="cancel" disabled>撤销厂商资格</button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews" disabled>发送消息</button>
+                                        <button type="button" class="btn btn-danger" disabled>撤销厂商资格</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" disabled>发送消息</button>
                                     </c:if>
                                     <c:if test="${!empty useStoreList}">
                                         <button type="button" class="btn btn-danger" id="cancel">撤销厂商资格</button>
