@@ -35,7 +35,7 @@ public class ServiceController {
     @RequestMapping(value = "/detail/{serviceId}",method = RequestMethod.GET)
     public String detail(@PathVariable("serviceId") Integer serviceId, Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         OfferServiceDetail serviceDetail = offerServiceService.getOfferServiceDetailByServiceId(serviceId);
         if(serviceDetail!=null){
             model.addAttribute("service",serviceDetail);

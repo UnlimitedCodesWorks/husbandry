@@ -19,7 +19,7 @@ public interface UserMapper {
 
     User userLogin(@Param("num") String registNum, @Param("pass") String password);
 
-    User getUserInfo(String registNum);
+    User getUserInfo(Integer userId);
 
     int selectUserIdByRegistNum(String registNum);
 }

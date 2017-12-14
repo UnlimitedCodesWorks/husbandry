@@ -19,6 +19,6 @@ public interface UserService {
     Boolean userMyInfoUpdate(UpdateUser updateUser);
 
     //获取个人信息
-    User getUserInfo(String registNum);
+    User getUserInfo(Integer userId);
 
 }

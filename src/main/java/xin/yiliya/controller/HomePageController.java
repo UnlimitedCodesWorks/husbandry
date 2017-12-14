@@ -38,7 +38,7 @@ public class HomePageController {
         Boolean loginStatus;
         loginStatus = user == null;
         if(!loginStatus){
-            User newUser = userService.getUserInfo(user.getRegistNum());
+            User newUser = userService.getUserInfo(user.getUserid());
             model.addAttribute("user",newUser);
         }
         model.addAttribute("loginStatus",loginStatus);

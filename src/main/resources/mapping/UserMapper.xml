@@ -215,11 +215,11 @@
   <select id="selectUserIdByRegistNum" resultType="java.lang.Integer">
     SELECT userid FROM user WHERE regist_num=#{registNum}
   </select>
-    <select id="getUserInfo" resultMap="BaseResultMap1" parameterType="java.lang.String">
+    <select id="getUserInfo" resultMap="BaseResultMap1" parameterType="java.lang.Integer">
     select
     `user`.*,provinces.*,cities.*
     from `user`,cities,provinces
-    WHERE regist_num=#{registNum}
+    WHERE userid = #{userId}
     and `user`.city_id=cities.ciid
     and cities.provinceid=provinces.provinceid
     </select>

@@ -18,7 +18,7 @@ public interface StoreService {
 
     //获取厂商个人信息
     //返回：厂商的个人信息Bean
-    Store getStoreInfo(String loginName);
+    Store getStoreInfo(Integer storeId);
 
     //厂商修改个人信息
     //返回：一个修改是否成功的布尔值

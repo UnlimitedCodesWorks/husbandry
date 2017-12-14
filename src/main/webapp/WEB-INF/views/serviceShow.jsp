@@ -240,7 +240,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    								<!-- 主评人头像 -->
    								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
    									<div class="head-wrap">
-   										<img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
+   										<a href="<%=portPath%>userResident/information.html"> <img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
    									</div>
    								</div>
    								<!-- 主容器 -->
@@ -248,7 +248,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<!-- 主评人内容 -->
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
-   											<a href="javascrapt:"><h4>${evaluate.user.userName}</h4></a>
+   											<a href="<%=portPath%>userResident/information.html"><h4>${evaluate.user.userName}</h4></a>
    											<a href="javascrapt:">删除评论</a>
    											<el-rate
     											v-model="${evaluate.grade/2}"

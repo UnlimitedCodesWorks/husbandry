@@ -39,7 +39,7 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/information.html",method = RequestMethod.GET)
     public String information(Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         model.addAttribute("provinces",regionService.getAllProvinces());
@@ -52,7 +52,7 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/security.html",method = RequestMethod.GET)
     public String security(Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_security";
@@ -61,7 +61,7 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/order.html",method = RequestMethod.GET)
     public String order(Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         Integer userId = user.getUserid();
         int pageSize = 10;
         PageInfo<OrderShow> allOrders = orderService.getAllUserOrder(userId,1,pageSize);
@@ -88,7 +88,7 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/focus.html",method = RequestMethod.GET)
     public String focus(Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         Integer userId = user.getUserid();
         int pageSize =12;
         PageInfo<StoreIndex> concernedStores = userConcernService.userConcernStores(userId,1,pageSize);
@@ -106,7 +106,7 @@ public class UserResidentController extends BaseController {
     @RequestMapping(value = "/refund.html",method = RequestMethod.GET)
     public String refund(Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         Integer userId = user.getUserid();
         int pageSize = 10;
         PageInfo<OrderCancel> orderCancels = orderService.getAllUserCancelOrder(userId,1,pageSize);

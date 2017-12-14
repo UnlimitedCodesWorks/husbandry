@@ -44,7 +44,7 @@ public class SearchController {
                              @RequestParam(value = "ciid",required = false) Integer ciid,
                              Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         String provinceId;
         Integer rankId = Rank.PRICE_DESC;
         if(ciid ==null){
@@ -82,7 +82,7 @@ public class SearchController {
                                               @RequestParam(value = "ciid",required = false) Integer ciid,
                                                   HttpServletResponse response) throws IOException {
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         Integer rankId = Rank.PRICE_DESC;
         if(ciid ==null){
             ciid = newUser.getCityId();

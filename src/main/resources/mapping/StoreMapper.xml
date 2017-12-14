@@ -113,11 +113,11 @@
     from store
     where regist_num = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
-  <select id="selectStoreInfo" resultMap="LoginResultMap" parameterType="java.lang.String">
+  <select id="selectStoreInfo" resultMap="LoginResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Login_Column_List" />
     from store,areas,cities,provinces
-    where regist_num = #{loginName,jdbcType=VARCHAR}
+    where storeid = #{storeId,jdbcType=INTEGER}
     and area_id = arid and areas.cityid = cities.cityid and cities.provinceid = provinces.provinceid
   </select>
   <select id="selectStoreSimpleByStoreId" resultMap="selectStoreSimpleByStoreId" parameterType="java.lang.Integer">

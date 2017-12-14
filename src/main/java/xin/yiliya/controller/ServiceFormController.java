@@ -34,7 +34,7 @@ public class ServiceFormController {
                                    @RequestParam(value = "serviceId")Integer serviceId,
                                   Model model){
         User user = (User) session.getAttribute("userBean");
-        User newUser = userService.getUserInfo(user.getRegistNum());
+        User newUser = userService.getUserInfo(user.getUserid());
         model.addAttribute("user",newUser);
         model.addAttribute("serviceForm",orderFormService.getAllOrderFormRow(kind));
         model.addAttribute("serviceName",serviceService.getSerKindBySerId(kind));
