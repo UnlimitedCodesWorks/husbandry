@@ -202,19 +202,19 @@
                                 <div style="display: inline-block;">
                                     <c:if test="${empty scoreStoreList}">
                                         <form style="display: inline-block;">
-                                            <button type="submit" class="btn btn-warning" disabled>黄色警告</button>
+                                            <button type="button" class="btn btn-warning" disabled>黄色警告</button>
                                         </form>
                                         <form style="display: inline-block;">
-                                            <button type="submit" class="btn btn-danger" disabled>红色警告</button>
+                                            <button type="button" class="btn btn-danger" disabled>红色警告</button>
                                         </form>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews" disabled>发送消息</button>
                                     </c:if>
                                     <c:if test="${!empty scoreStoreList}">
                                         <form style="display: inline-block;">
-                                            <button type="submit" class="btn btn-warning">黄色警告</button>
+                                            <button type="button" class="btn btn-warning" id="yellow">黄色警告</button>
                                         </form>
                                         <form style="display: inline-block;">
-                                            <button type="submit" class="btn btn-danger">红色警告</button>
+                                            <button type="button" class="btn btn-danger" id="red">红色警告</button>
                                         </form>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
                                     </c:if>
@@ -419,6 +419,44 @@
                 });
             }
             initTableCheckbox();
+
+            $('#yellow').click(function () {
+                var checked=$("tbody input:checked");
+                var yellow=[];
+                checked.each(function () {
+                    yellow.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'admin/storeYellow.do',
+                    type : "get",
+                    traditional: true,
+                    data:{yellowStoreId:yellow},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/scoreAdmin.html";
+            });
+
+            $('#red').click(function () {
+                var checked=$("tbody input:checked");
+                var red=[];
+                checked.each(function () {
+                    red.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'admin/storeRed.do',
+                    type : "get",
+                    traditional: true,
+                    data:{redStoreId:red},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/scoreAdmin.html";
+            });
 
             $('#handleNews').click(function () {
                 var checked=$("tbody input:checked");

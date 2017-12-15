@@ -241,10 +241,6 @@
         var portPath = "<%=portPath%>";
         var currentPage = 1;
         $(function(){
-            $('#check img').zoomify({
-                easing: "ease"
-            });
-
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
 
@@ -375,7 +371,6 @@
                         data:{offerServiceId:serviceId},
                         async: true,
                         success: function(data){
-                            console.log(data);
                             $('.modal-content').remove();
                                 var node1='<div class="modal-content">\n' +
                                     '<div class="modal-header">\n' +
@@ -448,6 +443,9 @@
                                     '</div>';
                                 var node=node1+node2+node3+node4+node5;
                                 serviceDetailInfo.append(node);
+                                $('#check img').zoomify({
+                                    easing: "ease"
+                                });
                             },
                         error: function(jqXHR){
                             alert("发生错误：" + jqXHR.status);

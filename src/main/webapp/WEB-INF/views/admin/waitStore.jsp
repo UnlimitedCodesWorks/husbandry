@@ -259,10 +259,6 @@
         var portPath = "<%=portPath%>";
         var currentPage = 1;
         $(function(){
-            $('#check img').zoomify({
-                easing: "ease"
-            });
-
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
 
@@ -400,6 +396,9 @@
                                 var node='<img src="'+data[i]+'" style="width: 100%;">';
                                 aptitudeDiv.append(node);
                             }
+                            $('#check img').zoomify({
+                                easing: "ease"
+                            });
                         },
                         error: function(jqXHR){
                             alert("发生错误：" + jqXHR.status);

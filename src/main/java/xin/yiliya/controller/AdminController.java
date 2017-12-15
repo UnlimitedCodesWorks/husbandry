@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xin.yiliya.pojo.Admin;
-import xin.yiliya.pojo.OfferServiceAdmin;
-import xin.yiliya.pojo.OfferServiceDetail;
-import xin.yiliya.pojo.StoreAdmin;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.AdminService;
 import xin.yiliya.service.OfferServiceService;
+import xin.yiliya.service.StoreNewsService;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -32,6 +30,9 @@ public class AdminController {
 
     @Autowired
     OfferServiceService offerServiceService;
+
+    @Autowired
+    StoreNewsService storeNewsService;
 
     @RequestMapping(value = "/login.html",method = RequestMethod.GET)
     public String loginHTML(){
@@ -136,6 +137,32 @@ public class AdminController {
         model.addAttribute("pages",adminService.getStoresByGrade(Float.parseFloat(input.trim()),1,2).getPages());
         model.addAttribute("input",input.trim());
         return "admin/scoreAdmin";
+    }
+
+    @RequestMapping(value = "/storeYellow.do",method = RequestMethod.GET)
+    public String yellowStoreDo(@RequestParam(value = "yellowStoreId")String storeId){
+        String[] ids=storeId.split("[^0123456789.]+");
+        for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(Integer.parseInt(s));
+            storeNews.setContent("您的店铺被系统进行黄色警告，请注意您对客户的服务态度！");
+            storeNews.setType("公告通知");
+            storeNewsService.addNew(storeNews);
+        }
+        return "redirect:scoreAdmin.html";
+    }
+
+    @RequestMapping(value = "/storeRed.do",method = RequestMethod.GET)
+    public String redStoreDo(@RequestParam(value = "redStoreId")String storeId){
+        String[] ids=storeId.split("[^0123456789.]+");
+        for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(Integer.parseInt(s));
+            storeNews.setContent("您的店铺被系统进行红色警告，请注意您对客户的服务态度！");
+            storeNews.setType("公告通知");
+            storeNewsService.addNew(storeNews);
+        }
+        return "redirect:scoreAdmin.html";
     }
 
     @RequestMapping(value = "/serviceAdmin.html",method = RequestMethod.GET)
