@@ -204,8 +204,8 @@
                                         <button type="button" class="btn btn-danger" disabled>拒绝</button>
                                     </c:if>
                                     <c:if test="${!empty serviceStoreList}">
-                                        <button type="button" class="btn btn-primary">同意</button>
-                                        <button type="button" class="btn btn-danger">拒绝</button>
+                                        <button type="button" class="btn btn-primary" id="agreeService">同意</button>
+                                        <button type="button" class="btn btn-danger" id="refuseService">拒绝</button>
                                     </c:if>
                                 </div>
                                 <div id="serviceAdmin-page" style="float: right"></div>
@@ -215,76 +215,7 @@
                 </div>
                 <!-- 模态框 -->
                 <div class="modal fade" id="check" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="checkLabel" style="font-weight: bold;">服务详情</h4>
-                            </div>
-                            <div class="modal-body">
-                                <h4>服务LOGO图</h4>
-                                <hr>
-                                <div>
-                                    <img src="../../../resources/images/backloginimg.jpg" style="width: 100%;">
-                                </div>
-                                <h4>服务基本信息</h4>
-                                <hr>
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="service-name" class="col-sm-3 control-label">服务名</label>
-                                        <div class="col-sm-8 col-xs-12 input-group">
-                                            <input class="form-control" id="service-name" value="华峰服务" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="price-name" class="col-sm-3 control-label">服务价格</label>
-                                        <div class="col-sm-8 input-group">
-                                            <input class="form-control" id="price-name" value="2000" readonly>
-                                            <span class="input-group-addon">/小时</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tel" class="col-sm-3 control-label">负责人联系方式</label>
-                                        <div class="col-sm-8 col-xs-12 input-group">
-                                            <input class="form-control" id="tel" value="88888888" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="detail" class="col-sm-3 control-label">服务详细信息</label>
-                                        <div class="col-sm-8 col-xs-12 input-group">
-                                            <textarea class="form-control" id="detail" rows="8" readonly style="resize: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, quidem odio excepturi commodi accusantium a minima unde cum eos, sapiente laudantium minus illum ab culpa nisi ducimus doloremque harum ipsa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit voluptatem iste id illum quaerat aliquid tempore accusantium, libero error, cum, cumque deleniti, dolor ex? Blanditiis illo, accusamus necessitatibus sapiente eveniet! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam omnis nemo, assumenda, architecto molestias tempore sapiente ea blanditiis at dolore reiciendis, cum nisi? Nesciunt dolore, repudiandae magnam illo officia iusto.</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务范围</label>
-                                        <div class="col-sm-8 col-xs-12 input-group">
-                                            <input class="form-control" class="range" value="浙江省杭州市" readonly/>
-                                            <input class="form-control" class="range" value="浙江省温州市" readonly/>
-                                            <input class="form-control" class="range" value="浙江省台州市" readonly/>
-                                            <input class="form-control" class="range" value="浙江省金华市" readonly/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="notice" class="col-sm-3 control-label">注意事项</label>
-                                        <div class="col-sm-8 col-xs-12 input-group">
-                                            <textarea class="form-control" id="notice" rows="8" readonly style="resize: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, quidem odio excepturi commodi accusantium a minima unde cum eos, sapiente laudantium minus illum ab culpa nisi ducimus doloremque harum ipsa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit voluptatem iste id illum quaerat aliquid tempore accusantium, libero error, cum, cumque deleniti, dolor ex? Blanditiis illo, accusamus necessitatibus sapiente eveniet! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam omnis nemo, assumenda, architecto molestias tempore sapiente ea blanditiis at dolore reiciendis, cum nisi? Nesciunt dolore, repudiandae magnam illo officia iusto.</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-12 control-label" style="text-align: center;">服务特色</label>
-                                        <div class="col-sm-12 col-xs-12" style="margin-bottom: 5px;">
-                                            <img src="../../../resources//images/鸣哥.jpg" style="width: 100%;">
-                                        </div>
-                                        <div class="col-sm-12 col-xs-12" style="margin-bottom: 5px;">
-                                            <img src="../../../resources/images/鸣哥.jpg" style="width: 100%;">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                            </div>
-                        </div>
+                    <div class="modal-dialog" role="document" id="serviceDetailInfo">
                     </div>
                 </div>
             </section>
@@ -310,10 +241,6 @@
         var portPath = "<%=portPath%>";
         var currentPage = 1;
         $(function(){
-            $('#check img').zoomify({
-                easing: "ease"
-            });
-
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
 
@@ -433,11 +360,138 @@
                 });
             }
             initTableCheckbox();
-            
-            function getServiceDetail() {
 
+            function getServiceDetail() {
+                var serviceDetailInfo=$('#serviceDetailInfo');
+                $('.serviceBtn').click(function () {
+                    var serviceId=$(this).parent().parent().children("td").eq(1).html();
+                    $.ajax({
+                        url :portPath + 'admin/serviceDetail.do',
+                        type : "post",
+                        data:{offerServiceId:serviceId},
+                        async: true,
+                        success: function(data){
+                            $('.modal-content').remove();
+                                var node1='<div class="modal-content">\n' +
+                                    '<div class="modal-header">\n' +
+                                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                                    '<h4 class="modal-title" id="checkLabel" style="font-weight:bold;">服务详情</h4>\n' +
+                                    '</div>\n' +
+                                    '<div class="modal-body">\n' +
+                                    '<h4>服务LOGO图</h4>\n' +
+                                    '<hr>\n' +
+                                    '<div>\n' +
+                                    '<img src="'+data.serviceImg+'" style="width: 100%;">\n' +
+                                    '</div>\n' +
+                                    '<h4>服务基本信息</h4>\n' +
+                                    '<hr>\n' +
+                                    '<form class="form-horizontal">\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="service-name" class="col-sm-3 control-label">服务名</label>\n' +
+                                    '<div class="col-sm-8 col-xs-12 input-group">\n' +
+                                    '<input class="form-control" id="service-name" value="'+data.serviceName+'" readonly>\n' +
+                                    '</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="price-name" class="col-sm-3 control-label">服务价格</label>\n' +
+                                    '<div class="col-sm-8 input-group">\n' +
+                                    '<input class="form-control" id="price-name" value="'+data.price+'" readonly>\n' +
+                                    '<span class="input-group-addon">/小时</span>\n' +
+                                    '</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="tel" class="col-sm-3 control-label">负责人联系方式</label>\n' +
+                                    '<div class="col-sm-8 col-xs-12 input-group">\n' +
+                                    '<input class="form-control" id="tel" value="'+data.peoplePhone+'" readonly>\n' +
+                                    '</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="detail" class="col-sm-3 control-label">服务详细信息</label>\n' +
+                                    '<div class="col-sm-8 col-xs-12 input-group">\n' +
+                                    '<textarea class="form-control" id="detail" rows="8" readonly style="resize: none;">'+data.introduce+'</textarea>\n' +
+                                    '</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="range" class="col-sm-3 control-label">服务范围</label>\n' +
+                                    '<div class="col-sm-8 col-xs-12 input-group">\n';
+                                var node2="";
+                                for(var j=0;j<data.cities.length;j++){
+                                    node2=node2+'<input class="form-control" class="range" value="'+data.cities[j].provinces.province+data.cities[j].city+'" readonly/>\n';
+                                }
+                                var node3='</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="notice" class="col-sm-3 control-label">注意事项</label>\n' +
+                                    '<div class="col-sm-8 col-xs-12 input-group">\n' +
+                                    '<textarea class="form-control" id="notice" rows="8" readonly style="resize: none;">'+data.notice+'</textarea>\n' +
+                                    '</div>\n' +
+                                    '</div>\n' +
+                                    '<div class="form-group">\n' +
+                                    '<label for="characteristic" class="col-sm-12 control-label" style="text-align: center;">服务特色</label>';
+                                var node4="";
+                                for(var k=0;k<data.serviceSpecial.length;k++){
+                                    node4=node4+'<div class="col-sm-12 col-xs-12" style="margin-bottom: 5px;">\n' +
+                                        '<img src="'+data.serviceSpecial[k].specialImg+'" style="width: 100%;">\n' +
+                                        '</div>';
+                                }
+                                var node5='</div>\n' +
+                                    '</form>\n' +
+                                    '</div>\n' +
+                                    '<div class="modal-footer">\n' +
+                                    '<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                var node=node1+node2+node3+node4+node5;
+                                serviceDetailInfo.append(node);
+                                $('#check img').zoomify({
+                                    easing: "ease"
+                                });
+                            },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
             }
             getServiceDetail();
+
+            $('#agreeService').click(function () {
+                var checked=$("tbody input:checked");
+                var agree=[];
+                checked.each(function () {
+                    agree.push($(this).parent().parent().children("td").eq(1).html());
+                })
+                $.ajax({
+                    url :portPath + 'admin/serviceAgree.do',
+                    type : "get",
+                    traditional: true,
+                    data:{agreeServiceId:agree},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/serviceAdmin.html";
+            });
+
+            $('#refuseService').click(function () {
+                var checked=$("tbody input:checked");
+                var refuse=[];
+                checked.each(function () {
+                    refuse.push($(this).parent().parent().children("td").eq(1).html());
+                })
+                $.ajax({
+                    url :portPath + 'admin/serviceRefuse.do',
+                    type : "get",
+                    traditional: true,
+                    data:{refuseServiceId:refuse},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/serviceAdmin.html";
+            });
         });
     </script>
 </body>

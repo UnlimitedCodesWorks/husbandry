@@ -186,4 +186,9 @@
     AND offerservice.status = 0
     AND store.store_name LIKE '%${input}%'
   </select>
+  <update id="passService" parameterType="Integer">
+    UPDATE offerservice
+    SET status = 1
+    WHERE offerserviceid = #{offerServiceId,jdbcType=INTEGER}
+  </update>
 </mapper>

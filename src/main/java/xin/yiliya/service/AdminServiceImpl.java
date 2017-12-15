@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.AdminMapper;
+import xin.yiliya.dao.AptitudeMapper;
 import xin.yiliya.dao.ServiceMapper;
 import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.pojo.Admin;
 import xin.yiliya.pojo.OfferServiceAdmin;
 import xin.yiliya.pojo.StoreAdmin;
+import xin.yiliya.tool.AliOssTool;
 
 import javax.annotation.Resource;;
 import java.text.SimpleDateFormat;
@@ -16,6 +18,9 @@ import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService{
+
+    @Resource
+    private AliOssTool aliOssTool;
 
     @Resource
     private AdminMapper adminMapper;
@@ -31,6 +36,9 @@ public class AdminServiceImpl implements AdminService{
 
     @Resource
     private EvaluateStoreService evaluateStoreService;
+
+    @Resource
+    private AptitudeMapper aptitudeMapper;
 
     public Admin AdminLogin(String adminNum,String adminPass){
         return adminMapper.AdminLogin(adminNum,adminPass);
@@ -100,6 +108,12 @@ public class AdminServiceImpl implements AdminService{
 
     public Boolean refuseStore(Integer storeId) {
         try{
+            aliOssTool.deleteFileByLink(storeMapper.getHeadLinkByStoreId(storeId));
+            aliOssTool.deleteFileByLink(storeMapper.getLogoLinkByStoreId(storeId));
+            List<String> links=aptitudeMapper.getAptitudeLinksByStoreId(storeId);
+            for (String link : links){
+                aliOssTool.deleteFileByLink(link);
+            }
             storeMapper.deleteByPrimaryKey(storeId);
             return true;
         }catch (Exception e){
@@ -164,5 +178,15 @@ public class AdminServiceImpl implements AdminService{
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceAdmin> list = adminMapper.getUnpassServicesBySearch(input);
         return new PageInfo<OfferServiceAdmin>(list);
+    }
+
+    public Boolean passService(Integer offerServiceId) {
+        try{
+            adminMapper.passService(offerServiceId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -158,17 +158,17 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">评分管理</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/scoreSearch.do" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <input type="text" class="form-control" autocomplete="off" placeholder="请输入您要筛选的分数">
+                                        <input type="text" name="input" class="form-control" autocomplete="off" placeholder="请输入您要筛选的分数">
                                     </div>
-                                    <button type="button" class="btn btn-primary search" data-toggle="tooltip" data-placement="right" title="将筛选出该分数以下的所有商户">筛选</button>
+                                    <button type="submit" class="btn btn-primary search" data-toggle="tooltip" data-placement="right" title="将筛选出该分数以下的所有商户">筛选</button>
                                 </form>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <!-- 表格 -->
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="scoreTable">
                                         <thead>
                                             <tr>
                                                 <th>商户名称</th>
@@ -179,31 +179,45 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="select">华峰国际有限公司</td>
-                                                <td class="select">13333333333</td>
-                                                <td class="select">888888@gmail.com</td>
-                                                <td class="select">8.7分</td>
-                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="select">华峰国际有限公司非洲分公司</td>
-                                                <td class="select">15555555555</td>
-                                                <td class="select">123456@gmail.com</td>
-                                                <td class="select">9.5分</td>
-                                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
-                                            </tr>
+                                            <c:if test="${empty scoreStoreList}">
+                                                <tr>
+                                                    <td colspan="5" align="center"><b>没有该类型厂商</b></td>
+                                                </tr>
+                                            </c:if>
+                                            <c:if test="${scoreStoreList!=null}">
+                                                <c:forEach var="scoreStore" items="${scoreStoreList}">
+                                                    <tr>
+                                                        <td hidden="hidden"><c:out value="${scoreStore.storeId}"/></td>
+                                                        <td class="select"><c:out value="${scoreStore.storeName}"/></td>
+                                                        <td class="select"><c:out value="${scoreStore.phone}"/></td>
+                                                        <td class="select"><c:out value="${scoreStore.email}"/></td>
+                                                        <td class="select"><c:out value="${scoreStore.grade}"/></td>
+                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <form style="display: inline-block;">
-                                        <button type="submit" class="btn btn-warning">黄色警告</button>
-                                    </form>
-                                    <form style="display: inline-block;">
-                                        <button type="submit" class="btn btn-danger">红色警告</button>
-                                    </form>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
+                                    <c:if test="${empty scoreStoreList}">
+                                        <form style="display: inline-block;">
+                                            <button type="button" class="btn btn-warning" disabled>黄色警告</button>
+                                        </form>
+                                        <form style="display: inline-block;">
+                                            <button type="button" class="btn btn-danger" disabled>红色警告</button>
+                                        </form>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews" disabled>发送消息</button>
+                                    </c:if>
+                                    <c:if test="${!empty scoreStoreList}">
+                                        <form style="display: inline-block;">
+                                            <button type="button" class="btn btn-warning" id="yellow">黄色警告</button>
+                                        </form>
+                                        <form style="display: inline-block;">
+                                            <button type="button" class="btn btn-danger" id="red">红色警告</button>
+                                        </form>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
+                                    </c:if>
                                 </div>
                                 <div id="scoreAdmin-page" style="float: right"></div>
                             </div>
@@ -305,9 +319,62 @@
                     ,count: pages*2 //数据总数，从服务端得到
                     ,limit: 2
                     ,theme: '#3c8dbc'
-
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            currentPage = obj.curr;
+                            var href=portPath+"admin/scoreAdmin.do?";
+                            if(input=='none'){
+                                href+='currentPage='+currentPage;
+                                changePage(href);
+                            }
+                            else{
+                                href+='input='+input;
+                                href +='&currentPage='+currentPage;
+                                changePage(href);
+                            }
+                        }
+                    }
                 });
             });
+
+            function changePage(href) {
+                $.ajax({
+                    url :href,
+                    type : "get",
+                    dataType : "json",
+                    async:true,
+                    success: function(data){
+                        pages=data.pages;
+                        createScoreStores(data);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                        currentPage = 1;
+                    }
+                });
+            }
+
+            function createScoreStores(data) {
+                var table=$('#scoreTable');
+                table.find('thead').remove();
+                table.find('tbody').remove();
+                var theadNode='<thead><tr><th>商户名称</th><th>商户电话</th><th>商户邮箱</th><th>商户评分</th><th>服务评分详情</th></tr></thead><tbody>';
+                table.append(theadNode);
+                for(var i=0;i<data.list.length;i++){
+                    var storeId=data.list[i].storeId;
+                    var storeName=data.list[i].storeName;
+                    var phone=data.list[i].phone;
+                    var email=data.list[i].email;
+                    var grade=data.list[i].grade;
+                    var node='<tr><td hidden="hidden">'+storeId+'</td><td class="select">'+storeName+'</td>' +
+                        '<td class="select">'+phone+'</td><td class="select">'+email+'</td><td class="select">'+grade+'</td>' +
+                        '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td></tr>';
+                    table.append(node);
+                }
+                table.append('</tbody>');
+                initTableCheckbox();
+            }
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -352,6 +419,44 @@
                 });
             }
             initTableCheckbox();
+
+            $('#yellow').click(function () {
+                var checked=$("tbody input:checked");
+                var yellow=[];
+                checked.each(function () {
+                    yellow.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'admin/storeYellow.do',
+                    type : "get",
+                    traditional: true,
+                    data:{yellowStoreId:yellow},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/scoreAdmin.html";
+            });
+
+            $('#red').click(function () {
+                var checked=$("tbody input:checked");
+                var red=[];
+                checked.each(function () {
+                    red.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'admin/storeRed.do',
+                    type : "get",
+                    traditional: true,
+                    data:{redStoreId:red},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href="/admin/scoreAdmin.html";
+            });
 
             $('#handleNews').click(function () {
                 var checked=$("tbody input:checked");

@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
+import xin.yiliya.dao.OfferServiceMapper;
 import xin.yiliya.dao.RequireMapper;
 import xin.yiliya.dao.ServicePeopleMapper;
 import xin.yiliya.exception.ImageFormatException;
@@ -63,6 +64,12 @@ public class HhfTest {
 
     @Autowired
     ServicePeopleMapper servicePeopleMapper;
+
+    @Autowired
+    OfferServiceService offerServiceService;
+
+    @Autowired
+    OfferServiceMapper offerServiceMapper;
 
     @Test
     public void test() throws IOException, ImageFormatException, InvocationTargetException, IllegalAccessException {
@@ -322,5 +329,11 @@ public class HhfTest {
 //        JSONObject myJson=JSONObject.fromObject(adminService.getRealTimeMarketPrice());
 //        System.out.print(myJson);
 
+        //获取服务的详细信息
+//        OfferServiceDetail offerServiceDetail=offerServiceService.getOfferServiceDetailByServiceId(1);
+//        System.out.print(JSON.toJSONString(offerServiceDetail,true));
+
+        //分页BUG
+//        System.out.print(JSON.toJSONString(adminService.getStoresByGrade((float)6,1,2),true));
     }
 }

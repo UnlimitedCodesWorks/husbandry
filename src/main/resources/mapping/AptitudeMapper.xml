@@ -68,4 +68,7 @@
       aptitude_img = #{aptitudeImg,jdbcType=VARCHAR}
     where aptitudeid = #{aptitudeid,jdbcType=INTEGER}
   </update>
+  <select id="getAptitudeLinksByStoreId" parameterType="java.lang.Integer" resultType="String">
+    SELECT aptitude_img FROM aptitude WHERE store_id=#{storeId}
+  </select>
 </mapper>
