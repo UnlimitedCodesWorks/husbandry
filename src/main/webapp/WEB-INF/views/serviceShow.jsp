@@ -264,7 +264,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
    											<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"><h4>${evaluate.user.userName}</h4></a>
-											<p class="order-num">订单号XXXXXXX</p>
+											<p class="order-num">订单号${evaluate.orderNum}</p>
 											<c:set var="userId" value="${user.userid}" />
 											<c:set var="replyId" value="${evaluate.user.userId}" />
    											<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteEvaluate(${evaluate.evaluateserviceid})">删除评论</a></c:if>
@@ -371,7 +371,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<hr>
 			<form class="layui-form" action="">
 				<div class="layui-form-item layui-form-text">
-					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="reply-content"></textarea>
+					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="complain-content"></textarea>
 					<p>至多输入300个字</p>
 					<button class="layui-btn" lay-submit id="complaint-submit" style="background: #FF5722;">提交</button>
 				</div>
@@ -613,7 +613,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     '<div class="row-in1 layui-row layui-col-space10">' +
                     '<div class="layui-col-md12 layui-col-sm12">' +
                     '<a href="'+userHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
-					'<p class="order-num">订单号XXXXXXX</p>' +
+					'<p class="order-num">订单号'+data[i].orderNum+'</p>' +
                     deleteNode+'<div style="float:right;">' +
                 	'<span class="raty" data-score="'+(data[i].grade/2)+'"></span>' +
                 	'<p style="color: rgb(255, 153, 0);padding-left: 5px;">'+data[i].grade.toFixed(1)+'</p>' +

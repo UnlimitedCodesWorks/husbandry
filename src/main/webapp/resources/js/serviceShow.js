@@ -203,6 +203,37 @@ jQuery(document).ready(function($) {
           });
       }
     });
+
+      $('#complaint-submit').click(function(event) {
+          var value = $(this).prevAll('textarea').val();
+          if (value.length!=0) {
+              $.ajax({
+                  type: "POST",
+                  url: portPath+"service/complainService.do",
+                  data: {
+                      serviceId:serviceId,
+                      userId:userId,
+                      reason:value
+                  },
+                  dataType: "json",
+                  success: function(data){
+                      if(data!=0){
+                          layer.msg("投诉成功",{
+                              time: 1000
+                          });
+                      }else {
+                          layer.msg("投诉失败",{
+                              time: 1000
+                          });
+                      }
+
+                  },
+                  error: function(jqXHR){
+                      alert("发生错误：" + jqXHR.status);
+                  }
+              });
+          }
+      });
   });
 
   var nav = new Vue({
