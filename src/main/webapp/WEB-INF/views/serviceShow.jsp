@@ -13,6 +13,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<script src="../../resources/js/jquery-3.2.1.min.js"></script>
+	<script src="../../resources/js/jquery.raty.min.js"></script>
 	<script src="../../resources/layui.js"></script>
 	<script src="../../resources/js/vue.js"></script>
 	<script src="../../resources/js/serviceShow.js"></script>
@@ -107,8 +108,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
   										disabled
 				  						show-score
 				  						text-color="#ff9900"
-				  						score-template="<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}</c:if>"
-				  						:colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+				  						score-template="<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}</c:if>">
 				  					</el-rate>
 								</div>
 								<!-- 评价数&交易量 -->
@@ -139,7 +139,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										</button>
 									</c:if>
 									<c:if test="${ifConcern}">
-										<button class="layui-btn" onclick="unconcernService()" >
+										<button class="layui-btn" style="background: #c2c2c2;" onclick="unconcernService()" >
 											<i class="iconfont">&#xe611;</i> 取消关注
 										</button>
 									</c:if>
@@ -267,8 +267,12 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											<c:set var="userId" value="${user.userid}" />
 											<c:set var="replyId" value="${evaluate.user.userId}" />
    											<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteEvaluate(${evaluate.evaluateserviceid})">删除评论</a></c:if>
-   											<el-rate v-model="${evaluate.grade/2}" disabled show-score text-color="#ff9900" score-template="${evaluate.grade}" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" style="float: right;">
-				  							</el-rate>
+   											<%--<el-rate v-model="${evaluate.grade/2}" disabled show-score text-color="#ff9900" score-template="${evaluate.grade}" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" style="float: right;">--%>
+				  							<%--</el-rate>--%>
+											<div style="float:right;">
+												<span class="raty" data-score="${evaluate.grade/2}"></span>
+												<p style="color: rgb(255, 153, 0);padding-left: 5px;">${evaluate.grade}</p>
+											</div>
    										</div>
    										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">${evaluate.content}</div>
    										<div class="layui-col-md12 layui-col-sm12">
@@ -358,6 +362,20 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
       				<button class="layui-btn" lay-submit id="reply-submit" >回复</button>
   				</div>
   			</form>
+		</div>
+	</div>
+	<!-- 投诉 -->
+	<div id="complaint-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="color: #FF5722;">投诉</h2>
+			<hr>
+			<form class="layui-form" action="">
+				<div class="layui-form-item layui-form-text">
+					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="reply-content"></textarea>
+					<p>至多输入300个字</p>
+					<button class="layui-btn" lay-submit id="complaint-submit" style="background: #FF5722;">提交</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
@@ -459,7 +477,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             layer.msg("关注成功",{
                                 time: 1000
                             });
-                            var node ='<button class="layui-btn" onclick="unconcernService()">' +
+                            var node ='<button class="layui-btn" style="background: #c2c2c2" onclick="unconcernService()">' +
                                 '<i class="iconfont">&#xe611;</i> 取消关注' +
                                 '</button>';
                             $("#concern-container").html(node);
@@ -595,7 +613,10 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     '<div class="row-in1 layui-row layui-col-space10">' +
                     '<div class="layui-col-md12 layui-col-sm12">' +
                     '<a href="'+userHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
-                    deleteNode+'<el-rate v-model="'+(data[i].grade/2)+'" disabled show-score text-color="#ff9900" score-template="'+data[i].grade+'" :colors="[\'#99A9BF\', \'#F7BA2A\', \'#FF9900\']" style="float: right;"> </el-rate>'+
+                    deleteNode+'<div style="float:right;">' +
+                	'<span class="raty" data-score="'+(data[i].grade/2)+'"></span>' +
+                	'<p style="color: rgb(255, 153, 0);padding-left: 5px;">'+data[i].grade.toFixed(1)+'</p>' +
+                	'</div>'+
                     '</div>' +
                     '<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">'+data[i].content+'</div>' +
                     '<div class="layui-col-md12 layui-col-sm12">' +
@@ -643,6 +664,13 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			node+='<div class="reply-page" data-pages="'+data[i].eservicePages+'" data-evaluateId="'+data[i].evaluateserviceid+'"></div>'+'</div>' +
                 '</div>';
 		    container.append(node);
+            $(".raty").raty({
+                path: '../../resources/images',
+                readOnly: true,
+                score: function() {
+                    return $(this).attr('data-score');
+                }
+            });
 		}
         layui.use('element', function(){
             //实例化element

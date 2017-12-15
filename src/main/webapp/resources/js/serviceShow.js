@@ -3,6 +3,14 @@ jQuery(document).ready(function($) {
     minHeight: ($(window).height()-110)+'px'
   });
 
+  $(".raty").raty({
+      path: '../../resources/images',
+      readOnly: true,
+      score: function() {
+          return $(this).attr('data-score');
+      }
+  });
+
   var layerWidth;
   if($(window).width()>=768) {
     layerWidth = '50%';
@@ -147,8 +155,15 @@ jQuery(document).ready(function($) {
       });
     });
 
-
-
+      $('.layui-btn-danger').click(function(event) {
+          layer.open({
+              type: 1,
+              title: '投诉',
+              area: layerWidth,
+              anim: 2,
+              content: $('#complaint-modal')
+          });
+      });
 
     $('#comment-submit').click(function(event) {
         var value = $(this).prevAll('textarea').val();
@@ -199,15 +214,6 @@ jQuery(document).ready(function($) {
 
   var rateHead = new Vue({
     el: '.wrap-head',
-    data() {
-      return {
-        value: 4.5
-      }
-    }
-  });
-
-  var rateBody = new Vue({
-    el: '.tab2',
     data() {
       return {
       }

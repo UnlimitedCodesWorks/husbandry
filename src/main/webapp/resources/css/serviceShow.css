@@ -276,6 +276,10 @@ footer p{
 	display: none;
 }
 
+#complaint-modal {
+	display: none;
+}
+
 .modal h2 {
 	color: #009688;
 	margin: 10px;
