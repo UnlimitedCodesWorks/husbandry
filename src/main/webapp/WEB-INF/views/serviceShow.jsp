@@ -264,6 +264,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
    											<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"><h4>${evaluate.user.userName}</h4></a>
+											<p class="order-num">订单号XXXXXXX</p>
 											<c:set var="userId" value="${user.userid}" />
 											<c:set var="replyId" value="${evaluate.user.userId}" />
    											<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteEvaluate(${evaluate.evaluateserviceid})">删除评论</a></c:if>
@@ -337,7 +338,6 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<el-rate
     			v-model="value"
 				text-color="#ff9900"
-				:colors="['#99A9BF', '#F7BA2A', '#FF9900']"
 				style="float: right;margin-top: 10px;">
 			</el-rate>
 			<hr>
@@ -613,6 +613,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     '<div class="row-in1 layui-row layui-col-space10">' +
                     '<div class="layui-col-md12 layui-col-sm12">' +
                     '<a href="'+userHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
+					'<p class="order-num">订单号XXXXXXX</p>' +
                     deleteNode+'<div style="float:right;">' +
                 	'<span class="raty" data-score="'+(data[i].grade/2)+'"></span>' +
                 	'<p style="color: rgb(255, 153, 0);padding-left: 5px;">'+data[i].grade.toFixed(1)+'</p>' +

@@ -167,6 +167,11 @@ nav {
 	padding-bottom: 10px;
 }
 
+.wrap-body .tab2 .order-num {
+	color: #a8a8a8;
+	padding-right: 10px;
+}
+
 .wrap-body .tab2 .row {
 	padding-top: 20px;
 }
@@ -202,7 +207,7 @@ nav {
 	font-size: 18px;
 	font-weight: bold;
 	display: inline-block;
-	padding-right: 20px;
+	padding-right: 10px;
 }
 
 .wrap-body .tab2 .row .row-in1 p {
