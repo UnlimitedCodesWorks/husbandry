@@ -223,18 +223,18 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="checkLabel" style="font-weight: bold;">发送消息</h4>
                             </div>
-                            <form>
-                                <div class="modal-body">
+                            <form action="/admin/useStoreNews.do" method="post">
+                                <div class="modal-body" id="handleBody">
                                     <div class="form-group">
                                         <label for="type">类别</label>
-                                        <select class="form-control" id="type">
+                                        <select class="form-control" id="type" name="type">
                                             <option>公告通知</option>
                                             <option>活动消息</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="index">内容</label>
-                                        <textarea class="form-control" rows="8" id="index" placeholder="请输入您要发送的消息" style="resize: none;"></textarea>
+                                        <textarea name="content" class="form-control" rows="8" id="index" placeholder="请输入您要发送的消息" style="resize: none;"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -255,23 +255,6 @@
                             </div>
                             <div class="modal-body">
                                 <p>请至少选择一个商户</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 模态框->1 -->
-                <div class="modal fade bs-example-modal-sm" id="1-notice" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">提示</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>只能选择一个商店进行消息发送</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
@@ -446,12 +429,14 @@
                 if(checked.length==0){
                     $("#0-notice").modal("show");
                 }
-                else if(checked.length>1){
-                    $("#1-notice").modal("show");
-                }
                 else{
                     $("#message").modal("show");
                 }
+                checked.each(function () {
+                    var id=$(this).parent().parent().children("td").eq(1).html();
+                    var node='<input type="text" name="storeIds" hidden="hidden" value="'+id+'"/>';
+                    $('#handleBody').append(node);
+                });
             });
         });
     </script>

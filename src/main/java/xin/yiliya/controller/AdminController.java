@@ -165,6 +165,19 @@ public class AdminController {
         return "redirect:scoreAdmin.html";
     }
 
+    @RequestMapping(value = "/scoreNews.do",method = RequestMethod.POST)
+    public String scoreStoreNewsDo(String scoreIds,String type,String content){
+        String[] ids=scoreIds.split("[^0123456789.]+");
+        for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(Integer.parseInt(s));
+            storeNews.setContent(content);
+            storeNews.setType(type);
+            storeNewsService.addNew(storeNews);
+        }
+        return "redirect:useStore.html";
+    }
+
     @RequestMapping(value = "/serviceAdmin.html",method = RequestMethod.GET)
     public String serviceAdminHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
@@ -264,6 +277,19 @@ public class AdminController {
         String[] ids=storeId.split("[^0123456789.]+");
         for(String s:ids){
             adminService.cancelStore(Integer.parseInt(s));
+        }
+        return "redirect:useStore.html";
+    }
+
+    @RequestMapping(value = "/useStoreNews.do",method = RequestMethod.POST)
+    public String useStoreNewsDo(String storeIds,String type,String content){
+        String[] ids=storeIds.split("[^0123456789.]+");
+        for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(Integer.parseInt(s));
+            storeNews.setContent(content);
+            storeNews.setType(type);
+            storeNewsService.addNew(storeNews);
         }
         return "redirect:useStore.html";
     }
