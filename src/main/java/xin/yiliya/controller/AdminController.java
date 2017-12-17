@@ -51,6 +51,31 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/pageSearch.do",method = RequestMethod.POST)
+    public String pageSearchDo(String q){
+        if(q.contains("运")||q.contains("overall")){
+            return "redirect:OperationOverview.html";
+        }
+        else if(q.contains("价")||q.contains("price")){
+            return "redirect:priceControll.html";
+        }
+        else if(q.contains("认")||q.contains("wait")){
+            return "redirect:waitStore.html";
+        }
+        else if(q.contains("操")||q.contains("use")){
+            return "redirect:useStore.html";
+        }
+        else if(q.contains("评")||q.contains("score")){
+            return "redirect:scoreAdmin.html";
+        }
+        else if(q.contains("服")||q.contains("service")){
+            return "redirect:serviceAdmin.html";
+        }
+        else{
+            return "redirect:OperationOverview.html";
+        }
+    }
+
     @RequestMapping(value = "/OperationOverview.html",method = RequestMethod.GET)
     public String OperationOverviewHTML(Model model){
         if(httpSession.getAttribute("adminBean")!=null){
@@ -226,6 +251,7 @@ public class AdminController {
     public String refuseServiceDo(@RequestParam(value = "refuseServiceId")String offerServiceId){
         String[] ids=offerServiceId.split("[^0123456789.]+");
         for(String s:ids){
+
             offerServiceService.deleteService(Integer.parseInt(s));
         }
         return "redirect:waitStore.html";

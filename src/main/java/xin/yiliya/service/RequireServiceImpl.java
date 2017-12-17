@@ -17,8 +17,8 @@ public class RequireServiceImpl implements RequireService{
     @Autowired
     RequireMapper requireMapper;
 
-    public Integer addRequireOrder(Integer userId,RequireList requireList) {
-        try {
+    public Boolean addRequireOrder(Integer userId, RequireList requireList, Require require){
+        try{
             Order order=new Order();
             order.setOrderNumber(String.valueOf(System.currentTimeMillis())+String.valueOf((int)(Math.random()*900)+100));
             Integer serviceId=requireList.getServiceId();
@@ -26,25 +26,19 @@ public class RequireServiceImpl implements RequireService{
             order.setUserId(userId);
             order.setStatus(0);
             order.setStartTime(new Date());
+            order.setEndTime(new Date());
             requireMapper.addRequireOrder(order);
-            return order.getOrderid();
-        }catch (Exception e){
-            return 0;
-        }
-    }
-
-    public Boolean addRequires(Integer orderId, RequireList requireList) {
-        try{
+            Integer orderId=order.getOrderid();
             List<Require> requires=requireList.getRequireList();
-            for(Require require:requires){
-                require.setOrderId(orderId);
-                requireMapper.addRequire(require);
-                int id=require.getRequireid();
-                List<RequireContent> contents=require.getRequireContents();
-                for(RequireContent content:contents){
-                    content.setRequireId(id);
-                    requireMapper.addContent(content);
-                }
+            List<RequireContent> contents=require.getRequireContents();
+            for(int i=0;i<requires.size();i++){
+                Require rx=requires.get(i);
+                rx.setOrderId(orderId);
+                requireMapper.addRequire(rx);
+                int requireId=rx.getRequireid();
+                RequireContent cx=contents.get(i);
+                cx.setRequireId(requireId);
+                requireMapper.addContent(cx);
             }
             return true;
         }catch (Exception e){

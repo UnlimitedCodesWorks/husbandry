@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
     String loginPath =
             request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/admin/login.do";
 %>
@@ -13,13 +14,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../../resources/css/layui.css">
     <link rel="stylesheet" href="../../../resources/css/bgmanagement_login.css">
-    <title>Bgmanagement_login</title>
+    <title>智慧社区-管理员登陆</title>
 </head>
 
 <body>
     <ul class="layui-nav layui-row layui-col-md12 layui-col-sm12 layui-col-xs12">
-        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 bgmanagement_login_webname">Husbandry</li>
-        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-xs-offset6 layui-col-sm-offset9 layui-col-md-offset10 bgmanagement_login_top">返回首页<span class="layui-icon">&#xe602;</span></li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm1 layui-col-xs3 bgmanagement_login_webname" onclick="location.href='<%=portPath%>index.html'">Husbandry</li>
+        <li class="layui-nav-item layui-col-md1 layui-col-sm2 layui-col-xs3 layui-col-xs-offset6 layui-col-sm-offset9 layui-col-md-offset10 bgmanagement_login_top" onclick="location.href='<%=portPath%>index.html'">返回首页<span class="layui-icon">&#xe602;</span></li>
     </ul>
     <div class="bgmanagement_login_l"></div>
     <div class="bgmanagement_login_bgimg"></div>

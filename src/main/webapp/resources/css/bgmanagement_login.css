@@ -27,7 +27,7 @@ body {
 }
 
 .bgmanagement_login_bgimg {
-    background-image: url("../images/backloginimg.jpg");
+    background-image: url("../images/adminLogin.jpg");
     width: 100%;
     height: 100%;
     position: fixed;

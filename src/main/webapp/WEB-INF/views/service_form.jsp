@@ -3,6 +3,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String submitPath=portPath+"serviceForm/submitRequire.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -50,32 +51,35 @@
             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_title">${serviceName}服务具体需求</div>
             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_hint">您需要填写对服务的具体需求，以便您和服务商进行更好的沟通：</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-sm-offset1 layui-col-xs10 layui-col-xs-offset1 service_form_main_qa">
-                <form class="layui-col-md12 layui-form">
-                    <input type="hidden" name="serviceId" value="${serviceId}">
-                    <c:forEach var="problem" items="${serviceForm}">
-                        <c:if test="${problem.proType=='checkbox'}" >
+                <form class="layui-col-md12 layui-form" method="post" action="<%=submitPath%>">
+                    <input type="hidden" name="serviceId" value="${serviceId}"/>
+                    <c:forEach var="problem" items="${serviceForm}" varStatus="status">
+                        <c:if test="${problem.proType=='checkbox'}">
                             <div class="layui-form-item">
                                 <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">${problem.proName}</label>
+                                <input type="text" hidden="hidden" name="requireList[${status.index}].problem" value="${problem.proName}"/>
                                 <c:forEach var="value" items="${problem.values}">
-                                    <input type="checkbox"  title="${value.content}">
+                                    <input type="checkbox" name="requireContents[${status.index}].content" value="${value.content}" title="${value.content}"/>
                                 </c:forEach>
                             </div>
                         </c:if>
                         <c:if test="${problem.proType=='radio'}" >
                             <div class="layui-form-item">
                                 <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">${problem.proName}</label>
+                                <input type="text" hidden="hidden" name="requireList[${status.index}].problem" value="${problem.proName}"/>
                                 <c:forEach var="value" items="${problem.values}">
-                                    <input name="XXX" type="radio"  value="${value.content}" title="${value.content}">
+                                    <input name="requireContents[${status.index}].content" type="radio"  value="${value.content}" title="${value.content}"/>
                                 </c:forEach>
                             </div>
                         </c:if>
                         <c:if test="${problem.proType=='select'}" >
                             <div class="layui-form-item">
                                 <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">${problem.proName}</label>
-                                <select name="city" lay-verify="required">
+                                <input type="text" hidden="hidden" name="requireList[${status.index}].problem" value="${problem.proName}"/>
+                                <select name="requireContents[${status.index}].content" lay-verify="required">
                                     <option value=""></option>
                                     <c:forEach var="value" items="${problem.values}">
-                                    <option value="${value.content}">${value.content}</option>
+                                        <option value="${value.content}">${value.content}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -83,7 +87,8 @@
                         <c:if test="${problem.proType=='textarea'}" >
                             <div class="layui-form-item layui-form-text">
                                 <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">${problem.proName}</label>
-                                <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                                <input type="text" hidden="hidden" name="requireList[${status.index}].problem" value="${problem.proName}"/>
+                                <textarea name="requireContents[${status.index}].content" placeholder="请输入内容" class="layui-textarea"></textarea>
                             </div>
                         </c:if>
                     </c:forEach>

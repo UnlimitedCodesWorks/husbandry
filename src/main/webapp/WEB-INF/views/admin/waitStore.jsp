@@ -3,6 +3,8 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String searchPath=portPath+"admin/search.do";
+    String pageSearchPath=portPath+"admin/pageSearch.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,7 +15,7 @@
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WaitStore</title>
+    <title>智慧社区-商户认证</title>
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -75,9 +77,9 @@
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <form action="#" method="get" class="sidebar-form">
+                <form action="<%=pageSearchPath%>" method="post" class="sidebar-form">
                     <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <input type="text" name="q" class="form-control" placeholder="Search..." required="required">
                     <span class="input-group-btn">
                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                         </button>
@@ -87,7 +89,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="/admin/OperationOverview.html">
+                        <a href="<%=portPath%>admin/OperationOverview.html">
                             <i class="fa fa-th"></i><span>运营总揽</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-red">new</small>
@@ -95,7 +97,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/priceControll.html">
+                        <a href="<%=portPath%>admin/priceControll.html">
                             <i class="fa fa-signal"></i><span>价格调控</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green">new</small>
@@ -111,8 +113,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="active"><a href="/admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
-                            <li><a href="/admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
+                            <li class="active"><a href="<%=portPath%>admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
+                            <li><a href="<%=portPath%>admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -124,7 +126,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
+                            <li><a href="<%=portPath%>admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -136,7 +138,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
+                            <li><a href="<%=portPath%>admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -160,7 +162,7 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">商户认证</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/search.do" method="post">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="<%=searchPath%>" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
                                         <input type="text" name="input" class="form-control" placeholder="请输入商户名" autocomplete="off"/>
                                     </div>
@@ -425,7 +427,7 @@
                         alert("发生错误：" + jqXHR.status);
                     }
                 });
-                window.location.href="/admin/waitStore.html";
+                window.location.href=portPath+"admin/waitStore.html";
             });
 
             $('#refuse').click(function () {
@@ -444,7 +446,7 @@
                         alert("发生错误：" + jqXHR.status);
                     }
                 });
-                window.location.href="/admin/waitStore.html";
+                window.location.href=portPath+"admin/waitStore.html";
             });
         });
     </script>

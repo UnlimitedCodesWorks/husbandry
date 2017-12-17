@@ -3,6 +3,9 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String useSearchPath=portPath+"admin/storeSearch.do";
+    String useNewsPath=portPath+"admin/useStoreNews.do";
+    String pageSearchPath=portPath+"admin/pageSearch.do";
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
@@ -13,7 +16,7 @@
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>UseStore</title>
+    <title>智慧社区-商户操作</title>
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -74,9 +77,9 @@
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <form action="#" method="get" class="sidebar-form">
+                <form action="<%=pageSearchPath%>" method="post" class="sidebar-form">
                     <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <input type="text" name="q" class="form-control" placeholder="Search..." required="required">
                     <span class="input-group-btn">
                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                         </button>
@@ -86,7 +89,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="/admin/OperationOverview.html">
+                        <a href="<%=portPath%>admin/OperationOverview.html">
                             <i class="fa fa-th"></i><span>运营总揽</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-red">new</small>
@@ -94,7 +97,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/priceControll.html">
+                        <a href="<%=portPath%>admin/priceControll.html">
                             <i class="fa fa-signal"></i><span>价格调控</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green">new</small>
@@ -110,8 +113,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
-                            <li class="active"><a href="/admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
+                            <li><a href="<%=portPath%>admin/waitStore.html"><i class="fa fa-circle-o"></i>商户认证</a></li>
+                            <li class="active"><a href="<%=portPath%>admin/useStore.html"><i class="fa fa-circle-o"></i>商户操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -123,7 +126,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
+                            <li><a href="<%=portPath%>admin/scoreAdmin.html"><i class="fa fa-circle-o"></i>评分管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -135,7 +138,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
+                            <li><a href="<%=portPath%>admin/serviceAdmin.html"><i class="fa fa-circle-o"></i>服务管理</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -159,7 +162,7 @@
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">商户操作</h3>
-                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="/admin/storeSearch.do" method="post">
+                                <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="<%=useSearchPath%>" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
                                         <input name="input" type="text" class="form-control" placeholder="请输入商户名" autocomplete="off">
                                     </div>
@@ -223,7 +226,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="checkLabel" style="font-weight: bold;">发送消息</h4>
                             </div>
-                            <form action="/admin/useStoreNews.do" method="post">
+                            <form action="<%=useNewsPath%>" method="post">
                                 <div class="modal-body" id="handleBody">
                                     <div class="form-group">
                                         <label for="type">类别</label>
@@ -421,7 +424,7 @@
                         alert("发生错误：" + jqXHR.status);
                     }
                 });
-                window.location.href="/admin/useStore.html";
+                window.location.href=portPath+"admin/useStore.html";
             });
 
             $('#handleNews').click(function () {

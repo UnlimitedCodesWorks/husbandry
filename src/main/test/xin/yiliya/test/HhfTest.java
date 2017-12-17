@@ -24,7 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -185,10 +187,10 @@ public class HhfTest {
 //        requireList.add(require1);
 //        requireList.add(require2);
 //        requireList.add(require3);
-//        requires.setServiceId(7);
+//        requires.setServiceId(1);
 //        requires.setRequireList(requireList);
-//        Integer integer=requireService.addRequireOrder(15,requires);
-//        System.out.print(integer);
+//        Boolean b=requireService.addRequireOrder(24,requires);
+//        System.out.print(b);
 
         //确认订单后将问题，选中的答案都插入require表
 //        Boolean b=requireService.addRequires(integer,requires);

@@ -8,6 +8,7 @@
         <result property="userId" column="user_id" />
         <result property="status" column="status" />
         <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time"/>
     </resultMap>
 
     <insert id="addRequireOrder" useGeneratedKeys="true" keyProperty="orderid" parameterType="xin.yiliya.pojo.Order">
@@ -21,9 +22,6 @@
             </if>
             <if test="serviceId != null">
                 service_id,
-            </if>
-            <if test="markserviceId != null">
-                markservice_id,
             </if>
             <if test="userId != null">
                 user_id,
@@ -47,9 +45,6 @@
             </if>
             <if test="serviceId != null">
                 #{serviceId,jdbcType=INTEGER},
-            </if>
-            <if test="markserviceId != null">
-                #{markserviceId,jdbcType=INTEGER},
             </if>
             <if test="userId != null">
                 #{userId,jdbcType=INTEGER},
