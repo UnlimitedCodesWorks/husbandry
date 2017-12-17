@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<script src="../../resources/js/jquery-3.2.1.min.js"></script>
+	<script src="../../resources/js/jquery.raty.min.js"></script>
+	<script src="../../resources/layui.js"></script>
+	<script src="../../resources/js/vue.js"></script>
+	<script src="../../resources/js/storeHome.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="../../resources/js/particles.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../resources/css/storeHome.css">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<title>智慧社区-商户中心</title>
+</head>
+<body>
+	<header>
+		<!-- 导航栏 -->
+		<nav>
+			<ul class="layui-nav">
+				<li class="layui-nav-item ">
+					<a href="javascript:;" title="Husbandry">Husbandry</a>
+				</li>
+				<template v-if="isLogin">
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="注册">注册</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;" title="登录">登录</a>
+					</li>
+				</template>
+ 				<li class="layui-nav-item" v-else>
+    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">何华峰无耻老贼</a>
+    				<dl class="layui-nav-child">
+      					<dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
+      					<dd><a href="javascript:;">登出</a></dd>
+    				</dl>
+ 	 			</li>
+			</ul>
+		</nav>
+	</header>
+	<div class="layui-container" id="wrap">
+		<!-- 头部信息 -->
+		<div class="wrap-head">
+			<hr>
+			<!-- 大logo -->
+			<div class="big-logo-wrap layui-fuild">
+				<img src="../../resources/images/家居9.jpg">
+			</div>
+			<hr>
+			<!-- 基本信息 -->
+			<div class="layui-fuild">
+				<!-- 头像&名字&评分&粉丝数&按钮组 -->
+				<div class="layui-row layui-col-space10">
+					<!-- 头像 -->
+					<div class="layui-col-md2 layui-col-sm2">
+						<div class="head-wrap">
+							<img src="http://t.cn/RCzsdCq">
+						</div>
+					</div>
+					<!-- 名字&评分&粉丝&按钮组 -->
+					<div class="layui-col-md10 layui-col-sm10">
+						<div class="row layui-row layui-col-space10">
+							<div class="layui-col-md6 layui-col-sm6">
+								<div class="row-in layui-row layui-col-space10">
+									<div class="layui-col-md12">
+										<h3>华峰国际有限公司</h3>
+									</div>
+									<div class="layui-col-md12">
+										<el-rate
+	    									v-model="value"
+	  										disabled
+					  						show-score
+					  						text-color="#ff9900"
+					  						score-template="9.0">
+				  						</el-rate>
+									</div>
+									<div class="layui-col-md12">
+										<p>粉丝数：<span>111</span></p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md6 layui-col-sm6">
+								<div class="row-in2 layui-row layui-col-space10">
+									<div class="layui-col-md4 layui-col-sm12">
+										<button class="layui-btn">
+											<i class="iconfont">&#xe611;</i> 关注
+										</button>
+										<button class="layui-btn" style="background: #c2c2c2;display: none;">
+											<i class="iconfont">&#xe611;</i> 取消关注
+										</button>
+									</div>
+									<div class="layui-col-md4 layui-col-sm12">
+										<button class="layui-btn layui-btn-danger">
+											<i class="iconfont">&#xe66e;</i> 投诉
+										</button>
+									</div>
+									<div class="layui-col-md4 layui-col-sm12">
+										<button class="layui-btn layui-btn-normal">
+											<i class="iconfont">&#xe722;</i> 后台管理
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 所在地&邮箱&类别 -->
+				<div class="layui-row layui-col-space10">
+					<div class="information-wrap layui-col-md4 layui-col-sm4">
+						<div class="information">
+							<p><i class="iconfont">&#xe62a;</i> 所在地：<span>湖南省长沙市</span></p>
+						</div>
+					</div>
+					<div class="information-wrap layui-col-md4 layui-col-sm4">
+						<div class="information">
+							<p><i class="iconfont">&#xe76a;</i> 邮箱：<span>111111111@qq.com</span></p>
+						</div>
+					</div>
+					<div class="information-wrap layui-col-md4 layui-col-sm4">
+						<div class="information">
+							<p><i class="iconfont">&#xe638;</i> 类别：<span>老牌商家</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- 详细信息 -->
+			<div class="layui-fuild">
+				<div class="layui-row">
+					<div class="layui-col-md12">
+						<p style="padding: 20px;background: rgba(168, 168, 168, 0.2);border-radius: 20px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus sunt suscipit tempore voluptates quia eaque fuga, recusandae error unde dolorum iure, dolore molestias? Aut labore praesentium amet dolorem, natus quasi.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 服务&评论 -->
+		<div class="wrap-body">
+			<div class="layui-tab layui-tab-brief">
+  				<ul class="layui-tab-title">
+    				<li class="layui-this"><i class="iconfont">&#xe602;</i> 商户服务</li>
+    				<li><i class="iconfont">&#xe694;</i> 用户评价</li>
+  				</ul>
+  				<div class="layui-tab-content">
+  					<!-- 商户服务 -->
+    				<div class="layui-tab-item layui-show tab1">
+						<div class="layui-fuild">
+	    					<h3>商户服务</h3>
+	    					<hr>
+	    					<div class="layui-fuild" style="padding-bottom: 10px;">
+	    						<div class="layui-row layui-col-space10" style="padding-bottom: 10px;">
+	    							<!-- 服务 -->
+	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+		    							<div class="layui-row row-in" title="华峰国际有限公司">
+		    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/201291810101174356.jpg"></div>
+		    								<div class="layui-row row-in2">
+												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司</a></div>
+												<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
+											</div>
+											<div class="layui-row row-in3">
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+											</div>
+		    							</div>
+	    							</div>
+	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+		    							<div class="layui-row row-in" title="华峰国际有限公司非洲分公司">
+		    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/家居9.jpg"></div>
+		    								<div class="layui-row row-in2">
+												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">华峰国际有限公司非洲分公司</a></div>
+												<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：9.5分</div>
+											</div>
+											<div class="layui-row row-in3">
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+											</div>
+		    							</div>
+	    							</div>
+	    						</div>
+		    					<div class="layui-row">
+		    						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+		    							<div id="store-page"></div>
+		    						</div>
+		    					</div>
+    						</div>
+    					</div>
+    				</div>
+    				<!-- 用户评论 -->
+   					<div class="layui-tab-item tab2">
+   						<h3>用户评论</h3>
+   						<form class="layui-form sort" action="">
+	   						<select name="mode" lay-filter="mode">
+	  							<option value="1">按时间排序</option>
+	  							<option value="2">按热度排序</option>
+							</select>
+						</form>
+   						<hr>
+   						<div class="layui-fluid" style="padding: 20px;background: #efefef;">
+   							<form class="layui-form" id="comment" action="" style="position: relative;cursor: text;">
+   								<p style="font-size: 18px;color: #a8a8a8;position: absolute;left: 10px;top: 5px;"><i class="iconfont">&#xe62b;</i> 发表评论</p>
+      							<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
+  							</form>
+   						</div>
+   						<div class="layui-fliud comment-wrap">
+   							<!-- 评论 -->
+   							<hr>
+   							<div class="row layui-row layui-col-space10">
+   								<!-- 主评人头像 -->
+   								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
+   									<div class="head-wrap">
+   										<img src="http://t.cn/RCzsdCq">
+   									</div>
+   								</div>
+   								<!-- 主容器 -->
+   								<div class="layui-col-md10 layui-col-sm10">
+   									<!-- 主评人内容 -->
+   									<div class="row-in1 layui-row layui-col-space10">
+   										<div class="layui-col-md12 layui-col-sm12">
+   											<h4>何华峰</h4>
+   											<a href="javascrapt:">删除评论</a>
+   										</div>
+   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi praesentium numquam facilis laboriosam consectetur officia eligendi pariatur rerum, provident ad sit iure cupiditate quisquam est esse cum magni? Fuga, optio.</div>
+   										<div class="layui-col-md12 layui-col-sm12">
+   											<p>2017-12-12</p>
+   											<span class="layui-breadcrumb" lay-separator="|">
+  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (60)</a>
+  												<a href="javascrapt:" class="reply">回复</a>
+											</span>
+   										</div>
+   									</div>
+   									<!-- 回复 -->
+   									<hr>
+   									<div class="row-in2 layui-row layui-col-space10">
+   										<!-- 回复人头像 -->
+   										<div class="layui-col-md1 layui-col-sm2">
+   											<div class="head-wrap-sub">
+   												<img src="http://t.cn/RCzsdCq">
+   											</div>
+   										</div>
+   										<!-- 容器 -->
+   										<div class="layui-col-md11 layui-col-sm10">
+   											<!-- 回复人内容 -->
+   											<div class="row-in-in layui-row layui-col-space10">
+   												<div class="layui-col-md6 layui-col-sm6">
+   													<h4>洪欣</h4>
+   													<a href="javascrapt:">删除评论</a>
+   												</div>
+   												<div class="layui-col-md12 layui-col-sm12">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur temporibus quidem ab cumque est nihil debitis, perferendis quis expedita amet nulla quae sapiente explicabo obcaecati dolores. Delectus, optio maiores minus.</div>
+   												<div class="layui-col-md12 layui-col-sm12">
+   													<p>2017-12-12</p>
+   												</div>
+   											</div>
+   										</div>
+   									</div>
+   									<div class="reply-page"></div>
+   								</div>
+   							</div>
+   						</div>
+   						<div class="layui-fulid" style="height: 120px;">
+							<div id="comment-page"></div>
+						</div>
+   					</div>
+  				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<p>Husbandry-&copy2017</p>
+	</footer>
+	<div class="particles-wrap">
+		<div id="particles-js"></div>
+	</div>
+	<!-- 评论 -->
+	<div id="comment-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 style="margin-bottom: 0px;">发表评论</h2>
+			<hr>
+			<form class="layui-form" action="">
+  				<div class="layui-form-item layui-form-text">
+      				<textarea placeholder="请输入您想要发表的评论" required lay-verify="required" class="layui-textarea" rows="6" id="comment-content"></textarea>
+      				<p>最多输入300个字</p>
+      				<button type="button" class="layui-btn" lay-submit id="comment-submit">提交</button>
+  				</div>
+  			</form>
+		</div>
+	</div>
+	<!-- 回复 -->
+	<div id="reply-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">回复</h2>
+			<hr>
+			<form class="layui-form" action="">
+  				<div class="layui-form-item layui-form-text">
+      				<textarea placeholder="请输入您想要回复的内容" required lay-verify="required" class="layui-textarea" rows="6" id="reply-content"></textarea>
+      				<p>最多输入300个字</p>
+      				<button class="layui-btn" lay-submit id="reply-submit">回复</button>
+  				</div>
+  			</form>
+		</div>
+	</div>
+	<!-- 投诉 -->
+	<div id="complaint-modal" class="modal">
+		<div class="layui-fluid">
+			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="color: #FF5722;">投诉</h2>
+			<hr>
+			<form class="layui-form" action="">
+				<div class="layui-form-item layui-form-text">
+					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="complaint-content"></textarea>
+					<p>至多输入300个字</p>
+					<button class="layui-btn" lay-submit id="complaint-submit" style="background: #FF5722;">提交</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
