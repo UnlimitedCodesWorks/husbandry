@@ -155,15 +155,16 @@ jQuery(document).ready(function($) {
       });
     });
 
-      $('.layui-btn-danger').click(function(event) {
-          layer.open({
-              type: 1,
-              title: '投诉',
-              area: layerWidth,
-              anim: 2,
-              content: $('#complaint-modal')
-          });
-      });
+    //投诉
+    $('.layui-btn-danger').click(function(event) {
+        layer.open({
+            type: 1,
+            title: '投诉',
+            area: layerWidth,
+            anim: 2,
+            content: $('#complaint-modal')
+        });
+    });
 
     $('#comment-submit').click(function(event) {
         var value = $(this).prevAll('textarea').val();

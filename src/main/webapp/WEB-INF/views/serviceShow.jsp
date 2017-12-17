@@ -320,7 +320,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </c:forEach>
                             </c:if>
    						</div>
-						<div class="layui-fulid" style="height: 180px;">
+						<div class="layui-fulid" style="height: 120px;">
 							<div id="comment-page"></div>
 						</div>
    					</div>
