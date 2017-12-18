@@ -39,11 +39,18 @@
 					</li>
 				</template>
  				<li class="layui-nav-item" v-else>
+					<!-- 居民 -->
     				<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
     				<dl class="layui-nav-child">
       					<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
       					<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
     				</dl>
+					<!-- 商户 -->
+					<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<dl class="layui-nav-child">
+						<dd><a href="<%=portPath%>userResident/information/${user.userid}">商户中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
+					</dl>
  	 			</li>
 			</ul>
 		</nav>
