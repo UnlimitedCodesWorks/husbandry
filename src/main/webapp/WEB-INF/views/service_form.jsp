@@ -101,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-md4">预约服务简单流程 等王总页面做好一起总和</div>
+        <div class="layui-col-md4">预约服务简单流程 等王总页面做好一起总和123</div>
     </div>
     <div class="layui-row layui-col-md12 layui-col-sm12 layui-col-xs12">
         <footer>
