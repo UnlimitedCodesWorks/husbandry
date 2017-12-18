@@ -1,6 +1,13 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>智慧社区-商户后台管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +27,6 @@
         <!-- Javascript Libs -->
     <script type="text/javascript" src="../../../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/bootstrap.min.js"></script>
-<!--             <script type="text/javascript" src="../../../resources/js/Chart.js"></script> -->
     <script type="text/javascript" src="../../../resources/js/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/jquery.matchHeight-min.js"></script>
     <script type="text/javascript" src="../../../resources/js/jquery.dataTables.min.js"></script>
@@ -29,9 +35,11 @@
     <script type="text/javascript" src="../../../resources/js/ace/ace.js"></script>
     <script type="text/javascript" src="../../../resources/js/ace/mode-html.js"></script>
     <script type="text/javascript" src="../../../resources/js/ace/theme-github.js"></script>
+
     <!-- Javascript -->
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
-    <!-- <script type="text/javascript" src="../../../resources/js/index.js"></script> -->
+    <script type="text/javascript" src="../../../resources/js/Chart.min.js"></script>
+    <script type="text/javascript" src="../../../resources/js/chartjs.js"></script>
 </head>
 
 <body class="flat-blue">
@@ -215,7 +223,28 @@
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        警告！如果一个月内低于6.0评分,系统将给予警告，严重者经过核实将撤销厂商资格，系统每月将会进行重新统计。
+                    </div>
+                    <p>时间：2017-11&nbsp;&nbsp;&nbsp;&nbsp;该月平均分：9.5&nbsp;&nbsp;&nbsp;&nbsp;状态：良好</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <div class="title">商户评分</div>
+                                    </div>
+                                </div>
+                                <div class="card-body no-padding">
+                                    <canvas id="line-chart" class="chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
