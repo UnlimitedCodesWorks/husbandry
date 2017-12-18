@@ -344,5 +344,6 @@ public class HhfTest {
         //获得某月份的厂商评分曲线信息
         StoreEvalutePerMonth storeEvalutePerMonth=evaluateStoreService.getGradePerMonthByStoreId(1,"58到家",new Date());
         System.out.print(JSON.toJSONString(storeEvalutePerMonth,true));
+//        System.out.print(storeEvalutePerMonth.getDays());
     }
 }

@@ -122,8 +122,8 @@
 									</c:if>
 									<c:if test="${!empty store}">
 									<div class="layui-col-md4 layui-col-sm12">
-										<button class="layui-btn layui-btn-normal">
-											<i class="iconfont">&#xe722;</i> 后台管理
+										<button class="layui-btn layui-btn-normal" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/score/${storeId}'">
+											<i class="iconfont">&#xe722;</i>后台管理
 										</button>
 									</div>
 									</c:if>

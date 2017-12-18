@@ -2,6 +2,7 @@ package xin.yiliya.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import xin.yiliya.pojo.Store;
 import xin.yiliya.pojo.User;
 
 import javax.servlet.http.HttpServletRequest;

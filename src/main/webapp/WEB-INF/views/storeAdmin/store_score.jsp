@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,6 @@
     <!-- Javascript -->
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
     <script type="text/javascript" src="../../../resources/js/Chart.min.js"></script>
-    <script type="text/javascript" src="../../../resources/js/chartjs.js"></script>
 </head>
 
 <body class="flat-blue">
@@ -67,18 +67,18 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">1</span>
+                                    新消息 <span class="badge pull-right">${unReadNews}</span>
                                 </li>
-                                <li class="message">
-                                    您有1条新消息
+                                <li class="message" onclick="javascript:window.location.href=''" style="cursor: pointer;">
+                                    您有${unReadNews}条新消息
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> 8.5</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> ${score.grade}</a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">8.5分</span>
+                                    当前评分 <span class="badge pull-right">${score.grade}分</span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -107,18 +107,18 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">华峰国际有限公司 <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${storeInfo.storeName}<span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="profile-img">
-                                    <img src="http://t.cn/RCzsdCq" class="profile-img">
+                                    <img src="${storeInfo.headImg}" class="profile-img" >
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">华峰国际有限公司</h4>
-                                        <p>123456789@sina.com</p>
+                                        <h4 class="username">${storeInfo.storeName}</h4>
+                                        <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> 商户中心</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>store/information/${storeId}'"><i class="fa fa-user"></i>商户中心</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/exit.do'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
@@ -230,7 +230,7 @@
                         </button>
                         警告！如果一个月内低于6.0评分,系统将给予警告，严重者经过核实将撤销厂商资格，系统每月将会进行重新统计。
                     </div>
-                    <p>时间：2017-11&nbsp;&nbsp;&nbsp;&nbsp;该月平均分：9.5&nbsp;&nbsp;&nbsp;&nbsp;状态：良好</p>
+                    <p>时间：<fmt:formatDate value="${score.date}" pattern="yyyy-MM"/>&nbsp;&nbsp;&nbsp;&nbsp;该月平均分：${score.grade}&nbsp;&nbsp;&nbsp;&nbsp;状态：${score.status}</p>
                     <div class="row">
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                             <div class="card">
@@ -249,5 +249,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            var ctx, data, myLineChart, options;
+            Chart.defaults.global.responsive = true;
+            ctx = $('#line-chart').get(0).getContext('2d');
+            options = {
+                scaleShowGridLines: true,
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleGridLineWidth: 1,
+                scaleShowHorizontalLines: true,
+                scaleShowVerticalLines: true,
+                bezierCurve: false,
+                bezierCurveTension: 0.4,
+                pointDot: true,
+                pointDotRadius: 4,
+                pointDotStrokeWidth: 1,
+                pointHitDetectionRadius: 20,
+                datasetStroke: true,
+                datasetStrokeWidth: 2,
+                datasetFill: true
+            };
+            data = {
+                labels: ${days},
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(26, 188, 156,0.2)",
+                        strokeColor: "#1ABC9C",
+                        pointColor: "#1ABC9C",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "#1ABC9C",
+                        data: ${grades}
+                    },
+                ]
+            };
+            myLineChart = new Chart(ctx).Line(data, options);
+        });
+    </script>
 </body>
 </html>
