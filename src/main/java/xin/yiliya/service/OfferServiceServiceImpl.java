@@ -209,8 +209,11 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         PageHelper.startPage(currentPage,pageSize);
         List<OfferServiceSimple> list = offerServiceMapper.getAllSimpleOfferServiceByStoreId(storeId);
         for(OfferServiceSimple offerServiceSimple:list){
-            offerServiceSimple.setGrade(serviceEvaluateService.getGradeByServiceId(offerServiceSimple.getOfferServiceId()));
+            Integer offerServiceId=offerServiceSimple.getOfferServiceId();
+            offerServiceSimple.setGrade(serviceEvaluateService.getGradeByServiceId(offerServiceId));
             offerServiceSimple.setStatus(GradeJudge.judge(offerServiceSimple.getGrade()));
+            offerServiceSimple.setMarkNum(offerServiceMapper.getServiceOfMarkNum(offerServiceId));
+            offerServiceSimple.setServiceFans(offerServiceMapper.getServiceOfFans(offerServiceId));
         }
         return new PageInfo<OfferServiceSimple>(list);
     }

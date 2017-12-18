@@ -50,6 +50,7 @@
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
     <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
     <result column="fans" jdbcType="INTEGER" property="fans" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
     <association property="areas" column="area_id" javaType="xin.yiliya.pojo.Areas">
       <id column="arid" jdbcType="INTEGER" property="arid" />
       <result column="area" jdbcType="VARCHAR" property="area" />
@@ -85,7 +86,7 @@
   </sql>
 
   <sql id="Info_Column_List">
-    storeid, store_name,email,detail_info, head_img,
+    storeid, store_name,email,detail_info, head_img,regist_time,
     logo_img,COUNT(*) as fans,arid,area,ciid,city,proid,province
   </sql>
 

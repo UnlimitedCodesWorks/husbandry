@@ -109,7 +109,7 @@
 												<!-- 公司名&关注 -->
 												<div class="layui-row layui-col-space10 row1">
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 															<p>订单状态：已完成</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
@@ -171,7 +171,7 @@
 												<!-- 公司名&关注 -->
 												<div class="layui-row layui-col-space10 row1">
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待派遣</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
@@ -238,7 +238,7 @@
 												<!-- 公司名&关注 -->
 												<div class="layui-row layui-col-space10 row1">
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待确认</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
@@ -308,7 +308,7 @@
 												<!-- 公司名&关注 -->
 												<div class="layui-row layui-col-space10 row1">
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
-														<a href="javascrapt:">${order.storeInfo.storeName}</a>
+														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：已确认</p>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
@@ -584,6 +584,7 @@
             var container;
             var buttons;
             var href= portPath+"service/detail/"+data.list[i].offerService.offerserviceid;
+            var storePath = portPath+"store/information/"+data.list[i].storeInfo.storeid;
             switch (status){
 				case 5:
 				    container = $(".layui-container:eq(1)");
@@ -660,7 +661,7 @@
                 '<!-- 公司名&关注 -->' +
                 '<div class="layui-row layui-col-space10 row1">' +
                 '<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">' +
-                '<a href="javascrapt:">'+data.list[i].storeInfo.storeName+'</a>' +
+                '<a href="'+storePath+'">'+data.list[i].storeInfo.storeName+'</a>' +
                 line +
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">' +

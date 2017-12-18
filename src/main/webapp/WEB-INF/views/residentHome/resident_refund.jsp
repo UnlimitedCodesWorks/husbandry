@@ -101,7 +101,7 @@
 									<!-- 公司名&关注 -->
 									<div class="layui-row layui-col-space10 row1">
 										<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">
-											<a href="javascrapt:">${order.storeInfo.storeName}</a>
+											<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 											<c:if test="${order.status==3}">
 												<p>退款状态：退款中</p>
 											</c:if>
@@ -231,13 +231,14 @@
                 line = '<p>退款状态：退款成功</p>';
             }
 			var href= portPath+"service/detail/"+data[i].offerService.offerserviceid;
+            var storePath = portPath+"store/information/"+data[i].storeInfo.storeid;
             container.html("");
             var node = '<div class="refund-wrap">' +
                 '<hr>' +
                 '<!-- 公司名&关注 -->' +
                 '<div class="layui-row layui-col-space10 row1">' +
                 '<div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">' +
-                '<a href="javascrapt:">'+data[i].storeInfo.storeName+'</a>' +
+                '<a href="'+storePath+'">'+data[i].storeInfo.storeName+'</a>' +
                 line+
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +

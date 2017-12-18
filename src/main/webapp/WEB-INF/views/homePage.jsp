@@ -39,18 +39,24 @@
 					</li>
 				</template>
  				<li class="layui-nav-item" v-else>
+					<c:if test="${!empty user}">
 					<!-- 居民 -->
     				<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
     				<dl class="layui-nav-child">
       					<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
       					<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
     				</dl>
+					</c:if>
 					<!-- 商户 -->
-					<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+					<c:if test="${!empty store}">
+					<a href="<%=portPath%>store/information/${store.storeid}"><img src="${store.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${store.storeName}</a>
 					<dl class="layui-nav-child">
-						<dd><a href="<%=portPath%>userResident/information/${user.userid}">商户中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>store/information/${store.storeid}">商户中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>store/information/${store.storeid}">商户后台</a></dd>
+						<dd><a href="<%=portPath%>store/information/${store.storeid}">消息中心</a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
+					</c:if>
  	 			</li>
 			</ul>
 		</nav>
@@ -170,10 +176,12 @@
 					<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
 				<div class="layui-row row-in" title="${storeIndex.storeName}">
 					<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-						<img src="${storeIndex.headImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'" />
+						<a href="<%=portPath%>store/information/${storeIndex.storeId}">
+							<img src="${storeIndex.headImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'" />
+						</a>
 					</div>
 					<div class="layui-row row-in2">
-						<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${storeIndex.storeName}</a></div>
+						<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="<%=portPath%>store/information/${storeIndex.storeId}" class="store-title">${storeIndex.storeName}</a></div>
 						<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${storeIndex.grade==0}" >未评分</c:if><c:if test="${storeIndex.grade!=0}" >${storeIndex.grade}分</c:if></div>
 					</div>
 					<div class="layui-row row-in3">
@@ -193,6 +201,7 @@
 	</footer>
 </body>
 <script>
-	var loginStatus = ${loginStatus};
+	var loginStatus = ${!loginStatus};
+	var portPath = "<%=portPath%>";
 </script>
 </html>

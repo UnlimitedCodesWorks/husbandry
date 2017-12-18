@@ -141,14 +141,16 @@ jQuery(document).ready(function($) {
 			var CNode = fNode.children(".layui-row").eq(num);
 			num++;
         	for(var q = i;q<i+4&&q<data.length;q++){
-        		console.log(q);
+        		var storePath = portPath+"store/information/"+data[q].storeId;
         		var html = '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">' +
                     '<div class="layui-row row-in" title="'+data[q].storeName+'">' +
                     '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
-                    '<img src="'+data[q].headImg+'" onerror="this.src=\'../../resources/images/201291810101174356.jpg\'" />' +
+					'<a href="'+storePath+'"> '+
+                    '<img src="'+data[q].headImg+'" onerror="this.src=\'../../resources/images/201291810101174356.jpg\'" />'
+					+'</a>'+
                     '</div>' +
                     '<div class="layui-row row-in2">' +
-                    '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">'+data[q].storeName+'</a></div>' +
+                    '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="'+storePath+'" class="store-title">'+data[q].storeName+'</a></div>' +
                     '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+data[q].grade+'分</div>' +
                     '</div>' +
                     '<div class="layui-row row-in3">' +

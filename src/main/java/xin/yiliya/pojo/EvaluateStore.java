@@ -20,6 +20,8 @@ public class EvaluateStore {
 
     private List<EstoreUser> estoreUserList;
 
+    private Integer estorePages;
+
     public Integer getUserId() {
         return userId;
     }
@@ -82,5 +84,13 @@ public class EvaluateStore {
 
     public void setPraise(Integer praise) {
         this.praise = praise;
+    }
+
+    public Integer getEstorePages() {
+        return estorePages;
+    }
+
+    public void setEstorePages(Integer estorePages) {
+        this.estorePages = estorePages;
     }
 }

@@ -14,8 +14,10 @@ import xin.yiliya.dao.StoreMapper;
 import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
 import xin.yiliya.tool.Rank;
+import xin.yiliya.tool.StoreJudge;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -117,6 +119,11 @@ public class StoreServiceImpl implements StoreService {
 
     public StoreInfo getInfoByStoreId(Integer storeId) {
         StoreInfo storeInfo = storeMapper.selectByPrimaryKey(storeId);
+        try {
+            storeInfo.setStoreType(StoreJudge.handle(storeInfo.getRegistTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         storeInfo.setGrade(evaluateStoreService.getGradeByStoreId(storeId));
         return storeInfo;
     }

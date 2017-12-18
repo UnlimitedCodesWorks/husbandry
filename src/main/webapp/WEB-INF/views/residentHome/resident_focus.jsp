@@ -139,10 +139,10 @@
     						<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
     							<div class="layui-row row-in" title="${store.storeName}">
     								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-										<img src="${store.headImg}" onerror="this.src='../../../resources/images/201291810101174356.jpg'">
+										<a href="<%=portPath%>store/information/${store.storeId}"> <img src="${store.headImg}" onerror="this.src='../../../resources/images/201291810101174356.jpg'"></a>
 									</div>
     								<div class="layui-row row-in2">
-										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">${store.storeName}</a></div>
+										<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="<%=portPath%>store/information/${store.storeId}" class="store-title">${store.storeName}</a></div>
 										<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${store.grade==0}" >未评分</c:if><c:if test="${store.grade!=0}" >${store.grade}分</c:if></div>
 									</div>
 									<div class="layui-row row-in3">
@@ -274,6 +274,7 @@
 		for(var i=0;i<data.length;i++){
 		    var grade = data[i].grade;
 		    var gradeNode;
+		    var storePath = data[i].storeId;
 		    if(grade==0){
 		        gradeNode = "未评分";
 			}else {
@@ -282,10 +283,12 @@
 		    var node = '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">' +
                 '<div class="layui-row row-in" title="'+data[i].storeName+'">' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
-                '<img src="'+data[i].headImg+'" onerror="this.src=\'../../../resources/images/201291810101174356.jpg\'">' +
+					'<a href="'+storePath+'" >'+
+                '<img src="'+data[i].headImg+'" onerror="this.src=\'../../../resources/images/201291810101174356.jpg\'">'
+				+'</a>'+
                 '</div>' +
                 '<div class="layui-row row-in2">' +
-                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="store-title">'+data[i].storeName+'</a></div>' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="'+storePath+'" class="store-title">'+data[i].storeName+'</a></div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+gradeNode+'</div>' +
                 '</div>' +
                 '<div class="layui-row row-in3">' +

@@ -83,8 +83,8 @@ jQuery(document).ready(function($) {
     //评论分页
     laypage.render({
       elem: 'comment-page' //注意，这里的 test1 是 ID，不用加 # 号
-      ,count: 40 //数据总数，从服务端得到
-      ,limit: 8
+      ,count: evaluatePages*evaluatePageSize //数据总数，从服务端得到
+      ,limit: evaluatePageSize
       ,jump: function(obj, first){
         //obj包含了当前分页的所有参数，比如：
         console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
@@ -99,9 +99,9 @@ jQuery(document).ready(function($) {
     //服务分页
     laypage.render({
       elem: 'store-page' //注意，这里的 test1 是 ID，不用加 # 号
-      ,count: 40 //数据总数，从服务端得到
-      ,limit: 8
-      ,jump: function(obj, first){
+      ,count: servicePages*servicePageSize //数据总数，从服务端得到
+      ,limit: servicePageSize
+        ,jump: function(obj, first){
         //obj包含了当前分页的所有参数，比如：
         console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
         console.log(obj.limit); //得到每页显示的条数
@@ -116,7 +116,7 @@ jQuery(document).ready(function($) {
   var nav = new Vue({
     el: 'nav',
     data: {
-      isLogin: true
+      isLogin: loginStatus
     }
   });
 

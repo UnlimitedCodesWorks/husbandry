@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.yiliya.pojo.Store;
 import xin.yiliya.pojo.StoreIndex;
 import xin.yiliya.pojo.User;
 import xin.yiliya.service.StoreService;
@@ -35,11 +36,17 @@ public class HomePageController {
         List<StoreIndex> storeIndexList = storeService.getAllHotStore(Rank.SALES_DESC);
         model.addAttribute("storeIndexList",storeIndexList);
         User user = (User) session.getAttribute("userBean");
-        Boolean loginStatus;
-        loginStatus = user == null;
-        if(!loginStatus){
+        Store store = (Store) session.getAttribute("storeBean");
+        Boolean userLogin = user!=null;
+        Boolean storeLogin = store!=null;
+        Boolean loginStatus = userLogin||storeLogin;
+        if(userLogin){
             User newUser = userService.getUserInfo(user.getUserid());
             model.addAttribute("user",newUser);
+        }
+        if(storeLogin){
+            Store newStore = storeService.getStoreInfo(store.getStoreid());
+            model.addAttribute("store",newStore);
         }
         model.addAttribute("loginStatus",loginStatus);
         return "homePage";

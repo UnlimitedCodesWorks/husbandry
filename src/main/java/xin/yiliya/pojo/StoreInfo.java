@@ -1,5 +1,7 @@
 package xin.yiliya.pojo;
 
+import java.util.Date;
+
 public class StoreInfo {
 
     private Integer storeid;
@@ -19,6 +21,10 @@ public class StoreInfo {
     private Integer fans;
 
     private float grade;
+
+    private Date registTime;
+
+    private String storeType;
 
     public float getGrade() {
         return grade;
@@ -90,5 +96,21 @@ public class StoreInfo {
 
     public void setDetailInfo(String detailInfo) {
         this.detailInfo = detailInfo;
+    }
+
+    public Date getRegistTime() {
+        return registTime;
+    }
+
+    public void setRegistTime(Date registTime) {
+        this.registTime = registTime;
+    }
+
+    public String getStoreType() {
+        return storeType;
+    }
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
     }
 }

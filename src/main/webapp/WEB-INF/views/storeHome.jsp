@@ -1,3 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,23 +30,36 @@
 		<nav>
 			<ul class="layui-nav">
 				<li class="layui-nav-item ">
-					<a href="javascript:;" title="Husbandry">Husbandry</a>
+					<a href="<%=portPath%>index.html" title="Husbandry" >Husbandry</a>
 				</li>
 				<template v-if="isLogin">
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="注册">注册</a>
+						<a href="<%=portPath%>register.html" title="注册">注册</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" title="登录">登录</a>
+						<a href="<%=portPath%>login/user.html" title="登录">登录</a>
 					</li>
 				</template>
- 				<li class="layui-nav-item" v-else>
-    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">何华峰无耻老贼</a>
-    				<dl class="layui-nav-child">
-      					<dd><a href="javascript:;">个人中心<span class="layui-badge-dot"></span></a></dd>
-      					<dd><a href="javascript:;">登出</a></dd>
-    				</dl>
- 	 			</li>
+				<li class="layui-nav-item" v-else>
+					<c:if test="${!empty user}">
+						<!-- 居民 -->
+						<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
+						<dl class="layui-nav-child">
+							<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
+							<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
+						</dl>
+					</c:if>
+					<!-- 商户 -->
+					<c:if test="${!empty store}">
+						<a href="<%=portPath%>store/information/${store.storeid}"><img src="${store.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${store.storeName}</a>
+						<dl class="layui-nav-child">
+							<dd><a href="<%=portPath%>store/information/${store.storeid}">商户中心<span class="layui-badge-dot"></span></a></dd>
+							<dd><a href="<%=portPath%>store/information/${store.storeid}">商户后台</a></dd>
+							<dd><a href="<%=portPath%>store/information/${store.storeid}">消息中心</a></dd>
+							<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
+						</dl>
+					</c:if>
+				</li>
 			</ul>
 		</nav>
 	</header>
@@ -47,7 +69,7 @@
 			<hr>
 			<!-- 大logo -->
 			<div class="big-logo-wrap layui-fuild">
-				<img src="../../resources/images/家居9.jpg">
+				<img src="${storeInfo.logoImg}" onerror="this.src='../../resources/images/家居9.jpg'">
 			</div>
 			<hr>
 			<!-- 基本信息 -->
@@ -57,7 +79,7 @@
 					<!-- 头像 -->
 					<div class="layui-col-md2 layui-col-sm2">
 						<div class="head-wrap">
-							<img src="http://t.cn/RCzsdCq">
+							<img src="${storeInfo.headImg}" onerror="this.src='http://t.cn/RCzsdCq'">
 						</div>
 					</div>
 					<!-- 名字&评分&粉丝&按钮组 -->
@@ -66,42 +88,50 @@
 							<div class="layui-col-md6 layui-col-sm6">
 								<div class="row-in layui-row layui-col-space10">
 									<div class="layui-col-md12">
-										<h3>华峰国际有限公司</h3>
+										<h3>${storeInfo.storeName}</h3>
 									</div>
 									<div class="layui-col-md12">
 										<el-rate
-	    									v-model="value"
+	    									v-model="${storeInfo.grade}"
 	  										disabled
 					  						show-score
 					  						text-color="#ff9900"
-					  						score-template="9.0">
+					  						score-template="${storeInfo.grade}">
 				  						</el-rate>
 									</div>
 									<div class="layui-col-md12">
-										<p>粉丝数：<span>111</span></p>
+										<p>粉丝数：<span>${storeInfo.fans}</span></p>
 									</div>
 								</div>
 							</div>
 							<div class="layui-col-md6 layui-col-sm6">
 								<div class="row-in2 layui-row layui-col-space10">
+									<c:if test="${!empty user}">
 									<div class="layui-col-md4 layui-col-sm12">
+										<c:if test="${!userConcern}">
 										<button class="layui-btn">
 											<i class="iconfont">&#xe611;</i> 关注
 										</button>
-										<button class="layui-btn" style="background: #c2c2c2;display: none;">
+										</c:if>
+										<c:if test="${userConcern}">
+										<button class="layui-btn" style="background: #c2c2c2">
 											<i class="iconfont">&#xe611;</i> 取消关注
 										</button>
+										</c:if>
 									</div>
 									<div class="layui-col-md4 layui-col-sm12">
 										<button class="layui-btn layui-btn-danger">
 											<i class="iconfont">&#xe66e;</i> 投诉
 										</button>
 									</div>
+									</c:if>
+									<c:if test="${!empty store}">
 									<div class="layui-col-md4 layui-col-sm12">
 										<button class="layui-btn layui-btn-normal">
 											<i class="iconfont">&#xe722;</i> 后台管理
 										</button>
 									</div>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -111,17 +141,17 @@
 				<div class="layui-row layui-col-space10">
 					<div class="information-wrap layui-col-md4 layui-col-sm4">
 						<div class="information">
-							<p><i class="iconfont">&#xe62a;</i> 所在地：<span>湖南省长沙市</span></p>
+							<p><i class="iconfont">&#xe62a;</i> 所在地：<span>${storeInfo.areas.city.provinces.province} ${storeInfo.areas.city.city} ${storeInfo.areas.area}</span></p>
 						</div>
 					</div>
 					<div class="information-wrap layui-col-md4 layui-col-sm4">
 						<div class="information">
-							<p><i class="iconfont">&#xe76a;</i> 邮箱：<span>111111111@qq.com</span></p>
+							<p><i class="iconfont">&#xe76a;</i> 邮箱：<span>${storeInfo.email}</span></p>
 						</div>
 					</div>
 					<div class="information-wrap layui-col-md4 layui-col-sm4">
 						<div class="information">
-							<p><i class="iconfont">&#xe638;</i> 类别：<span>老牌商家</span></p>
+							<p><i class="iconfont">&#xe638;</i> 类别：<span>${storeInfo.storeType}</span></p>
 						</div>
 					</div>
 				</div>
@@ -131,7 +161,7 @@
 			<div class="layui-fuild">
 				<div class="layui-row">
 					<div class="layui-col-md12">
-						<p style="padding: 20px;background: rgba(168, 168, 168, 0.2);border-radius: 20px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus sunt suscipit tempore voluptates quia eaque fuga, recusandae error unde dolorum iure, dolore molestias? Aut labore praesentium amet dolorem, natus quasi.</p>
+						<p style="padding: 20px;background: rgba(168, 168, 168, 0.2);border-radius: 20px;">${storeInfo.detailInfo}</p>
 					</div>
 				</div>
 			</div>
@@ -152,18 +182,24 @@
 	    					<div class="layui-fuild" style="padding-bottom: 10px;">
 	    						<div class="layui-row layui-col-space10" style="padding-bottom: 10px;">
 	    							<!-- 服务 -->
-	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-		    							<div class="layui-row row-in" title="马杀鸡服务">
-		    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12"><img src="../../resources/images/201291810101174356.jpg"></div>
+	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12" id="service-container">
+										<c:if test="${!empty services}">
+											<c:forEach var="service" items="${services}">
+		    							<div class="layui-row row-in" title="${service.serviceName}">
+		    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+												<img src="${service.serviceImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'">
+											</div>
 		    								<div class="layui-row row-in2">
-												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">马杀鸡服务</a></div>
-												<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：8.5分</div>
+												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">${service.serviceName}</a></div>
+												<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}分</c:if></div>
 											</div>
 											<div class="layui-row row-in3">
-												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">2234关注</div>
-												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">3454笔交易</div>
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${service.serviceFans}关注</div>
+												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${service.markNum}笔交易</div>
 											</div>
 		    							</div>
+											</c:forEach>
+										</c:if>
 	    							</div>
 	    						</div>
 		    					<div class="layui-row">
@@ -190,14 +226,16 @@
       							<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
   							</form>
    						</div>
-   						<div class="layui-fliud comment-wrap">
+   						<div class="layui-fliud comment-wrap" id="evaluate-container">
+							<c:if test="${!empty evaluates}">
+								<c:forEach var="evaluate" items="${evaluates}">
    							<!-- 评论 -->
    							<hr>
    							<div class="row layui-row layui-col-space10">
    								<!-- 主评人头像 -->
    								<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">
    									<div class="head-wrap">
-   										<img src="http://t.cn/RCzsdCq">
+										<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"> <img src="${evaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
    									</div>
    								</div>
    								<!-- 主容器 -->
@@ -205,25 +243,29 @@
    									<!-- 主评人内容 -->
    									<div class="row-in1 layui-row layui-col-space10">
    										<div class="layui-col-md12 layui-col-sm12">
-   											<h4>何华峰</h4>
-   											<a href="javascrapt:">删除评论</a>
+											<a href="<%=portPath%>userResident/information/${evaluate.user.userId}"><h4>${evaluate.user.userName}</h4></a>
+											<c:set var="userId" value="${user.userid}" />
+											<c:set var="replyId" value="${evaluate.user.userId}" />
+											<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteEvaluate(${evaluate.evaluatestoreid})">删除评论</a></c:if>
    										</div>
-   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi praesentium numquam facilis laboriosam consectetur officia eligendi pariatur rerum, provident ad sit iure cupiditate quisquam est esse cum magni? Fuga, optio.</div>
+   										<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">${evaluate.content}</div>
    										<div class="layui-col-md12 layui-col-sm12">
-   											<p>2017-12-12</p>
+   											<p><fmt:formatDate value="${evaluate.time}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
    											<span class="layui-breadcrumb" lay-separator="|">
-  												<a href="javascrapt:" class="good"><i class="iconfont">&#xe60a;</i> (60)</a>
-  												<a href="javascrapt:" class="reply">回复</a>
+  												<a href="javascript:void(0);" onclick="support(${evaluate.evaluatestoreid},${evaluate.praise},this)" class="good"><i class="iconfont">&#xe60a;</i> (${evaluate.praise})</a>
+  												<a href="javascript:void(0);" onclick="reply(${evaluate.evaluatestoreid})" class="reply">回复</a>
 											</span>
    										</div>
    									</div>
    									<!-- 回复 -->
+									<c:if test="${!empty evaluate.estoreUserList}">
+										<c:forEach var="estoreEvaluate" items="${evaluate.estoreUserList}">
    									<hr>
    									<div class="row-in2 layui-row layui-col-space10">
    										<!-- 回复人头像 -->
    										<div class="layui-col-md1 layui-col-sm2">
    											<div class="head-wrap-sub">
-   												<img src="http://t.cn/RCzsdCq">
+												<a href="<%=portPath%>userResident/information/${estoreEvaluate.user.userId}"> <img src="${estoreEvaluate.user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'"></a>
    											</div>
    										</div>
    										<!-- 容器 -->
@@ -231,19 +273,25 @@
    											<!-- 回复人内容 -->
    											<div class="row-in-in layui-row layui-col-space10">
    												<div class="layui-col-md6 layui-col-sm6">
-   													<h4>洪欣</h4>
-   													<a href="javascrapt:">删除评论</a>
+													<a href="<%=portPath%>userResident/information/${estoreEvaluate.user.userId}"><h4>${estoreEvaluate.user.userName}</h4></a>
+													<c:set var="userId" value="${user.userid}" />
+													<c:set var="replyId" value="${estoreEvaluate.user.userId}" />
+													<c:if test="${userId==replyId}"><a href="javascript:void(0)" onclick="deleteReply(${estoreEvaluate.estoreuserid})">删除评论</a></c:if>
    												</div>
-   												<div class="layui-col-md12 layui-col-sm12">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur temporibus quidem ab cumque est nihil debitis, perferendis quis expedita amet nulla quae sapiente explicabo obcaecati dolores. Delectus, optio maiores minus.</div>
+   												<div class="layui-col-md12 layui-col-sm12">${estoreEvaluate.content}</div>
    												<div class="layui-col-md12 layui-col-sm12">
-   													<p>2017-12-12</p>
+   													<p><fmt:formatDate value="${estoreEvaluate.time}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
    												</div>
    											</div>
    										</div>
    									</div>
-   									<div class="reply-page"></div>
+										</c:forEach>
+									</c:if>
    								</div>
    							</div>
+								</c:forEach>
+								<div class="reply-page" data-pages="${evaluate.estorePages}" data-evaluateId="${evaluate.evaluatestoreid}"></div>
+							</c:if>
    						</div>
    						<div class="layui-fulid" style="height: 120px;">
 							<div id="comment-page"></div>
@@ -302,4 +350,13 @@
 		</div>
 	</div>
 </body>
+<script>
+    var loginStatus = ${!loginStatus};
+    var servicePages = ${servicePages};
+    var evaluatePages = ${evaluatePages};
+    var servicePageSize = ${servicePageSize};
+    var evaluatePageSize = ${evaluatePageSize};
+    var sonPageSize = ${sonPageSize};
+
+</script>
 </html>

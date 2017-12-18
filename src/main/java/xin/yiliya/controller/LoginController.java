@@ -55,7 +55,7 @@ public class LoginController {
             return "redirect:/login/user.html";
         }else{
             httpSession.setAttribute("storeBean",store);
-            return "redirect:/index.html";
+            return "redirect:/store/information/"+store.getStoreid();
         }
     }
 

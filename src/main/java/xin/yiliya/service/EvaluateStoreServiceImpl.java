@@ -58,7 +58,10 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
         }
         List<EvaluateStore> list = evaluateStoreMapper.getAllEvaluateByStoreId(storeId);
         for(EvaluateStore evaluateStore:list){
-            evaluateStore.setEstoreUserList(eStoreUserService.getAllEstoreUserByEstoreId(evaluateStore.getEvaluatestoreid(),1,sonPageSize).getList());
+            Integer evluateId = evaluateStore.getEvaluatestoreid();
+            PageInfo<EstoreUser> estoreUserPageInfo = eStoreUserService.getAllEstoreUserByEstoreId(evluateId,1,sonPageSize);
+            evaluateStore.setEstoreUserList(estoreUserPageInfo.getList());
+            evaluateStore.setEstorePages(estoreUserPageInfo.getPages());
         }
         return new PageInfo<EvaluateStore>(list);
     }

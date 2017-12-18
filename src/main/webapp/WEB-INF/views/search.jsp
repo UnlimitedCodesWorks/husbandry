@@ -125,15 +125,15 @@
         <c:if test="${offerServiceList!=null}">
             <c:forEach var="offerService" items="${offerServiceList}">
         <ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">
-            <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href='<%=portPath%>service/detail/${offerService.offerServiceId}'" >
-                <img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">
+            <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul"  >
+                <a href="<%=portPath%>service/detail/${offerService.offerServiceId}"><img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img"></a>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <div class="layui-col-md4 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
                     <div class="layui-col-md8 layui-col-sm7 layui-col-xs7 search_price_noise">市场价：${offerService.marketPrice}<c:if test="${offerService.priceJudge ==true}"><i class="iconfont price_high">&#xe702;</i><div class="price_high1">高于市场价</div></c:if> <c:if test="${offerService.priceJudge ==false}"><i class="iconfont price_low">&#xe6e5;</i><div class="price_low1">低于市场价</div></c:if></div>
                 </div>
-                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">${fn:replace(offerService.serviceName,content,redContent)}</div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href='<%=portPath%>service/detail/${offerService.offerServiceId}'">${fn:replace(offerService.serviceName,content,redContent)}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
-                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company">${fn:replace(offerService.store.storeName,content,redContent)}</div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company" onclick="location.href='<%=portPath%>store/information/${offerService.store.storeid}'">${fn:replace(offerService.store.storeName,content,redContent)}</div>
                     <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_score"><c:if test="${offerService.grade ==0}">未评分</c:if><c:if test="${offerService.grade !=0}">${offerService.grade}分</c:if><span class="search_score_peoplenum" >(${offerService.gradeNum}人评分)</span></div>
                 </div>
             </ul>
@@ -428,6 +428,7 @@
             var serviceName = data.list[i].serviceName;
             var storeName = data.list[i].store.storeName;
             var path = portPath+"service/detail/"+data.list[i].offerServiceId;
+            var storePath = portPath+"store/information/"+data.list[i].store.storeid;
             if(content.length!=0){
                 serviceName=serviceName.replace(content,redContent);
                 storeName=storeName.replace(content,redContent);
@@ -444,16 +445,18 @@
                 grade = data.list[i].grade;
             }
             var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
-                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href=\''+path+'\'">' +
-                '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" >'
+                +'<a href="'+path+'"> '+
+                '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">'
+                +'</a>'+
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' +
                 '市场价：'+data.list[i].marketPrice+priceJudge+'</div>' +
                 '</div>' +
-                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">'+serviceName+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href=\''+path+'\'">'+serviceName+'</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
-                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company">'+storeName+'</div>' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company" onclick="location.href=\''+storePath+'\'">'+storeName+'</div>' +
                 '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_score">'+grade+'<span class="search_score_peoplenum" >('+data.list[i].gradeNum+'人评分)</span>'+'</div>' +
                 '</div>' +
                 '</ul>' +
@@ -499,16 +502,18 @@
                 grade = data.list[i].grade;
             }
             var node = '<ul class="layui-row layui-col-md3 layui-col-sm6 layui-col-xs12 search_main_ul">' +
-                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" onclick="location.href=\''+path+'\'" >' +
-                '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">' +
+                '<ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul" >'
+                +'<a href="'+path+'"> '+
+                '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">'
+                +'</a>'+
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
                 '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' +
                 '市场价：'+data.list[i].marketPrice+priceJudge+'</div>' +
                 '</div>' +
-                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service">'+serviceName+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href=\''+path+'\'">'+serviceName+'</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
-                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company">'+storeName+'</div>' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_company" onclick="location.href=\''+storePath+'\'">'+storeName+'</div>' +
                 '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6 search_score">'+grade+'<span class="search_score_peoplenum" >('+data.list[i].gradeNum+'人评分)</span>'+'</div>' +
                 '</div>' +
                 '</ul>' +
