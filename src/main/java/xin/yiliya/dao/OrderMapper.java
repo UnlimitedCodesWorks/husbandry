@@ -55,6 +55,4 @@ public interface OrderMapper {
     Integer updateOrderDone(@Param(value = "serviceId") Integer serviceId,@Param(value = "userId") Integer userId);
 
     String getCancelReason(Integer cancelId);
-
-    String getOrderNum(@Param("serviceId") Integer serviceId,@Param("userId") Integer userId);
 }

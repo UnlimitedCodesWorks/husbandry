@@ -73,7 +73,6 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
             PageInfo<EserviceUser> eserviceUsers = eserviceUserService.getAllReplyByEvaluateId(reply.getEvaluateserviceid(),1,sonPageSize);
             reply.setEserviceUsers(eserviceUsers.getList());
             reply.setEservicePages(eserviceUsers.getPages());
-            reply.setOrderNum(orderMapper.getOrderNum(serviceId,reply.getUser().getUserId()));
         }
         return new PageInfo<EvaluateService>(list);
     }

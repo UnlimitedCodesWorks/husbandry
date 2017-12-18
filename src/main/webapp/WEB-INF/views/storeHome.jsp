@@ -107,22 +107,17 @@
 							<div class="layui-col-md6 layui-col-sm6">
 								<div class="row-in2 layui-row layui-col-space10">
 									<c:if test="${!empty user}">
-									<div class="layui-col-md4 layui-col-sm12">
+									<div class="layui-col-md4 layui-col-sm12" id="concern-container">
 										<c:if test="${!userConcern}">
-										<button class="layui-btn">
+										<button class="layui-btn" onclick="concernStore()">
 											<i class="iconfont">&#xe611;</i> 关注
 										</button>
 										</c:if>
 										<c:if test="${userConcern}">
-										<button class="layui-btn" style="background: #c2c2c2">
+										<button class="layui-btn" style="background: #c2c2c2" onclick="unconcernStore()">
 											<i class="iconfont">&#xe611;</i> 取消关注
 										</button>
 										</c:if>
-									</div>
-									<div class="layui-col-md4 layui-col-sm12">
-										<button class="layui-btn layui-btn-danger">
-											<i class="iconfont">&#xe66e;</i> 投诉
-										</button>
 									</div>
 									</c:if>
 									<c:if test="${!empty store}">
@@ -180,17 +175,17 @@
 	    					<h3>商户服务</h3>
 	    					<hr>
 	    					<div class="layui-fuild" style="padding-bottom: 10px;">
-	    						<div class="layui-row layui-col-space10" style="padding-bottom: 10px;">
+	    						<div class="layui-row layui-col-space10" style="padding-bottom: 10px;" id="service-container">
+									<c:if test="${!empty services}">
+									<c:forEach var="service" items="${services}">
 	    							<!-- 服务 -->
-	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12" id="service-container">
-										<c:if test="${!empty services}">
-											<c:forEach var="service" items="${services}">
+	    							<div class="layui-col-md3 layui-col-sm6 layui-col-xs12" >
 		    							<div class="layui-row row-in" title="${service.serviceName}">
 		    								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-												<img src="${service.serviceImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'">
+												<a href="<%=portPath%>service/detail/${service.offerServiceId}"> <img src="${service.serviceImg}" onerror="this.src='../../resources/images/201291810101174356.jpg'"></a>
 											</div>
 		    								<div class="layui-row row-in2">
-												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="#" class="service-title">${service.serviceName}</a></div>
+												<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="<%=portPath%>service/detail/${service.offerServiceId}" class="service-title">${service.serviceName}</a></div>
 												<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：<c:if test="${service.grade==0}">未评分</c:if><c:if test="${service.grade!=0}">${service.grade}分</c:if></div>
 											</div>
 											<div class="layui-row row-in3">
@@ -198,9 +193,9 @@
 												<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">${service.markNum}笔交易</div>
 											</div>
 		    							</div>
-											</c:forEach>
-										</c:if>
 	    							</div>
+									</c:forEach>
+									</c:if>
 	    						</div>
 		    					<div class="layui-row">
 		    						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
@@ -220,13 +215,15 @@
 							</select>
 						</form>
    						<hr>
+						<c:if test="${!empty user}">
    						<div class="layui-fluid" style="padding: 20px;background: #efefef;">
    							<form class="layui-form" id="comment" action="" style="position: relative;cursor: text;">
    								<p style="font-size: 18px;color: #a8a8a8;position: absolute;left: 10px;top: 5px;"><i class="iconfont">&#xe62b;</i> 发表评论</p>
       							<input type="text" autocomplete="off" class="layui-input" disabled style="cursor: text;">
   							</form>
    						</div>
-   						<div class="layui-fliud comment-wrap" id="evaluate-container">
+						</c:if>
+   						<div class="layui-fliud comment-wrap" id="commet-container">
 							<c:if test="${!empty evaluates}">
 								<c:forEach var="evaluate" items="${evaluates}">
    							<!-- 评论 -->
@@ -289,8 +286,8 @@
 									</c:if>
    								</div>
    							</div>
+									<div class="reply-page" data-pages="${evaluate.estorePages}" data-evaluateId="${evaluate.evaluatestoreid}"></div>
 								</c:forEach>
-								<div class="reply-page" data-pages="${evaluate.estorePages}" data-evaluateId="${evaluate.evaluatestoreid}"></div>
 							</c:if>
    						</div>
    						<div class="layui-fulid" style="height: 120px;">
@@ -335,20 +332,6 @@
   			</form>
 		</div>
 	</div>
-	<!-- 投诉 -->
-	<div id="complaint-modal" class="modal">
-		<div class="layui-fluid">
-			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="color: #FF5722;">投诉</h2>
-			<hr>
-			<form class="layui-form" action="">
-				<div class="layui-form-item layui-form-text">
-					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="complaint-content"></textarea>
-					<p>至多输入300个字</p>
-					<button class="layui-btn" lay-submit id="complaint-submit" style="background: #FF5722;">提交</button>
-				</div>
-			</form>
-		</div>
-	</div>
 </body>
 <script>
     var loginStatus = ${!loginStatus};
@@ -357,6 +340,399 @@
     var servicePageSize = ${servicePageSize};
     var evaluatePageSize = ${evaluatePageSize};
     var sonPageSize = ${sonPageSize};
+    var storeId = ${storeId};
+    var portPath = "<%=portPath%>";
+    var userId ="${user.userid}";
+    var schema = true;
 
+    function support(evaluateId,praise,e) {
+        $.ajax({
+            type: "POST",
+            url: portPath+"store/support.do",
+            data: {
+                evaluateId:evaluateId
+            },
+            dataType: "json",
+            success: function(data){
+                praise++;
+                if(data){
+                    $(e).html('<i class="iconfont">&#xe60a;</i> ('+praise+')');
+                }
+                $(e).removeAttr("onclick");
+            },
+            error: function(jqXHR){
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    }
+
+    function reply(evaluateId) {
+        $("#reply-submit").attr("data-evaluateId",evaluateId);
+        if($(window).width()>=768) {
+            layerWidth = '50%';
+        }
+        else {
+            layerWidth = '80%';
+        }
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '回复',
+                area: layerWidth,
+                anim: 2,
+                content: $('#reply-modal')
+            });
+        });
+    }
+
+    $("#reply-submit").click(function () {
+        var value = $(this).attr("data-evaluateId");
+        var content = $("#reply-content").val();
+        if(content.length!=0){
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"store/replyEvaluate.do",
+                    data: {
+                        estoreId:value,
+                        userId:userId,
+                        content:content
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        layer.msg("回复成功",{
+                            time: 1000
+                        });
+                        setTimeout("location.replace(location.href)",1000);
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+        }
+    });
+
+    function concernStore () {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要关注该商户吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"store/concernStore.do",
+                    data: {
+                        storeId:storeId,
+                        userId:userId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("关注成功",{
+                                time: 1000
+                            });
+                            var node ='<button class="layui-btn" style="background: #c2c2c2" onclick="unconcernStore()">'+
+                                '<i class="iconfont">&#xe611;</i> 取消关注'+
+                            '</button>';
+                            $("#concern-container").html(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+
+    function unconcernStore() {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要取消关注该商户吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"store/unConcernStore.do",
+                    data: {
+                        storeId:storeId,
+                        userId:userId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("取消关注成功",{
+                                time: 1000
+                            });
+                            var node ='<button class="layui-btn" onclick="concernStore()">' +
+                                '<i class="iconfont">&#xe611;</i> 关注' +
+                                '</button>';
+                            $("#concern-container").html(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+
+    function deleteEvaluate(evaluateId) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要删除该评论吗？', {
+                btn: ['确定','关闭'] //按钮d
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"store/deleteEvaluate.do",
+                    data: {
+                        evaluateId:evaluateId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("删除成功",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+    function deleteReply(replyId) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.confirm('您确定要删除该评论吗？', {
+                btn: ['确定', '关闭'] //按钮d
+            }, function () {
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"store/deleteReply.do",
+                    data: {
+                        replyId:replyId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data){
+                            layer.msg("删除成功",{
+                                time: 1000
+                            });
+                            setTimeout("location.replace(location.href)",1000);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            }, function(){
+                //dosomething
+            });
+        });
+    }
+
+
+    function createServices(data) {
+        var container = $("#service-container");
+		container.html("");
+		for(var i=0;i<data.length;i++){
+		    var grade = data[i].grade;
+		    if(grade == 0){
+		        grade = "未评分";
+			}else{
+		        grade = ""+grade+"分";
+			}
+			var servicePath = portPath+"service/detail/"+data[i].offerServiceId;
+		    var node = '<!-- 服务 -->' +
+                '<div class="layui-col-md3 layui-col-sm6 layui-col-xs12" >' +
+                '<div class="layui-row row-in" title="'+data[i].serviceName+'">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
+                '<a href="'+servicePath+'"> <img src="'+data[i].serviceImg+'" onerror="this.src=\'../../resources/images/201291810101174356.jpg\'"></a>' +
+                '</div>' +
+                '<div class="layui-row row-in2">' +
+                '<div class="layui-col-md8 layui-col-sm8 layui-col-xs8"><a href="'+servicePath+'" class="service-title">'+data[i].serviceName+'</a></div>' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs4">评分：'+grade+'</div>' +
+                '</div>' +
+                '<div class="layui-row row-in3">' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].serviceFans+'关注</div>' +
+                '<div class="layui-col-md6 layui-col-sm6 layui-col-xs6">'+data[i].markNum+'笔交易</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+		    container.append(node);
+		}
+    }
+
+    function createEvaluates(data) {
+        var container = $("#commet-container");
+        container.html("");
+        for(var i=0;i<data.length;i++){
+            var userHref = portPath+"userResident/information/"+data[i].user.userId;
+            var replyId = data[i].user.userId;
+            var evaluateId = data[i].evaluatestoreid;
+            var deleteNode="";
+            if(userId ==replyId){
+                deleteNode = '<a href="javascript:void(0)" onclick="deleteEvaluate('+evaluateId+')">删除评论</a>';
+            }
+            var node = '<hr>' +
+                '<div class="row layui-row layui-col-space10">' +
+                '<!-- 主评人头像 -->' +
+                '<div class="layui-col-md2 layui-col-sm2" style="position: relative;min-height: 110px;">' +
+                '<div class="head-wrap">' +
+                '<a href="'+userHref+'"> <img src="'+data[i].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                '</div>' +
+                '</div>' +
+                '<!-- 主容器 -->' +
+                '<div class="layui-col-md10 layui-col-sm10">' +
+                '<!-- 主评人内容 -->' +
+                '<div class="row-in1 layui-row layui-col-space10">' +
+                '<div class="layui-col-md12 layui-col-sm12">' +
+                '<a href="'+userHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
+                deleteNode+'<div style="float:right;">' +
+                '</div>'+
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12" style="min-height: 49.8px;">'+data[i].content+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12">' +
+                '<p>'+data[i].time+'</p>' +
+                '<span class="layui-breadcrumb" lay-separator="|"  >' +
+                '<a href="javascript:void(0);" onclick="support('+data[i].evaluatestoreid+','+data[i].praise+',this)" class="good"><i class="iconfont">&#xe60a;</i> ('+data[i].praise+')</a>' +
+                '<a href="javascript:void(0);" onclick="reply('+data[i].evaluatestoreid+')" class="reply">回复</a>' +
+                '</span>' +
+                '</div>' +
+                '</div>' +
+                '<!-- 回复 -->' ;
+            for(var j=0;j<data[i].estoreUserList.length;j++){
+                var euserHref = portPath+"userResident/information/"+data[i].estoreUserList[j].user.userId;
+                var ereplyId = data[i].estoreUserList[j].user.userId;
+                var edeleteNode="";
+                if(userId==ereplyId){
+                    edeleteNode = '<a href="javascript:void(0)" onclick="deleteReply('+data[i].estoreUserList[j].estoreuserid+')">删除评论</a>';
+                }
+                node+=
+                    '<hr>' +
+                    '<div class="row-in2 layui-row layui-col-space10">' +
+                    '<!-- 回复人头像 -->' +
+                    '<div class="layui-col-md1 layui-col-sm2">' +
+                    '<div class="head-wrap-sub">' +
+                    '<a href="'+euserHref+'"> <img src="'+data[i].estoreUserList[j].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                    '</div>' +
+                    '</div>' +
+                    '<!-- 容器 -->' +
+                    '<div class="layui-col-md11 layui-col-sm10">' +
+                    '<!-- 回复人内容 -->' +
+                    '<div class="row-in-in layui-row layui-col-space10">' +
+                    '<div class="layui-col-md6 layui-col-sm6">' +
+                    ' <a href="'+euserHref+'"><h4>'+data[i].estoreUserList[j].user.userName+'</h4></a>' +
+                    edeleteNode +
+                    '</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12">'+data[i].estoreUserList[j].content+'</div>' +
+                    '<div class="layui-col-md12 layui-col-sm12">' +
+                    '<p>'+data[i].estoreUserList[j].time+'</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' ;
+
+            }
+            node+='<div class="reply-page" data-pages="'+data[i].estorePages+'" data-evaluateId="'+data[i].evaluatestoreid+'"></div>'+'</div>' +
+                '</div>';
+            container.append(node);
+        }
+        layui.use('element', function(){
+            //实例化element
+            var element = layui.element;
+            //初始化动态元素
+            element.init();
+        });
+        layui.use('laypage', function() {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            $('.reply-page').each(function () {
+                var node = $(this);
+                var container = node.prev();
+                var pages = $(this).attr("data-pages");
+                var evaluateId = $(this).attr("data-evaluateId");
+                laypage.render({
+                    elem: node //注意，这里的 test1 是 ID，不用加 # 号
+                    ,count: pages*sonPageSize //数据总数，从服务端得到
+                    ,limit: sonPageSize
+                    ,theme: 'reply'
+                    ,container:container
+                    ,evaluateId:evaluateId
+                    ,jump: function(obj, first){
+                        //首次不执行
+                        if(!first){
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"store/getAllEstoreUserByEstoreId.do",
+                                data: {
+                                    evaluateId:obj.evaluateId,
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createReplys(data,obj.container);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    function createReplys(data,container) {
+        container.html("");
+        for(var i=0;i<data.length;i++){
+            var euserHref = portPath+"userResident/information/"+data[i].user.userId;
+            var ereplyId = data[i].user.userId;
+            var edeleteNode="";
+            if(userId==ereplyId){
+                edeleteNode = '<a href="javascript:void(0)" onclick="deleteReply('+data[i].estoreuserid+')">删除评论</a>';
+            }
+            var node=
+                '<div class="row-in2 layui-row layui-col-space10">' +
+                '<!-- 回复人头像 -->' +
+                '<div class="layui-col-md1 layui-col-sm2">' +
+                '<div class="head-wrap-sub">' +
+                '<a href="'+euserHref+'"> <img src="'+data[i].user.headImg+'" onerror="this.src=\'http://t.cn/RCzsdCq\'"></a>' +
+                '</div>' +
+                '</div>' +
+                '<!-- 容器 -->' +
+                '<div class="layui-col-md11 layui-col-sm10">' +
+                '<!-- 回复人内容 -->' +
+                '<div class="row-in-in layui-row layui-col-space10">' +
+                '<div class="layui-col-md6 layui-col-sm6">' +
+                ' <a href="'+euserHref+'"><h4>'+data[i].user.userName+'</h4></a>' +
+                edeleteNode +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12">'+data[i].content+'</div>' +
+                '<div class="layui-col-md12 layui-col-sm12">' +
+                '<p>'+data[i].time+'</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' ;
+            container.append(node);
+        }
+    }
 </script>
 </html>

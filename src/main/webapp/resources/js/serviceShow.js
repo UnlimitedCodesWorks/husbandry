@@ -169,10 +169,10 @@ jQuery(document).ready(function($) {
     $('#comment-submit').click(function(event) {
         var value = $(this).prevAll('textarea').val();
         var grade = rateComment.value;
-      if (grade==0 && value.length!=0) {
+      if (grade==0 || value.length==0) {
         layer.open({
           title: '提示'
-          ,content: '请先打分'
+          ,content: '请先完善评论'
         });
       }else {
           $.ajax({

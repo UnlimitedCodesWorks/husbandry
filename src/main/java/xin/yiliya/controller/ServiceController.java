@@ -51,7 +51,7 @@ public class ServiceController {
         }else {
             return "redirect:/index.html";
         }
-        int pageSize = 1;
+        int pageSize = 12;
         int sonPageSize = 5;
         PageInfo<EvaluateService> evaluates =
                 serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,pageSize,sonPageSize);
@@ -70,15 +70,15 @@ public class ServiceController {
 
     @RequestMapping(value = "/getAllEvaluateByServiceId.do",method = RequestMethod.POST)
     @ResponseBody
-    public List<EvaluateService> getAllEvaluateByServiceId(Integer serviceId,Boolean schema,int currentPage){
-        int pageSize = 1;
+    public List<EvaluateService> getAllEvaluateByServiceId(Integer serviceId,Boolean schema,Integer currentPage){
+        int pageSize = 12;
         int sonPageSize = 5;
         return serviceEvaluateService.getAllEvaluateByServiceId(serviceId,schema,currentPage,pageSize,sonPageSize).getList();
     }
 
     @RequestMapping(value = "/getAllReplyByEvaluateId.do",method = RequestMethod.POST)
     @ResponseBody
-    public List<EserviceUser> getAllReplyByEvaluateId(Integer evaluateId,int currentPage){
+    public List<EserviceUser> getAllReplyByEvaluateId(Integer evaluateId,Integer currentPage){
         int pageSize = 5;
         return eserviceUserService.getAllReplyByEvaluateId(evaluateId,currentPage,pageSize).getList();
     }

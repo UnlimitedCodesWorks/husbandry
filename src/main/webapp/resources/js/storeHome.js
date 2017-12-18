@@ -11,7 +11,45 @@ jQuery(document).ready(function($) {
     layerWidth = '80%';
   }
 
-  layui.use('element', function(){
+    $('#comment-submit').click(function(event) {
+        var value = $(this).prevAll('textarea').val();
+        if (value.length==0) {
+            layer.open({
+                title: '提示'
+                ,content: '请先完善评论'
+            });
+        }else {
+            $.ajax({
+                type: "POST",
+                url: portPath+"store/evaluateStore.do",
+                data: {
+                    storeId:storeId,
+                    userId:userId,
+                    content:value
+                },
+                dataType: "json",
+                success: function(data){
+                    if(data!=0){
+                        layer.msg("评论成功",{
+                            time: 1000
+                        });
+                        setTimeout("location.replace(location.href)",1000);
+                    }else {
+                        layer.msg("评论失败",{
+                            time: 1000
+                        });
+                    }
+
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        }
+    });
+
+
+    layui.use('element', function(){
     //实例化element
       var element = layui.element;
       //初始化动态元素
@@ -21,7 +59,44 @@ jQuery(document).ready(function($) {
   layui.use('form', function(){
     var form = layui.form;
     form.on('select(mode)', function(data){
-      console.log(data);
+        var value = data.value;
+        if(value==1){
+            schema = true;
+            $.ajax({
+                type: "POST",
+                url: portPath+"store/getAllEvaluateByStoreId.do",
+                data: {
+                    storeId:storeId,
+                    schema:schema,
+                    currentPage:1
+                },
+                dataType: "json",
+                success: function(data){
+                    createEvaluates(data);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        }else if(value==2){
+            schema = false;
+            $.ajax({
+                type: "POST",
+                url: portPath+"store/getAllEvaluateByStoreId.do",
+                data: {
+                    storeId:storeId,
+                    schema:schema,
+                    currentPage:1
+                },
+                dataType: "json",
+                success: function(data){
+                    createEvaluates(data);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        }
     });
   });
 
@@ -38,46 +113,44 @@ jQuery(document).ready(function($) {
       });
     });
 
-    //回复
-    $('.reply').click(function(event) {
-      layer.open({
-        type: 1,
-        title: '回复',
-        area: layerWidth,
-        anim: 2,
-        content: $('#reply-modal')
-      });
-    });
-
-    //投诉
-    $('.layui-btn-danger').click(function(event) {
-      layer.open({
-        type: 1,
-        title: '投诉',
-        area: layerWidth,
-        anim: 2,
-        content: $('#complaint-modal')
-      });
-    });
   });
 
   layui.use('laypage', function(){
-    var laypage = layui.laypage;
-    //回复分页
-    laypage.render({
-      elem: $('.reply-page') //注意，这里的 test1 是 ID，不用加 # 号
-      ,count: 40 //数据总数，从服务端得到
-      ,limit: 8
-      ,theme: 'reply'
-      ,jump: function(obj, first){
-        //obj包含了当前分页的所有参数，比如：
-        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-        console.log(obj.limit); //得到每页显示的条数
-        //首次不执行
-        if(!first){
-          //do something
-        }
-      }
+      var laypage = layui.laypage;
+      //执行一个laypage实例
+      $('.reply-page').each(function () {
+          var node = $(this);
+          var container = node.prev();
+          var pages = $(this).attr("data-pages");
+          var evaluateId = $(this).attr("data-evaluateId");
+          laypage.render({
+              elem: node //注意，这里的 test1 是 ID，不用加 # 号
+              ,count: pages*sonPageSize //数据总数，从服务端得到
+              ,limit: sonPageSize
+              ,theme: 'reply'
+              ,container:container
+              ,evaluateId:evaluateId
+              ,jump: function(obj, first){
+                  //首次不执行
+                  if(!first){
+                      $.ajax({
+                          type: "POST",
+                          url: portPath+"store/getAllEstoreUserByEstoreId.do",
+                          data: {
+                              evaluateId:obj.evaluateId,
+                              currentPage:obj.curr
+                          },
+                          dataType: "json",
+                          success: function(data){
+                              createReplys(data,obj.container);
+                          },
+                          error: function(jqXHR){
+                              alert("发生错误：" + jqXHR.status);
+                          }
+                      });
+                  }
+              }
+          });
     });
 
     //评论分页
@@ -86,12 +159,25 @@ jQuery(document).ready(function($) {
       ,count: evaluatePages*evaluatePageSize //数据总数，从服务端得到
       ,limit: evaluatePageSize
       ,jump: function(obj, first){
-        //obj包含了当前分页的所有参数，比如：
-        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-        console.log(obj.limit); //得到每页显示的条数
         //首次不执行
         if(!first){
           //do something
+            $.ajax({
+                type: "POST",
+                url: portPath+"store/getAllEvaluateByStoreId.do",
+                data: {
+                    storeId:storeId,
+                    schema:schema,
+                    currentPage:obj.curr
+                },
+                dataType: "json",
+                success: function(data){
+                    createEvaluates(data);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
         }
       }
     });
@@ -102,12 +188,24 @@ jQuery(document).ready(function($) {
       ,count: servicePages*servicePageSize //数据总数，从服务端得到
       ,limit: servicePageSize
         ,jump: function(obj, first){
-        //obj包含了当前分页的所有参数，比如：
-        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-        console.log(obj.limit); //得到每页显示的条数
         //首次不执行
         if(!first){
           //do something
+            $.ajax({
+                type: "POST",
+                url: portPath+"store/getAllSimpleOfferServiceByStoreId.do",
+                data: {
+                    storeId:storeId,
+                    currentPage:obj.curr
+                },
+                dataType: "json",
+                success: function(data){
+                    createServices(data);
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
         }
       }
     });

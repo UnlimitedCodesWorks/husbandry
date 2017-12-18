@@ -24,8 +24,6 @@ public class EvaluateService {
 
     private Integer eservicePages;
 
-    private String orderNum;
-
     public Integer getUserId() {
         return userId;
     }
@@ -107,11 +105,4 @@ public class EvaluateService {
         this.eservicePages = eservicePages;
     }
 
-    public String getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
-    }
 }
