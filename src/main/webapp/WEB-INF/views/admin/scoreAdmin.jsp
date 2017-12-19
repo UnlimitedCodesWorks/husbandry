@@ -163,7 +163,7 @@
                                 <h3 class="box-title col-md-7 col-sm-5 col-xs-12" style="min-height: 34.4px;line-height: 34.4px;">评分管理</h3>
                                 <form class="form-inline col-md-5 col-sm-7 col-xs-12" action="<%=scoreSearchPath%>" method="post">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <input type="text" name="input" class="form-control" autocomplete="off" placeholder="请输入您要筛选的分数">
+                                        <input required="required" type="text" name="input" class="form-control" autocomplete="off" placeholder="请输入您要筛选的分数">
                                     </div>
                                     <button type="submit" class="btn btn-primary search" data-toggle="tooltip" data-placement="right" title="将筛选出该分数以下的所有商户">筛选</button>
                                 </form>
