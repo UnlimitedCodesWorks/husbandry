@@ -118,7 +118,7 @@
                                         <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
                                             <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>store/information/${storeId}'"><i class="fa fa-user"></i>商户中心</button>
-                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/exit.do'"><i class="fa fa-sign-out"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>login/exit'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
