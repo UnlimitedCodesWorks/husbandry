@@ -92,11 +92,11 @@
 									</div>
 									<div class="layui-col-md12">
 										<el-rate
-	    									v-model="${storeInfo.grade}"
+	    									v-model="<fmt:formatNumber type="number" value="${storeInfo.grade/2}" maxFractionDigits="1"/>"
 	  										disabled
 					  						show-score
 					  						text-color="#ff9900"
-					  						score-template="${storeInfo.grade}">
+					  						score-template="<fmt:formatNumber type="number" value="${storeInfo.grade/2}" maxFractionDigits="1"/>">
 				  						</el-rate>
 									</div>
 									<div class="layui-col-md12">
@@ -555,7 +555,7 @@
 		    if(grade == 0){
 		        grade = "未评分";
 			}else{
-		        grade = ""+grade+"分";
+		        grade = ""+(grade/2)+"分";
 			}
 			var servicePath = portPath+"service/detail/"+data[i].offerServiceId;
 		    var node = '<!-- 服务 -->' +

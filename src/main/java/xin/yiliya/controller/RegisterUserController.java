@@ -40,9 +40,9 @@ public class RegisterUserController {
     }
 
     @RequestMapping(value = "/registerUser.do",method = RequestMethod.POST)
-    public String registerUserDo(RegisterUser registerUser){
-        Boolean b=userService.userRegister(registerUser);
-        return "redirect:/login/user.html";
+    @ResponseBody
+    public Boolean registerUserDo(RegisterUser registerUser){
+        return userService.userRegister(registerUser);
     }
 
 }
