@@ -16,6 +16,7 @@
     <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/flat-blue.css">
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/cropper.css">
 
         <!-- Javascript Libs -->
     <script type="text/javascript" src="../../../resources/js/jquery-3.2.1.min.js"></script>
@@ -31,7 +32,69 @@
     <script type="text/javascript" src="../../../resources/js/ace/theme-github.js"></script>
     <!-- Javascript -->
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
+    <script type="text/javascript" src="../../../resources/js/cropper.js"></script>
     <!-- <script type="text/javascript" src="../../../resources/js/index.js"></script> -->
+    <style type="text/css">
+        .head-wrap {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .head-wrap div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .head-wrap div:hover {
+            opacity: 0.6;
+        }
+
+        .head-wrap div a {
+            height: 100%;
+            line-height: 100px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .head-wrap div a:hover {
+            color: #fff;
+        }
+
+        .head-wrap img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload {
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+            float: left;
+        }
+
+        .upload input {
+            opacity: 0;
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="flat-blue">
@@ -215,10 +278,334 @@
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    
+                    <form class="form-horizontal">
+                        <!-- 商户名称 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label for="store-name" class="col-sm-3 control-label">商户名称</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="store-name" placeholder="商户名称">
+                                        <span class="help-block">注：名称遵循xxx格式</span>
+                                        <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 商户账号 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label for="store-account" class="col-sm-3 control-label">商户账号</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="store-account" placeholder="商户账号" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 联系电话 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label for="store-tel" class="col-sm-3 control-label">联系电话</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="store-tel" placeholder="联系电话">
+                                        <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 邮箱地址 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label for="store-email" class="col-sm-3 control-label">邮箱地址</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="store-email" placeholder="邮箱地址">
+                                        <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 商户所在地 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商户所在地</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option>省</option>
+                                            <option>浙江省</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option>市</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option>区</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 商户详细信息 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商户详细信息</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" rows="6" style="resize: none;" placeholder="商户详细信息"></textarea>
+                                        <span class="help-block">剩余x字</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 修改头像 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">修改头像</label>
+                                    <div class="col-sm-3">
+                                        <div class="head-wrap">
+                                            <div>
+                                                <a href="" data-toggle="modal" data-target="#head-modal">修改头像</a>
+                                            </div>
+                                            <img src="http://t.cn/RCzsdCq">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span class="help-block">注：头像要求xxx格式</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 修改LOGO -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">修改LOGO</label>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#logo-modal"><i class="icon fa fa-pencil-square-o"></i> 点击修改</button>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span class="help-block">注：LOGO要求xxx格式</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 修改密码 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">修改密码</label>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#password-modal"><i class="icon fa fa-pencil-square-o"></i> 点击修改</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 保存 -->
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-3">
+                                        <button type="button" class="btn btn-primary" style="width: 100%;">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 修改头像 -->
+    <div class="modal fade" id="head-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改头像</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="head-wrap" style="height: 500px;">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary upload" id="upload">
+                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择图片
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="head-btn">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改logo -->
+    <div class="modal fade" id="logo-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改LOGO</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="logo-wrap" style="height: 500px;">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary upload" id="upload2">
+                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择图片
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="logo-btn">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改密码 -->
+    <div class="modal fade" id="password-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <!-- 原密码 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">原密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" placeholder="原密码">
+                                    <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                </div>
+                            </div>
+                            <!-- 新密码 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">新密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" placeholder="新密码">
+                                    <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                </div>
+                            </div>
+                            <!-- 确认密码 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">确认密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" placeholder="确认密码">
+                                    <span class="help-block" style="color: red;display: none;">错误信息</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="password-btn">修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            var cropper;
+            var cropper2;
+            $('#head-modal').on('shown.bs.modal', function () {
+                if(cropper == undefined) {
+                    cropper = $('#head-wrap img').cropper({
+                        aspectRatio: 1 / 1,
+                        // minContainerWidth: 500,
+                        crop: function(data) {
+                            // Output the result data for cropping image.
+                        }
+                    });
+                }
+                cropper.cropper('reset').cropper('replace',"../../../resources/images/家居9.jpg");
+            });
+
+            $('#logo-modal').on('shown.bs.modal', function () {
+                if(cropper2 == undefined) {
+                    cropper2 = $('#logo-wrap img').cropper({
+                        aspectRatio: 16 / 9,
+                        // minContainerWidth: 500,
+                        crop: function(data) {
+                            // Output the result data for cropping image.
+                        }
+                    });
+                }
+                cropper2.cropper('reset').cropper('replace',"../../../resources/images/家居9.jpg");
+            });
+
+            //选择头像
+            $("#upload input").change(function(event) {
+                let $file = $(this);
+                let fileObj = $file[0];
+                let windowURL = window.URL || window.webkitURL;
+                let dataURL;
+                let $img = $("#head-wrap img");
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                    //cropper
+                    $.fn.cropper;
+                    cropper.cropper('reset').cropper('replace',dataURL);
+                }
+                else{
+                    dataURL = $file.val();
+                    let imgObj = $("#head-wrap img");
+                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                }
+            });
+
+            //选择LOGO
+            $("#upload2 input").change(function(event) {
+                let $file = $(this);
+                let fileObj = $file[0];
+                let windowURL = window.URL || window.webkitURL;
+                let dataURL;
+                let $img = $("#logo-wrap img");
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                    //cropper
+                    $.fn.cropper2;
+                    cropper2.cropper('reset').cropper('replace',dataURL);
+                }
+                else{
+                    dataURL = $file.val();
+                    let imgObj = $("#logo-wrap img");
+                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                }
+            });
+
+            //点击头像模态框的修改
+            $("#head-btn").click(function(event) {
+                let canvas;
+                canvas = cropper.cropper('getCroppedCanvas');
+                canvas.toBlob(function(blob) {
+                    url = URL.createObjectURL(blob);
+                    $(".head-wrap img").attr('src', url);
+                });
+                $("#head-modal").modal('hide');
+            });
+
+            //点击LOGO模态框的修改
+            $("#logo-btn").click(function(event) {
+                let canvas;
+                canvas = cropper2.cropper('getCroppedCanvas');
+
+                $("#logo-modal").modal('hide');
+            });
+        });
+    </script>
 </body>
 </html>
