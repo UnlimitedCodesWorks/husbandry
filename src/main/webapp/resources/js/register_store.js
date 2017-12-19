@@ -54,7 +54,7 @@ layui.use('layer', function() {
         });
         if (cropper1 == undefined) {
             cropper1 = $('#head-img-wrap1 img').cropper({
-                aspectRatio: 1 / 1,
+                aspectRatio: 16 / 9,
                 // minContainerWidth: 500,
                 crop: function (data) {
                     // Output the result data for cropping image.
