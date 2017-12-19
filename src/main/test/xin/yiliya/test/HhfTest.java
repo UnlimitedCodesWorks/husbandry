@@ -76,6 +76,9 @@ public class HhfTest {
     @Autowired
     EvaluateStoreService evaluateStoreService;
 
+    @Autowired
+    ServiceEvaluateService serviceEvaluateService;
+
     @Test
     public void test() throws IOException, ImageFormatException, InvocationTargetException, IllegalAccessException {
         //管理员登录
@@ -342,8 +345,14 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(adminService.getStoresByGrade((float)6,1,2),true));
 
         //获得某月份的厂商评分曲线信息
-        StoreEvalutePerMonth storeEvalutePerMonth=evaluateStoreService.getGradePerMonthByStoreId(1,"58到家",new Date());
-        System.out.print(JSON.toJSONString(storeEvalutePerMonth,true));
+//        StoreEvalutePerMonth storeEvalutePerMonth=evaluateStoreService.getGradePerMonthByStoreId(1,"58到家",new Date());
+//        System.out.print(JSON.toJSONString(storeEvalutePerMonth,true));
 //        System.out.print(storeEvalutePerMonth.getDays());
+
+        //根据厂商id获取简单服务详情（可分页）
+//        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,1,100),true));
+
+        //获得某月份的服务评分曲线信息
+        System.out.print(JSON.toJSONString(serviceEvaluateService.getGradePerMonthBySeviceId(1,"服务一",new Date()),true));
     }
 }

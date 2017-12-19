@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/storeAdmin",method = RequestMethod.GET)
+@RequestMapping(value = "/storeAdmin/storeScore",method = RequestMethod.GET)
 public class StoreScoreController {
 
     @Resource
@@ -34,7 +34,7 @@ public class StoreScoreController {
     @Resource
     HttpSession httpSession;
 
-    @RequestMapping(value = "/score/{storeId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{storeId}",method = RequestMethod.GET)
     public String storeScoreHTML(@PathVariable("storeId") Integer storeId,Model model){
         Store store = (Store) httpSession.getAttribute("storeBean");
         model.addAttribute("storeInfo",storeService.getStoreInfo(storeId));

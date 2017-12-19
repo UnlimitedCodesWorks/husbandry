@@ -150,7 +150,7 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="store_information.html">修改商户资料</a>
                                             </li>
-                                            <li class="active"><a href="javascrapt:">评分管理</a>
+                                            <li class="active"><a href="javascript:">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -186,7 +186,7 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNews}</span></a>
                                             </li>
                                             <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
@@ -207,7 +207,7 @@
                                             </li>
                                             <li><a href="add_service.html">添加服务</a>
                                             </li>
-                                            <li><a href="service_score.html">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore/${storeId}">服务评分</a>
                                             </li>
                                             <li><a href="service_template.html">服务模板</a>
                                             </li>
