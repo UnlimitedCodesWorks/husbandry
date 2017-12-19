@@ -48,8 +48,8 @@ public class RegisterStoreController {
     }
 
     @RequestMapping(value = "/register.do",method = RequestMethod.POST)
-    public String register(@ModelAttribute("registerStore") RegisterStore store){
-        Integer b = storeService.register(store);
-        return "redirect:/index.html";
+    @ResponseBody
+    public Integer register(@ModelAttribute("registerStore") RegisterStore store){
+        return storeService.register(store);
     }
 }

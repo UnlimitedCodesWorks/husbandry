@@ -31,6 +31,8 @@ layui.use('layer', function() {
     });
     $(".head_qd").click(function(){
         cropper.cropper("getCroppedCanvas").toBlob(function (blob) {
+            userBlob = blob;
+            userMIME = blob.type;
             var url = URL.createObjectURL(blob);
             $(".register_user_headingimg").onload = function() {
                 // no longer need to read the blob so it's revoked

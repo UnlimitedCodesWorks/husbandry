@@ -28,7 +28,7 @@ String registerPath =
     </ul>
     <div class="register_store_l"></div>
     <div class="register_store_bgimg"></div>
-    <f:form cssClass="layui-form"   action="<%=registerPath%>" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
+    <f:form  class="layui-form"   modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
     <div class="layui-row">
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_main">
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title">商户注册</div>
@@ -38,25 +38,25 @@ String registerPath =
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_username">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_username_text">账户名：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input name="username" path="registNum"  required="required" lay-verify="required" placeholder="请输入用户名" autocomplete="off" cssClass="layui-input register_store_username_text1" />
+                                <input name="registNum"  required="required" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input register_store_username_text1" />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_password">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_password_text">密码：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:password  name="password" path="password" required="required" lay-verify="required" placeholder="8~16位组合" autocomplete="off" cssClass="layui-input register_store_password_text1" />
+                                <input type="password" name="password"  required="required" lay-verify="required" placeholder="8~16位组合" autocomplete="off" class="layui-input register_store_password_text1" />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_phone">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_phone_text">手机号：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input  name="storephone" path="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" cssClass="layui-input register_store_phone_text1"  />
+                                <input name="phone" required="required" lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input register_store_phone_text1"  />
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_email">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_email_text">邮箱：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input  name="storeemail" path="email" required="required" lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" cssClass="layui-input register_store_eamil_text1" />
+                                <input  name="email" required="required" lay-verify="required" placeholder="请输入邮箱号" autocomplete="off" class="layui-input register_store_eamil_text1" />
                             </span>
                         </div>
 
@@ -83,7 +83,7 @@ String registerPath =
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_storename">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_email_text">商户名：</span>
                             <span class="layui-col-md7 layui-col-sm7 layui-col-xs7">
-                                <f:input  path="storeName" required="required" lay-verify="required" placeholder="请输入商户的名字" autocomplete="off" class="layui-input register_store_eamil_text1" />
+                                <input  name="storeName" required="required" lay-verify="required" placeholder="请输入商户的名字" autocomplete="off" class="layui-input register_store_eamil_text1" />
                             </span>
                         </div>
                     </div>
@@ -112,12 +112,13 @@ String registerPath =
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs4">
                                 <input type="file" name="aptitudeImgs" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)">
                             </span>
-                            <div id="register_store_porperty_show" class=" layui-col-md12 layui-col-sm12 layui-col-xs12 register_store_porperty_show">
+                            <div id="register_store_porperty_show" class="layui-col-md12 layui-col-sm12 layui-col-xs12 register_store_porperty_show">
                             </div>
                         </div>
                     </div>
+                </f:form>
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-                        <button type="submit" class="layui-col-md4 layui-col-md-offset4 layui-col-sm6 layui-col-sm-offset3 layui-col-xs8 layui-col-xs-offset2 layui-btn layui-btn-primary register_store_success">完成注册</button>
+                        <button type="button" class="layui-col-md4 layui-col-md-offset4 layui-col-sm6 layui-col-sm-offset3 layui-col-xs8 layui-col-xs-offset2 layui-btn layui-btn-primary register_store_success" id="register-store">完成注册</button>
                     </div>
             </div>
         </div>
@@ -162,7 +163,6 @@ String registerPath =
                 </div>
             </div>
         </div>
-    </f:form>
 </body>
 <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../resources/layui.js"></script>
@@ -173,6 +173,11 @@ String registerPath =
     var city = $("#city");
     var area = $("#area");
     var portPath = "<%=portPath%>";
+    var loginPath = portPath+"login/user.html";
+    var storeHeadBlob;
+    var storeHeadMIME="";
+    var storeLogoBlob;
+    var storeLogoMIME="";
     province.change(function (e) {
         city.html("");
         area.html("");
@@ -218,6 +223,41 @@ String registerPath =
                 alert("发生错误：" + jqXHR.status);
             }
         });
-    })
+    });
+
+    $("#register-store").click(function () {
+        var formData = new FormData(document.querySelector("form"));
+        var headSuffix = storeHeadMIME.split("/")[1];
+        var headFileName = "blobImage."+headSuffix;
+        var logoSuffix = storeLogoMIME.split("/")[1];
+        var logoFileName = "blobImage."+ logoSuffix;
+        formData.append("headImg",storeHeadBlob,headFileName);
+        formData.append("logoImg",storeLogoBlob,logoFileName);
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            $.ajax({
+                type: "post",
+                url: "<%=registerPath%>",
+                cache: false,
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    if (data!=0) {
+                        layer.msg("注册商户成功！审核结果会发邮件到您的邮箱",{
+                            time: 2000
+                        });
+                        setTimeout("location.replace(loginPath)",2000);
+                    } else {
+                        alert("注册商户失败!请检查有没有未填的项");
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown, data) {
+                    alert(errorThrown);
+                }
+            });
+        });
+    });
 </script>
 </html>
