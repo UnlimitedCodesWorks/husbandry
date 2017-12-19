@@ -17,6 +17,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../resources/css/layui.css">
     <link rel="stylesheet" href="../../resources/css/register_user.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/cropper.css">
     <title>智慧社区-用户注册</title>
 </head>
 
@@ -27,11 +28,11 @@
     </ul>
     <div class="register_user_l"></div>
     <div class="register_user_bgimg"></div>
-
+    <f:form class="layui-form" method="post" action="<%=registerPath%>" modelAttribute="registerUser" enctype="multipart/form-data">
     <div class="layui-row layui-col-md8 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset2 register_user_main">
         <div class="layui-col-md10 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 layui-col-md-offset1 register_user_title"><span class="layui-icon">&#xe612;</span> 用户注册</div>
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-            <f:form class="layui-form" method="post" action="<%=registerPath%>" modelAttribute="registerUser" enctype="multipart/form-data">
+
                 <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_registernum">
                         <span class="layui-col-md3 layui-col-sm4 layui-col-xs4 register_user_registernum_text">用户名：</span>
@@ -65,7 +66,7 @@
                         <img src="../../resources/images/house.jpg" class="register_user_headingimg" >
                         </span>
                         <span class="layui-col-sm4 layui-col-xs3">
-                            <input name="headImg" type="file" class="register_user_upload" lay-verify="required" autocomplete="off" onchange="imgPreview(this)"/>
+                          <button type="button" class="layui-btn layui-btn-primary register_user_upload">选择头像</button>
                         </span>
                     </div>
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_user_username">
@@ -96,12 +97,34 @@
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                     <button type="submit" class="layui-col-md4 layui-col-sm4  layui-col-xs12 layui-col-sm-offset4 layui-col-md-offset4 layui-btn layui-btn-primary register_user_success">完成注册</button>
                 </div>
-            </f:form>
         </div>
     </div>
+    //头像
+        <div id="head">
+            <div class="layui-fuild">
+                <div class="layui-row">
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <a href="javascript:" class="a-upload">
+                            <input type="file" name="" id="btn-upload"><i class="layui-icon">&#xe67c;</i> 选择图片
+                        </a>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <button class="layui-btn head_qd" type="button">
+                            <i class="iconfont">&#xe62b;</i> 确定
+                        </button>
+                    </div>
+                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
+                        <img id="head-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:form>
     <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/layui.all.js"></script>
+    <script type="text/javascript" src="../../resources/layui.js"></script>
     <script type="text/javascript" src="../../resources/js/register_user.js"></script>
+    <script src="../../resources/js/cropper.js"></script>
+
     <script type="text/javascript">
         var province = $("#province");
         var city = $("#city");

@@ -17,6 +17,7 @@ String registerPath =
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../resources/css/layui.css">
     <link rel="stylesheet" href="../../resources/css/register_store.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/cropper.css">
     <title>智慧社区-商户注册</title>
 </head>
 
@@ -27,11 +28,12 @@ String registerPath =
     </ul>
     <div class="register_store_l"></div>
     <div class="register_store_bgimg"></div>
+    <f:form cssClass="layui-form"   action="<%=registerPath%>" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
     <div class="layui-row">
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_main">
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title">商户注册</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
-                <f:form cssClass="layui-form"   action="<%=registerPath%>" modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
+
                     <div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_username">
                             <span class="layui-col-md4 layui-col-sm4 layui-col-xs4 register_store_username_text">账户名：</span>
@@ -66,7 +68,7 @@ String registerPath =
                             <img src="../../resources/images/house.jpg" class="register_store_headingimg" >
                             </span>
                             <span class="layui-col-sm4 layui-col-xs4">
-                                <input type="file" name="headImg"  class="register_store_upload" required lay-verify="required" autocomplete="off" onchange="imgPreview(this)">
+                               <button type="button" class="layui-btn layui-btn-primary register_store_upload">选择头像</button>
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item">
@@ -75,7 +77,7 @@ String registerPath =
                             <img src="../../resources/images/house.jpg" class="register_store_logoimg" >
                             </span>
                             <span class="layui-col-sm4 layui-col-xs4">
-                                <input type="file" name="logoImg" class="register_store_logoupload" required lay-verify="required" autocomplete="off" onchange="imgPreview1(this)">
+                                <button type="button" class="layui-btn layui-btn-primary register_store_logoupload">选择图片</button>
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_storename">
@@ -117,15 +119,55 @@ String registerPath =
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
                         <button type="submit" class="layui-col-md4 layui-col-md-offset4 layui-col-sm6 layui-col-sm-offset3 layui-col-xs8 layui-col-xs-offset2 layui-btn layui-btn-primary register_store_success">完成注册</button>
                     </div>
-                </f:form>
             </div>
         </div>
     </div>
-
+        //商家头像
+        <div id="head">
+            <div class="layui-fuild">
+                <div class="layui-row">
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <a href="javascript:" class="a-upload">
+                            <input type="file" name="" id="btn-upload"><i class="layui-icon">&#xe67c;</i> 选择图片
+                        </a>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <button class="layui-btn head_qd" type="button">
+                            <i class="iconfont">&#xe62b;</i> 确定
+                        </button>
+                    </div>
+                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
+                        <img id="head-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+        //商家LOGO
+        <div id="head1">
+            <div class="layui-fuild">
+                <div class="layui-row">
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <a href="javascript:" class="a-upload">
+                            <input type="file" name="" id="btn-upload1"><i class="layui-icon">&#xe67c;</i> 选择图片
+                        </a>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                        <button class="layui-btn head_qd1" type="button">
+                            <i class="iconfont">&#xe62b;</i> 确定
+                        </button>
+                    </div>
+                    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap1">
+                        <img id="head-img1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:form>
 </body>
 <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../resources/layui.all.js"></script>
+<script type="text/javascript" src="../../resources/layui.js"></script>
 <script type="text/javascript" src="../../resources/js/register_store.js"></script>
+<script src="../../resources/js/cropper.js"></script>
 <script type="text/javascript">
     var province = $("#province");
     var city = $("#city");
