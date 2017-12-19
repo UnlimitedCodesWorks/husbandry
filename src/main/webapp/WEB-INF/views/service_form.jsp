@@ -47,7 +47,7 @@
     </header>
     <div class="layui-row layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_second"></div>
     <div class="layui-row layui-col-md10 layui-col-sm10 layui-col-xs12 layui-col-sm-offset1  layui-col-md-offset1">
-        <div class="layui-row layui-col-md7  service_form_main">
+        <div class="layui-row layui-col-md7 layui-col-sm12 layui-col-xs12  service_form_main">
             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_title">${serviceName}服务具体需求</div>
             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_hint">您需要填写对服务的具体需求，以便您和服务商进行更好的沟通：</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-sm-offset1 layui-col-xs10 layui-col-xs-offset1 service_form_main_qa">
@@ -101,7 +101,43 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-md4">预约服务简单流程 等王总页面做好一起总和123</div>
+        <div class="layui-col-md5 layui-col-sm12 layui-col-xs12">
+            <div class="layui-col-md11 layui-col-sm12 layui-col-xs12 layui-col-md-offset1 service_advert">
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_title">
+                    <i class="iconfont">&#xe6e9;</i> Husbandry makes housewifery easy.
+                </div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_spt1">
+                    <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm12 layui-col-xs12 service_advert_spt1_title">
+                        <i class="iconfont">&#xe619;</i>
+                        <font>搜索您需要的家政服务</font>
+                    </div>
+                    <div class="layui-col-md9 layui-col-sm12 layui-col-xs12 layui-col-md-offset1 service_advert_spt1_img">
+                        <img src="../../resources/images/stp1.png">
+                    </div>
+                </div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_spt2">
+                    <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm12 layui-col-xs12 service_advert_spt2_title">
+                        <i class="iconfont">&#xe611;</i>
+                        <font>选择预约您中意的家政服务</font>
+                    </div>
+                    <div class="layui-col-md9 layui-col-sm12 layui-col-xs12 layui-col-md-offset1 service_advert_spt2_img">
+                        <img src="../../resources/images/stp1.png">
+                    </div>
+                </div>
+
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_spt3">
+                    <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm12 layui-col-xs12 service_advert_spt3_title">
+                        <i class="iconfont">&#xe61b;</i>
+                        <font>填写一份需求详情问卷</font>
+                    </div>
+                    <div class="layui-col-md9 layui-col-sm12 layui-col-xs12 layui-col-md-offset1 service_advert_spt3_img">
+                        <img src="../../resources/images/stp3.png">
+                    </div>
+                </div>
+                <!-- <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_spt2"><i class="iconfont">&#xe611;</i></div>
+                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_advert_spt3"><i class="iconfont">&#xe61b;</i></div> -->
+            </div>
+        </div>
     </div>
     <div class="layui-row layui-col-md12 layui-col-sm12 layui-col-xs12">
         <footer>

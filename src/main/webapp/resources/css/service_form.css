@@ -119,3 +119,106 @@ footer p {
     text-align: center;
     padding-top: 50px;
 }
+.service_advert {
+    background-color: #f3f3f3;
+}
+
+.service_advert_title {
+    font-size: 16px;
+    color: #393D49;
+    font-weight: bold;
+    margin-top: 20px;
+    padding-left: 10px;
+}
+
+.service_advert_title i {
+    color: #393D49;
+    font-weight: normal;
+}
+
+.service_advert_spt1 {
+    margin-top: 60px;
+    padding-left: 12px;
+}
+
+@font-face {
+    font-family: 'iconfont';
+    /* project id 514080 */
+    src: url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.eot');
+    src: url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.eot?#iefix') format('embedded-opentype'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.woff') format('woff'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.ttf') format('truetype'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.svg#iconfont') format('svg');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    color: #009688;
+    font-size: 30px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.service_advert_spt1_title font {
+    font-size: 15px;
+    margin-left: 5px;
+    font-family: 黑体;
+}
+
+.service_advert_spt1_title i {
+    font-size: 23px;
+}
+
+.service_advert_spt1_img {
+    margin-top: 30px;
+}
+
+.service_advert_spt1_img img {
+    width: 100%;
+}
+
+.service_advert_spt2 {
+    margin-top: 100px;
+    padding-left: 12px;
+}
+
+.service_advert_spt2_title font {
+    font-size: 15px;
+    margin-left: 5px;
+    font-family: 黑体;
+}
+
+.service_advert_spt2_title i {
+    font-size: 23px;
+}
+
+.service_advert_spt2_img {
+    margin-top: 30px;
+}
+
+.service_advert_spt2_img img {
+    width: 100%;
+}
+
+.service_advert_spt3 {
+    margin-top: 100px;
+    padding-left: 12px;
+    margin-bottom: 50px;
+}
+
+.service_advert_spt3_title font {
+    font-size: 15px;
+    margin-left: 5px;
+    font-family: 黑体;
+}
+
+.service_advert_spt3_title i {
+    font-size: 23px;
+}
+
+.service_advert_spt3_img {
+    margin-top: 30px;
+}
+
+.service_advert_spt3_img img {
+    width: 100%;
+}
