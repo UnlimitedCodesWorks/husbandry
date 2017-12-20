@@ -353,6 +353,6 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,1,100),true));
 
         //获得某月份的服务评分曲线信息
-        System.out.print(JSON.toJSONString(serviceEvaluateService.getGradePerMonthBySeviceId(1,"服务一",new Date()),true));
+        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,2,2),true));
     }
 }

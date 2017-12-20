@@ -14,20 +14,11 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
-@RequestMapping(value = "/storeAdmin/serviceScore",method = RequestMethod.GET)
+@RequestMapping(value = "/storeAdmin")
 public class ServiceScoreController {
 
     @Resource
     HttpSession httpSession;
-
-    @Resource
-    StoreService storeService;
-
-    @Resource
-    StoreNewsService storeNewsService;
-
-    @Resource
-    EvaluateStoreService evaluateStoreService;
 
     @Resource
     OfferServiceService offerServiceService;
@@ -35,22 +26,19 @@ public class ServiceScoreController {
     @Resource
     ServiceEvaluateService serviceEvaluateService;
 
-    @RequestMapping(value = "/{storeId}",method = RequestMethod.GET)
-    public String serviceScoreHTML(@PathVariable("storeId") Integer storeId,Model model){
+    @RequestMapping(value = "/serviceScore.html",method = RequestMethod.GET)
+    public String serviceScoreHTML(Model model){
         Store store = (Store) httpSession.getAttribute("storeBean");
-        model.addAttribute("storeInfo",storeService.getStoreInfo(storeId));
-        model.addAttribute("storeId",storeId);
-        model.addAttribute("unReadNews",storeNewsService.getUnreadNumByStoreId(storeId));
-        model.addAttribute("score",evaluateStoreService.getGradePerMonthByStoreId(storeId,store.getStoreName(),new Date()));
-        model.addAttribute("serviceList",offerServiceService.getAllSimpleOfferServiceByStoreId(storeId,1,2).getList());
-        model.addAttribute("pages",offerServiceService.getAllSimpleOfferServiceByStoreId(storeId,1,2).getPages());
+        model.addAttribute("storeId",store.getStoreid());
+        model.addAttribute("serviceList",offerServiceService.getAllSimpleOfferServiceByStoreId(store.getStoreid(),1,2).getList());
+        model.addAttribute("pages",offerServiceService.getAllSimpleOfferServiceByStoreId(store.getStoreid(),1,2).getPages());
         return "/storeAdmin/service_score";
     }
 
     @RequestMapping(value = "/page.do",method = RequestMethod.GET)
     @ResponseBody
-    public PageInfo<OfferServiceSimple> serviceScorePage(@RequestParam(value = "currentPage")Integer currentPage,
-                                                         @RequestParam(value = "storeId")Integer storeId){
+    public PageInfo<OfferServiceSimple> serviceScorePage(@RequestParam(value = "storeId")Integer storeId,
+                                                         @RequestParam(value = "currentPage")Integer currentPage){
         return offerServiceService.getAllSimpleOfferServiceByStoreId(storeId,currentPage,2);
     }
 
