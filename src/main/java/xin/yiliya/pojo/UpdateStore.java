@@ -24,6 +24,10 @@ public class UpdateStore {
 
     private String areaId;
 
+    private String provinceId;
+
+    private String cityId;
+
     private String detailInfo;
 
     public String getHeadLink() {
@@ -112,5 +116,21 @@ public class UpdateStore {
 
     public void setDetailInfo(String detailInfo) {
         this.detailInfo = detailInfo;
+    }
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(String provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 }

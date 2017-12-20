@@ -96,7 +96,7 @@
 	  										disabled
 					  						show-score
 					  						text-color="#ff9900"
-					  						score-template="<fmt:formatNumber type="number" value="${storeInfo.grade/2}" maxFractionDigits="1"/>">
+					  						score-template="<fmt:formatNumber type="number" value="${storeInfo.grade}" maxFractionDigits="1"/>">
 				  						</el-rate>
 									</div>
 									<div class="layui-col-md12">
@@ -122,7 +122,7 @@
 									</c:if>
 									<c:if test="${!empty store}">
 									<div class="layui-col-md4 layui-col-sm12">
-										<button class="layui-btn layui-btn-normal" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/information.html'">
+										<button class="layui-btn layui-btn-normal" onclick="window.location.href='<%=portPath%>storeAdmin/information.html'">
 											<i class="iconfont">&#xe722;</i>后台管理
 										</button>
 									</div>
