@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="../../../resources/css/checkbox3.min.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/dataTables.bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/select2.min.css">
     <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/flat-blue.css">
@@ -21,19 +20,21 @@
         <!-- Javascript Libs -->
     <script type="text/javascript" src="../../../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/bootstrap.min.js"></script>
-<!--             <script type="text/javascript" src="../../../resources/js/Chart.js"></script> -->
     <script type="text/javascript" src="../../../resources/js/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/jquery.matchHeight-min.js"></script>
     <script type="text/javascript" src="../../../resources/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../../resources/js/select2.full.min.js"></script>
     <script type="text/javascript" src="../../../resources/js/ace/ace.js"></script>
     <script type="text/javascript" src="../../../resources/js/ace/mode-html.js"></script>
     <script type="text/javascript" src="../../../resources/js/ace/theme-github.js"></script>
     <!-- Javascript -->
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
     <script type="text/javascript" src="../../../resources/layui.js"></script>
-    <!-- <script type="text/javascript" src="../../../resources/js/index.js"></script> -->
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body class="flat-blue">
@@ -180,9 +181,9 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 145px;">0</span></a>
                                             </li>
-                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 145px;">0</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -217,21 +218,17 @@
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <form class="form-inline pull-right">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="查找订单">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option>按订单号搜索</option>
-                                    <option>按发起人搜索</option>
-                                </select>
-                            </div>
+                            <input type="text" class="form-control" placeholder="查找订单">
+                            <select class="form-control">
+                                <option>按订单号搜索</option>
+                                <option>按发起人搜索</option>
+                            </select>
                             <button type="submit" class="btn btn-info">搜索</button>
                         </form>
                     </div>
-                    <div class="col-md-12 table-responsive" style="margin-bottom: 50px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" style="margin-bottom: 50px;">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
