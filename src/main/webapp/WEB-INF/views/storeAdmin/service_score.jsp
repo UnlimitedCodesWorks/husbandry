@@ -68,18 +68,18 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">${unReadNews}</span>
+                                    新消息 <span class="badge pull-right">${unReadNewsNum}</span>
                                 </li>
                                 <li class="message" onclick="javascript:window.location.href=''" style="cursor: pointer;">
-                                    您有${unReadNews}条新消息
+                                    您有${unReadNewsNum}条新消息
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> ${score.grade}</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> ${grade}</a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">${score.grade}分</span>
+                                    当前评分 <span class="badge pull-right">${grade}分</span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -118,8 +118,8 @@
                                         <h4 class="username">${storeInfo.storeName}</h4>
                                         <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user" onclick="javascript:window.location.href='<%=portPath%>store/information/${storeId}'"></i> 商户中心</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out" onclick="javascript:window.location.href='<%=portPath%>login/exit'"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>store/information/${storeId}'"><i class="fa fa-user"></i> 商户中心</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:window.location.href='<%=portPath%>login/exit'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
@@ -151,7 +151,7 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="store_information.html">修改商户资料</a>
                                             </li>
-                                            <li><a href="<%=portPath%>storeAdmin/storeScore/${storeId}">评分管理</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeScore.html">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -187,7 +187,7 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNews}</span></a>
+                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNewsNum}</span></a>
                                             </li>
                                             <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
@@ -289,12 +289,12 @@
                     ,jump: function(obj, first){
                         if(!first){
                             currentPage = obj.curr;
-                            var href=portPath+"storeAdmin/serviceScore/page.do?";
-                            href+='currentPage='+currentPage;
-                            href +='&storeId='+storeId;
+                            var href=portPath+"storeAdmin/page.do?";
+                            href+='storeId='+storeId;
+                            href +='&currentPage='+currentPage;
                             changePage(href);
-                            }
                         }
+                    }
                 });
 	    	});
 
@@ -342,7 +342,7 @@
                     $(this).addClass('info');
                     var serviceId=$(this).children(":first").html();
                     $.ajax({
-                        url :portPath +'storeAdmin/serviceScore/line.do',
+                        url :portPath +'storeAdmin/line.do',
                         type: "get",
                         async: true,
                         data:{offserviceId:serviceId},

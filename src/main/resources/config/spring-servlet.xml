@@ -50,7 +50,7 @@ mvc:annotation-driven默认加载很多的参数绑定方法，
         <!-- 配置商家登陆拦截器 -->
         <mvc:interceptor>
             <!-- /storeAdmin路径下的所有页面 -->
-            <mvc:mapping path="/storeAdmin/*"/>
+            <mvc:mapping path="/storeAdmin/*.html"/>
             <bean class="xin.yiliya.interceptor.StoreInterceptor"/>
         </mvc:interceptor>
 

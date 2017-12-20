@@ -67,10 +67,10 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">${unReadNews}</span>
+                                    新消息 <span class="badge pull-right">${unReadNewsNum}</span>
                                 </li>
                                 <li class="message" onclick="javascript:window.location.href=''" style="cursor: pointer;">
-                                    您有${unReadNews}条新消息
+                                    您有${unReadNewsNum}条新消息
                                 </li>
                             </ul>
                         </li>
@@ -78,7 +78,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> ${score.grade}</a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">${score.grade}分</span>
+                                    当前评分 <span class="badge pull-right">${grade}分</span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -186,7 +186,7 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNews}</span></a>
+                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNewsNum}</span></a>
                                             </li>
                                             <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
@@ -207,7 +207,7 @@
                                             </li>
                                             <li><a href="add_service.html">添加服务</a>
                                             </li>
-                                            <li><a href="<%=portPath%>storeAdmin/serviceScore/${storeId}">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
                                             <li><a href="service_template.html">服务模板</a>
                                             </li>

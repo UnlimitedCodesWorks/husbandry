@@ -122,7 +122,7 @@
 									</c:if>
 									<c:if test="${!empty store}">
 									<div class="layui-col-md4 layui-col-sm12">
-										<button class="layui-btn layui-btn-normal" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/storeScore/${storeId}'">
+										<button class="layui-btn layui-btn-normal" onclick="javascript:window.location.href='<%=portPath%>storeAdmin/storeScore.html'">
 											<i class="iconfont">&#xe722;</i>后台管理
 										</button>
 									</div>
