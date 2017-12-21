@@ -450,7 +450,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="head-wrap" style="height: 500px;">
-                        <img src="${storeDetail.headImg}">
+                        <img src="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -473,7 +473,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="logo-wrap" style="height: 500px;">
-                        <img src="${storeDetail.logoImg}">
+                        <img src="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -560,7 +560,7 @@
                         }
                     });
                 }
-                cropper.cropper('reset').cropper('replace',"../../../resources/images/家居9.jpg");
+                cropper.cropper('reset').cropper('replace',headLink);
             });
 
             $('#logo-modal').on('shown.bs.modal', function () {
@@ -573,7 +573,7 @@
                         }
                     });
                 }
-                cropper2.cropper('reset').cropper('replace',"../../../resources/images/家居9.jpg");
+                cropper2.cropper('reset').cropper('replace',logoLink);
             });
 
             //选择头像
