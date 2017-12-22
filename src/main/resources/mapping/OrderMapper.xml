@@ -273,33 +273,30 @@
     </update>
 
     <select id="cancelCount" resultType="Integer">
-        SELECT COUNT(*)
-        FROM offerservice,service,`order`,cancel,`user`
-        WHERE offerservice.kind=serid AND offerservice.store_id=#{storeId}
-        AND `order`.service_id=offerserviceid
-        AND cancel.order_id=orderid
-        AND userid=cancel.user_id
-        AND `order`.`status`=3
+        SELECT COUNT(*) FROM offerservice,`order`,cancel,`user`
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.`status`=1
+        AND `order`.`status`=3 AND offerservice.store_id=#{storeId}
     </select>
 
     <select id="handleCount" resultType="Integer">
-        SELECT COUNT(*)
-        FROM `user`,`order`,offerservice,service
-        WHERE `order`.user_id=`user`.userid
-        AND service_id=offerserviceid
-        AND kind=serid
-        AND `order`.`status`=0
-        AND store_id=#{storeId}
+        SELECT COUNT(*) FROM offerservice,`order`,cancel,`user`
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.`status`=1
+        AND `order`.`status`=0 AND offerservice.store_id=#{storeId}
     </select>
 
     <select id="sureCount" resultType="Integer">
-        SELECT COUNT(*)
-        FROM `user`,`order`,offerservice,service
-        WHERE `order`.user_id=`user`.userid
-        AND service_id=offerserviceid
-        AND kind=serid
-        AND `order`.`status`=1
-        AND store_id=#{storeId}
+        SELECT COUNT(*) FROM offerservice,`order`,cancel,`user`
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.`status`=1
+        AND `order`.`status`=1 AND offerservice.store_id=#{storeId}
     </select>
 
     <select id="getOrderByOrderId" parameterType="Integer" resultMap="Base">

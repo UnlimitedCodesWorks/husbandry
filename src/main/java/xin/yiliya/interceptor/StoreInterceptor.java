@@ -5,6 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.pojo.StoreInfo;
 import xin.yiliya.service.EvaluateStoreService;
+import xin.yiliya.service.OrderService;
 import xin.yiliya.service.StoreNewsService;
 import xin.yiliya.service.StoreService;
 
@@ -23,6 +24,9 @@ public class StoreInterceptor implements HandlerInterceptor {
 
     @Resource
     private StoreNewsService storeNewsService;
+
+    @Resource
+    private OrderService orderService;
 
     public boolean preHandle(HttpServletRequest httpServletRequest,
                              HttpServletResponse httpServletResponse, Object o) throws Exception{
@@ -48,6 +52,9 @@ public class StoreInterceptor implements HandlerInterceptor {
         modelAndView.addObject("storeInfo",storeInfo);
         modelAndView.addObject("grade",evaluateStoreService.getGradeByStoreId(storeId));
         modelAndView.addObject("unReadNewsNum",storeNewsService.getUnreadNumByStoreId(storeId));
+        modelAndView.addObject("waitCancelNum",orderService.cancelCount(storeId));
+        modelAndView.addObject("waitHandleNum",orderService.handleCount(storeId));
+        modelAndView.addObject("waitSureNum",orderService.sureCount(storeId));
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest,
