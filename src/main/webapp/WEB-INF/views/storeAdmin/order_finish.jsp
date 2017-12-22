@@ -1,6 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>智慧社区-商户后台管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,7 +56,7 @@
                         </button>
                         <ol class="breadcrumb navbar-breadcrumb">
                             <li>订单管理</li>
-                            <li class="active">待退款订单</li>
+                            <li class="active">已完成订单</li>
                         </ol>
                         <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
                             <i class="fa fa-th icon"></i>
@@ -159,13 +167,13 @@
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="order_finish.html">已完成订单</a>
+                                            <li class="active"><a href="javascrapt:">已完成订单</a>
                                             </li>
                                             <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
                                             <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
-                                            <li class="active"><a href="javascript:;">待退款订单<span class="badge" style="margin-left: 127px;">0</span></a>
+                                            <li><a href="order_wait_refund.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
                                             <li><a href="service_staff.html">服务人员模板</a>
                                             </li>
@@ -235,8 +243,9 @@
                                     <th>订单号</th>
                                     <th>订单名称</th>
                                     <th>创建时间</th>
+                                    <th>完成时间</th>
                                     <th>订单发起人</th>
-                                    <th>退款理由</th>
+                                    <th>完成状态</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -244,124 +253,34 @@
                                     <td>111111</td>
                                     <td>华峰国际保姆服务</td>
                                     <td>2017-12-12</td>
+                                    <td>2017-12-19</td>
                                     <td>何华峰</td>
-                                    <td>Lorem</td>
+                                    <td>交易成功</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <span>
-                            <button class="btn btn-info" id="adopt" data-toggle="modal" data-target="#prompt1">同意</button>
-                            <button class="btn btn-danger" id="refuse" data-toggle="modal" data-target="#prompt2">拒绝</button>
-                        </span>
                         <div id="page" class="pull-right"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 模态框-同意 -->
-    <div class="modal fade bs-example-modal-sm" id="prompt1" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">提示</h4>
-                </div>
-                <div class="modal-body">
-                    <p>同意该退款申请？</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-info" id="adopt-btn">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 模态框-拒绝 -->
-    <div class="modal fade bs-example-modal-sm" id="prompt2" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">提示</h4>
-                </div>
-                <div class="modal-body">
-                    <p>拒绝该退款申请？</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-info" id="refuse-btn">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <script type="text/javascript">
-        $(function() {
-            layui.use('laypage', function () {
+        $(function(){
+            layui.use('laypage', function(){
                 var laypage = layui.laypage;
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'page'
-                    , count: 20 //数据总数，从服务端得到
-                    , limit: 2
-                    , theme: '#19B5FE'
-                    , groups: 4
-                    , jump: function (obj, first) {
-                        if (!first) {
+                    ,count: 20 //数据总数，从服务端得到
+                    ,limit: 2
+                    ,theme: '#19B5FE'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            }
                         }
-                    }
                 });
-            });
-
-            function initTableCheckbox() {
-                var $thr = $('table thead tr');
-                var $checkAllTh = $('<th><input type="checkbox" id="checkAll" name="checkAll" /></th>');
-                /*将全选/反选复选框添加到表头最前，即增加一列*/
-                $thr.prepend($checkAllTh);
-                /*“全选/反选”复选框*/
-                var $checkAll = $thr.find('input');
-                $checkAll.click(function(event){
-                    /*将所有行的选中状态设成全选框的选中状态*/
-                    $tbr.find('input').prop('checked',$(this).prop('checked'));
-                    /*并调整所有选中行的CSS样式*/
-                    if ($(this).prop('checked')) {
-                        $tbr.find('input').parent().parent().addClass('info');
-                    } else{
-                        $tbr.find('input').parent().parent().removeClass('info');
-                    }
-                    /*阻止向上冒泡，以防再次触发点击操作*/
-                    event.stopPropagation();
-                });
-                /*点击全选框所在单元格时也触发全选框的点击操作*/
-                $checkAllTh.click(function(){
-                    $(this).find('input').click();
-                });
-                var $tbr = $('table tbody tr');
-                var $checkItemTd = $('<td><input type="checkbox" name="checkItem" class="select" /></td>');
-                /*每一行都在最前面插入一个选中复选框的单元格*/
-                $tbr.prepend($checkItemTd);
-                /*点击每一行的选中复选框时*/
-                $tbr.find('input').click(function(event){
-                    /*调整选中行的CSS样式*/
-                    $(this).parent().parent().toggleClass('info');
-                    /*如果已经被选中行的行数等于表格的数据行数，将全选框设为选中状态，否则设为未选中状态*/
-                    $checkAll.prop('checked',$tbr.find('input:checked').length == $tbr.length ? true : false);
-                    /*阻止向上冒泡，以防再次触发点击操作*/
-                    event.stopPropagation();
-                });
-                /*点击每一行时也触发该行的选中操作*/
-                $tbr.click(function(){
-                    $(this).find('input').click();
-                });
-            }
-            initTableCheckbox();
-
-            $("#adopt-btn").click(function (event) {
-
-            });
-
-            $("#refuse-btn").click(function (event) {
-
             });
         });
     </script>

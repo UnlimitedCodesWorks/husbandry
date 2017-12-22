@@ -134,6 +134,54 @@ public class OrderServiceImpl implements OrderService{
         return new PageInfo<OrderSimple>(list);
     }
 
+    public PageInfo<OrderSimple> getAllStoreHandleOrder(String input, String type, Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        if(type.equals("按订单号搜索")){
+            List<OrderSimple> list=orderMapper.getAllStoreHandleByNumberSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+        else{
+            List<OrderSimple> list=orderMapper.getAllStoreHandleByUserSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+    }
+
+    public PageInfo<OrderSimple> getAllStoreSureOrder(String input, String type, Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        if(type.equals("按订单号搜索")){
+            List<OrderSimple> list=orderMapper.getAllStoreSureByNumberSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+        else{
+            List<OrderSimple> list=orderMapper.getAllStoreSureByUserSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+    }
+
+    public PageInfo<OrderCancel> getAllStoreCancelOrder(String input, String type, Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        if(type.equals("按订单号搜索")){
+            List<OrderCancel> list=orderMapper.getAllStoreCancelByNumberSearch(input,storeId);
+            return new PageInfo<OrderCancel>(list);
+        }
+        else{
+            List<OrderCancel> list=orderMapper.getAllStoreCancelByUserSearch(input,storeId);
+            return new PageInfo<OrderCancel>(list);
+        }
+    }
+
+    public PageInfo<OrderSimple> getAllStoreFinishOrder(String input, String type, Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        if(type.equals("按订单号搜索")){
+            List<OrderSimple> list=orderMapper.getAllStoreFinishByNumberSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+        else{
+            List<OrderSimple> list=orderMapper.getAllStoreFinishByUserSearch(input,storeId);
+            return new PageInfo<OrderSimple>(list);
+        }
+    }
+
     public List<Require> getUserRequires(Integer orderId) {
         List<Require> requires=orderMapper.getUserRequires(orderId);
         return requires;

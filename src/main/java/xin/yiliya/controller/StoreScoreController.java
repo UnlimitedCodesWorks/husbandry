@@ -25,7 +25,7 @@ public class StoreScoreController {
     @Resource
     HttpSession httpSession;
 
-    @RequestMapping(value = "storeScore.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/storeScore.html",method = RequestMethod.GET)
     public String storeScoreHTML(Model model){
         Store store = (Store) httpSession.getAttribute("storeBean");
         model.addAttribute("storeId",store.getStoreid());

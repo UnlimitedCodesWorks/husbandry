@@ -95,6 +95,9 @@
             <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
             <result column="reason" jdbcType="VARCHAR" property="reason" />
         </association>
+        <association property="offerService" javaType="xin.yiliya.pojo.OfferService">
+            <result property="serviceName" jdbcType="VARCHAR" column="serviceName"/>
+        </association>
     </resultMap>
 
     <resultMap id="user_requires" type="xin.yiliya.pojo.Require">
@@ -126,7 +129,7 @@
 
     <sql id="store_cancel">
         orderid,`order`.order_number,`order`.user_id,`order`.`status`,`order`.start_time,serkind,
-        `user`.user_name,cancelid,reason
+        `user`.user_name,cancelid,reason,service_name AS serviceName
     </sql>
 
     <select id="getServiceTypeFinish" resultType="Integer">
@@ -189,6 +192,7 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=0
+        AND offerservice.`status`=1
         AND store_id=#{storeId} ORDER BY start_time DESC
     </select>
 
@@ -199,17 +203,19 @@
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=1
+        AND offerservice.`status`=1
         AND store_id=#{storeId} ORDER BY start_time DESC
     </select>
 
     <select id="getAllStoreCancelOrder" resultMap="store_cancel">
         SELECT <include refid="store_cancel" />
-        FROM offerservice,service,`order`,cancel,`user`
-        WHERE offerservice.kind=serid AND offerservice.store_id=#{storeId}
-        AND `order`.service_id=offerserviceid
-        AND cancel.order_id=orderid
-        AND userid=cancel.user_id
-        AND `order`.`status`=3 ORDER BY cancel.cancel_time DESC
+        FROM offerservice,`order`,cancel,`user`,service
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.kind=service.serid
+        AND offerservice.`status`=1
+        AND `order`.`status`=3 AND offerservice.store_id=#{storeId} ORDER BY cancel.cancel_time DESC
     </select>
 
     <select id="getAllStoreFinishOrder" resultMap="store_handle">
@@ -220,6 +226,105 @@
         AND kind=serid
         AND `order`.`status` IN(2,4)
         AND store_id=#{storeId}
+        AND offerservice.`status`=1
+        ORDER BY end_time DESC
+    </select>
+
+    <select id="getAllStoreHandleByNumberSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=0
+        AND offerservice.`status`=1
+        AND store_id=#{storeId}
+        AND `order`.order_number LIKE '%${input}%' ORDER BY start_time DESC
+    </select>
+
+    <select id="getAllStoreHandleByUserSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=0
+        AND offerservice.`status`=1
+        AND store_id=#{storeId}
+        AND `user`.user_name LIKE '%${input}%' ORDER BY start_time DESC
+    </select>
+
+    <select id="getAllStoreSureByNumberSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=1
+        AND offerservice.`status`=1
+        AND store_id=#{storeId}
+        AND `order`.order_number LIKE '%${input}%' ORDER BY start_time DESC
+    </select>
+
+    <select id="getAllStoreSureByUserSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status`=1
+        AND offerservice.`status`=1
+        AND store_id=#{storeId}
+        AND `user`.user_name LIKE '%${input}%' ORDER BY start_time DESC
+    </select>
+
+    <select id="getAllStoreCancelByNumberSearch" resultMap="store_cancel">
+        SELECT <include refid="store_cancel" />
+        FROM offerservice,`order`,cancel,`user`,service
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.kind=service.serid
+        AND offerservice.`status`=1
+        AND `order`.`status`=3 AND offerservice.store_id=#{storeId}
+        AND `order`.order_number LIKE '%${input}%' ORDER BY cancel.cancel_time DESC
+    </select>
+
+    <select id="getAllStoreCancelByUserSearch" resultMap="store_cancel">
+        SELECT <include refid="store_cancel" />
+        FROM offerservice,`order`,cancel,`user`,service
+        WHERE offerservice.offerserviceid=`order`.service_id
+        AND `order`.orderid=cancel.order_id
+        AND `order`.user_id=`user`.userid
+        AND offerservice.kind=service.serid
+        AND offerservice.`status`=1
+        AND `order`.`status`=3 AND offerservice.store_id=#{storeId}
+        AND `user`.user_name LIKE '%${input}%' ORDER BY cancel.cancel_time DESC
+    </select>
+
+    <select id="getAllStoreFinishByNumberSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status` IN(2,4)
+        AND store_id=#{storeId}
+        AND offerservice.`status`=1
+        AND `order`.order_number LIKE '%${input}%'
+        ORDER BY end_time DESC
+    </select>
+
+    <select id="getAllStoreFinishByUserSearch" resultMap="store_handle">
+        SELECT <include refid="store_handle" />
+        FROM `user`,`order`,offerservice,service
+        WHERE `order`.user_id=`user`.userid
+        AND service_id=offerserviceid
+        AND kind=serid
+        AND `order`.`status` IN(2,4)
+        AND store_id=#{storeId}
+        AND offerservice.`status`=1
+        AND `user`.user_name LIKE '%${input}%'
         ORDER BY end_time DESC
     </select>
 

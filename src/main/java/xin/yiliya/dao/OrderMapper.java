@@ -32,6 +32,30 @@ public interface OrderMapper {
 
     List<OrderSimple> getAllStoreFinishOrder(Integer storeId);
 
+    List<OrderSimple> getAllStoreHandleByNumberSearch(@Param(value="input")String input,
+                                                @Param(value = "storeId") Integer storeId);
+
+    List<OrderSimple> getAllStoreHandleByUserSearch(@Param(value="input")String input,
+                                                      @Param(value = "storeId") Integer storeId);
+
+    List<OrderSimple> getAllStoreSureByNumberSearch(@Param(value="input")String input,
+                                              @Param(value="storeId") Integer storeId);
+
+    List<OrderSimple> getAllStoreSureByUserSearch(@Param(value="input")String input,
+                                                    @Param(value="storeId") Integer storeId);
+
+    List<OrderCancel> getAllStoreCancelByNumberSearch(@Param(value="input")String input,
+                                                @Param(value="storeId") Integer storeId);
+
+    List<OrderCancel> getAllStoreCancelByUserSearch(@Param(value="input")String input,
+                                                      @Param(value="storeId") Integer storeId);
+
+    List<OrderSimple> getAllStoreFinishByNumberSearch(@Param(value="input")String input,
+                                                @Param(value="storeId") Integer storeId);
+
+    List<OrderSimple> getAllStoreFinishByUserSearch(@Param(value="input")String input,
+                                                      @Param(value="storeId") Integer storeId);
+
     List<Require> getUserRequires(Integer orderId);
 
     Integer addUserOrderCancel(Cancel cancel);

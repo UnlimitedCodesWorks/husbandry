@@ -353,6 +353,10 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,1,100),true));
 
         //获得某月份的服务评分曲线信息
-        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,2,2),true));
+//        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,2,2),true));
+
+        //模糊搜索,获取商户待退款订单
+//        PageInfo<OrderCancel> pageInfo=orderService.getAllStoreCancelOrder("230","按订单号搜索",1,1,1);
+//        System.out.print(JSON.toJSONString(pageInfo,true));
     }
 }
