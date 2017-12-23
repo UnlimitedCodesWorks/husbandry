@@ -46,6 +46,10 @@ public interface OfferServiceService {
     //返回单个服务详细信息Bean
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
 
+    //根据服务id获取服务信息
+    //返回单个服务信息Bean
+    OfferService getOfferServiceByServiceId(Integer offerServiceId);
+
     //增加一个服务的点击量
     //返回是否成功的布尔值
     Boolean increaseViewNumByServiceId(Integer serviceId);

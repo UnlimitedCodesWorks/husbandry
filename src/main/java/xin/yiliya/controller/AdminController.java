@@ -199,6 +199,11 @@ public class AdminController {
     public String agreeServiceDo(@RequestParam(value = "agreeServiceId")String offerServiceId){
         String[] ids=offerServiceId.split("[^0123456789.]+");
         for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getStoreId());
+            storeNews.setContent("您的服务"+offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getServiceName()+"已被认证");
+            storeNews.setType("公告通知");
+            storeNewsService.addNew(storeNews);
             adminService.passService(Integer.parseInt(s));
         }
         return "redirect:serviceAdmin.html";
@@ -208,6 +213,11 @@ public class AdminController {
     public String refuseServiceDo(@RequestParam(value = "refuseServiceId")String offerServiceId){
         String[] ids=offerServiceId.split("[^0123456789.]+");
         for(String s:ids){
+            StoreNews storeNews=new StoreNews();
+            storeNews.setStoreId(offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getStoreId());
+            storeNews.setContent("您的服务"+offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getServiceName()+"未认证成功");
+            storeNews.setType("公告通知");
+            storeNewsService.addNew(storeNews);
             offerServiceService.deleteService(Integer.parseInt(s));
         }
         return "redirect:waitStore.html";

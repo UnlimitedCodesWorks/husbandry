@@ -209,7 +209,7 @@
                                         <button type="button" class="btn btn-primary" data-toggle="modal" disabled>发送消息</button>
                                     </c:if>
                                     <c:if test="${!empty useStoreList}">
-                                        <button type="button" class="btn btn-danger" id="cancel">撤销厂商资格</button>
+                                        <button type="button" class="btn btn-danger" id="cancel" data-toggle="modal" data-target="#cancelAction">撤销厂商资格</button>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
                                     </c:if>
                                 </div>
@@ -261,6 +261,24 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 撤销厂商模态框提示 -->
+                <div class="modal fade bs-example-modal-sm" id="cancelAction" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>您要撤销该厂商的资格吗？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="cancel-btn">确定</button>
                             </div>
                         </div>
                     </div>
@@ -408,7 +426,7 @@
             }
             initTableCheckbox();
 
-            $('#cancel').click(function () {
+            $('#cancel-btn').click(function () {
                 var checked=$("tbody input:checked");
                 var cancel=[];
                 checked.each(function () {

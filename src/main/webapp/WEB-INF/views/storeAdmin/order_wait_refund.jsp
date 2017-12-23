@@ -3,6 +3,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String cancelPath=portPath+"storeAdmin/cancelSearch.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -227,7 +228,7 @@
             <div class="container-fluid">
                 <div class="side-body padding-top">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <form class="form-inline pull-right" method="post" action="<%=portPath%>storeAdmin/cancelSearch.do">
+                        <form class="form-inline pull-right" method="post" action="<%=cancelPath%>">
                             <input type="text" class="form-control" placeholder="查找订单" name="input" required="required">
                             <select class="form-control" name="orderType" required="required">
                                 <option>按订单号搜索</option>

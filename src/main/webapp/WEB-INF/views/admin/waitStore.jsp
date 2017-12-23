@@ -209,8 +209,8 @@
                                         <button type="button" class="btn btn-danger" disabled>拒绝</button>
                                     </c:if>
                                     <c:if test="${!empty waitStoreList}">
-                                        <button type="button" class="btn btn-primary" id="agree">同意</button>
-                                        <button type="button" class="btn btn-danger" id="refuse">拒绝</button>
+                                        <button type="button" class="btn btn-primary" id="agree" data-toggle="modal" data-target="#waitAction1">同意</button>
+                                        <button type="button" class="btn btn-danger" id="refuse" data-toggle="modal" data-target="#waitAction2">拒绝</button>
                                     </c:if>
                                 </div>
                                 <div id="waitStore-page" style="float: right"></div>
@@ -234,6 +234,42 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 同意模态框 -->
+                <div class="modal fade bs-example-modal-sm" id="waitAction1" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>同意该商户的注册？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="wait-agree">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 拒绝模态框 -->
+                <div class="modal fade bs-example-modal-sm" id="waitAction2" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>拒绝该商户的注册？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="wait-refuse">确定</button>
                             </div>
                         </div>
                     </div>
@@ -410,7 +446,7 @@
             }
             getAptitudeImg();
 
-            $('#agree').click(function () {
+            $('#wait-agree').click(function () {
 //                console.log($("tbody input:checked"));
                 var checked=$("tbody input:checked");
                 var agree=[];
@@ -430,7 +466,7 @@
                 window.location.href=portPath+"admin/waitStore.html";
             });
 
-            $('#refuse').click(function () {
+            $('#wait-refuse').click(function () {
                 var checked=$("tbody input:checked");
                 var refuse=[];
                 checked.each(function () {

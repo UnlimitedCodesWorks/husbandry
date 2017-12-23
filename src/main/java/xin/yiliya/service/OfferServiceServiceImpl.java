@@ -243,6 +243,10 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return offerServiceDetail;
     }
 
+    public OfferService getOfferServiceByServiceId(Integer offerServiceId) {
+        return offerServiceMapper.selectByPrimaryKey(offerServiceId);
+    }
+
     public Boolean increaseViewNumByServiceId(Integer serviceId) {
         try {
             offerServiceMapper.increaseViewNumByServiceId(serviceId);

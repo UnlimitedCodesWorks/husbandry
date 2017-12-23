@@ -206,8 +206,8 @@
                                         <button type="button" class="btn btn-danger" disabled>拒绝</button>
                                     </c:if>
                                     <c:if test="${!empty serviceStoreList}">
-                                        <button type="button" class="btn btn-primary" id="agreeService">同意</button>
-                                        <button type="button" class="btn btn-danger" id="refuseService">拒绝</button>
+                                        <button type="button" class="btn btn-primary" id="agreeService" data-toggle="modal" data-target="#ser-agree">同意</button>
+                                        <button type="button" class="btn btn-danger" id="refuseService" data-toggle="modal" data-target="#ser-refuse">拒绝</button>
                                     </c:if>
                                 </div>
                                 <div id="serviceAdmin-page" style="float: right"></div>
@@ -218,6 +218,42 @@
                 <!-- 模态框 -->
                 <div class="modal fade" id="check" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document" id="serviceDetailInfo">
+                    </div>
+                </div>
+                <!-- 同意模态框 -->
+                <div class="modal fade bs-example-modal-sm" id="ser-agree" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>同意该服务认证？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="ser-adopt-btn">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 拒绝模态框 -->
+                <div class="modal fade bs-example-modal-sm" id="ser-refuse" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>拒绝该服务认证？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="ser-refuse-btn">确定</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -457,7 +493,7 @@
             }
             getServiceDetail();
 
-            $('#agreeService').click(function () {
+            $('#ser-adopt-btn').click(function () {
                 var checked=$("tbody input:checked");
                 var agree=[];
                 checked.each(function () {
@@ -476,7 +512,7 @@
                 window.location.href=portPath+"admin/serviceAdmin.html";
             });
 
-            $('#refuseService').click(function () {
+            $('#ser-refuse-btn').click(function () {
                 var checked=$("tbody input:checked");
                 var refuse=[];
                 checked.each(function () {

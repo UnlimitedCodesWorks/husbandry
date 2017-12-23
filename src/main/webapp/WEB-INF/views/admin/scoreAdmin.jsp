@@ -210,14 +210,14 @@
                                         <form style="display: inline-block;">
                                             <button type="button" class="btn btn-danger" disabled>红色警告</button>
                                         </form>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews" disabled>发送消息</button>
+                                        <button type="button" class="btn btn-primary" disabled>发送消息</button>
                                     </c:if>
                                     <c:if test="${!empty scoreStoreList}">
                                         <form style="display: inline-block;">
-                                            <button type="button" class="btn btn-warning" id="yellow">黄色警告</button>
+                                            <button type="button" class="btn btn-warning" id="yellow" data-toggle="modal" data-target="#yellowAction">黄色警告</button>
                                         </form>
                                         <form style="display: inline-block;">
-                                            <button type="button" class="btn btn-danger" id="red">红色警告</button>
+                                            <button type="button" class="btn btn-danger" id="red" data-toggle="modal" data-target="#redAction">红色警告</button>
                                         </form>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" id="handleNews">发送消息</button>
                                     </c:if>
@@ -270,6 +270,42 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 黄色模态框提示 -->
+                <div class="modal fade bs-example-modal-sm" id="yellowAction" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>确定将该商户置为黄色预警？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="yellow-btn">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 红色模态框提示 -->
+                <div class="modal fade bs-example-modal-sm" id="redAction" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>确定将该商户置为红色预警？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-info" id="red-btn">确定</button>
                             </div>
                         </div>
                     </div>
@@ -406,7 +442,7 @@
             }
             initTableCheckbox();
 
-            $('#yellow').click(function () {
+            $('#yellow-btn').click(function () {
                 var checked=$("tbody input:checked");
                 var yellow=[];
                 checked.each(function () {
@@ -425,7 +461,7 @@
                 window.location.href=portPath+"admin/scoreAdmin.html";
             });
 
-            $('#red').click(function () {
+            $('#red-btn').click(function () {
                 var checked=$("tbody input:checked");
                 var red=[];
                 checked.each(function () {
