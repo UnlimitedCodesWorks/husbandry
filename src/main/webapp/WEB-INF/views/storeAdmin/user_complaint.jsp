@@ -254,8 +254,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </tbody>
                         </table>
                         <span>
-                            <button class="btn btn-danger" id="delete" data-toggle="modal" data-target="#prompt1">删除</button>
-                            <button class="btn btn-info" id="feedback" data-toggle="modal" data-target="#prompt2">反馈</button>
+                            <button class="btn btn-danger" id="delete">删除</button>
+                            <button class="btn btn-info" id="feedback">反馈</button>
                         </span>
                         <div id="page" class="pull-right"></div>
                     </div>
@@ -289,12 +289,50 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">投诉反馈</h4>
                 </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <textarea id="feedback-detail" class="form-control" rows="6" placeholder="反馈内容" style="resize: none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-info" id="feedback-btn">反馈</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-未勾选提示 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt3" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
                 <div class="modal-body">
-
+                    <p>请先勾选</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-info" id="feedback-btn">反馈</button>
+                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-反馈提示 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt4" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>请输入内容</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -412,7 +450,37 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
 
             $("#feedback-btn").click(function (event) {
+                if($("#feedback-detail").val().length==0) {
+                    $("#prompt2").modal("hide");
+                    $("#prompt4").modal("show");
+                }
+                else {
 
+                }
+            });
+
+            $("#delete").click(function (event) {
+                var $checked = $("tbody input:checked");
+                if($checked.length==0) {
+                    $("#prompt3").modal("show");
+                }
+                else if($checked.length>=1) {
+                    $("#prompt1").modal('show');
+                }
+            });
+
+            $("#feedback").click(function (event) {
+                var $checked = $("tbody input:checked");
+                if($checked.length==0) {
+                    $("#prompt3").modal("show");
+                }
+                else if($checked.length>=1) {
+                    $("#prompt2").modal('show');
+                }
+            });
+
+            $("#prompt4").on('hidden.bs.modal', function(event) {
+                $("#prompt2").modal('show');
             });
 
             function createComplain(data) {
