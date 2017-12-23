@@ -152,9 +152,9 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_information.html">修改商户资料</a>
+                                            <li><a href="<%=portPath%>storeAdmin/information.html">修改商户资料</a>
                                             </li>
-                                            <li><a href="store_score.jsp">评分管理</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeScore.html">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -168,13 +168,13 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="order_finish.html">已完成订单</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeFinish.html">已完成订单</a>
                                             </li>
                                             <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
                                             <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
-                                            <li><a href="order_wait_refund.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
                                             <li><a href="service_staff.html">服务人员模板</a>
                                             </li>
@@ -190,9 +190,9 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li class="active"><a href="javascrpt:;">系统消息<span class="badge" style="margin-left: 142px;">0</span></a>
+                                            <li class="active"><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 142px;">0</span></a>
                                             </li>
-                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 145px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 145px;">0</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -211,7 +211,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                             </li>
                                             <li><a href="add_service.html">添加服务</a>
                                             </li>
-                                            <li><a href="service_score.jsp">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
                                             <li><a href="service_template.html">服务模板</a>
                                             </li>
