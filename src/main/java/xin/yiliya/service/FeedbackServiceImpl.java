@@ -3,6 +3,7 @@ package xin.yiliya.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import xin.yiliya.dao.ComplainMapper;
 import xin.yiliya.dao.FeedbackMapper;
 import xin.yiliya.pojo.Feedback;
 import xin.yiliya.pojo.FeedbackSimple;
@@ -17,11 +18,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Resource
     private FeedbackMapper feedbackMapper;
 
+    @Resource
+    private ComplainMapper complainMapper;
+
     public Integer feedbackUser(Feedback feedback) {
         try {
             feedback.setTime(new Date());
             feedback.setUserRead(0);
             feedbackMapper.insertSelective(feedback);
+            Integer complainId = feedback.getComplainId();
+            complainMapper.updateStatusById(complainId);
             return feedback.getFeedbackid();
         }catch (Exception e){
             e.printStackTrace();

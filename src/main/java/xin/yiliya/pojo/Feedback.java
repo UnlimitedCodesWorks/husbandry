@@ -15,6 +15,8 @@ public class Feedback {
 
     private String content;
 
+    private Integer complainId;
+
     public Integer getFeedbackid() {
         return feedbackid;
     }
@@ -61,5 +63,13 @@ public class Feedback {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getComplainId() {
+        return complainId;
+    }
+
+    public void setComplainId(Integer complainId) {
+        this.complainId = complainId;
     }
 }

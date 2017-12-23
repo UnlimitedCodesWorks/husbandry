@@ -22,4 +22,6 @@ public interface ComplainMapper {
 
     int updateReadStautsById(Integer complainId);
 
+    int updateStatusById(Integer complainId);
+
 }

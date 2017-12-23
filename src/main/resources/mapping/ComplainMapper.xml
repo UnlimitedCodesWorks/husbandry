@@ -6,6 +6,11 @@
     SET store_read = 1
     WHERE complainid = #{complainId,jdbcType=INTEGER}
   </update>
+  <update id="updateStatusById" parameterType="java.lang.Integer">
+    UPDATE complain
+    SET `status` = 1
+    WHERE complainid = #{complainId,jdbcType=INTEGER}
+  </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from complain
     where complainid = #{complainid,jdbcType=INTEGER}
