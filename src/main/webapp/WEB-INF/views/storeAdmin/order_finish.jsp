@@ -79,10 +79,10 @@
                             </ul>
                         </li>
                         <li class="dropdown danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> ${grade}</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> <c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if></a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">${grade}分</span>
+                                    当前评分 <span class="badge pull-right"><c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if>分</span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -152,9 +152,9 @@
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_information.html">修改商户资料</a>
+                                            <li><a href="<%=portPath%>storeAdmin/information.html">修改商户资料</a>
                                             </li>
-                                            <li><a href="store_score.jsp">评分管理</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeScore.html">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -168,13 +168,13 @@
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li class="active"><a href="javascrapt:">已完成订单</a>
+                                            <li class="active"><a href="<%=portPath%>storeAdmin/storeFinish.html">已完成订单</a>
                                             </li>
-                                            <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">${waitSureNum}</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeSure.html">待确认订单<span class="badge" style="margin-left: 130px;">${waitSureNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">${waitHandleNum}</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeWait.html">待处理订单<span class="badge" style="margin-left: 130px;">${waitHandleNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_refund.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
                                             </li>
                                             <li><a href="service_staff.html">服务人员模板</a>
                                             </li>
@@ -190,9 +190,9 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 145px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 145px;">${unReadNewsNum}</span></a>
                                             </li>
-                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 145px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 145px;">0</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -211,7 +211,7 @@
                                             </li>
                                             <li><a href="add_service.html">添加服务</a>
                                             </li>
-                                            <li><a href="service_score.jsp">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
                                             <li><a href="service_template.html">服务模板</a>
                                             </li>

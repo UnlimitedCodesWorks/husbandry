@@ -390,18 +390,16 @@
     </select>
 
     <select id="handleCount" resultType="Integer">
-        SELECT COUNT(*) FROM offerservice,`order`,cancel,`user`
+        SELECT COUNT(*) FROM offerservice,`order`,`user`
         WHERE offerservice.offerserviceid=`order`.service_id
-        AND `order`.orderid=cancel.order_id
         AND `order`.user_id=`user`.userid
         AND offerservice.`status`=1
-        AND `order`.`status`=0 AND offerservice.store_id=#{storeId}
+        AND `order`.`status`=0 AND offerservice.store_id=#{storeId};
     </select>
 
     <select id="sureCount" resultType="Integer">
-        SELECT COUNT(*) FROM offerservice,`order`,cancel,`user`
+        SELECT COUNT(*) FROM offerservice,`order`,`user`
         WHERE offerservice.offerserviceid=`order`.service_id
-        AND `order`.orderid=cancel.order_id
         AND `order`.user_id=`user`.userid
         AND offerservice.`status`=1
         AND `order`.`status`=1 AND offerservice.store_id=#{storeId}

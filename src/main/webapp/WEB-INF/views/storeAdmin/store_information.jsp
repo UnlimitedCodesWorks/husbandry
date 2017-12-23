@@ -231,11 +231,11 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="<%=portPath%>storeAdmin/storeFinish.html">已完成订单</a>
                                             </li>
-                                            <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeSure.html">待确认订单<span class="badge" style="margin-left: 130px;">${waitSureNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeWait.html">待处理订单<span class="badge" style="margin-left: 130px;">${waitHandleNum}</span></a>
                                             </li>
-                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
                                             </li>
                                             <li><a href="service_staff.html">服务人员模板</a>
                                             </li>
@@ -251,7 +251,7 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNewsNum}</span></a>
                                             </li>
                                             <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
                                             </li>
