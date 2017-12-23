@@ -250,7 +250,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </tbody>
                         </table>
                         <span>
-                            <button class="btn btn-danger" id="delete" data-toggle="modal" data-target="#prompt">删除</button>
+                            <button class="btn btn-danger" id="delete">删除</button>
                         </span>
                         <div id="page" class="pull-right"></div>
                     </div>
@@ -258,8 +258,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
     </div>
-    <!-- 模态框 -->
-    <div class="modal fade bs-example-modal-sm" id="prompt" tabindex="-1" role="dialog">
+    <!-- 模态框-删除 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt1" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -267,11 +267,28 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h4 class="modal-title">提示</h4>
                 </div>
                 <div class="modal-body">
-                    <p>删除该消息？</p>
+                    <p>删除选中的消息？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-info" id="delete-btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-提示勾选 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt2" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>请先勾选</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -386,6 +403,16 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         }
                     });
                 });
+            });
+
+            $("#delete").click(function (event) {
+                var $checked = $("tbody input:checked");
+                if($checked.length==0) {
+                    $("#prompt2").modal("show");
+                }
+                else if($checked.length>=1) {
+                    $("#prompt1").modal('show');
+                }
             });
 
             function createNews(data) {
