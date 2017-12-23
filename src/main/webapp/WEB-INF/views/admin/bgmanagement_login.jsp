@@ -4,7 +4,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
     String loginPath =
-            request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/admin/login.do";
+            request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/manage/login.do";
 %>
 <!DOCTYPE html>
 <html lang="en">

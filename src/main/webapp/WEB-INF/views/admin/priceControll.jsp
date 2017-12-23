@@ -3,7 +3,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-    String pageSearchPath=portPath+"admin/pageSearch.do";
+    String pageSearchPath=portPath+"admin/pageRedirect.do";
 %>
 <!DOCTYPE html>
 <html lang="en">

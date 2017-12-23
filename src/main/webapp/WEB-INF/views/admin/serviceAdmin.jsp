@@ -4,7 +4,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
     String serviceSearchPath=portPath+"admin/serviceSearch.do";
-    String pageSearchPath=portPath+"admin/pageSearch.do";
+    String pageSearchPath=portPath+"admin/pageRedirect.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

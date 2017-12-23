@@ -5,7 +5,7 @@
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
     String useSearchPath=portPath+"admin/storeSearch.do";
     String useNewsPath=portPath+"admin/useStoreNews.do";
-    String pageSearchPath=portPath+"admin/pageSearch.do";
+    String pageSearchPath=portPath+"admin/pageRedirect.do";
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>

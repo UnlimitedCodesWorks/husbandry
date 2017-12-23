@@ -34,24 +34,7 @@ public class AdminController {
     @Autowired
     StoreNewsService storeNewsService;
 
-    @RequestMapping(value = "/login.html",method = RequestMethod.GET)
-    public String loginHTML(){
-        return "admin/bgmanagement_login";
-    }
-
-    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
-    public String loginDo(String adminname,String password){
-        Admin admin=adminService.AdminLogin(adminname,password);
-        if (admin==null){
-            return "redirect:login.html";
-        }
-        else{
-            httpSession.setAttribute("adminBean",admin);
-            return "redirect:OperationOverview.html";
-        }
-    }
-
-    @RequestMapping(value = "/pageSearch.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/pageRedirect.do",method = RequestMethod.POST)
     public String pageSearchDo(String q){
         if(q.contains("运")||q.contains("overall")){
             return "redirect:OperationOverview.html";
@@ -78,16 +61,10 @@ public class AdminController {
 
     @RequestMapping(value = "/OperationOverview.html",method = RequestMethod.GET)
     public String OperationOverviewHTML(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("userTotal",adminService.getUserNum());
             model.addAttribute("storeTotal",adminService.getStoreNum());
             model.addAttribute("passStoreNum",adminService.getPassStoreNum());
             return "admin/OperationOverview";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/nowMonthOrder.do",method = RequestMethod.GET)
@@ -114,8 +91,6 @@ public class AdminController {
 
     @RequestMapping(value = "/priceControll.html",method = RequestMethod.GET)
     public String priceControllHTML(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             ArrayList list=new ArrayList();
             Map<String,Float> priceMap=adminService.getRealTimeMarketPrice();
             for(String key:priceMap.keySet()){
@@ -123,24 +98,14 @@ public class AdminController {
             }
             model.addAttribute("priceList",list);
             return "admin/priceControll";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/scoreAdmin.html",method = RequestMethod.GET)
     public String scoreAdminHTML(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("scoreStoreList",adminService.getStoresByGrade((float)10.1,1,2).getList());
             model.addAttribute("pages",adminService.getStoresByGrade((float)10.1,1,2).getPages());
             model.addAttribute("input","none");
             return "admin/scoreAdmin";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/scoreAdmin.do",method = RequestMethod.GET)
@@ -156,8 +121,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/scoreSearch.do",method = RequestMethod.POST)
-    public String searchScore(@RequestParam(required = false)String input,Model model){
-        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+    public String searchScore(String input,Model model){
         model.addAttribute("scoreStoreList",adminService.getStoresByGrade(Float.parseFloat(input.trim()),1,2).getList());
         model.addAttribute("pages",adminService.getStoresByGrade(Float.parseFloat(input.trim()),1,2).getPages());
         model.addAttribute("input",input.trim());
@@ -205,16 +169,10 @@ public class AdminController {
 
     @RequestMapping(value = "/serviceAdmin.html",method = RequestMethod.GET)
     public String serviceAdminHTML(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("serviceStoreList",adminService.getUnpassServices(1,2).getList());
             model.addAttribute("pages",adminService.getUnpassServices(1,2).getPages());
             model.addAttribute("input","none");
             return "admin/serviceAdmin";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/serviceAdmin.do",method = RequestMethod.GET)
@@ -230,8 +188,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/serviceSearch.do",method = RequestMethod.POST)
-    public String searchService(@RequestParam(required = false)String input,Model model){
-        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+    public String searchService(String input,Model model){
         model.addAttribute("serviceStoreList",adminService.getUnpassServices(input.trim(),1,2).getList());
         model.addAttribute("pages",adminService.getUnpassServices(input.trim(),1,2).getPages());
         model.addAttribute("input",input.trim());
@@ -251,7 +208,6 @@ public class AdminController {
     public String refuseServiceDo(@RequestParam(value = "refuseServiceId")String offerServiceId){
         String[] ids=offerServiceId.split("[^0123456789.]+");
         for(String s:ids){
-
             offerServiceService.deleteService(Integer.parseInt(s));
         }
         return "redirect:waitStore.html";
@@ -265,16 +221,10 @@ public class AdminController {
 
     @RequestMapping(value = "/useStore.html",method = RequestMethod.GET)
     public String useStoreHTML(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("useStoreList",adminService.getPassStores(1,2).getList());
             model.addAttribute("pages",adminService.getPassStores(1,2).getPages());
             model.addAttribute("input","none");
             return "admin/useStore";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/useStore.do",method = RequestMethod.GET)
@@ -290,8 +240,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/storeSearch.do",method = RequestMethod.POST)
-    public String searchUseStore(@RequestParam(required = false)String input,Model model){
-        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+    public String searchUseStore(String input,Model model){
         model.addAttribute("useStoreList",adminService.getPassStores(input.trim(),1,2).getList());
         model.addAttribute("pages",adminService.getPassStores(input.trim(),1,2).getPages());
         model.addAttribute("input",input.trim());
@@ -322,16 +271,10 @@ public class AdminController {
 
     @RequestMapping(value = "/waitStore.html",method = RequestMethod.GET)
     public String waitStore(Model model){
-        if(httpSession.getAttribute("adminBean")!=null){
-            model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
             model.addAttribute("waitStoreList",adminService.getUnpassStores(1,2).getList());
             model.addAttribute("pages",adminService.getUnpassStores(1,2).getPages());
             model.addAttribute("input","none");
             return "admin/waitStore";
-        }
-        else{
-            return "redirect:login.html";
-        }
     }
 
     @RequestMapping(value = "/waitStore.do",method = RequestMethod.GET)
@@ -346,9 +289,8 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/search.do",method = RequestMethod.POST)
-    public String searchWaitStore(@RequestParam(required = false)String input,Model model){
-        model.addAttribute("unPassStoreNum",adminService.getUnpassStoreNum());
+    @RequestMapping(value = "/waitSearch.do",method = RequestMethod.POST)
+    public String searchWaitStore(String input,Model model){
         model.addAttribute("waitStoreList",adminService.getUnpassStores(input.trim(),1,2).getList());
         model.addAttribute("pages",adminService.getUnpassStores(input.trim(),1,2).getPages());
         model.addAttribute("input",input.trim());
