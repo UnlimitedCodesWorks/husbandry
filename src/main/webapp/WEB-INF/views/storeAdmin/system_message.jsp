@@ -1,3 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -62,10 +71,10 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">1</span>
+                                    新消息 <span class="badge pull-right">${unReadNewsNum}</span>
                                 </li>
                                 <li class="message">
-                                    您有1条新消息
+                                    您有${unReadNewsNum}条新消息
                                 </li>
                             </ul>
                         </li>
@@ -73,7 +82,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> 8.5</a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">8.5分</span>
+                                    当前评分 <span class="badge pull-right"><c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if> </span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -102,18 +111,18 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">华峰国际有限公司 <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${storeInfo.storeName} <span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="profile-img">
-                                    <img src="http://t.cn/RCzsdCq" class="profile-img">
+                                    <img src="${storeInfo.headImg}" class="profile-img" onerror="this.src='http://t.cn/RCzsdCq'">
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">华峰国际有限公司</h4>
-                                        <p>123456789@sina.com</p>
+                                        <h4 class="username">${storeInfo.storeName}</h4>
+                                        <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> 商户中心</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>store/information/${storeInfo.storeid}'"><i class="fa fa-user"></i> 商户中心</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>login/exit'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
@@ -227,12 +236,17 @@
                                 <th>类型</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="news-container">
+                            <c:if test="${!empty storeNews}">
+                            <c:forEach var="news" items="${storeNews}">
                             <tr>
-                                <td>Lorem</td>
-                                <td>2017-12-12</td>
-                                <td>系统公告</td>
+                                <td hidden="hidden">${news.storenewsid}</td>
+                                <td>${news.content}</td>
+                                <td><fmt:formatDate value="${news.time}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td>${news.stype}</td>
                             </tr>
+                            </c:forEach>
+                            </c:if>
                             </tbody>
                         </table>
                         <span>
@@ -264,17 +278,36 @@
     </div>
     <script type="text/javascript">
         $(function() {
+            var storeNewPages = ${storeNewPages};
+            var pageSize = ${pageSize};
+            var portPath = "<%=portPath%>";
+            var storeId = ${storeInfo.storeid};
             layui.use('laypage', function () {
                 var laypage = layui.laypage;
                 //执行一个laypage实例
                 laypage.render({
                     elem: 'page'
-                    , count: 20 //数据总数，从服务端得到
-                    , limit: 2
+                    , count: storeNewPages*pageSize //数据总数，从服务端得到
+                    , limit: pageSize
                     , theme: '#19B5FE'
                     , groups: 4
                     , jump: function (obj, first) {
                         if (!first) {
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"storeAdmin/getAllNewsByStoreId.do",
+                                data: {
+                                    storeId:storeId,
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createNews(data);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
                         }
                     }
                 });
@@ -324,8 +357,70 @@
             initTableCheckbox();
 
             $("#delete-btn").click(function (event) {
-
+                var $checked = $("tbody input:checked");
+                var yellow = [];
+                $checked.each(function () {
+                    yellow.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "POST",
+                        url: portPath + "storeAdmin/deleteNews.do",
+                        data: {
+                            storeNewsIds: yellow
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                layer.msg("删除成功！", {
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("删除失败！");
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
             });
+
+            function createNews(data) {
+                var $container = $("#news-container");
+                $container.html("");
+                for(var i=0;i<data.length;i++){
+                    var node = '<tr>' +
+                        '<td hidden="hidden">'+data[i].storenewsid+'</td>' +
+                        '<td>'+data[i].content+'</td>' +
+                        '<td>'+new Date(Date.parse(data[i].time.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm")+'</td>' +
+                        '<td>'+data[i].stype+'</td>' +
+                        '</tr>';
+                    $container.append(node);
+                }
+                var $tbr = $('table tbody tr');
+                var $checkItemTd = $('<td><input type="checkbox" name="checkItem" class="select" /></td>');
+                /*每一行都在最前面插入一个选中复选框的单元格*/
+                $tbr.prepend($checkItemTd);
+            }
+
+            Date.prototype.Format = function (fmt) { //author: meizz
+                var o = {
+                    "M+": this.getMonth() + 1, //月份
+                    "d+": this.getDate(), //日
+                    "h+": this.getHours(), //小时
+                    "m+": this.getMinutes(), //分
+                    "s+": this.getSeconds(), //秒
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                    "S": this.getMilliseconds() //毫秒
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
         });
     </script>
 </body>

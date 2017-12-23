@@ -14,7 +14,7 @@
     <id property="storenewsid" column="storenewsid" />
     <result property="content" column="content" />
     <result property="time" column="time" />
-    <result property="type" column="type" />
+    <result property="stype" column="type" />
   </resultMap>
   <select id="getAllNewsByStoreId" resultMap="getAllNewsByStoreId" parameterType="java.lang.Integer">
     SELECT

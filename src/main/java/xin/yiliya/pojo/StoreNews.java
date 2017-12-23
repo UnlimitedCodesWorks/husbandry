@@ -7,7 +7,7 @@ public class StoreNews {
 
     private Integer storeId;
 
-    private String type;
+    private String stype;
 
     private Date time;
 
@@ -29,14 +29,6 @@ public class StoreNews {
 
     public void setStoreId(Integer storeId) {
         this.storeId = storeId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
     }
 
     public Date getTime() {
@@ -61,5 +53,13 @@ public class StoreNews {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public String getStype() {
+        return stype;
+    }
+
+    public void setStype(String stype) {
+        this.stype = stype;
     }
 }

@@ -135,7 +135,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(Integer.parseInt(s));
             storeNews.setContent("您的店铺被系统进行黄色警告，请注意您对客户的服务态度！");
-            storeNews.setType("公告通知");
+            storeNews.setStype("公告通知");
             storeNewsService.addNew(storeNews);
         }
         return "redirect:scoreAdmin.html";
@@ -148,7 +148,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(Integer.parseInt(s));
             storeNews.setContent("您的店铺被系统进行红色警告，请注意您对客户的服务态度！");
-            storeNews.setType("公告通知");
+            storeNews.setStype("公告通知");
             storeNewsService.addNew(storeNews);
         }
         return "redirect:scoreAdmin.html";
@@ -161,7 +161,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(Integer.parseInt(s));
             storeNews.setContent(content);
-            storeNews.setType(type);
+            storeNews.setStype(type);
             storeNewsService.addNew(storeNews);
         }
         return "redirect:useStore.html";
@@ -202,7 +202,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getStoreId());
             storeNews.setContent("您的服务"+offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getServiceName()+"已被认证");
-            storeNews.setType("公告通知");
+            storeNews.setStype("公告通知");
             storeNewsService.addNew(storeNews);
             adminService.passService(Integer.parseInt(s));
         }
@@ -216,7 +216,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getStoreId());
             storeNews.setContent("您的服务"+offerServiceService.getOfferServiceByServiceId(Integer.parseInt(s)).getServiceName()+"未认证成功");
-            storeNews.setType("公告通知");
+            storeNews.setStype("公告通知");
             storeNewsService.addNew(storeNews);
             offerServiceService.deleteService(Integer.parseInt(s));
         }
@@ -273,7 +273,7 @@ public class AdminController {
             StoreNews storeNews=new StoreNews();
             storeNews.setStoreId(Integer.parseInt(s));
             storeNews.setContent(content);
-            storeNews.setType(type);
+            storeNews.setStype(type);
             storeNewsService.addNew(storeNews);
         }
         return "redirect:useStore.html";
