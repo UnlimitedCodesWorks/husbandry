@@ -77,6 +77,9 @@
             <id property="userid" column="userid"/>
             <result property="userName" column="user_name"/>
         </association>
+        <association property="offerService" javaType="xin.yiliya.pojo.OfferService">
+            <result property="serviceName" jdbcType="VARCHAR" column="serviceName"/>
+        </association>
     </resultMap>
 
     <resultMap id="store_cancel" type="xin.yiliya.pojo.OrderCancel">
@@ -124,7 +127,7 @@
     </sql>
 
     <sql id="store_handle">
-        orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name
+        orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name,service_name AS serviceName
     </sql>
 
     <sql id="store_cancel">

@@ -453,7 +453,22 @@
             initTableCheckbox();
 
             $("#adopt-btn").click(function (event) {
-
+                var checked=$("tbody input:checked");
+                var agree=[];
+                checked.each(function () {
+                    agree.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'storeAdmin/cancelAgree.do',
+                    type : "get",
+                    traditional: true,
+                    data:{orderId:agree},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href=portPath+"storeAdmin/storeCancel.html";
             });
 
             $("#refuse-btn").click(function (event) {

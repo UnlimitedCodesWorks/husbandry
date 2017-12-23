@@ -18,6 +18,8 @@ public class OrderSimple {
 
     private User user;
 
+    private OfferService offerService;
+
     public Integer getOrderid() {
         return orderid;
     }
@@ -72,5 +74,13 @@ public class OrderSimple {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public OfferService getOfferService() {
+        return offerService;
+    }
+
+    public void setOfferService(OfferService offerService) {
+        this.offerService = offerService;
     }
 }

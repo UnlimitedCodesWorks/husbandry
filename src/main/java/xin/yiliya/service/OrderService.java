@@ -96,8 +96,8 @@ public interface OrderService {
     //获取每个订单用户的需求
     List<Require> getUserRequires(Integer orderId);
 
-    //商户批量通过客户退款
-    Boolean storeSureCancelOrder(int [] orderId);
+    //商户通过客户退款
+    Boolean storeSureCancelOrder(Integer orderId);
 
     //商户派遣服务人员
     Integer dispatchServicePeople(OrderPeople orderPeople);

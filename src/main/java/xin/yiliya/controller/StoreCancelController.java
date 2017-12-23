@@ -62,4 +62,22 @@ public class StoreCancelController {
         return "/storeAdmin/order_wait_refund";
     }
 
+    @RequestMapping(value = "/cancelAgree.do",method = RequestMethod.GET)
+    public String agreeCancelDo(@RequestParam(value = "orderId")String orderId){
+        String[] ids=orderId.split("[^0123456789.]+");
+        for(String s:ids){
+            orderService.storeSureCancelOrder(Integer.parseInt(s));
+        }
+        return "redirect:storeCancel.html";
+    }
+
+    @RequestMapping(value = "/cancelRefuse.do",method = RequestMethod.GET)
+    public String refuseCancelDo(@RequestParam(value = "orderId")String orderId){
+//        String[] ids=orderId.split("[^0123456789.]+");
+//        for(String s:ids){
+//
+//        }
+        return null;
+    }
+
 }

@@ -187,11 +187,9 @@ public class OrderServiceImpl implements OrderService{
         return requires;
     }
 
-    public Boolean storeSureCancelOrder(int[] orderId) {
+    public Boolean storeSureCancelOrder(Integer orderId) {
         try{
-            for(int id:orderId){
-                orderMapper.storeUpdateOrderCancelStatus(id);
-            }
+            orderMapper.storeUpdateOrderCancelStatus(orderId);
             return true;
         }catch (Exception e){
             return false;
