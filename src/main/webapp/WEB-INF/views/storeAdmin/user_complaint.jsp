@@ -43,6 +43,9 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
         body {
             font-size: 13px;
         }
+        table tr td:hover{
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -227,6 +230,13 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        <p style="color: #ff0505;">点击列表反馈对应的投诉</p>
+                    </div>
                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" style="margin-bottom: 50px;">
                         <table class="table table-hover">
                             <thead>
@@ -243,6 +253,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <c:forEach var="complain" items="${complains}">
                             <tr>
                                 <td hidden="hidden">${complain.complainid}</td>
+                                <td hidden="hidden">${complain.user.userid}</td>
+                                <td hidden="hidden">${complain.service.offerserviceid}</td>
                                 <td>${complain.reason}</td>
                                 <td><fmt:formatDate value="${complain.time}" pattern="yyyy-MM-dd HH:mm" /></td>
                                 <td>${complain.service.serviceName}</td>
@@ -255,7 +267,6 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </table>
                         <span>
                             <button class="btn btn-danger" id="delete">删除</button>
-                            <button class="btn btn-info" id="feedback">反馈</button>
                         </span>
                         <div id="page" class="pull-right"></div>
                     </div>
@@ -272,7 +283,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h4 class="modal-title">提示</h4>
                 </div>
                 <div class="modal-body">
-                    <p>删除该投诉信息？</p>
+                    <p>删除选中的投诉信息？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">关闭</button>
@@ -455,7 +466,37 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     $("#prompt4").modal("show");
                 }
                 else {
-
+                    var complainId = $("#feedback-detail").attr("complain-id");
+                    var serviceId = $("#feedback-detail").attr("service-id");
+                    var userId = $("#feedback-detail").attr("user-id");
+                    var content = $("#feedback-detail").val();
+                    layui.use('layer', function() {
+                        var layer = layui.layer;
+                        $.ajax({
+                            type: "POST",
+                            url: portPath + "storeAdmin/feedback.do",
+                            data: {
+                                complainId:complainId,
+                                serviceId:serviceId,
+                                userId:userId,
+                                content:content
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data!=0) {
+                                    layer.msg("反馈成功！", {
+                                        time: 1000
+                                    });
+                                    setTimeout("location.replace(location.href)",1000);
+                                } else if(data==0){
+                                    alert("反馈失败！");
+                                }
+                            },
+                            error: function (jqXHR) {
+                                alert("发生错误：" + jqXHR.status);
+                            }
+                        });
+                    });
                 }
             });
 
@@ -469,14 +510,15 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 }
             });
 
-            $("#feedback").click(function (event) {
-                var $checked = $("tbody input:checked");
-                if($checked.length==0) {
-                    $("#prompt3").modal("show");
-                }
-                else if($checked.length>=1) {
-                    $("#prompt2").modal('show');
-                }
+            $("table tr").click(function (event) {
+                $("#feedback-detail").val("");
+                var complainId = $(this).children("td").eq(1).html();
+                var userId = $(this).children("td").eq(2).html();
+                var serviceId = $(this).children("td").eq(3).html();
+                $("#feedback-detail").attr("complain-id",complainId);
+                $("#feedback-detail").attr("user-id",userId);
+                $("#feedback-detail").attr("service-id",serviceId);
+                $("#prompt2").modal('show');
             });
 
             $("#prompt4").on('hidden.bs.modal', function(event) {
@@ -495,6 +537,8 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                     var node = '<tr>' +
                         '<td hidden="hidden">'+data[i].complainid+'</td>'+
+                        '<td hidden="hidden">'+data[i].user.userid+'</td>' +
+                        '<td hidden="hidden">'+data[i].service.offerserviceid+'</td>'+
                         '<td>'+data[i].reason+'</td>' +
                         '<td>'+new Date(Date.parse(data[i].time.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm")+'</td>' +
                         '<td>'+data[i].service.serviceName+'</td>' +

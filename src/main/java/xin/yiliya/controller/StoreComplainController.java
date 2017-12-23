@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.ComplainSimple;
+import xin.yiliya.pojo.Feedback;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.ComplainService;
+import xin.yiliya.service.FeedbackService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,9 @@ public class StoreComplainController {
 
     @Resource
     private ComplainService complainService;
+
+    @Resource
+    private FeedbackService feedbackService;
 
     @RequestMapping(value = "/complain.html",method = RequestMethod.GET)
     public String complain(Model model){
@@ -57,4 +62,11 @@ public class StoreComplainController {
         }
         return b;
     }
+
+    @RequestMapping(value = "/feedback.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Integer feedback(Feedback feedback){
+        return feedbackService.feedbackUser(feedback);
+    }
+
 }

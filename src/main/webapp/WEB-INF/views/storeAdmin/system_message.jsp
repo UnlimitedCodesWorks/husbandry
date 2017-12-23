@@ -267,7 +267,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h4 class="modal-title">提示</h4>
                 </div>
                 <div class="modal-body">
-                    <p>删除该消息？</p>
+                    <p>删除选中的消息？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">关闭</button>
