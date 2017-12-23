@@ -72,6 +72,26 @@
         input::-webkit-input-placeholder { /* WebKit browsers */
             color:#a0a0a0;
         }
+
+        #template-modal .col-md-9 {
+            height: 44px;
+        }
+
+        #template-modal .col-md-9 a {
+            display: inline-block;
+            height: 100%;
+            line-height: 44px;
+            font-size: 14px;
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
+        #template-modal .col-md-3 button {
+            float: right;
+        }
     </style>
 </head>
 
@@ -300,8 +320,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">派遣人员</h4>
+                    <button type="button" class="btn btn-primary pull-right" id="staff-template">选择服务人员模板</button>
+                    <h4 class="modal-title" style="height: 44px;font-size: 18px;line-height: 44px;">派遣人员</h4>
                 </div>
                 <form class="form-horizontal">
                     <div class="modal-body">
@@ -393,9 +413,39 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary pull-left">选择服务人员模板</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-info" id="staff-btn">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-模板 -->
+    <div class="modal fade" id="template-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog  modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">服务人员模板</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <!-- 模板项 -->
+                            <div class="row">
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <a href="#" title="何华峰">何华峰</a>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <button type="button" class="btn btn-info select">选择</button>
+                                </div>
+                            </div>
+                            <!-- 分页 -->
+                            <div id="template-page"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="template-dismiss">关闭</button>
                     </div>
                 </form>
             </div>
@@ -405,11 +455,24 @@
         $(function(){
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
-                //执行一个laypage实例
+                //表格分页
                 laypage.render({
                     elem: 'page'
                     ,count: 20 //数据总数，从服务端得到
                     ,limit: 2
+                    ,theme: '#19B5FE'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            }
+                        }
+                });
+
+                //模板分页
+                laypage.render({
+                    elem: 'template-page'
+                    ,count: 20 //数据总数，从服务端得到
+                    ,limit: 8
                     ,theme: '#19B5FE'
                     ,groups: 4
                     ,jump: function(obj, first){
@@ -424,6 +487,23 @@
                 laydate.render({
                     elem: '#date' //指定元素
                 });
+            });
+
+            $("#staff-template").click(function(event) {
+                $("#staff-modal").modal('hide');
+                $("#template-modal").modal('show');
+            });
+            $("#template-dismiss").click(function(event) {
+                $("#template-modal").modal('hide');
+            });
+            $("#template-modal").on('hidden.bs.modal', function(event) {
+                $("#staff-modal").modal('show');
+            });
+            //选择模板
+            $(".select").click(function(event) {
+                $("#template-modal").modal('hide');
+                //传数据
+                
             });
 
             $(".upload input").change(function(event) {

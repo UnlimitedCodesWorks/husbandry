@@ -34,6 +34,64 @@
         body {
             font-size: 13px;
         }
+
+        .upload {
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+            float: left;
+        }
+
+        .upload input {
+            opacity: 0;
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        body .layui-laydate .layui-this {
+            background-color: #22A7F0!important;
+        }
+
+        body .laydate-set-ym span:hover {
+            color: #22A7F0;
+        }
+
+        body .layui-laydate-header .laydate-icon:hover {
+            color: #22A7F0;
+        }
+
+        body .laydate-footer-btns span:hover {
+            color: #22A7F0;
+        }
+
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color:#a0a0a0;
+        }
+
+        #template-modal .col-md-9 {
+            height: 44px;
+        }
+
+        #template-modal .col-md-9 a {
+            display: inline-block;
+            height: 100%;
+            line-height: 44px;
+            font-size: 14px;
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
+        #template-modal .col-md-3 button {
+            float: right;
+        }
     </style>
 </head>
 
@@ -218,10 +276,289 @@
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form class="form-inline pull-right">
+                            <input type="text" class="form-control" placeholder="查找订单">
+                            <select class="form-control">
+                                <option>按订单号搜索</option>
+                                <option>按发起人搜索</option>
+                            </select>
+                            <button type="submit" class="btn btn-info">搜索</button>
+                        </form>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" style="margin-bottom: 50px;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>订单名称</th>
+                                    <th>创建时间</th>
+                                    <th>订单发起人</th>
+                                    <th>订单需求</th>
+                                    <th>订单状态</th>
+                                    <th>派遣</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>111111</td>
+                                    <td>华峰国际保姆服务</td>
+                                    <td>2017-12-12</td>
+                                    <td>何华峰</td>
+                                    <td><button class="btn btn-info" data-toggle="modal" data-target="#demand-modal">查看</button></td>
+                                    <td>待支付</td>
+                                    <td><button class="btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="page" class="pull-right"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 模态框-需求 -->
+    <div class="modal fade" id="demand-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">用户需求</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <!-- 需求 -->
+                            <div class="row">
+                                <div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">需求1</div>
+                                <div class="col-md-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam doloremque commodi ut perferendis dolore rem non atque quibusdam placeat repudiandae sint, aut reiciendis cum, inventore aspernatur quae vero fugit iusto.</p>
+                                </div>
+                            </div>
+                            <!-- 需求 -->
+                            <div class="row">
+                                <div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">需求2</div>
+                                <div class="col-md-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam doloremque commodi ut perferendis dolore rem non atque quibusdam placeat repudiandae sint, aut reiciendis cum, inventore aspernatur quae vero fugit iusto.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-派遣 -->
+    <div class="modal fade" id="staff-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn btn-primary pull-right" id="staff-template">选择服务人员模板</button>
+                    <h4 class="modal-title" style="height: 44px;font-size: 18px;line-height: 44px;">派遣人员</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <h4>员工头像</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
+                                    <img id="head" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <button class="btn btn-primary upload">
+                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <h4>员工信息</h4>
+                            <hr>
+                            <!-- 姓名 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="姓名">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 性别 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">性别</label>
+                                <div class="col-sm-10" style="position: relative;top: 5px;">
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="sex" id="sex-radio1" value="男">
+                                        <label for="sex-radio1">男</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="sex" id="sex-radio2" value="女">
+                                        <label for="sex-radio2">女</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 出生日期 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">出生日期</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="layui-input" id="date" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;">
+                                </div>
+                            </div>
+                            <!-- 身高 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">身高</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="身高">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 体重 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">体重</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="体重">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 民族 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">民族</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="民族">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 联系电话 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">联系电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="联系电话">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 其它说明 -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">其它说明</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="6" class="form-control" placeholder="其它说明" style="resize: none;"></textarea>
+                                    <span class="help-block">剩余xxx字</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-info" id="staff-btn">派遣</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-模板 -->
+    <div class="modal fade" id="template-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog  modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">服务人员模板</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <!-- 模板 -->
+                            <div class="row">
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <a href="#" title="何华峰">何华峰</a>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <button type="button" class="btn btn-info select">选择</button>
+                                </div>
+                            </div>
+                            <!-- 分页-->
+                            <div id="template-page"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="template-dismiss">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+                //表格分页
+                laypage.render({
+                    elem: 'page'
+                    ,count: 20 //数据总数，从服务端得到
+                    ,limit: 2
+                    ,theme: '#19B5FE'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            }
+                        }
+                });
+
+                //模板分页
+                laypage.render({
+                    elem: 'template-page'
+                    ,count: 20 //数据总数，从服务端得到
+                    ,limit: 8
+                    ,theme: '#19B5FE'
+                    ,groups: 4
+                    ,jump: function(obj, first){
+                        if(!first){
+                            }
+                        }
+                });
+            });
+
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#date' //指定元素
+                });
+            });
+
+            $("#staff-template").click(function(event) {
+                $("#staff-modal").modal('hide');
+                $("#template-modal").modal('show');
+            });
+            $("#template-dismiss").click(function(event) {
+                $("#template-modal").modal('hide');
+            });
+            $("#template-modal").on('hidden.bs.modal', function(event) {
+                $("#staff-modal").modal('show');
+            });
+            //选择模板
+            $(".select").click(function(event) {
+                $("#template-modal").modal('hide');
+                //传数据
+                
+            });
+
+            $(".upload input").change(function(event) {
+                var $file = $(this);
+                var fileObj = $file[0];
+                var windowURL = window.URL || window.webkitURL;
+                var $img = $("#head");
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                }
+                else{
+                    dataURL = $file.val();
+                    var imgObj = document.getElementById("#head-img");
+                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
