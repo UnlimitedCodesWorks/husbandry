@@ -45,7 +45,7 @@ public class ServiceScoreController {
     @RequestMapping(value = "/line.do",method =RequestMethod.GET)
     @ResponseBody
     public ServiceEvalutePerMonth getLineDo(Integer offserviceId){
-        String serviceName=offerServiceService.getOfferServiceDetailByServiceId(offserviceId).getServiceName();
+        String serviceName=offerServiceService.getOfferServiceByServiceId(offserviceId).getServiceName();
         return serviceEvaluateService.getGradePerMonthBySeviceId(offserviceId,serviceName,new Date());
     }
 
