@@ -81,4 +81,6 @@ public interface OrderMapper {
     Integer updateOrderDone(@Param(value = "serviceId") Integer serviceId,@Param(value = "userId") Integer userId);
 
     String getCancelReason(Integer cancelId);
+
+    Integer afterDispatchOrder(int orderId);
 }

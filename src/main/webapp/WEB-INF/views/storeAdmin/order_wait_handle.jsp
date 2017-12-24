@@ -363,7 +363,7 @@
                     <button type="button" class="btn btn-primary pull-right" id="staff-template">选择服务人员模板</button>
                     <h4 class="modal-title" style="height: 44px;font-size: 18px;line-height: 44px;">派遣人员</h4>
                 </div>
-                <f:form class="form-horizontal" action="<%=dispatchPath%>" method="post" modelAttribute="servicePeopleTemp" enctype="mutltipart/form-data">
+                <f:form class="form-horizontal" action="<%=dispatchPath%>" method="post" modelAttribute="servicePeopleTemp" enctype="multipart/form-data">
                     <div class="modal-body" id="body">
                         <div>
                             <h4>员工头像</h4>

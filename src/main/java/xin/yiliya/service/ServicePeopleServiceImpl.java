@@ -6,6 +6,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xin.yiliya.dao.OrderMapper;
 import xin.yiliya.dao.OrderPeopleMapper;
 import xin.yiliya.dao.ServicePeopleMapper;
 import xin.yiliya.pojo.*;
@@ -27,6 +28,9 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
     @Autowired
     OrderPeopleMapper orderPeopleMapper;
 
+    @Autowired
+    OrderMapper orderMapper;
+
     public Boolean addTempServicePeople(ServicePeopleTemp servicePeopleTemp) {
         try{
             ServicePeople servicePeople=new ServicePeople();
@@ -40,6 +44,7 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
             orderPeople.setOrderId(orderId);
             orderPeople.setSpId(servicePeopleId);
             orderPeopleMapper.insertSelective(orderPeople);
+            orderMapper.afterDispatchOrder(orderId);
             return true;
         }catch (Exception e){
             return false;

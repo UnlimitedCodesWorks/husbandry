@@ -457,4 +457,8 @@
     <delete id="userDeleteOrder" parameterType="Integer">
         DELETE FROM `order` WHERE `order`.orderid=#{orderId}
     </delete>
+
+    <update id="afterDispatchOrder" parameterType="Integer">
+        UPDATE `order` SET `status`=1 WHERE orderid=#{orderId}
+    </update>
 </mapper>
