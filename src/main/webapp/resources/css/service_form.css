@@ -227,7 +227,7 @@ footer p {
     height: 38px;
     line-height: 38px;
     color: #555555;
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
     margin-bottom: 10px;
 }
@@ -240,23 +240,24 @@ footer p {
 .service_form_a_time {
     height: 38px;
     line-height: 38px;
-    font-size: 18px;
+    font-size: 15px;
     color: #555555;
 }
 
 .service_form_a_money {
-    text-align: center;
+    text-align: right;
     height: 38px;
     line-height: 38px;
-    font-size: 18px;
+    font-size: 15px;
     color: #555555;
+    padding-right: 5px;
 }
 
 .service_form_main_a2 {
     height: 38px;
     line-height: 38px;
     color: #555555;
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
     margin-bottom: 10px;
     margin-top: 10px;
