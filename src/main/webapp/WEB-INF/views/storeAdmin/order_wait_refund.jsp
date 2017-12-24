@@ -213,7 +213,7 @@
                                             </li>
                                             <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
-                                            <li><a href="service_template.html">服务模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storePeople.html">服务模板</a>
                                             </li>
                                         </ul>
                                     </div>

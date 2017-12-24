@@ -290,7 +290,7 @@ public class HhfTest {
 //        System.out.print(n);
 
         //获取供应商服务人员模板  返回服务人员模板详情bean   可分页
-//        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,2);
+//        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //根据服务人员模板id查询单个服务人员模板bean
@@ -298,8 +298,8 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(servicePeople,true));
 
         //删除服务人员模板
-//        boolean b=servicePeopleService.deleteServicePeopleTemplate(14);
-//        System.out.print(b);
+        boolean b=servicePeopleService.deleteServicePeopleTemplate(22);
+        System.out.print(b);
 
         //修改一个服务人员模板
 //        File file1 = new File("src/main/test/test1.jpg");
@@ -320,12 +320,6 @@ public class HhfTest {
 //        ServicePeople servicePeople=servicePeopleService.getServicePeople("aaa");
 //        System.out.print(JSON.toJSONString(servicePeople,true));
 
-        //供应商派遣服务人员
-//        OrderPeople orderPeople=new OrderPeople();
-//        orderPeople.setOrderId(11);
-//        orderPeople.setSpId(15);
-//        int n=orderService.dispatcheServicePeople(orderPeople);
-//        System.out.print(n);
 
         //获取某年每月的订单成交量
 //        Map<Integer,Integer> orderMap=adminService.getOrderNumPerYear("2016");
@@ -360,22 +354,22 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(pageInfo,true));
 
         //派遣一个临时服务人员
-        File file1 = new File("src/main/test/test.jpg");
-        FileInputStream input1 = new FileInputStream(file1);
-        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
-        ServicePeopleTemp servicePeopleTemp=new ServicePeopleTemp();
-        servicePeopleTemp.setStoreId(1);
-        servicePeopleTemp.setSphead(multipartFile1);
-        servicePeopleTemp.setSpName("hhf");
-        servicePeopleTemp.setSpSex("男");
-        servicePeopleTemp.setSpBirth(new Date());
-        servicePeopleTemp.setSpHeight("187");
-        servicePeopleTemp.setSpWeight("170");
-        servicePeopleTemp.setSpNation("1111");
-        servicePeopleTemp.setSpPhone("111111");
-        servicePeopleTemp.setSpOtherinfo("22222");
-        servicePeopleTemp.setOrderId(6);
-        Boolean b=servicePeopleService.addTempServicePeople(servicePeopleTemp);
-        System.out.print(b);
+//        File file1 = new File("src/main/test/test.jpg");
+//        FileInputStream input1 = new FileInputStream(file1);
+//        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+//        ServicePeopleTemp servicePeopleTemp=new ServicePeopleTemp();
+//        servicePeopleTemp.setStoreId(1);
+//        servicePeopleTemp.setSphead(multipartFile1);
+//        servicePeopleTemp.setSpName("hhf");
+//        servicePeopleTemp.setSpSex("男");
+//        servicePeopleTemp.setSpBirth(new Date());
+//        servicePeopleTemp.setSpHeight("187");
+//        servicePeopleTemp.setSpWeight("170");
+//        servicePeopleTemp.setSpNation("1111");
+//        servicePeopleTemp.setSpPhone("111111");
+//        servicePeopleTemp.setSpOtherinfo("22222");
+//        servicePeopleTemp.setOrderId(6);
+//        Boolean b=servicePeopleService.addTempServicePeople(servicePeopleTemp);
+//        System.out.print(b);
     }
 }

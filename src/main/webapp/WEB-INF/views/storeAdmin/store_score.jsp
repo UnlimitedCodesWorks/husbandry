@@ -172,7 +172,7 @@
                                             </li>
                                             <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
                                             </li>
-                                            <li><a href="service_staff.html">服务人员模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storePeople.html">服务人员模板</a>
                                             </li>
                                         </ul>
                                     </div>
