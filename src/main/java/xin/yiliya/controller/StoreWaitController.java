@@ -72,7 +72,7 @@ public class StoreWaitController extends BaseController{
         Integer storeId=store.getStoreid();
         servicePeopleTemp.setStoreId(storeId);
         servicePeopleService.addTempServicePeople(servicePeopleTemp);
-        return "redirect:storeWait.html";
+        return "redirect:/storeAdmin/storeWait.html";
     }
 
 }
