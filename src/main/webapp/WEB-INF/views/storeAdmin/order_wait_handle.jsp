@@ -462,7 +462,6 @@
                                 <label class="col-sm-2 control-label">其它说明</label>
                                 <div class="col-sm-10">
                                     <textarea rows="6" class="form-control" placeholder="其它说明" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余xxx字</span>
                                 </div>
                             </div>
                         </div>
