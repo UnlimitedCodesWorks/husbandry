@@ -217,12 +217,4 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.sureCount(storeId);
     }
 
-    public Integer dispatchServicePeople(OrderPeople orderPeople) {
-        Order order=orderMapper.getOrderByOrderId(orderPeople.getOrderId());
-        order.setStatus(1);
-        order.setEndTime(new Date());
-        orderMapper.updateOrder(order);
-        orderPeopleMapper.insertSelective(orderPeople);
-        return orderPeople.getOrderpeopleid();
-    }
 }

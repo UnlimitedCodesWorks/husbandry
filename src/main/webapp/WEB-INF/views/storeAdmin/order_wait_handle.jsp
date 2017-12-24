@@ -4,6 +4,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
     String waitPath=portPath+"storeAdmin/waitSearch.do";
+    String dispatchPath=portPath+"storeAdmin/waitDispatch.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -308,7 +309,7 @@
                                             <td><c:out value="${waitOrder.user.userName}"/></td>
                                             <td><button class="btn btn-info" data-toggle="modal" data-target="#demand-modal">查看</button></td>
                                             <td>已支付</td>
-                                            <td><button class="btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>
+                                            <td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>
                                         </tr>
                                     </c:forEach>
                                 </c:if>
@@ -362,8 +363,8 @@
                     <button type="button" class="btn btn-primary pull-right" id="staff-template">选择服务人员模板</button>
                     <h4 class="modal-title" style="height: 44px;font-size: 18px;line-height: 44px;">派遣人员</h4>
                 </div>
-                <form class="form-horizontal">
-                    <div class="modal-body">
+                <f:form class="form-horizontal" action="<%=dispatchPath%>" method="post" modelAttribute="servicePeopleTemp">
+                    <div class="modal-body" id="body">
                         <div>
                             <h4>员工头像</h4>
                             <hr>
@@ -373,7 +374,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                     <button class="btn btn-primary upload">
-                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
+                                        <input type="file" name="sphead"><i class="icon fa fa-cloud-upload"></i> 选择
                                     </button>
                                 </div>
                             </div>
@@ -384,7 +385,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="姓名" required>
+                                    <input type="text" class="form-control" placeholder="姓名" required="required" name="spName">
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -393,11 +394,11 @@
                                 <label class="col-sm-2 control-label">性别</label>
                                 <div class="col-sm-10" style="position: relative;top: 5px;">
                                     <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" id="sex-radio1" value="男" checked>
+                                        <input type="radio" name="spSex" id="sex-radio1" value="男" checked>
                                         <label for="sex-radio1">男</label>
                                     </div>
                                     <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" id="sex-radio2" value="女">
+                                        <input type="radio" name="spSex" id="sex-radio2" value="女">
                                         <label for="sex-radio2">女</label>
                                     </div>
                                 </div>
@@ -406,14 +407,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">出生日期</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="layui-input" id="date" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;" required>
+                                    <input type="text" name="spBirth" class="layui-input" id="date" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;" required="required"/>
                                 </div>
                             </div>
                             <!-- 身高 -->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">身高</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="身高" required>
+                                    <input type="text" name="spHeight" class="form-control" placeholder="身高" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -421,7 +422,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">体重</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="体重" required>
+                                    <input type="text" name="spWeight" class="form-control" placeholder="体重" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -429,7 +430,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">民族</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="民族" required>
+                                    <input type="text" name="spNation" class="form-control" placeholder="民族" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -437,7 +438,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">联系电话</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="联系电话" required>
+                                    <input type="text" name="spPhone" class="form-control" placeholder="联系电话" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -445,7 +446,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">其它说明</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="6" class="form-control" placeholder="其它说明" style="resize: none;" required></textarea>
+                                    <textarea rows="6" name="spOtherinfo" class="form-control" placeholder="其它说明" style="resize: none;" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -454,7 +455,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-info" id="staff-btn">派遣</button>
                     </div>
-                </form>
+                </f:form>
             </div>
         </div>
     </div>
@@ -586,12 +587,23 @@
                             '<td>'+userName+'</td>\n' +
                             '<td><button class="btn btn-info" data-toggle="modal" data-target="#demand-modal">查看</button></td>\n' +
                             '<td>已支付</td>\n' +
-                            '<td><button class="btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>\n' +
+                            '<td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal" class="dispatch">派遣</button></td>\n' +
                             '</tr>';
                         table.append(node);
                         table.append('</tbody>');
                     }
+                    dispatchTemp();
                 }
+
+                function dispatchTemp() {
+                    $('.dispatch').click(function () {
+                        $('#hiddenOrder').remove();
+                        var orderId=$("tbody tr td:hidden").html();
+                        var node='<input id="hiddenOrder" hidden="hidden" type="text" value="'+orderId+'" name="orderId"/>';
+                        $('#body').append(node);
+                    });
+                }
+                dispatchTemp();
 
                 //模板分页
                 laypage.render({

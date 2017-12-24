@@ -358,5 +358,24 @@ public class HhfTest {
         //模糊搜索,获取商户待退款订单
 //        PageInfo<OrderCancel> pageInfo=orderService.getAllStoreCancelOrder("230","按订单号搜索",1,1,1);
 //        System.out.print(JSON.toJSONString(pageInfo,true));
+
+        //派遣一个临时服务人员
+        File file1 = new File("src/main/test/test.jpg");
+        FileInputStream input1 = new FileInputStream(file1);
+        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
+        ServicePeopleTemp servicePeopleTemp=new ServicePeopleTemp();
+        servicePeopleTemp.setStoreId(1);
+        servicePeopleTemp.setSphead(multipartFile1);
+        servicePeopleTemp.setSpName("hhf");
+        servicePeopleTemp.setSpSex("男");
+        servicePeopleTemp.setSpBirth(new Date());
+        servicePeopleTemp.setSpHeight("187");
+        servicePeopleTemp.setSpWeight("170");
+        servicePeopleTemp.setSpNation("1111");
+        servicePeopleTemp.setSpPhone("111111");
+        servicePeopleTemp.setSpOtherinfo("22222");
+        servicePeopleTemp.setOrderId(6);
+        Boolean b=servicePeopleService.addTempServicePeople(servicePeopleTemp);
+        System.out.print(b);
     }
 }

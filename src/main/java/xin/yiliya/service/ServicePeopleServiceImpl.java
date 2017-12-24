@@ -6,10 +6,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xin.yiliya.dao.OrderPeopleMapper;
 import xin.yiliya.dao.ServicePeopleMapper;
-import xin.yiliya.pojo.ServicePeople;
-import xin.yiliya.pojo.ServicePeopleAdd;
-import xin.yiliya.pojo.ServicePeopleUpdate;
+import xin.yiliya.pojo.*;
 import xin.yiliya.tool.AliOssTool;
 
 import javax.annotation.Resource;
@@ -24,6 +23,28 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
 
     @Autowired
     ServicePeopleMapper servicePeopleMapper;
+
+    @Autowired
+    OrderPeopleMapper orderPeopleMapper;
+
+    public Boolean addTempServicePeople(ServicePeopleTemp servicePeopleTemp) {
+        try{
+            ServicePeople servicePeople=new ServicePeople();
+            BeanUtils.copyProperties(servicePeople,servicePeopleTemp);
+            servicePeople.setSpHead(aliOssTool.putImage(servicePeopleTemp.getSphead(),"other"));
+            servicePeople.setUpTime(new Date());
+            servicePeopleMapper.insertSelective(servicePeople);
+            Integer servicePeopleId=servicePeople.getServicepeopleid();
+            Integer orderId=servicePeopleTemp.getOrderId();
+            OrderPeople orderPeople=new OrderPeople();
+            orderPeople.setOrderId(orderId);
+            orderPeople.setSpId(servicePeopleId);
+            orderPeopleMapper.insertSelective(orderPeople);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
     public Integer addServicePeopleTemplate(ServicePeopleAdd servicePeopleAdd) {
         try{
