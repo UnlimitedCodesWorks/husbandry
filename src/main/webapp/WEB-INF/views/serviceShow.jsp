@@ -164,7 +164,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						<!-- 服务商名 -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-							<a href="javascrapt:" title="${service.store.storeName}"><h3 style="text-align: center;font-weight: bold;">${service.store.storeName}</h3></a>
+							<a href="<%=portPath%>store/information/${service.store.storeid}" title="${service.store.storeName}"><h3 style="text-align: center;font-weight: bold;">${service.store.storeName}</h3></a>
 						</div>
 						<!-- 注册时间 -->
 						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
