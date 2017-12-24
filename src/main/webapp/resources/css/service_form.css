@@ -144,8 +144,8 @@ footer p {
 @font-face {
     font-family: 'iconfont';
     /* project id 514080 */
-    src: url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.eot');
-    src: url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.eot?#iefix') format('embedded-opentype'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.woff') format('woff'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.ttf') format('truetype'), url('https://at.alicdn.com/t/font_514080_z3q6ighgp2zf47vi.svg#iconfont') format('svg');
+    src: url('https://at.alicdn.com/t/font_514080_a7kjbadqx48l4n29.eot');
+    src: url('https://at.alicdn.com/t/font_514080_a7kjbadqx48l4n29.eot?#iefix') format('embedded-opentype'), url('https://at.alicdn.com/t/font_514080_a7kjbadqx48l4n29.woff') format('woff'), url('https://at.alicdn.com/t/font_514080_a7kjbadqx48l4n29.ttf') format('truetype'), url('https://at.alicdn.com/t/font_514080_a7kjbadqx48l4n29.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -221,4 +221,52 @@ footer p {
 
 .service_advert_spt3_img img {
     width: 100%;
+}
+
+.service_form_main_a1 {
+    height: 38px;
+    line-height: 38px;
+    color: #555555;
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.service_form_main_a1 input {
+    text-align: right;
+    padding: 10px;
+}
+
+.service_form_a_time {
+    height: 38px;
+    line-height: 38px;
+    font-size: 18px;
+    color: #555555;
+}
+
+.service_form_a_money {
+    text-align: center;
+    height: 38px;
+    line-height: 38px;
+    font-size: 18px;
+    color: #555555;
+}
+
+.service_form_main_a2 {
+    height: 38px;
+    line-height: 38px;
+    color: #555555;
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.service_form_main_a2 input {
+    text-align: right;
+    padding: 10px;
+}
+
+.service_form_main_aa2 i{
+    cursor: pointer;
 }

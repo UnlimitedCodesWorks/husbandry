@@ -92,6 +92,50 @@
                             </div>
                         </c:if>
                     </c:forEach>
+                    <div class="layui-form-item">
+                        <label class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_q">您期望的服务时长？</label>
+                        <div class="layui-col-md12 layui-col-sm12 layui-col-xs24 service_form_main_a1">
+                            <div class="layui-col-md3 layui-col-sm3 layui-col-xs6">
+                                <div class="layui-col-md8 layui-col-sm8 layui-col-xs8">
+                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_month">
+                                </div>
+                                <div class="layui-col-md3 layui-col-sm3 layui-col-xs3">月</div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-sm3 layui-col-xs6">
+                                <div class="layui-col-md8 layui-col-sm8 layui-col-xs8">
+                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_day">
+                                </div>
+                                <div class="layui-col-md3 layui-col-sm3 layui-col-xs3">天</div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-sm3 layui-col-xs6">
+                                <span class="service_form_main_hourprs">15</span>元/小时
+                            </div>
+                            <button type="button" class="layui-btn layui-btn-primary layui-col-md3 layui-col-sm3 layui-col-xs5 service_addbtn">添加周期服务</button>
+                        </div>
+
+                        <div class="service_form_main_a2">
+
+                            <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">
+                                <div class="layui-col-md-offset2 layui-col-md2 layui-col-sm2 layui-col-sm-offset2 layui-col-xs3">
+                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">
+                                </div>
+                                <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
+                                    时~
+                                </div>
+                                <div class="layui-col-md2 layui-col-sm2 layui-col-xs3">
+                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">
+                                </div>
+                                <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
+                                    时
+                                </div>
+                                <div class="layui-col-md3 layui-col-sm3 layui-col-xs2"><i class="iconfont service_time_delete">&#xe641;</i></div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 service_form_a_time">总时长：0小时</div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 service_form_a_money">总金额：0元</div>
+                        </div>
+                    </div>
                     <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-button">
                         <button type="submit" class="layui-btn layui-btn-primary layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_btn">提交信息</button>
                     </div>
