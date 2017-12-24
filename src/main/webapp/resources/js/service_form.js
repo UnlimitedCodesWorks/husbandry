@@ -39,7 +39,8 @@ function abc() {
     var timem = $(".service_input_month");
     var timed = $(".service_input_day");
     var price = $(".service_form_main_hourprs").text();
-    $(".service_input").blur(function() {
+
+    function calculate() {
         var x1 = 0;
         for (var j = 0; j < times.length; j++) {
             x1 += (parseInt(timeo.eq(j).val()) - parseInt(times.eq(j).val()));
@@ -50,11 +51,17 @@ function abc() {
         var x = ((parseInt(timem.val()) * 31) + (parseInt(timed.val()))) * x1;
         $(".service_form_a_time").html("总时长：" + x + "小时");
         $(".service_form_a_money").html("总金额：" + (parseInt(price) * x) + "元");
-    })
+    }
+    $(".service_input").blur(function() {
+        calculate();
+    });
 
     var fun1 = function(i) {
         del.eq(i).click(function() {
             mydiv.eq(i).remove();
+            times = $(".service_input_times");
+            timeo = $(".service_input_timeo");
+            calculate();
         })
     }
     for (var i = 0; i < del.length; i++) {
@@ -63,19 +70,19 @@ function abc() {
 };
 abc();
 var timechose = '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">' +
-    '<div class="layui-col-md-offset2 layui-col-md2 layui-col-sm2 layui-col-sm-offset2 layui-col-xs3">' +
+    '<div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
     '  <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">' +
     '</div>' +
     ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
     '时~' +
     '</div>' +
-    ' <div class="layui-col-md2 layui-col-sm2 layui-col-xs3">' +
+    ' <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
     '<input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">' +
     ' </div>' +
     ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
     '  时' +
     '</div>' +
-    ' <div class="layui-col-md3 layui-col-sm3 layui-col-xs2"><i class="iconfont service_time_delete">&#xe641;</i></div>' +
+    ' <div class="layui-col-md2 layui-col-sm2 layui-col-xs2"><i class="iconfont service_time_delete">&#xe641;</i></div>' +
     '</div>';
 $(".service_addbtn").click(function() {
     $(".service_form_main_a2").append(timechose);
