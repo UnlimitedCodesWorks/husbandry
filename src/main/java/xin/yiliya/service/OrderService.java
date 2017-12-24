@@ -102,7 +102,4 @@ public interface OrderService {
     //商户拒绝客户退款
     Boolean StoreRefuseCancelOrder(Integer orderId);
 
-    //商户派遣服务人员
-    Integer dispatchServicePeople(OrderPeople orderPeople);
-
 }

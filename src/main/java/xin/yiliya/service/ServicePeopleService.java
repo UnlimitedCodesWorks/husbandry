@@ -5,10 +5,14 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 import xin.yiliya.pojo.ServicePeople;
 import xin.yiliya.pojo.ServicePeopleAdd;
+import xin.yiliya.pojo.ServicePeopleTemp;
 import xin.yiliya.pojo.ServicePeopleUpdate;
 
 @Service
 public interface ServicePeopleService {
+
+    //派遣临时服务人员
+    public Boolean addTempServicePeople(ServicePeopleTemp servicePeopleTemp);
 
     //添加一个服务人员模板
     //返回：添加服务人员的id，若返回为0，则添加失败

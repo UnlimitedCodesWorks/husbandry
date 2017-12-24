@@ -3,26 +3,28 @@ package xin.yiliya.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import xin.yiliya.pojo.OrderSimple;
+import xin.yiliya.pojo.ServicePeopleTemp;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.OrderService;
+import xin.yiliya.service.ServicePeopleService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/storeAdmin",method = RequestMethod.GET)
-public class StoreWaitController {
+public class StoreWaitController extends BaseController{
 
     @Resource
     HttpSession httpSession;
 
     @Resource
     OrderService orderService;
+
+    @Resource
+    ServicePeopleService servicePeopleService;
 
     @RequestMapping(value = "/storeWait.html",method = RequestMethod.GET)
     public String storeWaitHTML(Model model){
@@ -33,6 +35,7 @@ public class StoreWaitController {
         model.addAttribute("pages",orderService.getAllStoreHandleOrder(storeId,1,2).getPages());
         model.addAttribute("input","none");
         model.addAttribute("type","none");
+        model.addAttribute("servicePeopleTemp",new ServicePeopleTemp());
         return "/storeAdmin/order_wait_handle";
     }
 
@@ -60,6 +63,16 @@ public class StoreWaitController {
         model.addAttribute("input",input.trim());
         model.addAttribute("type",orderType);
         return "/storeAdmin/order_wait_handle";
+    }
+
+    @RequestMapping(value = "/waitDispatch.do",method = RequestMethod.POST)
+    public String dispatchDo(@ModelAttribute("servicePeopleTemp") ServicePeopleTemp servicePeopleTemp){
+        System.out.println("*******************************"+servicePeopleTemp.getOrderId()+"*****************************************");
+        Store store = (Store) httpSession.getAttribute("storeBean");
+        Integer storeId=store.getStoreid();
+        servicePeopleTemp.setStoreId(storeId);
+        servicePeopleService.addTempServicePeople(servicePeopleTemp);
+        return "redirect:storeWait.html";
     }
 
 }
