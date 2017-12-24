@@ -82,24 +82,8 @@
             color:#a0a0a0;
         }
 
-        #template-modal .col-md-9 {
-            height: 44px;
-        }
-
-        #template-modal .col-md-9 a {
-            display: inline-block;
-            height: 100%;
-            line-height: 44px;
-            font-size: 14px;
-            overflow : hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-        }
-
-        #template-modal .col-md-3 button {
-            float: right;
+        .btn-info {
+            margin: 0;
         }
     </style>
 </head>
@@ -450,17 +434,29 @@
                 <form class="form-horizontal">
                     <div class="modal-body">
                         <div>
-                            <!-- 模板项 -->
+                            <!-- 模板 -->
                             <div class="row">
-                                <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <a href="#" title="何华峰">何华峰</a>
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <button type="button" class="btn btn-info select">选择</button>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>模板名称</th>
+                                            <th>备注</th>
+                                            <th>选择</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><a href="#" title="何华峰">何华峰</a></td>
+                                            <td>保姆</td>
+                                            <td><button type="button" class="btn btn-info select">选择</button></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- 分页-->
+                                    <div id="template-page" class="pull-right"></div>
                                 </div>
                             </div>
-                            <!-- 分页 -->
-                            <div id="template-page"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
