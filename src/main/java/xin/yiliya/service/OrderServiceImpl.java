@@ -196,6 +196,15 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+    public Boolean StoreRefuseCancelOrder(Integer orderId) {
+        try{
+            orderMapper.storeCancelRefuseStatus(orderId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public Integer cancelCount(Integer storeId) {
         return orderMapper.cancelCount(storeId);
     }

@@ -73,11 +73,11 @@ public class StoreCancelController {
 
     @RequestMapping(value = "/cancelRefuse.do",method = RequestMethod.GET)
     public String refuseCancelDo(@RequestParam(value = "orderId")String orderId){
-//        String[] ids=orderId.split("[^0123456789.]+");
-//        for(String s:ids){
-//
-//        }
-        return null;
+        String[] ids=orderId.split("[^0123456789.]+");
+        for(String s:ids){
+            orderService.StoreRefuseCancelOrder(Integer.parseInt(s));
+        }
+        return "redirect:storeCancel.html";
     }
 
 }

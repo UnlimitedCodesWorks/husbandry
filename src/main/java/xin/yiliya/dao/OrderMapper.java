@@ -62,6 +62,8 @@ public interface OrderMapper {
 
     Integer storeUpdateOrderCancelStatus(int orderId);
 
+    Integer storeCancelRefuseStatus(int orderId);
+
     Integer userSureToOrder(int orderId);
 
     Integer cancelCount(int storeId);

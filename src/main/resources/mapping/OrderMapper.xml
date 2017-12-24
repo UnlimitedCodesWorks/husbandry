@@ -376,6 +376,12 @@
         where orderid = #{orderId,jdbcType=INTEGER}
     </update>
 
+    <update id="storeCancelRefuseStatus">
+        update `order`
+        SET status=6
+        where orderid = #{orderId,jdbcType=INTEGER}
+    </update>
+
     <update id="userSureToOrder">
         UPDATE `order` SET `status`=2 WHERE orderid=#{orderId}
     </update>

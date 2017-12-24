@@ -473,7 +473,22 @@
             });
 
             $("#refuse-btn").click(function (event) {
-
+                var checked=$("tbody input:checked");
+                var refuse=[];
+                checked.each(function () {
+                    refuse.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                $.ajax({
+                    url :portPath + 'storeAdmin/cancelRefuse.do',
+                    type : "get",
+                    traditional: true,
+                    data:{orderId:refuse},
+                    async: false,
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+                window.location.href=portPath+"storeAdmin/storeCancel.html";
             });
         });
     </script>
