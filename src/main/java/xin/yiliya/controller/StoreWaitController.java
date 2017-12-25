@@ -65,6 +65,9 @@ public class StoreWaitController extends BaseController{
         model.addAttribute("pages",orderService.getAllStoreHandleOrder(input.trim(),orderType,storeId,1,2).getPages());
         model.addAttribute("input",input.trim());
         model.addAttribute("type",orderType);
+        model.addAttribute("servicePeopleTemp",new ServicePeopleTemp());
+        model.addAttribute("peopleTemplateList",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getList());
+        model.addAttribute("templatePages",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getPages());
         return "/storeAdmin/order_wait_handle";
     }
 
