@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class ServicePeopleTemp {
 
+    private Integer servicepeopleid;
+
     private Integer storeId;
 
     private MultipartFile sphead;
@@ -114,5 +116,13 @@ public class ServicePeopleTemp {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getServicepeopleid() {
+        return servicepeopleid;
+    }
+
+    public void setServicepeopleid(Integer servicepeopleid) {
+        this.servicepeopleid = servicepeopleid;
     }
 }

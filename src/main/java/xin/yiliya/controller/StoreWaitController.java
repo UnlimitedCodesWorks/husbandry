@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import xin.yiliya.pojo.OrderSimple;
+import xin.yiliya.pojo.ServicePeople;
 import xin.yiliya.pojo.ServicePeopleTemp;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.OrderService;
@@ -36,6 +37,8 @@ public class StoreWaitController extends BaseController{
         model.addAttribute("input","none");
         model.addAttribute("type","none");
         model.addAttribute("servicePeopleTemp",new ServicePeopleTemp());
+        model.addAttribute("peopleTemplateList",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getList());
+        model.addAttribute("templatePages",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getPages());
         return "/storeAdmin/order_wait_handle";
     }
 
@@ -70,7 +73,28 @@ public class StoreWaitController extends BaseController{
         Store store = (Store) httpSession.getAttribute("storeBean");
         Integer storeId=store.getStoreid();
         servicePeopleTemp.setStoreId(storeId);
-        servicePeopleService.addTempServicePeople(servicePeopleTemp);
+        servicePeopleService.addTempServicePeople(servicePeopleTemp,false);
+        return "redirect:/storeAdmin/storeWait.html";
+    }
+
+    @RequestMapping(value = "/muBan.do",method = RequestMethod.GET)
+    @ResponseBody
+    public PageInfo<ServicePeople> peoplePagePage(@RequestParam(value = "currentPage")Integer currentPage,
+                                                  @RequestParam(value = "storeId")Integer storeId){
+
+        return servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,currentPage,3);
+
+    }
+
+    @RequestMapping(value = "/chooseServicePeople.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServicePeople getTemplatePeopleDo(Integer servicePeopleId){
+        return servicePeopleService.getServicePeopleTemplateById(servicePeopleId);
+    }
+
+    @RequestMapping(value = "/waitDispatchTemplate.do",method = RequestMethod.POST)
+    public String dispatchTemplateDo(@ModelAttribute("servicePeopleTemp") ServicePeopleTemp servicePeopleTemp){
+        servicePeopleService.addTempServicePeople(servicePeopleTemp,true);
         return "redirect:/storeAdmin/storeWait.html";
     }
 

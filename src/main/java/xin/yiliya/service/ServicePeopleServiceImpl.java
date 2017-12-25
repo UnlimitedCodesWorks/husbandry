@@ -31,21 +31,33 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
     @Autowired
     OrderMapper orderMapper;
 
-    public Boolean addTempServicePeople(ServicePeopleTemp servicePeopleTemp) {
+    public Boolean addTempServicePeople(ServicePeopleTemp servicePeopleTemp,Boolean templatePeople) {
         try{
-            ServicePeople servicePeople=new ServicePeople();
-            BeanUtils.copyProperties(servicePeople,servicePeopleTemp);
-            servicePeople.setSpHead(aliOssTool.putImage(servicePeopleTemp.getSphead(),"other"));
-            servicePeople.setUpTime(new Date());
-            servicePeopleMapper.insertSelective(servicePeople);
-            Integer servicePeopleId=servicePeople.getServicepeopleid();
-            Integer orderId=servicePeopleTemp.getOrderId();
-            OrderPeople orderPeople=new OrderPeople();
-            orderPeople.setOrderId(orderId);
-            orderPeople.setSpId(servicePeopleId);
-            orderPeopleMapper.insertSelective(orderPeople);
-            orderMapper.afterDispatchOrder(orderId);
-            return true;
+            if(templatePeople==false){
+                ServicePeople servicePeople=new ServicePeople();
+                BeanUtils.copyProperties(servicePeople,servicePeopleTemp);
+                servicePeople.setSpHead(aliOssTool.putImage(servicePeopleTemp.getSphead(),"other"));
+                servicePeople.setUpTime(new Date());
+                servicePeopleMapper.insertSelective(servicePeople);
+                Integer servicePeopleId=servicePeople.getServicepeopleid();
+                Integer orderId=servicePeopleTemp.getOrderId();
+                OrderPeople orderPeople=new OrderPeople();
+                orderPeople.setOrderId(orderId);
+                orderPeople.setSpId(servicePeopleId);
+                orderPeopleMapper.insertSelective(orderPeople);
+                orderMapper.afterDispatchOrder(orderId);
+                return true;
+            }
+            else{
+                Integer orderId=servicePeopleTemp.getOrderId();
+                Integer servicePeopleId=servicePeopleTemp.getServicepeopleid();
+                OrderPeople orderPeople=new OrderPeople();
+                orderPeople.setOrderId(orderId);
+                orderPeople.setSpId(servicePeopleId);
+                orderPeopleMapper.insertSelective(orderPeople);
+                orderMapper.afterDispatchOrder(orderId);
+                return true;
+            }
         }catch (Exception e){
             return false;
         }

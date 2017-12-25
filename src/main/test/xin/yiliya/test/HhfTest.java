@@ -297,8 +297,8 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(services,true));
 
         //获取供应商服务人员模板  返回服务人员模板详情bean   可分页
-//        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
-//        System.out.print(JSON.toJSONString(info,true));
+        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
+        System.out.print(JSON.toJSONString(info,true));
 
         //根据服务人员模板id查询单个服务人员模板bean
 //        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(20);
