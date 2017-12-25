@@ -67,7 +67,6 @@ public class StoreWaitController extends BaseController{
 
     @RequestMapping(value = "/waitDispatch.do",method = RequestMethod.POST)
     public String dispatchDo(@ModelAttribute("servicePeopleTemp") ServicePeopleTemp servicePeopleTemp){
-        System.out.println("*******************************"+servicePeopleTemp.getOrderId()+"*****************************************");
         Store store = (Store) httpSession.getAttribute("storeBean");
         Integer storeId=store.getStoreid();
         servicePeopleTemp.setStoreId(storeId);

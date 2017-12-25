@@ -79,6 +79,9 @@ public class HhfTest {
     @Autowired
     ServiceEvaluateService serviceEvaluateService;
 
+    @Autowired
+    ServiceService serviceService;
+
     @Test
     public void test() throws IOException, ImageFormatException, InvocationTargetException, IllegalAccessException {
         //管理员登录
@@ -273,7 +276,7 @@ public class HhfTest {
 //        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
 //
 //        ServicePeopleAdd servicePeopleAdd=new ServicePeopleAdd();
-//        servicePeopleAdd.setStoreId(2);
+//        servicePeopleAdd.setStoreId(1);
 //        servicePeopleAdd.setSphead(multipartFile1);
 //        servicePeopleAdd.setSpName("hx");
 //        servicePeopleAdd.setSpSex("男");
@@ -281,7 +284,7 @@ public class HhfTest {
 //        servicePeopleAdd.setSpHeight("183");
 //        servicePeopleAdd.setSpWeight("75");
 //        servicePeopleAdd.setSpNation("汉族");
-//        servicePeopleAdd.setSpRemark("大量时间");
+//        servicePeopleAdd.setSpRemark("保姆");
 //        servicePeopleAdd.setSpTemplatename("我是模板3");
 //        servicePeopleAdd.setSpPhone("1300000007703");
 //        servicePeopleAdd.setSpOtherinfo("我是衢州人");
@@ -289,17 +292,21 @@ public class HhfTest {
 //        Integer n=servicePeopleService.addServicePeopleTemplate(servicePeopleAdd);
 //        System.out.print(n);
 
+        //获取所有服务类
+//        List<Service> services=serviceService.getAllService();
+//        System.out.print(JSON.toJSONString(services,true));
+
         //获取供应商服务人员模板  返回服务人员模板详情bean   可分页
 //        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //根据服务人员模板id查询单个服务人员模板bean
-//        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(14);
+//        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(20);
 //        System.out.print(JSON.toJSONString(servicePeople,true));
 
         //删除服务人员模板
-        boolean b=servicePeopleService.deleteServicePeopleTemplate(22);
-        System.out.print(b);
+//        boolean b=servicePeopleService.deleteServicePeopleTemplate(22);
+//        System.out.print(b);
 
         //修改一个服务人员模板
 //        File file1 = new File("src/main/test/test1.jpg");
@@ -307,14 +314,12 @@ public class HhfTest {
 //        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
 //
 //        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
-//        servicePeopleUpdate.setServicepeopleid(15);
+//        servicePeopleUpdate.setServicepeopleid(28);
 //        servicePeopleUpdate.setSphead(multipartFile1);
 //        servicePeopleUpdate.setSpName("wuliafeng");
 //
 //        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
 //        System.out.print(b);
-
-        //?????????????
 
         //根据服务人员名字显示模板
 //        ServicePeople servicePeople=servicePeopleService.getServicePeople("aaa");

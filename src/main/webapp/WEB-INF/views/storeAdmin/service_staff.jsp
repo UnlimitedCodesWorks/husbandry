@@ -3,6 +3,8 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String createPeoplePath=portPath+"storeAdmin/createPeople.do";
+    String updatePeoplePath=portPath+"storeAdmin/updatePeople.do";
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -287,7 +289,7 @@
                                             <td class="select"><c:out value="${servicePeople.spTemplatename}"/></td>
                                             <td class="select"><c:out value="${servicePeople.spRemark}"/></td>
                                             <td class="select"><fmt:formatDate value="${servicePeople.upTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                            <td><button class="btn btn-info" data-toggle="modal" data-target="#template-modal">查看</button></td>
+                                            <td><button class="btn btn-info look" data-toggle="modal" data-target="#template-modal">查看</button></td>
                                         </tr>
                                     </c:forEach>
                                 </c:if>
@@ -311,106 +313,7 @@
     </div>
     <!-- 模态框-模板 -->
     <div class="modal fade" id="template-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">服务人员模板</h4>
-                </div>
-                <form class="form-horizontal">
-                    <div class="modal-body">
-                        <div>
-                            <h4>员工头像</h4>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
-                                    <img src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
-                                </div>
-                                <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <button class="btn btn-primary upload">
-                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
-                                    </button>
-                                </div>
-                            </div>
-                            <hr>
-                            <h4>员工信息</h4>
-                            <hr>
-                            <!-- 姓名 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">姓名</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="姓名">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 性别 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">性别</label>
-                                <div class="col-sm-10" style="position: relative;top: 5px;">
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" value="男" id="sex-radio1">
-                                        <label for="sex-radio1">男</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" value="女" id="sex-radio2">
-                                        <label for="sex-radio2">女</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 出生日期 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">出生日期</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="layui-input" id="date1" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;">
-                                </div>
-                            </div>
-                            <!-- 身高 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">身高</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="身高">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 体重 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">体重</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="体重">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 民族 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">民族</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="民族">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 联系电话 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">联系电话</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="联系电话">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 其它说明 -->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">其它说明</label>
-                                <div class="col-sm-10">
-                                    <textarea rows="6" class="form-control" placeholder="其它说明" style="resize: none;"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-info" id="staff-btn">保存</button>
-                    </div>
-                </form>
-            </div>
+        <div class="modal-dialog" role="document" id="servicePeopleInfo">
         </div>
     </div>
     <!-- 模态框-添加模板 -->
@@ -421,7 +324,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">添加服务人员模板</h4>
                 </div>
-                <form class="form-horizontal">
+                <f:form class="form-horizontal" action="<%=createPeoplePath%>" method="post" enctype="multipart/form-data" modelAttribute="servicePeopleAdd">
                     <div class="modal-body">
                         <div>
                             <h4>员工头像</h4>
@@ -432,7 +335,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                     <button class="btn btn-primary upload">
-                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
+                                        <input name="sphead" type="file"><i class="icon fa fa-cloud-upload"></i> 选择
                                     </button>
                                 </div>
                             </div>
@@ -443,7 +346,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="姓名" required>
+                                    <input type="text" name="spName" class="form-control" placeholder="姓名" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -452,11 +355,11 @@
                                 <label class="col-sm-2 control-label">性别</label>
                                 <div class="col-sm-10" style="position: relative;top: 5px;">
                                     <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" value="男" checked id="sex-radio3">
+                                        <input type="radio" name="spSex" value="男" checked id="sex-radio3">
                                         <label for="sex-radio3">男</label>
                                     </div>
                                     <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="sex" value="女" id="sex-radio4">
+                                        <input type="radio" name="spSex" value="女" id="sex-radio4">
                                         <label for="sex-radio4">女</label>
                                     </div>
                                 </div>
@@ -465,14 +368,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">出生日期</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="layui-input" id="date2" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;" required>
+                                    <input type="text" name="spBirth" class="layui-input" id="date2" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;" required>
                                 </div>
                             </div>
                             <!-- 身高 -->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">身高</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="身高" required>
+                                    <input type="text" name="spHeight" class="form-control" placeholder="身高" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -480,7 +383,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">体重</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="体重" required>
+                                    <input type="text" name="spWeight" class="form-control" placeholder="体重" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -488,7 +391,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">民族</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="民族" required>
+                                    <input type="text" name="spNation" class="form-control" placeholder="民族" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -496,7 +399,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">联系电话</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="联系电话" required>
+                                    <input type="text" name="spPhone" class="form-control" placeholder="联系电话" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -504,7 +407,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">模板名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="模板名" required>
+                                    <input type="text" name="spTemplatename" class="form-control" placeholder="模板名" required>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -512,6 +415,16 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">服务类别</label>
                                 <div class="col-sm-10">
+                                    <select class="form-control" name="spRemark">
+                                        <option>保姆</option>
+                                        <option>月嫂</option>
+                                        <option>涉外家政</option>
+                                        <option>钟点工</option>
+                                        <option>老人陪护</option>
+                                        <option>病人陪护</option>
+                                        <option>育婴师</option>
+                                        <option>催乳师</option>
+                                    </select>
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -519,7 +432,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">其它说明</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="6" class="form-control" placeholder="其它说明" style="resize: none;" required></textarea>
+                                    <textarea rows="6" name="spOtherinfo" class="form-control" placeholder="其它说明" style="resize: none;" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -528,7 +441,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-info" id="add-btn">添加</button>
                     </div>
-                </form>
+                </f:form>
             </div>
         </div>
     </div>
@@ -635,27 +548,14 @@
                         '<td class="select">'+spTemplateName+'</td>\n' +
                         '<td class="select">'+spRemark+'</td>\n' +
                         '<td class="select">'+upTime+'</td>\n' +
-                        '<td><button class="btn btn-info" data-toggle="modal" data-target="#template-modal">查看</button></td>\n' +
+                        '<td><button class="btn btn-info look" data-toggle="modal" data-target="#template-modal">查看</button></td>\n' +
                         '</tr>';
                     table.append(node);
                 }
                 table.append('</tbody>');
                 initTableCheckbox();
+                getServicePeopleLook();
             }
-
-            layui.use('laydate', function(){
-                var laydate = layui.laydate;
-                laydate.render({
-                    elem: '#date1' //指定元素
-                });
-            });
-
-            layui.use('laydate', function(){
-                var laydate = layui.laydate;
-                laydate.render({
-                    elem: '#date2' //指定元素
-                });
-            });
 
             function initTableCheckbox() {
                 var $thr = $('table thead tr');
@@ -701,6 +601,244 @@
             }
             initTableCheckbox();
 
+            function getServicePeopleLook() {
+                var servicePeopleInfo=$('#servicePeopleInfo');
+                $('.look').click(function () {
+                    var servicePeopleId=$(this).parent().parent().children("td").eq(1).html();
+                    $.ajax({
+                        url :portPath + 'storeAdmin/lookServicePeople.do',
+                        type : "post",
+                        data:{servicePeopleId:servicePeopleId},
+                        async: true,
+                        success: function(data){
+                            var birth = new Date(data.spBirth).format("yyyy-MM-dd");
+                            $('#people-content').remove();
+                            var node1='<div class="modal-content" id="people-content">\n' +
+                                '<div class="modal-header">\n' +
+                                '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                                '<h4 class="modal-title">服务人员模板</h4>\n' +
+                                '</div>\n' +
+                                '<f:form class="form-horizontal" enctype="multipart/form-data" modelAttribute="servicePeopleUpdate" method="post" action="<%=updatePeoplePath%>">\n' +
+                                '<input type="text" hidden="hidden" name="servicepeopleid" value="'+data.servicepeopleid+'"/>\n' +
+                                '<div class="modal-body">\n' +
+                                '<div>\n' +
+                                '<h4>员工头像</h4>\n' +
+                                '<hr>\n' +
+                                '<div class="row">\n' +
+                                '<div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">\n' +
+                                '<img src="'+data.spHead+'" onerror="this.src=\'http://t.cn/RCzsdCq\'" style="height: 100%;float: right;">\n' +
+                                '</div>\n' +
+                                '<div class="col-md-6 col-sm-6 col-xs-6">\n' +
+                                '<button class="btn btn-primary upload">\n' +
+                                '<input name="sphead" type="file"><i class="icon fa fa-cloud-upload"></i> 选择\n' +
+                                '</button>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<hr>\n' +
+                                '<h4>员工信息</h4>\n' +
+                                '<hr>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">姓名</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input name="spName" value="'+data.spName+'" type="text" class="form-control" placeholder="姓名">\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">性别</label>\n' +
+                                '<div class="col-sm-10" style="position: relative;top: 5px;">\n' +
+                                '<div class="radio3 radio-check radio-inline">\n';
+                            var node2="";
+                            if(data.spSex=="男"){
+                                node2=node2+'<input type="radio" checked="checked" name="spSex" value="男" id="sex-radio1">\n' +
+                                    '<label for="sex-radio1">男</label>\n' +
+                                    '</div>\n' +
+                                    '<div class="radio3 radio-check radio-inline">\n' +
+                                    '<input type="radio" name="spSex" value="女" id="sex-radio2">\n';
+                            }
+                            else{
+                                node2=node2+'<input type="radio" name="spSex" value="男" id="sex-radio1">\n' +
+                                    '<label for="sex-radio1">男</label>\n' +
+                                    '</div>\n' +
+                                    '<div class="radio3 radio-check radio-inline">\n' +
+                                    '<input type="radio" checked="checked" name="spSex" value="女" id="sex-radio2">\n';
+                            }
+                            var node3='<label for="sex-radio2">女</label>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">出生日期</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spBirth" value="'+birth+'" class="layui-input" id="date1" placeholder="出生日期" style="border: 1px solid #ccc;height: 34px;color: #555;font-size: 14px;">\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">身高</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spHeight" value="'+data.spHeight+'" class="form-control" placeholder="身高">\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">体重</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spWeight" value="'+data.spWeight+'" class="form-control" placeholder="体重">\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">民族</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spNation" value="'+data.spNation+'" class="form-control" placeholder="民族">\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">联系电话</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spPhone" value="'+data.spPhone+'" class="form-control" placeholder="联系电话">\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">模板名</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<input type="text" name="spTemplatename" value="'+data.spTemplatename+'" class="form-control" placeholder="模板名" required>\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">服务类别</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<select class="form-control" name="spRemark">\n';
+                            var node4='';
+                            if(data.spRemark=="保姆"){
+                                node4=node4+'<option selected="selected">保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="月嫂"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option selected="selected">月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="涉外家政"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option selected="selected">涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="钟点工"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option selected="selected">钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="老人陪护"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option selected="selected">老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="病人陪护"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option selected="selected">病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="育婴师"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option selected="selected">育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            else if(data.spRemark=="催乳师"){
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option selected="selected">催乳师</option>\n';
+                            }
+                            else{
+                                node4=node4+'<option>保姆</option>\n' +
+                                    '<option>月嫂</option>\n' +
+                                    '<option>涉外家政</option>\n' +
+                                    '<option>钟点工</option>\n' +
+                                    '<option>老人陪护</option>\n' +
+                                    '<option>病人陪护</option>\n' +
+                                    '<option>育婴师</option>\n' +
+                                    '<option>催乳师</option>\n';
+                            }
+                            var node5='</select>\n' +
+                                '<span class="help-block" style="color: red;display: none;">警告信息</span>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="form-group">\n' +
+                                '<label class="col-sm-2 control-label">其它说明</label>\n' +
+                                '<div class="col-sm-10">\n' +
+                                '<textarea name="spOtherinfo" rows="6" class="form-control" placeholder="其它说明" style="resize: none;">'+data.spOtherinfo+'</textarea>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '</div>\n' +
+                                '<div class="modal-footer">\n' +
+                                '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\n' +
+                                '<button type="submit" class="btn btn-info" id="staff-btn">保存</button>\n' +
+                                '</div>\n' +
+                                '</f:form>\n' +
+                                '</div>';
+                            var node=node1+node2+node3+node4+node5;
+                            servicePeopleInfo.append(node);
+                            layui.use('laydate', function(){
+                                var laydate = layui.laydate;
+                                laydate.render({
+                                    elem: '#date1' //指定元素
+                                });
+                            });
+                            getImg();
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
+            }
+            getServicePeopleLook();
+
             $("#delete").click(function(event) {
                 var $checked = $("tbody input:checked");
                 if($checked.length==0) {
@@ -730,22 +868,54 @@
                 window.location.href=portPath+"storeAdmin/storePeople.html";
             });
 
-            $(".upload input").change(function(event) {
-                var $file = $(this);
-                var fileObj = $file[0];
-                var windowURL = window.URL || window.webkitURL;
-                var $img = $(this).parent().parent().prev().children('img');
-                if(fileObj && fileObj.files && fileObj.files[0]){
-                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
-                    $img.attr('src',dataURL);
+            Date.prototype.format = function(fmt) {
+                var o = {
+                    "M+" : this.getMonth()+1,                 //月份
+                    "d+" : this.getDate(),                    //日
+                    "h+" : this.getHours(),                   //小时
+                    "m+" : this.getMinutes(),                 //分
+                    "s+" : this.getSeconds(),                 //秒
+                    "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                    "S"  : this.getMilliseconds()             //毫秒
+                };
+                if(/(y+)/.test(fmt)) {
+                    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
                 }
-                else{
-                    dataURL = $file.val();
-                    var imgObj = document.getElementById("#head-img");
-                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                for(var k in o) {
+                    if(new RegExp("("+ k +")").test(fmt)){
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                    }
                 }
+                return fmt;
+            };
+
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#date2' //指定元素
+                });
             });
+
+            function getImg() {
+                $(".upload input").change(function(event) {
+                    var $file = $(this);
+                    var fileObj = $file[0];
+                    var windowURL = window.URL || window.webkitURL;
+                    var $img = $(this).parent().parent().prev().children('img');
+                    if(fileObj && fileObj.files && fileObj.files[0]){
+                        dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                        $img.attr('src',dataURL);
+                    }
+                    else{
+                        dataURL = $file.val();
+                        var imgObj = document.getElementById("#head-img");
+                        imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                        imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                    }
+                });
+            }
+            getImg();
+
         });
     </script>
 </body>
