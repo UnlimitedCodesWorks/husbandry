@@ -186,6 +186,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</c:forEach>
 					</c:if>
 				</p>
+				<div class="serviceShow_map" id="serviceshow_map"></div>
 			</div>
 		</div>
 		<!-- 详细信息&用户评价 -->
@@ -752,5 +753,104 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
             container.append(node);
 		}
     }
+</script>
+<script src="http://webapi.amap.com/maps?v=1.4.2&key=d03a55076cfdeee9a60430078e3c2904"></script>
+<script type="text/javascript">
+	$(function(){
+        var map = new AMap.Map('serviceshow_map');
+        //设置放大级别
+        map.setZoom(5);
+        //自定义图标
+        var icon = new AMap.Icon({
+            image: '../../resources/images/storemark.png',
+            size: new AMap.Size(24, 24)
+        });
+        // 创建地图上的标记点
+        var title_storename = '华峰国际';
+        var marker = new AMap.Marker({
+            icon: icon,
+            title: title_storename,
+            offset: new AMap.Pixel(-12, -24)
+        });
+
+        // 添加地图上的标记点
+        marker.setMap(map);
+
+        //添加题图上的各类使用工具
+        AMap.plugin(['AMap.ToolBar', 'AMap.AdvancedInfoWindow'], function() {
+            //工具条 ToolBar
+            //比例尺 Scale
+            //定位 Geolocation
+            //鹰眼 OverView
+            //类型切换 MapType
+
+            var toolBar = new AMap.ToolBar();
+            map.addControl(toolBar);
+
+        });
+        //添加地图样式
+        map.setMapStyle('amap://styles/whitesmoke');
+
+        //传入指定的省份使其对应的省边界被点亮
+        var search_province = '浙江省';
+        //传入商户所在地名称，自动转换经纬度Mark在地图上且以该点为地图中心
+        var storeaddress = '浙江省杭州市浙江科技学院';
+
+        addChina();
+        //叠加云数据图层
+        function addChina() {
+            //加载云图层插件
+            AMap.service('AMap.DistrictSearch', function() {
+                var opts = {
+                    subdistrict: 1, //返回下一级行政区
+                    extensions: 'all', //返回行政区边界坐标组等具体信息
+                    level: 'province' //查询行政级别为 省
+                };
+
+                //实例化DistrictSearch
+                district = new AMap.DistrictSearch(opts);
+                district.setLevel('district');
+                //查询省区划
+                district.search(search_province, function(status, result) {
+                    var bounds = result.districtList[0].boundaries;
+                    var polygons = [];
+                    if (bounds) {
+                        for (var i = 0, l = bounds.length; i < l; i++) {
+                            //生成省区划polygon
+                            var polygon = new AMap.Polygon({
+                                map: map,
+                                strokeWeight: 1,
+                                path: bounds[i],
+                                fillOpacity: 0.3,
+                                fillColor: '#CCF3FF',
+                                strokeColor: '#393D49'
+                            });
+                            polygons.push(polygon);
+                        }
+
+                    }
+                });
+            });
+        }
+        AMap.plugin('AMap.Geocoder', function() {
+            var geocoder = new AMap.Geocoder({});
+            geocoder.getLocation(storeaddress, function(status, result) {
+                if (status == 'complete' && result.geocodes.length) {
+                    marker.setPosition(result.geocodes[0].location);
+                    map.setCenter(marker.getPosition())
+                } else {}
+            })
+        });
+	});
+
+    $(window).resize(function() {
+        if ($(window).width() < 768) {
+            $(".serviceShow_map").css("width", "100%");
+
+        } else {
+            $(".serviceShow_map").css("width", "50%");
+
+        }
+    });
 </script>
 </html>
