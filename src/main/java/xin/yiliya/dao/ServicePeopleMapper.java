@@ -23,7 +23,9 @@ public interface ServicePeopleMapper {
 
     String getServicePeopleHeadImg(Integer servicePeopleId);
 
-    ServicePeople getServicePeople(String spName);
+    ServicePeople getDispatchPeople(Integer orderId);
 
     List<ServicePeople> getServicePeopleByOrderId(Integer orderId);
+
+
 }

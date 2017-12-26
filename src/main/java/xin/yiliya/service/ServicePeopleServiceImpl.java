@@ -116,7 +116,22 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
         }
     }
 
-    public ServicePeople getServicePeople(String spName) {
-        return servicePeopleMapper.getServicePeople(spName);
+    public Boolean addRestartDispatchTemplate(ServicePeopleTemp servicePeopleTemp) {
+        try{
+            Integer orderId=servicePeopleTemp.getOrderId();
+            Integer servicePeopleId=servicePeopleTemp.getServicepeopleid();
+            OrderPeople orderPeople=new OrderPeople();
+            orderPeople.setSpId(servicePeopleId);
+            orderPeople.setOrderId(orderId);
+            orderPeopleMapper.update(orderPeople);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
+
+    public ServicePeople getDispatchPeople(Integer orderId) {
+        return servicePeopleMapper.getDispatchPeople(orderId);
+    }
+
 }
