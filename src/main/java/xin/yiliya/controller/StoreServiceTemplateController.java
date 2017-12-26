@@ -42,7 +42,7 @@ public class StoreServiceTemplateController {
     public List<OfferServiceTemplate> getServiceTemplate(Integer currentPage){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
-        int pageSize = 1;
+        int pageSize = 7;
         return offerServiceService.getAllOfferServiceTemplateByStoreId(storeId,currentPage,pageSize).getList();
     }
 

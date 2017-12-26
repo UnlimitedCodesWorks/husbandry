@@ -47,9 +47,17 @@ public interface OfferServiceService {
     PageInfo<OfferServiceTemplate> getAllOfferServiceTemplateByStoreId(
             Integer storeId,int currentPage,int pageSize);
 
-    //根据服务id获取服务详细信息
+    //根据服务id获取服务详细信息 （已审核服务）
     //返回单个服务详细信息Bean
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
+
+    //根据服务id获取服务详细信息（非模板)
+    //返回单个服务详细信息Bean
+    OfferServiceDetail getSOfferServiceDetailByServiceId(Integer serviceId);
+
+    //根据服务id获取服务详细信息（模板)
+    //返回单个服务详细信息Bean
+    OfferServiceDetail getTOfferServiceDetailByServiceId(Integer serviceId);
 
     //根据服务id获取服务信息
     //返回单个服务信息Bean

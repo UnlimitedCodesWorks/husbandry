@@ -38,6 +38,10 @@ public interface OfferServiceMapper {
 
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
 
+    OfferServiceDetail getSOfferServiceDetailByServiceId(Integer serviceId);
+
+    OfferServiceDetail getTOfferServiceDetailByServiceId(Integer serviceId);
+
     List<Cities> getCitiesByServiceId(Integer serviceId);
 
     List<OfferServiceSimple> getAllUserConcernServices(Integer userId);

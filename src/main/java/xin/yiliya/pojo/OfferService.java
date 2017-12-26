@@ -25,6 +25,8 @@ public class OfferService {
 
     private String notice;
 
+    private Integer view_num;
+
     private Integer status;
 
 
@@ -122,5 +124,13 @@ public class OfferService {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getView_num() {
+        return view_num;
+    }
+
+    public void setView_num(Integer view_num) {
+        this.view_num = view_num;
     }
 }

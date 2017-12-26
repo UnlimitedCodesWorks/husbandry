@@ -24,7 +24,7 @@
   </resultMap>
   <select id="getAllOfferServiceTemplateByStoreId" resultMap="getAllOfferServiceTemplateByStoreId" parameterType="java.lang.Integer">
     SELECT
-    *
+    servicetemplateid,offerservice_id,template_name,template_detail
     FROM offerservicetemplate,offerservice
     WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = #{storeId,jdbcType=INTEGER}

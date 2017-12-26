@@ -315,14 +315,16 @@
                         <hr>
                         <h4>服务基本信息</h4>
                         <hr>
-                        <form class="form-horizontal">
+                        <form id="add-service" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <%--厂商id--%>
+                            <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
                             <!-- 服务名 -->
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">服务名</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="服务名" required>
+                                            <input type="text" name="serviceName" class="form-control" placeholder="服务名" required>
                                             <span class="help-block">注：名称不能出现标点符号</span>
                                             <span class="help-block" style="color: red;display: none;">错误信息</span>
                                         </div>
@@ -336,35 +338,35 @@
                                         <label class="col-sm-3 control-label">服务类型</label>
                                         <div class="col-sm-9" style="position: relative;top: 5px;">
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="保姆" checked id="sex-radio1">
+                                                <input type="radio" name="kind" value="1" checked id="sex-radio1">
                                                 <label for="sex-radio1">保姆</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="月嫂" id="sex-radio2">
+                                                <input type="radio" name="kind" value="2" id="sex-radio2">
                                                 <label for="sex-radio2">月嫂</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="涉外家政" id="sex-radio3">
+                                                <input type="radio" name="kind" value="3" id="sex-radio3">
                                                 <label for="sex-radio3">涉外家政</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="钟点工" id="sex-radio4">
+                                                <input type="radio" name="kind" value="4" id="sex-radio4">
                                                 <label for="sex-radio4">钟点工</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="老人陪护" id="sex-radio5">
+                                                <input type="radio" name="kind" value="5" id="sex-radio5">
                                                 <label for="sex-radio5">老人陪护</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="病人陪护" id="sex-radio6">
+                                                <input type="radio" name="kind" value="6" id="sex-radio6">
                                                 <label for="sex-radio6">病人陪护</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="育婴师" id="sex-radio7">
+                                                <input type="radio" name="kind" value="7" id="sex-radio7">
                                                 <label for="sex-radio7">育婴师</label>
                                             </div>
                                             <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="催乳师" id="sex-radio8">
+                                                <input type="radio" name="kind" value="8" id="sex-radio8">
                                                 <label for="sex-radio8">催乳师</label>
                                             </div>
                                         </div>
@@ -377,7 +379,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">服务价格</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="服务价格" required>
+                                            <input type="text" name="price" class="form-control" placeholder="服务价格" required>
                                             <span class="help-block" style="color: red;display: none;">错误信息</span>
                                         </div>
                                     </div>
@@ -389,7 +391,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">负责人联系方式</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="负责人联系方式" required>
+                                            <input type="text" name="peoplePhone" class="form-control" placeholder="负责人联系方式" required>
                                             <span class="help-block" style="color: red;display: none;">错误信息</span>
                                         </div>
                                     </div>
@@ -401,7 +403,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">服务详细信息</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" name="detailInfo" rows="6" style="resize: none;" placeholder="服务详细信息" required></textarea>
+                                            <textarea class="form-control" name="introduce" rows="6" style="resize: none;" placeholder="服务详细信息" required></textarea>
                                             <span class="help-block">剩余300字</span>
                                         </div>
                                     </div>
@@ -413,7 +415,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">注意事项</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" name="detailInfo" rows="6" style="resize: none;" placeholder="注意事项" required></textarea>
+                                            <textarea class="form-control" name="notice" rows="6" style="resize: none;" placeholder="注意事项" required></textarea>
                                             <span class="help-block">剩余300字</span>
                                         </div>
                                     </div>
@@ -426,15 +428,16 @@
                                         <label class="col-sm-3 control-label">服务范围</label>
                                         <div class="col-sm-3">
                                             <select name="provinceId" id="province" class="form-control">
-                                                <option>省</option>
-                                                <option value="浙江省">浙江省</option>
+                                                <c:forEach var="province" items="${provinces}" >
+                                                    <option value="${province.key}" > ${province.value}</option>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
                                             <select name="cityId" id="city" class="form-control" >
-                                                <option>市</option>
-                                                <option value="杭州市">杭州市</option>
-                                                <option value="温州市">温州市</option>
+                                                <c:forEach var="city" items="${cities}">
+                                                    <option value="${city.cityId}">${city.city}</option>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
@@ -450,10 +453,6 @@
                                         <label class="col-sm-3 control-label"></label>
                                         <div class="col-sm-9">
                                             <div class="row area">
-                                                <div class="col-sm-11">
-                                                    <p>浙江省杭州市</p>
-                                                    <button type="button" class="close delete-area"><span>&times;</span></button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -477,23 +476,23 @@
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-9 characteristic">
+                                        <div class="col-sm-9 characteristic" id="serviceSpecial-container">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </form>
                             <!-- 添加 -->
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label"></label>
                                         <div class="col-sm-9">
-                                            <button class="btn btn-info" style="width: 100%;">添加</button>
+                                            <button class="btn btn-info" id="add-btn" style="width: 100%;">添加</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -542,12 +541,16 @@
                                         <th>选择</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="template-container">
+                                        <c:if test="${!empty serviceTemplates}">
+                                        <c:forEach var="template" items="${serviceTemplates}">
                                     <tr>
-                                        <td><a href="#" title="XXX服务">XXX服务</a></td>
-                                        <td>保姆</td>
-                                        <td><button type="button" class="btn btn-info" id="select-template">选择</button></td>
+                                        <td><a href="#" title="${template.templateName}">${template.templateName}</a></td>
+                                        <td>${template.templateDetail}</td>
+                                        <td><button type="button" class="btn btn-info select-template" service-id="${template.offerserviceId}" >选择</button></td>
                                     </tr>
+                                        </c:forEach>
+                                        </c:if>
                                 </tbody>
                             </table>
                             <!-- 分页-->
@@ -564,6 +567,72 @@
     <script type="text/javascript">
         $(function(){
             var cropper;
+            var province = $("#province");
+            var city = $("#city");
+            var portPath = "<%=portPath%>";
+            var logoBlob;
+            var logoMIME = "";
+            var serviceTemplatePages = ${serviceTemplatePages};
+            var pageSize = ${pageSize};
+            province.change(function (e) {
+                city.html("");
+                city.append('<option value="NONE" label="市" />');
+                var value = province.val();
+                $.ajax({
+                    url :portPath + 'store/getCitys.do',
+                    type : "post",
+                    data:{
+                        provinceId : value
+                    },
+                    dataType : "json",
+                    success: function(data){
+                        for(var i=0;i<data.length;i++){
+                            var node = '<option value="'+data[i].cityId+ '" >'+data[i].city+'</option>';
+                            city.append(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+            var serviceSpecialBlob = [];
+            var serviceSpecialFileName = [];
+            $("#add-btn").click(function () {
+                var formData = new FormData(document.querySelector("#add-service"));
+                var logoSuffix = logoMIME.split("/")[1];
+                var logoFileName = "blobImage."+logoSuffix;
+                formData.append("serviceImg",logoBlob,logoFileName);
+                for(var i=0;i<serviceSpecialBlob.length;i++){
+                    formData.append("serviceSpecial",serviceSpecialBlob[i],serviceSpecialFileName[i]);
+                }
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "post",
+                        url: "<%=portPath%>storeAdmin/addService.do",
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            if (data!=0) {
+                                layer.msg("添加服务成功！",{
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("添加服务失败！");
+                            }
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown, data) {
+                            alert(errorThrown);
+                        }
+                    });
+                });
+            });
+
             $('#logo-modal').on('shown.bs.modal', function () {
                 if(cropper == undefined) {
                     cropper = $('#logo-wrap img').cropper({
@@ -582,30 +651,108 @@
                 //模板分页
                 laypage.render({
                     elem: 'template-page'
-                    ,count: 20 //数据总数，从服务端得到
-                    ,limit: 8
+                    ,count: serviceTemplatePages*pageSize //数据总数，从服务端得到
+                    ,limit: pageSize
                     ,theme: '#19B5FE'
                     ,groups: 4
                     ,jump: function(obj, first){
                         if(!first){
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"storeAdmin/getServiceTemplate.do",
+                                data: {
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createTemplate(data);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
                         }
                     }
                 });
             });
 
             //选择模板
-            $("#select-template").click(function(event) {
+            $(".select-template").click(function(event) {
                 $("#template-modal").modal('hide');
+                var serviceId = $(this).attr("service-id");
                 //传模板数据
-                
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"storeAdmin/getTOfferServiceDetailByServiceId.do",
+                    data: {
+                        serviceId:serviceId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        $("input[name = 'serviceName']:eq(0)").val(data.serviceName);
+                        $("input[name = 'price']:eq(0)").val(data.price);
+                        $("input[name = 'peoplePhone']:eq(0)").val(data.peoplePhone);
+                        $("textarea[name = 'introduce']:eq(0)").val(data.introduce);
+                        $("textarea[name = 'notice']:eq(0)").val(data.notice);
+                        let $area = $(".area");
+                        $area.html("");
+                        for(var i = 0; i<data.cities.length;i++){
+                            $area.append('<div class="col-sm-11 ">'+
+                                '<p>'+data.cities[i].provinces.province+data.cities[i].city+'</p>'+
+                                '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                                '<input type="hidden" name="cityIds" value="'+data.cities[i].cityId+'"  />'+
+                                '</div>');
+                        }
+                        var kind = data.serid;
+                        $("input[name = 'kind']").each(function () {
+                            var value = $(this).val();
+                            if(kind == value){
+                                $(this).attr("checked",'checked');
+                            }
+                        });
+                        var serviceImg = data.serviceImg;
+                        $("#logo").attr("src",serviceImg);
+                        //cropper
+                        $('#logo-modal').on('shown.bs.modal', function () {
+                            if(cropper == undefined) {
+                                cropper = $('#logo-wrap img').cropper({
+                                    aspectRatio: 16 / 9,
+                                    // minContainerWidth: 500,
+                                    crop: function(data) {
+                                        // Output the result data for cropping image.
+                                    }
+                                });
+                            }
+                            cropper.cropper('reset').cropper('replace',serviceImg);
+                        });
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("get",serviceImg, true);
+                        xhr.responseType = "blob";
+                        xhr.onload = function() {
+                            if (this.status == 200) {
+                                logoBlob = this.response;
+                                logoMIME = logoBlob.type;
+                            }
+                        };
+                        xhr.send();
+                        var serviceSpecialContainer = $("#serviceSpecial-container");
+                        for(var i =0;i<data.serviceSpecial.length;i++){
+                            var serviceSpecialImg = data.serviceSpecial[i].specialImg;
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
             });
 
             //添加服务范围项
             $("#add-area").click(function(event) {
                 let $area = $(".area");
-                $area.append('<div class="col-sm-11">'+
-                            '<p>'+$("#province").val()+$("#city").val()+'</p>'+
+                $area.append('<div class="col-sm-11 ">'+
+                            '<p>'+$("#province").find("option:selected").text()+$("#city").find("option:selected").text()+'</p>'+
                             '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                            '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
                             '</div>')
             });
 
@@ -640,6 +787,8 @@
             $(document).on('click', '#logo-btn', function(event) {
                 let canvas = cropper.cropper('getCroppedCanvas');
                 canvas.toBlob(function(blob) {
+                    logoBlob = blob;
+                    logoMIME = blob.type;
                     url = URL.createObjectURL(blob);
                     $("#logo").attr('src', url);
                 });
@@ -656,19 +805,53 @@
                     let img = document.createElement("img");
                     img.src = windowURL.createObjectURL(files);
                     let canvas = document.createElement("canvas");
+                    canvas.setAttribute("class","serviceSpecial");
                     img.onload = function() {
                         canvas.width = img.width;
                         canvas.height = img.height;
                         canvas.getContext("2d").drawImage(img, 0, 0);
-                    }
+                    };
                     $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
                 }
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
+                $(".serviceSpecial").each(function(index,element){
+                    this.toBlob(function (blob) {
+                        serviceSpecialBlob.push(blob);
+                        var suffix = blob.type.split("/")[1];
+                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                        serviceSpecialFileName.push(fileName);
+                    });
+                });
             });
             //删除特色项
             $(document).on('click', '.delete-characteristic', function(event) {
                 $(this).prev().remove();
                 $(this).remove();
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
+                $(".serviceSpecial").each(function(index,element){
+                    this.toBlob(function (blob) {
+                        serviceSpecialBlob.push(blob);
+                        var suffix = blob.type.split("/")[1];
+                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                        serviceSpecialFileName.push(fileName);
+                    });
+                });
             });
+
+            function createTemplate(data) {
+                var container = $("#template-container");
+                container.html("");
+                for(var i=0;i<data.length;i++){
+                    var node = ' <tr>' +
+                        '<td><a href="#" title="'+data[i].templateName+'">'+data[i].templateName+'</a></td>' +
+                        '<td>'+data[i].templateDetail+'</td>' +
+                        '<td><button type="button" class="btn btn-info select-template" service-id="'+data[i].offerserviceId+'" >选择</button></td>' +
+                        '</tr>';
+                    container.append(node);
+                }
+            }
         });
     </script>
 </body>

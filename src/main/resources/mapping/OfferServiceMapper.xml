@@ -94,6 +94,24 @@
     and offerservice.offerserviceid = servicespecial.offerservice_id
     and offerservice.status = 1
   </select>
+  <select id="getSOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
+    SELECT
+    <include refid="offerServiceDetail" />
+    FROM offerservice,service,servicespecial
+    WHERE
+    offerserviceid = #{serviceId,jdbcType=INTEGER} and offerservice.kind = service.serid
+    and offerservice.offerserviceid = servicespecial.offerservice_id
+    and offerservice.status != -1
+  </select>
+  <select id="getTOfferServiceDetailByServiceId" parameterType="java.lang.Integer" resultMap="offerServiceDetail">
+    SELECT
+    <include refid="offerServiceDetail" />
+    FROM offerservice,service,servicespecial
+    WHERE
+    offerserviceid = #{serviceId,jdbcType=INTEGER} and offerservice.kind = service.serid
+    and offerservice.offerserviceid = servicespecial.offerservice_id
+    and offerservice.status = -1
+  </select>
   <resultMap id="getCitiesByServiceId" type="xin.yiliya.pojo.Cities">
     <id property="ciid" column="ciid" />
     <result property="cityId" column="cityid" />
@@ -172,6 +190,9 @@
       <if test="notice != null">
         notice,
       </if>
+      <if test="view_num != null">
+        view_num,
+      </if>
       <if test="status != null">
         status,
       </if>
@@ -209,6 +230,9 @@
       </if>
       <if test="notice != null">
         #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="view_num != null">
+        #{view_num,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},

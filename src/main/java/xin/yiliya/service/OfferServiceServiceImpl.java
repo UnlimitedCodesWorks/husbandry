@@ -67,6 +67,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             BeanUtils.copyProperties(offerService,offerServiceAdd);
             offerService.setPublishTime(new Date());
             offerService.setUpdateTime(new Date());
+            offerService.setView_num(0);
             offerService.setServiceImg(aliOssTool.putImage(offerServiceAdd.getServiceImg(),"store"));
             if(!ifTemplate){
                 //设置状态0为待审核
@@ -247,6 +248,18 @@ public class OfferServiceServiceImpl implements OfferServiceService {
             offerServiceDetail.setPriceJudgement(false);
         }
         return offerServiceDetail;
+    }
+
+    public OfferServiceDetail getSOfferServiceDetailByServiceId(Integer serviceId) {
+        OfferServiceDetail offerServiceDetail = offerServiceMapper.getSOfferServiceDetailByServiceId(serviceId);
+        offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
+        return  offerServiceDetail;
+    }
+
+    public OfferServiceDetail getTOfferServiceDetailByServiceId(Integer serviceId) {
+        OfferServiceDetail offerServiceDetail = offerServiceMapper.getTOfferServiceDetailByServiceId(serviceId);
+        offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
+        return  offerServiceDetail;
     }
 
     public OfferService getOfferServiceByServiceId(Integer offerServiceId) {

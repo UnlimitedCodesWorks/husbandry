@@ -44,17 +44,17 @@ public class StoreServiceController {
         return "storeAdmin/store_service";
     }
 
-    @RequestMapping(value = "/getAllSimpleOfferServiceByStoreId.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/getSAllSimpleOfferServiceByStoreId.do",method = RequestMethod.POST)
     @ResponseBody
-    public List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId, Integer currentPage){
+    public List<OfferServiceSimple> getSAllSimpleOfferServiceByStoreId(Integer storeId, Integer currentPage){
         int pageSize = 1;
-        return offerServiceService.getAllSimpleOfferServiceByStoreId(storeId,currentPage,pageSize).getList();
+        return offerServiceService.getSAllSimpleOfferServiceByStoreId(storeId,currentPage,pageSize).getList();
     }
 
-    @RequestMapping(value = "/getOfferServiceDetailByServiceId.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/getSOfferServiceDetailByServiceId.do",method = RequestMethod.POST)
     @ResponseBody
-    public OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId){
-        return offerServiceService.getOfferServiceDetailByServiceId(serviceId);
+    public OfferServiceDetail getSOfferServiceDetailByServiceId(Integer serviceId){
+        return offerServiceService.getSOfferServiceDetailByServiceId(serviceId);
     }
 
     @RequestMapping(value = "/updateService.do",method = RequestMethod.POST)
