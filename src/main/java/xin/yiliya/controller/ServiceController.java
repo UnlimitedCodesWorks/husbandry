@@ -1,5 +1,6 @@
 package xin.yiliya.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,6 +66,7 @@ public class ServiceController {
         concernServiceKey.setUserId(userId);
         model.addAttribute("ifConcern",userConcernService.concernServiceJudgement(concernServiceKey));
         model.addAttribute("ifComment",serviceEvaluateService.ReviewQualification(serviceId,userId));
+        model.addAttribute("areaJson",JSON.toJSONString(serviceDetail.getCities(),true));
         return "serviceShow";
     }
 
