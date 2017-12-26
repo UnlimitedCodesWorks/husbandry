@@ -18,6 +18,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="../../resources/js/vue.js"></script>
 	<script src="../../resources/js/serviceShow.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://webapi.amap.com/js/marker.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../resources/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="../../resources/css/serviceShow.css">
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -380,6 +381,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 </body>
 <script>
+	var areaData=${areaJson};
     var evaluatePages = "${evaluatePages}";
     var pageSize = "${pageSize}";
 	var sonPageSize = "${sonPageSize}";
@@ -756,21 +758,24 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <script src="http://webapi.amap.com/maps?v=1.4.2&key=d03a55076cfdeee9a60430078e3c2904"></script>
 <script type="text/javascript">
+
 	$(function() {
+	    console.log(areaData);
         var map = new AMap.Map('serviceshow_map');
         //设置放大级别
-        map.setZoom(5);
+        map.setZoom(4);
+        map.setCenter([105.387951,36.27871]);
         //自定义图标
         var icon = new AMap.Icon({
             image: '../../resources/images/storemark.png',
             size: new AMap.Size(24, 24)
         });
         // 创建地图上的标记点
-        var title_storename = '华峰国际';
+        var title_storename = '${service.serviceName}';
 
 
         //添加题图上的各类使用工具
-        AMap.plugin(['AMap.ToolBar', 'AMap.AdvancedInfoWindow'], function () {
+        AMap.plugin(['AMap.ToolBar'], function () {
             //工具条 ToolBar
             //比例尺 Scale
             //定位 Geolocation
@@ -784,72 +789,83 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
         //添加地图样式
         map.setMapStyle('amap://styles/whitesmoke');
 
-        //传入指定的省份使其对应的省边界被点亮
-        var search_province = '浙江省';
-        //传入服务商所在地
-        var address = ['浙江省 衢州市', '福建省福州市'];
-
         addChina();
-
         //叠加云数据图层
         function addChina() {
             //加载云图层插件
-            AMap.service('AMap.DistrictSearch', function () {
+            AMap.service('AMap.DistrictSearch', function() {
                 var opts = {
                     subdistrict: 1, //返回下一级行政区
                     extensions: 'all', //返回行政区边界坐标组等具体信息
-                    level: 'province' //查询行政级别为 省
+                    level: 'city' //查询行政级别为 市
                 };
 
                 //实例化DistrictSearch
                 district = new AMap.DistrictSearch(opts);
                 district.setLevel('district');
-                //查询省区划
-                district.search(search_province, function (status, result) {
-                    var bounds = result.districtList[0].boundaries;
-                    var polygons = [];
-                    if (bounds) {
-                        for (var i = 0, l = bounds.length; i < l; i++) {
-                            //生成省区划polygon
-                            var polygon = new AMap.Polygon({
-                                map: map,
-                                strokeWeight: 1,
-                                path: bounds[i],
-                                fillOpacity: 0.3,
-                                fillColor: '#CCF3FF',
-                                strokeColor: '#393D49'
-                            });
-                            polygons.push(polygon);
-                        }
+                //行政区查询
+                var search_city = [];
+                for(var i=0;i<areaData.length;i++){
+                    search_city[i]=areaData[i].city;
+                }
+                for (var i = 0; i < search_city.length; i++) {
+                    district.search(search_city[i], function(status, result) {
+                        var bounds = result.districtList[0].boundaries;
+                        var polygons = [];
+                        if (bounds) {
+                            for (var i = 0, l = bounds.length; i < l; i++) {
+                                //生成行政区划polygon
+                                var polygon = new AMap.Polygon({
+                                    map: map,
+                                    strokeWeight: 1,
+                                    path: bounds[i],
+                                    fillOpacity: 0.3,
+                                    fillColor: '#CCF3FF',
+                                    strokeColor: '#393D49'
+                                });
+                                polygons.push(polygon);
+                            }
 
-                    }
-                });
+                        }
+                    });
+                }
             });
         }
 
-        var markers = [];
-        var marker;
+        var address = [];
+        for(var i=0; i< areaData.length;i++){
+            address[i]=areaData[i].provinces.province+areaData[i].city;
+		}
         for (var i = 0; i < address.length; i++) {
+            addressInfo(address[i]);
+        }
 
-            marker = new AMap.Marker({
-                icon: icon,
-                offset: new AMap.Pixel(-12, -24),
-                zIndex: 101,
-                title: title_storename,
-                map: map
+        function addressInfo(villPlace) {
+            var geo;
+            map.plugin(['AMap.Geocoder'], function() {
+                geo = new AMap.Geocoder({});
+                map.addControl(geo);
             });
+            geo.getLocation(villPlace, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    callback(result);
+                }
+            });
+        }
 
-            AMap.plugin('AMap.Geocoder', function () {
-                var geocoder = new AMap.Geocoder({});
-                geocoder.getLocation(address[i], function (status, result) {
-                    if (status == 'complete' && result.geocodes.length) {
-                        marker.setPosition(result.geocodes[0].location);
-                    } else {
-                    }
+
+        //转化信息窗地址--------->经度纬度！！！！！再生成标记！！！
+        function callback(place) {
+            var code = place.geocodes;
+            for (var i = 0; i < code.length; i++) {
+                var Marker = new AMap.Marker({
+                    icon: icon,
+                    offset: new AMap.Pixel(-12, -24),
+                    title: title_storename,
+                    map: map,
+                    position: [code[i].location.getLng(), code[i].location.getLat()],
                 });
-            });
-
-            markers.push(marker);
+            }
         }
 
         $(window).resize(function () {
@@ -857,7 +873,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $(".serviceShow_map").css("width", "100%");
 
             } else {
-                $(".serviceShow_map").css("width", "50%");
+                $(".serviceShow_map").css("width", "60%");
 
             }
         });
