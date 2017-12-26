@@ -756,7 +756,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <script src="http://webapi.amap.com/maps?v=1.4.2&key=d03a55076cfdeee9a60430078e3c2904"></script>
 <script type="text/javascript">
-	$(function(){
+	$(function() {
         var map = new AMap.Map('serviceshow_map');
         //设置放大级别
         map.setZoom(5);
@@ -767,17 +767,10 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         // 创建地图上的标记点
         var title_storename = '华峰国际';
-        var marker = new AMap.Marker({
-            icon: icon,
-            title: title_storename,
-            offset: new AMap.Pixel(-12, -24)
-        });
 
-        // 添加地图上的标记点
-        marker.setMap(map);
 
         //添加题图上的各类使用工具
-        AMap.plugin(['AMap.ToolBar', 'AMap.AdvancedInfoWindow'], function() {
+        AMap.plugin(['AMap.ToolBar', 'AMap.AdvancedInfoWindow'], function () {
             //工具条 ToolBar
             //比例尺 Scale
             //定位 Geolocation
@@ -793,14 +786,15 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //传入指定的省份使其对应的省边界被点亮
         var search_province = '浙江省';
-        //传入商户所在地名称，自动转换经纬度Mark在地图上且以该点为地图中心
-        var storeaddress = '浙江省杭州市浙江科技学院';
+        //传入服务商所在地
+        var address = ['浙江省 衢州市', '福建省福州市'];
 
         addChina();
+
         //叠加云数据图层
         function addChina() {
             //加载云图层插件
-            AMap.service('AMap.DistrictSearch', function() {
+            AMap.service('AMap.DistrictSearch', function () {
                 var opts = {
                     subdistrict: 1, //返回下一级行政区
                     extensions: 'all', //返回行政区边界坐标组等具体信息
@@ -811,7 +805,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 district = new AMap.DistrictSearch(opts);
                 district.setLevel('district');
                 //查询省区划
-                district.search(search_province, function(status, result) {
+                district.search(search_province, function (status, result) {
                     var bounds = result.districtList[0].boundaries;
                     var polygons = [];
                     if (bounds) {
@@ -832,25 +826,41 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
             });
         }
-        AMap.plugin('AMap.Geocoder', function() {
-            var geocoder = new AMap.Geocoder({});
-            geocoder.getLocation(storeaddress, function(status, result) {
-                if (status == 'complete' && result.geocodes.length) {
-                    marker.setPosition(result.geocodes[0].location);
-                    map.setCenter(marker.getPosition())
-                } else {}
-            })
-        });
-	});
 
-    $(window).resize(function() {
-        if ($(window).width() < 768) {
-            $(".serviceShow_map").css("width", "100%");
+        var markers = [];
+        var marker;
+        for (var i = 0; i < address.length; i++) {
 
-        } else {
-            $(".serviceShow_map").css("width", "50%");
+            marker = new AMap.Marker({
+                icon: icon,
+                offset: new AMap.Pixel(-12, -24),
+                zIndex: 101,
+                title: title_storename,
+                map: map
+            });
 
+            AMap.plugin('AMap.Geocoder', function () {
+                var geocoder = new AMap.Geocoder({});
+                geocoder.getLocation(address[i], function (status, result) {
+                    if (status == 'complete' && result.geocodes.length) {
+                        marker.setPosition(result.geocodes[0].location);
+                    } else {
+                    }
+                });
+            });
+
+            markers.push(marker);
         }
-    });
+
+        $(window).resize(function () {
+            if ($(window).width() < 768) {
+                $(".serviceShow_map").css("width", "100%");
+
+            } else {
+                $(".serviceShow_map").css("width", "50%");
+
+            }
+        });
+    })
 </script>
 </html>
