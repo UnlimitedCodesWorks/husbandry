@@ -297,8 +297,19 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(services,true));
 
         //获取供应商服务人员模板  返回服务人员模板详情bean   可分页
-        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
-        System.out.print(JSON.toJSONString(info,true));
+//        PageInfo<ServicePeople> info=servicePeopleService.getAllServicePeopleTemplateByStoreId(1,1,100);
+//        System.out.print(JSON.toJSONString(info,true));
+
+        //根据订单号搜索服务人员
+//        ServicePeople servicePeople=servicePeopleService.getDispatchPeople(7);
+//        System.out.print(JSON.toJSONString(servicePeople,true));
+
+        //重新派遣模板人员
+//        ServicePeopleTemp servicePeopleTemp=new ServicePeopleTemp();
+//        servicePeopleTemp.setOrderId(6);
+//        servicePeopleTemp.setServicepeopleid(30);
+//        Boolean b=servicePeopleService.addRestartDispatchTemplate(servicePeopleTemp);
+//        System.out.print(b);
 
         //根据服务人员模板id查询单个服务人员模板bean
 //        ServicePeople servicePeople=servicePeopleService.getServicePeopleTemplateById(20);
@@ -313,13 +324,13 @@ public class HhfTest {
 //        FileInputStream input1 = new FileInputStream(file1);
 //        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
 //
-//        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
-//        servicePeopleUpdate.setServicepeopleid(28);
+        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
+        servicePeopleUpdate.setServicepeopleid(28);
 //        servicePeopleUpdate.setSphead(multipartFile1);
-//        servicePeopleUpdate.setSpName("wuliafeng");
+        servicePeopleUpdate.setSpOtherinfo("1111111111");
 //
-//        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
-//        System.out.print(b);
+        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
+        System.out.print(b);
 
         //根据服务人员名字显示模板
 //        ServicePeople servicePeople=servicePeopleService.getServicePeople("aaa");

@@ -35,6 +35,12 @@ public interface ServicePeopleService {
     //返回：修改服务人员模板是否成功的布尔值
     public Boolean updateServicePeopleTemlate(ServicePeopleUpdate servicePeopleUpdate);
 
-    //根据服务人员名字显示模板
-    public ServicePeople getServicePeople(String spName);
+    //根据订单id查找服务人员
+    //返回：服务人员Bean
+    public ServicePeople getDispatchPeople(Integer orderId);
+
+    //重新派遣模板服务人员
+    //返回：布尔值
+    public Boolean addRestartDispatchTemplate(ServicePeopleTemp servicePeopleTemp);
+
 }

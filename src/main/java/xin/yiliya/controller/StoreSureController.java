@@ -1,28 +1,29 @@
 package xin.yiliya.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import xin.yiliya.pojo.OrderSimple;
-import xin.yiliya.pojo.Store;
+import org.springframework.web.bind.annotation.*;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.OrderService;
+import xin.yiliya.service.ServicePeopleService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/storeAdmin",method = RequestMethod.GET)
-public class StoreSureController {
+public class StoreSureController extends BaseController{
 
     @Resource
     HttpSession httpSession;
 
     @Resource
     OrderService orderService;
+
+    @Resource
+    ServicePeopleService servicePeopleService;
 
     @RequestMapping(value = "/storeSure.html",method = RequestMethod.GET)
     public String storeSureHTML(Model model){
@@ -33,6 +34,10 @@ public class StoreSureController {
         model.addAttribute("pages",orderService.getAllStoreSureOrder(storeId,1,2).getPages());
         model.addAttribute("input","none");
         model.addAttribute("type","none");
+        model.addAttribute("peopleTemplateList",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getList());
+        model.addAttribute("templatePages",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getPages());
+        model.addAttribute("servicePeopleUpdate",new ServicePeopleUpdate());
+        model.addAttribute("servicePeopleTemp",new ServicePeopleTemp());
         return "/storeAdmin/order_wait_confirm";
     }
 
@@ -59,7 +64,29 @@ public class StoreSureController {
         model.addAttribute("pages",orderService.getAllStoreSureOrder(input.trim(),orderType,storeId,1,2).getPages());
         model.addAttribute("input",input.trim());
         model.addAttribute("type",orderType);
+        model.addAttribute("peopleTemplateList",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getList());
+        model.addAttribute("templatePages",servicePeopleService.getAllServicePeopleTemplateByStoreId(storeId,1,3).getPages());
+        model.addAttribute("servicePeopleUpdate",new ServicePeopleUpdate());
+        model.addAttribute("servicePeopleTemp",new ServicePeopleTemp());
         return "/storeAdmin/order_wait_confirm";
+    }
+
+    @RequestMapping(value = "/lookDisPatchPeople.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServicePeople lookDisPatchPeopleDo(Integer orderId){
+        return servicePeopleService.getDispatchPeople(orderId);
+    }
+
+    @RequestMapping(value = "/upDispatcher.do",method = RequestMethod.POST)
+    public String updateDispatchDo(@ModelAttribute("servicePeopleUpdate")ServicePeopleUpdate servicePeopleUpdate){
+        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
+        return "redirect:/storeAdmin/storeSure.html";
+    }
+
+    @RequestMapping(value = "/upDispatchTemplate.do",method = RequestMethod.POST)
+    public String upDispatchTemplateDo(@ModelAttribute("servicePeopleTemp")ServicePeopleTemp servicePeopleTemp){
+        servicePeopleService.addRestartDispatchTemplate(servicePeopleTemp);
+        return "redirect:/storeAdmin/storeSure.html";
     }
 
 }

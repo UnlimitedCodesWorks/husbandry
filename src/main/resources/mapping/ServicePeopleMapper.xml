@@ -205,10 +205,6 @@
     SELECT sp_head from servicepeople WHERE servicepeopleid=#{servicePeopleId}
   </select>
 
-  <select id="getServicePeople" resultMap="BaseResultMap" parameterType="String" >
-    SELECT * from servicepeople WHERE sp_name=#{spName}
-  </select>
-
   <select id="getServicePeopleByOrderId" parameterType="Integer" resultMap="BaseResultMap">
     SELECT
 	servicepeople.*,`order`.`status`,offerservice.service_name
@@ -222,6 +218,13 @@
     AND orderpeople.order_id = `order`.orderid
     AND `order`.service_id = offerservice.offerserviceid
     AND order_id = #{orderId}
+  </select>
+
+  <select id="getDispatchPeople" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT servicepeople.*
+    FROM servicepeople,orderpeople
+    WHERE orderpeople.sp_id=servicepeople.servicepeopleid
+    AND orderpeople.order_id=#{orderId}
   </select>
 
 </mapper>
