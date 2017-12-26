@@ -1,3 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -59,18 +67,18 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">1</span>
+                                    新消息 <span class="badge pull-right">${unReadNewsNum}</span>
                                 </li>
                                 <li class="message">
-                                    您有1条新消息
+                                    您有${unReadNewsNum}条新消息
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> 8.5</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> <c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if></a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">8.5分</span>
+                                    当前评分 <span class="badge pull-right"><c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if></span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -99,18 +107,18 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">华峰国际有限公司 <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${storeInfo.storeName} <span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="profile-img">
-                                    <img src="http://t.cn/RCzsdCq" class="profile-img">
+                                    <img src="${storeInfo.headImg}" class="profile-img" onerror="this.src='http://t.cn/RCzsdCq'" >
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">华峰国际有限公司</h4>
-                                        <p>123456789@sina.com</p>
+                                        <h4 class="username">${storeInfo.storeName}</h4>
+                                        <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> 商户中心</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>store/information/${storeInfo.storeid}'"><i class="fa fa-user"></i> 商户中心</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>login/exit'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
@@ -140,9 +148,9 @@
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_information.html">修改商户资料</a>
+                                            <li><a href="<%=portPath%>storeAdmin/information.html">修改商户资料</a>
                                             </li>
-                                            <li><a href="store_score.jsp">评分管理</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeScore.html">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -156,15 +164,15 @@
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="order_finish.html">已完成订单</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeFinish.html">已完成订单</a>
                                             </li>
-                                            <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeSure.html">待确认订单<span class="badge" style="margin-left: 130px;">${waitSureNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeWait.html">待处理订单<span class="badge" style="margin-left: 130px;">${waitHandleNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_refund.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
                                             </li>
-                                            <li><a href="service_staff.html">服务人员模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storePeople.html">服务人员模板</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -178,9 +186,9 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNewsNum}</span></a>
                                             </li>
-                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 130px;">${unReadComplainNum}</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -195,13 +203,13 @@
                                 <div id="component-example" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_service.html">我的服务</a>
+                                            <li><a href="<%=portPath%>storeAdmin/service.html">我的服务</a>
                                             </li>
-                                            <li><a href="add_service.html">添加服务</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceAdd.html">添加服务</a>
                                             </li>
-                                            <li><a href="service_score.jsp">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
-                                            <li class="active"><a href="javascrapt:">服务模板</a>
+                                            <li class="active"><a href="<%=portPath%>storeAdmin/serviceTemplate.html">服务模板</a>
                                             </li>
                                         </ul>
                                     </div>

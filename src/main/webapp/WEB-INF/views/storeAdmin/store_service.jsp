@@ -1,3 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -17,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="../../../resources/css/flat-blue.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/layui.css">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/cropper.css">
-
 
         <!-- Javascript Libs -->
     <script type="text/javascript" src="../../../resources/js/jquery-3.2.1.min.js"></script>
@@ -56,12 +63,15 @@
             cursor: pointer;
         }
 
+        .btn-info {
+            margin: 0;
+        }
+
         .area p {
             display: inline-block;
             height: 20.8px;
             line-height: 20.8px;
             padding-left: 5px;
-            margin: 0;
         }
 
         .area button {
@@ -75,17 +85,16 @@
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background: #fff;
         }
 
         canvas {
-            width: 100%;
+            width: 60%;
             display: block;
             margin: 0 auto;
         }
 
         .delete-characteristic {
-            width: 100%;
+            width: 60%;
             height: 30px;
             margin: 0 auto;
             background: #000;
@@ -119,7 +128,7 @@
                         </button>
                         <ol class="breadcrumb navbar-breadcrumb">
                             <li>服务管理</li>
-                            <li class="active">添加服务</li>
+                            <li class="active">我的服务</li>
                         </ol>
                         <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
                             <i class="fa fa-th icon"></i>
@@ -133,18 +142,18 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    新消息 <span class="badge pull-right">1</span>
+                                    新消息 <span class="badge pull-right">${unReadNewsNum}</span>
                                 </li>
                                 <li class="message">
-                                    您有1条新消息
+                                    您有${unReadNewsNum}条新消息
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> 8.5</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star"></i> <c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if></a>
                             <ul class="dropdown-menu danger  animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="title">
-                                    当前评分 <span class="badge pull-right">8.5分</span>
+                                    当前评分 <span class="badge pull-right"><c:if test="${grade!=0}">${grade}分</c:if><c:if test="${grade==0}">未评分</c:if></span>
                                 </li>
                                 <!-- <li>
                                     <ul class="list-group notifications">
@@ -173,18 +182,18 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">华峰国际有限公司 <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${storeInfo.storeName} <span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown" style="box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <li class="profile-img">
-                                    <img src="http://t.cn/RCzsdCq" class="profile-img">
+                                    <img src="${storeInfo.headImg}" class="profile-img" onerror="this.src='http://t.cn/RCzsdCq'" >
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">华峰国际有限公司</h4>
-                                        <p>123456789@sina.com</p>
+                                        <h4 class="username">${storeInfo.storeName}</h4>
+                                        <p>${storeInfo.email}</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> 商户中心</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> 登出</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>store/information/${storeInfo.storeid}'" ><i class="fa fa-user"></i> 商户中心</button>
+                                            <button type="button" class="btn btn-default" onclick="location.href='<%=portPath%>login/exit'"><i class="fa fa-sign-out"></i> 登出</button>
                                         </div>
                                     </div>
                                 </li>
@@ -214,9 +223,9 @@
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_information.html">修改商户资料</a>
+                                            <li><a href="<%=portPath%>storeAdmin/information.html">修改商户资料</a>
                                             </li>
-                                            <li><a href="store_score.jsp">评分管理</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeScore.html">评分管理</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -230,15 +239,15 @@
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="order_finish.html">已完成订单</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeFinish.html">已完成订单</a>
                                             </li>
-                                            <li><a href="order_wait_confirm.html">待确认订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeSure.html">待确认订单<span class="badge" style="margin-left: 130px;">${waitSureNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_handle.html">待处理订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeWait.html">待处理订单<span class="badge" style="margin-left: 130px;">${waitHandleNum}</span></a>
                                             </li>
-                                            <li><a href="order_wait_refund.html">待退款订单<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/storeCancel.html">待退款订单<span class="badge" style="margin-left: 130px;">${waitCancelNum}</span></a>
                                             </li>
-                                            <li><a href="service_staff.html">服务人员模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/storePeople.html">服务人员模板</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -252,9 +261,9 @@
                                 <div id="dropdown-form" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="system_message.html">系统消息<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 145px;">${unReadNewsNum}</span></a>
                                             </li>
-                                            <li><a href="user_complaint.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 145px;">${unReadComplainNum}</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -269,13 +278,13 @@
                                 <div id="component-example" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_service.html">我的服务</a>
+                                            <li class="active"><a href="<%=portPath%>storeAdmin/service.html">我的服务</a>
                                             </li>
-                                            <li class="active"><a href="javascrapt:">添加服务</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceAdd.html">添加服务</a>
                                             </li>
-                                            <li><a href="service_score.jsp">服务评分</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
-                                            <li><a href="service_template.html">服务模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceTemplate.html">服务模板</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -289,204 +298,205 @@
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    <div class="container">
-                        <h4 style="display: inline-block;">服务LOGO</h4>
-                        <button type="button" class="btn btn-primary pull-right" id="service-template" data-toggle="modal" data-target="#template-modal">选择服务模板</button>
-                        <hr>
-                        <!-- 修改logo -->
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
-                                <img id="logo" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                <button type="button" class="btn btn-primary" id="select-logo" data-toggle="modal" data-target="#logo-modal">
-                                    <i class="icon fa fa-cloud-upload"></i> 更换
-                                </button>
-                            </div>
-                        </div>
-                        <hr>
-                        <h4>服务基本信息</h4>
-                        <hr>
-                        <form class="form-horizontal">
-                            <!-- 服务名 -->
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" style="margin-bottom: 50px;">
+                        <table class="table table-hover" id="waitOrder">
+                            <thead>
+                                <tr>
+                                    <th>服务名称</th>
+                                    <th>创建时间</th>
+                                    <th>最后修改时间</th>
+                                    <th>审核状态</th>
+                                    <th>服务详情</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="select">华峰国际保姆服务</td>
+                                    <td class="select">2017-12-24</td>
+                                    <td class="select">2017-12-24</td>
+                                    <td class="select">审核中/已通过/未通过</td>
+                                    <td><button class="btn btn-info" data-toggle="modal" data-target="#service-modal">查看</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span>
+                            <button class="btn btn-danger" id="delete">删除服务</button>
+                        </span>
+                        <div id="page" class="pull-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="service-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">服务详情</h4>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                        <div>
+                            <h4>服务LOGO图</h4>
+                            <hr>
                             <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务名</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="服务名" required>
-                                            <span class="help-block">注：名称不能出现标点符号</span>
-                                            <span class="help-block" style="color: red;display: none;">错误信息</span>
-                                        </div>
-                                    </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
+                                    <img id="logo" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <button type="button" class="btn btn-primary" id="select-logo">
+                                        <i class="icon fa fa-cloud-upload"></i> 更换
+                                    </button>
                                 </div>
                             </div>
-                            <!-- 服务类型 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务类型</label>
-                                        <div class="col-sm-9" style="position: relative;top: 5px;">
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="保姆" checked id="sex-radio1">
-                                                <label for="sex-radio1">保姆</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="月嫂" id="sex-radio2">
-                                                <label for="sex-radio2">月嫂</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="涉外家政" id="sex-radio3">
-                                                <label for="sex-radio3">涉外家政</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="钟点工" id="sex-radio4">
-                                                <label for="sex-radio4">钟点工</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="老人陪护" id="sex-radio5">
-                                                <label for="sex-radio5">老人陪护</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="病人陪护" id="sex-radio6">
-                                                <label for="sex-radio6">病人陪护</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="育婴师" id="sex-radio7">
-                                                <label for="sex-radio7">育婴师</label>
-                                            </div>
-                                            <div class="radio3 radio-check radio-inline">
-                                                <input type="radio" name="serviceType" value="催乳师" id="sex-radio8">
-                                                <label for="sex-radio8">催乳师</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <hr>
+                            <h4>服务基本信息</h4>
+                            <hr>
+                            <!-- 服务名 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="服务名">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
                             <!-- 服务价格 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务价格</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="服务价格" required>
-                                            <span class="help-block" style="color: red;display: none;">错误信息</span>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务价格</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="服务价格">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
                             <!-- 负责人联系方式 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">负责人联系方式</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="storeName" class="form-control" placeholder="负责人联系方式" required>
-                                            <span class="help-block" style="color: red;display: none;">错误信息</span>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">负责人联系方式</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="负责人联系方式">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
-                            <!-- 服务详细信息 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务详细信息</label>
-                                        <div class="col-sm-9">
-                                            <textarea class="form-control" name="detailInfo" rows="6" style="resize: none;" placeholder="服务详细信息" required></textarea>
-                                            <span class="help-block">剩余300字</span>
-                                        </div>
-                                    </div>
+                            <!-- 服务详细介绍 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务详细介绍</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="6" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
+                                    <span class="help-block">剩余xxx字</span>
                                 </div>
                             </div>
                             <!-- 注意事项 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">注意事项</label>
-                                        <div class="col-sm-9">
-                                            <textarea class="form-control" name="detailInfo" rows="6" style="resize: none;" placeholder="注意事项" required></textarea>
-                                            <span class="help-block">剩余300字</span>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">注意事项</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="6" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
+                                    <span class="help-block">剩余xxx字</span>
                                 </div>
                             </div>
                             <!-- 服务范围 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务范围</label>
-                                        <div class="col-sm-3">
-                                            <select name="provinceId" id="province" class="form-control">
-                                                <option>省</option>
-                                                <option value="浙江省">浙江省</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <select name="cityId" id="city" class="form-control" >
-                                                <option>市</option>
-                                                <option value="杭州市">杭州市</option>
-                                                <option value="温州市">温州市</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <button type="button" class="btn btn-info" id="add-area" style="width: 100%;margin: 0;">添加</button>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务范围</label>
+                                <div class="col-sm-3">
+                                    <select name="provinceId" id="province" class="form-control">
+                                        <option>省</option>
+                                        <option value="浙江省">浙江省</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="cityId" id="city" class="form-control" >
+                                        <option>市</option>
+                                        <option value="杭州市">杭州市</option>
+                                        <option value="温州市">温州市</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-info" id="add-area" style="width: 100%;">添加</button>
                                 </div>
                             </div>
                             <!-- 服务范围项 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-9">
-                                            <div class="row area">
-                                                <div class="col-sm-11">
-                                                    <p>浙江省杭州市</p>
-                                                    <button type="button" class="close delete-area"><span>&times;</span></button>
-                                                </div>
-                                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="row area">
+                                        <div class="col-sm-11">
+                                            <p>浙江省杭州市</p>
+                                            <button type="button" class="close delete-area"><span>&times;</span></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- 服务特色 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">服务特色</label>
-                                        <div class="col-sm-9">
-                                            <button class="btn btn-primary upload2">
-                                                <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
-                                            </button>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务特色</label>
+                                <div class="col-sm-9">
+                                    <button class="btn btn-primary upload2">
+                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
+                                    </button>
                                 </div>
                             </div>
                             <!-- 服务特色项 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-9 characteristic">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group characteristic">
                             </div>
-                            <!-- 添加 -->
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-9">
-                                            <button class="btn btn-info" style="width: 100%;">添加</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-info" id="save">修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-删除 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt1" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>删除选中的服务？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-info" id="delete-btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-未勾选提示 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt2" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>请先勾选</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框-确认修改 -->
+    <div class="modal fade bs-example-modal-sm" id="prompt3" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>修改将重新审核该服务，确定要修改吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-info" id="save-btn">确定</button>
                 </div>
             </div>
         </div>
@@ -497,7 +507,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">选择服务LOGO</h4>
+                    <h4 class="modal-title">修改服务LOGO</h4>
                 </div>
                 <div class="modal-body">
                     <div id="logo-wrap" style="height: 500px;">
@@ -510,45 +520,6 @@
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" id="logo-btn">修改</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 模态框-服务模板 -->
-    <div class="modal fade bs-example-modal-sm" id="template-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">服务模板</h4>
-                </div>
-                <div class="modal-body">
-                     <!-- 模板 -->
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>模板名称</th>
-                                        <th>备注</th>
-                                        <th>选择</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#" title="XXX服务">XXX服务</a></td>
-                                        <td>保姆</td>
-                                        <td><button type="button" class="btn btn-info" id="select-template">选择</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- 分页-->
-                            <div id="template-page" class="pull-right"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -568,14 +539,13 @@
                 }
                 cropper.cropper('reset').cropper('replace','http://t.cn/RCzsdCq');
             });
-
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
-                //模板分页
+                //表格分页
                 laypage.render({
-                    elem: 'template-page'
+                    elem: 'page'
                     ,count: 20 //数据总数，从服务端得到
-                    ,limit: 8
+                    ,limit: 2
                     ,theme: '#19B5FE'
                     ,groups: 4
                     ,jump: function(obj, first){
@@ -585,18 +555,88 @@
                 });
             });
 
-            //选择模板
-            $("#select-template").click(function(event) {
-                $("#template-modal").modal('hide');
-                //传模板数据
-                
+            function initTableCheckbox() {
+                var $thr = $('.app-container table thead tr');
+                var $checkAllTh = $('<th><input type="checkbox" id="checkAll" name="checkAll" /></th>');
+                /*将全选/反选复选框添加到表头最前，即增加一列*/
+                $thr.prepend($checkAllTh);
+                /*“全选/反选”复选框*/
+                var $checkAll = $thr.find('input');
+                $checkAll.click(function(event){
+                    /*将所有行的选中状态设成全选框的选中状态*/
+                    $tbr.find('input').prop('checked',$(this).prop('checked'));
+                    /*并调整所有选中行的CSS样式*/
+                    if ($(this).prop('checked')) {
+                        $tbr.find('input').parent().parent().addClass('info');
+                    } else{
+                        $tbr.find('input').parent().parent().removeClass('info');
+                    }
+                    /*阻止向上冒泡，以防再次触发点击操作*/
+                    event.stopPropagation();
+                });
+                /*点击全选框所在单元格时也触发全选框的点击操作*/
+                $checkAllTh.click(function(){
+                    $(this).find('input').click();
+                });
+                var $tbr = $('.app-container table tbody tr');
+                var $tbr2 = $('.app-container table tbody tr .select');
+                var $checkItemTd = $('<td><input type="checkbox" name="checkItem" class="select" /></td>');
+                /*每一行都在最前面插入一个选中复选框的单元格*/
+                $tbr.prepend($checkItemTd);
+                /*点击每一行的选中复选框时*/
+                $tbr.find('input').click(function(event){
+                    /*调整选中行的CSS样式*/
+                    $(this).parent().parent().toggleClass('info');
+                    /*如果已经被选中行的行数等于表格的数据行数，将全选框设为选中状态，否则设为未选中状态*/
+                    $checkAll.prop('checked',$tbr.find('input:checked').length == $tbr.length ? true : false);
+                    /*阻止向上冒泡，以防再次触发点击操作*/
+                    event.stopPropagation();
+                });
+                /*点击每一行时也触发该行的选中操作*/
+                $tbr2.click(function(){
+                    $(this).parent().find('input').click();
+                });
+            }
+            initTableCheckbox();
+
+            $("#delete").click(function (event) {
+                var $checked = $("tbody input:checked");
+                if($checked.length==0) {
+                    $("#prompt2").modal("show");
+                }
+                else if($checked.length>=1) {
+                    $("#prompt1").modal('show');
+                }
+            });
+
+            $(document).on('click','#select-logo',function() {
+                $('#service-modal').modal('hide');
+                $('#logo-modal').modal('show');
+            })
+            $("#logo-modal").on('hidden.bs.modal', function(event) {
+                $("#service-modal").modal('show');
+            });
+
+            $("#save").click(function(event) {
+                $("#service-modal").modal('hide');
+                $("#prompt3").modal('show');
+            });
+            $("#prompt3").on('hidden.bs.modal', function(event) {
+                $("#service-modal").modal('show');
             });
 
             //添加服务范围项
             $("#add-area").click(function(event) {
-                let $area = $(".area");
+                let $area = $("#service-modal .area");
                 $area.append('<div class="col-sm-11">'+
                             '<p>'+$("#province").val()+$("#city").val()+'</p>'+
+                            '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                            '</div>')
+            });
+            $("#add-area-add").click(function(event) {
+                let $area = $("#add-modal .area");
+                $area.append('<div class="col-sm-11">'+
+                            '<p>'+$("#province-add").val()+$("#city-add").val()+'</p>'+
                             '<button type="button" class="close delete-area"><span>&times;</span></button>'+
                             '</div>')
             });
@@ -641,7 +681,7 @@
             //特色
             $(document).on('change','.upload2 input',function() {
                 let $file = $(this);
-                let $canvases = $(this).parent().parent().parent().parent().parent().next().children().children().find('.characteristic');
+                let $canvases = $(this).parent().parent().parent().next();
                 let windowURL = window.URL || window.webkitURL;
                 let files = $file[0].files[0];
                 if(files) {
