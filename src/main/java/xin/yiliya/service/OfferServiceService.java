@@ -32,9 +32,14 @@ public interface OfferServiceService {
     //返回：删除服务模板是否成功的布尔值
     Boolean deleteServiceTemplate(Integer templateId);
 
-    //根据厂商id获取简单服务详情（可分页）
+    //根据厂商id获取简单服务详情（可分页）（审核通过）
     //返回多个简单服务详情Bean
     PageInfo<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(
+            Integer storeId,int currentPage,int pageSize);
+
+    //根据厂商id获取简单服务详情（可分页）(有审核状态)
+    //返回多个简单服务详情Bean
+    PageInfo<OfferServiceSimple> getSAllSimpleOfferServiceByStoreId(
             Integer storeId,int currentPage,int pageSize);
 
     //根据厂商id获取简单模板详情（可分页）

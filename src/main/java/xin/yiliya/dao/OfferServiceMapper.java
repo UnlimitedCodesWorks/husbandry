@@ -34,6 +34,8 @@ public interface OfferServiceMapper {
 
     List<OfferServiceSimple> getAllSimpleOfferServiceByStoreId(Integer storeId);
 
+    List<OfferServiceSimple> getSAllSimpleOfferServiceByStoreId(Integer storeId);
+
     OfferServiceDetail getOfferServiceDetailByServiceId(Integer serviceId);
 
     List<Cities> getCitiesByServiceId(Integer serviceId);

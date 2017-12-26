@@ -12,6 +12,7 @@ import xin.yiliya.pojo.OfferServiceSimple;
 import xin.yiliya.pojo.OfferServiceUpdate;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.OfferServiceService;
+import xin.yiliya.service.RegionService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -27,17 +28,20 @@ public class StoreServiceController {
     @Resource
     private OfferServiceService offerServiceService;
 
+    @Resource
+    private RegionService regionService;
+
     @RequestMapping(value = "/service.html",method = RequestMethod.GET)
-    @ResponseBody
     public String service(Model model){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
         int pageSize = 1;
-        PageInfo<OfferServiceSimple> offerServiceSimplePageInfo = offerServiceService.getAllSimpleOfferServiceByStoreId(storeId,1,pageSize);
+        PageInfo<OfferServiceSimple> offerServiceSimplePageInfo = offerServiceService.getSAllSimpleOfferServiceByStoreId(storeId,1,pageSize);
         model.addAttribute("services",offerServiceSimplePageInfo.getList());
         model.addAttribute("servicePages",offerServiceSimplePageInfo.getPages());
         model.addAttribute("pageSize",pageSize);
-        return "";
+        model.addAttribute("provinces",regionService.getAllProvinces());
+        return "storeAdmin/store_service";
     }
 
     @RequestMapping(value = "/getAllSimpleOfferServiceByStoreId.do",method = RequestMethod.POST)

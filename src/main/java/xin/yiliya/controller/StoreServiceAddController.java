@@ -26,7 +26,6 @@ public class StoreServiceAddController {
     private OfferServiceService offerServiceService;
 
     @RequestMapping(value = "/serviceAdd.html",method = RequestMethod.GET)
-    @ResponseBody
     public String serviceAdd(Model model){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
@@ -35,7 +34,7 @@ public class StoreServiceAddController {
         model.addAttribute("serviceTemplates",offerServiceTemplatePageInfo.getList());
         model.addAttribute("serviceTemplatePages",offerServiceTemplatePageInfo.getPages());
         model.addAttribute("pageSize",pageSize);
-        return "";
+        return "storeAdmin/add_service";
     }
 
     @RequestMapping(value = "/addService.do",method = RequestMethod.POST)

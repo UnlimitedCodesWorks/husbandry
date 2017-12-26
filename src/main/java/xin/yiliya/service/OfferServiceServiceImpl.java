@@ -218,6 +218,12 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         return new PageInfo<OfferServiceSimple>(list);
     }
 
+    public PageInfo<OfferServiceSimple> getSAllSimpleOfferServiceByStoreId(Integer storeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<OfferServiceSimple> list = offerServiceMapper.getSAllSimpleOfferServiceByStoreId(storeId);
+        return new PageInfo<OfferServiceSimple>(list);
+    }
+
     public PageInfo<OfferServiceTemplate> getAllOfferServiceTemplateByStoreId(
             Integer storeId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage,pageSize);
