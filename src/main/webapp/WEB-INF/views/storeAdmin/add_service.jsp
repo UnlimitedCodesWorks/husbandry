@@ -738,6 +738,27 @@
                         var serviceSpecialContainer = $("#serviceSpecial-container");
                         for(var i =0;i<data.serviceSpecial.length;i++){
                             var serviceSpecialImg = data.serviceSpecial[i].specialImg;
+                            let img = document.createElement("img");
+                            img.setAttribute('crossOrigin', 'anonymous');
+                            img.src = serviceSpecialImg;
+                            let canvas = document.createElement("canvas");
+                            canvas.setAttribute("class","serviceSpecial");
+                            img.onload = function() {
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                canvas.getContext("2d").drawImage(img, 0, 0);
+                                serviceSpecialContainer.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                                serviceSpecialBlob = [];
+                                serviceSpecialFileName = [];
+                                $(".serviceSpecial").each(function(index,element){
+                                    element.toBlob(function (blob) {
+                                        serviceSpecialBlob.push(blob);
+                                        var suffix = blob.type.split("/")[1];
+                                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                                        serviceSpecialFileName.push(fileName);
+                                    });
+                                });
+                            };
                         }
                     },
                     error: function(jqXHR){
@@ -810,19 +831,19 @@
                         canvas.width = img.width;
                         canvas.height = img.height;
                         canvas.getContext("2d").drawImage(img, 0, 0);
+                        $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                        serviceSpecialBlob = [];
+                        serviceSpecialFileName = [];
+                        $(".serviceSpecial").each(function(index,element){
+                            element.toBlob(function (blob) {
+                                serviceSpecialBlob.push(blob);
+                                var suffix = blob.type.split("/")[1];
+                                var fileName = "serviceBlobImage"+index+"."+suffix;
+                                serviceSpecialFileName.push(fileName);
+                            });
+                        });
                     };
-                    $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
                 }
-                serviceSpecialBlob = [];
-                serviceSpecialFileName = [];
-                $(".serviceSpecial").each(function(index,element){
-                    this.toBlob(function (blob) {
-                        serviceSpecialBlob.push(blob);
-                        var suffix = blob.type.split("/")[1];
-                        var fileName = "serviceBlobImage"+index+"."+suffix;
-                        serviceSpecialFileName.push(fileName);
-                    });
-                });
             });
             //删除特色项
             $(document).on('click', '.delete-characteristic', function(event) {
@@ -831,7 +852,7 @@
                 serviceSpecialBlob = [];
                 serviceSpecialFileName = [];
                 $(".serviceSpecial").each(function(index,element){
-                    this.toBlob(function (blob) {
+                    element.toBlob(function (blob) {
                         serviceSpecialBlob.push(blob);
                         var suffix = blob.type.split("/")[1];
                         var fileName = "serviceBlobImage"+index+"."+suffix;
