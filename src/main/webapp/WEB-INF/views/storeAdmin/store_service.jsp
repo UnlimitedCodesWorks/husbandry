@@ -338,159 +338,161 @@
     </div>
     <!-- 模态框 -->
     <div class="modal fade" id="service-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">服务详情</h4>
                 </div>
-                    <div class="modal-body">
-                        <div>
-                            <h4>服务LOGO图</h4>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
-                                    <img id="logo" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
+                <div class="modal-body">
+                    <div>
+                        <h4>服务LOGO图</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
+                                <img id="logo" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <button type="button" class="btn btn-primary" id="select-logo">
+                                    <i class="icon fa fa-cloud-upload"></i> 更换
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>服务基本信息</h4>
+                        <hr>
+                        <form id="update-service" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <%--厂商id--%>
+                            <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
+                            <!-- 服务名 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="serviceName" class="form-control" placeholder="服务名">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <button type="button" class="btn btn-primary" id="select-logo">
-                                        <i class="icon fa fa-cloud-upload"></i> 更换
+                            </div>
+                            <!-- 服务类型 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务类型</label>
+                                <div class="col-sm-9" style="position: relative;top: 5px;">
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="1" checked id="sex-radio1">
+                                        <label for="sex-radio1">保姆</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="2" id="sex-radio2">
+                                        <label for="sex-radio2">月嫂</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="3" id="sex-radio3">
+                                        <label for="sex-radio3">涉外家政</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="4" id="sex-radio4">
+                                        <label for="sex-radio4">钟点工</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="5" id="sex-radio5">
+                                        <label for="sex-radio5">老人陪护</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="6" id="sex-radio6">
+                                        <label for="sex-radio6">病人陪护</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="7" id="sex-radio7">
+                                        <label for="sex-radio7">育婴师</label>
+                                    </div>
+                                    <div class="radio3 radio-check radio-inline">
+                                        <input type="radio" name="kind" value="8" id="sex-radio8">
+                                        <label for="sex-radio8">催乳师</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 服务价格 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务价格</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="price" class="form-control" placeholder="服务价格">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 负责人联系方式 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">负责人联系方式</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="peoplePhone" class="form-control" placeholder="负责人联系方式">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 服务详细介绍 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务详细介绍</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="6" name="introduce" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
+                                    <span class="help-block">剩余xxx字</span>
+                                </div>
+                            </div>
+                            <!-- 注意事项 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">注意事项</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="6" name="notice" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
+                                    <span class="help-block">剩余xxx字</span>
+                                </div>
+                            </div>
+                            <!-- 服务范围 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务范围</label>
+                                <div class="col-sm-3">
+                                    <select name="provinceId" id="province" class="form-control">
+                                        <c:forEach var="province" items="${provinces}" >
+                                            <option value="${province.key}" > ${province.value}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="cityId" id="city" class="form-control" >
+                                        <c:forEach var="city" items="${cities}">
+                                            <option value="${city.cityId}">${city.city}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-info" id="add-area" style="width: 100%;">添加</button>
+                                </div>
+                            </div>
+                            <!-- 服务范围项 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="row area">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 服务特色 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">服务特色</label>
+                                <div class="col-sm-9">
+                                    <button class="btn btn-primary upload2">
+                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
                                     </button>
                                 </div>
                             </div>
-                            <hr>
-                            <h4>服务基本信息</h4>
-                            <hr>
-                            <form id="update-service" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <%--厂商id--%>
-                                <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
-                                <!-- 服务名 -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">服务名</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" name="serviceName" class="form-control" placeholder="服务名">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                    </div>
-                                    </div>
-                                    <!-- 服务类型 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">服务类型</label>
-                                                <div class="col-sm-9" style="position: relative;top: 5px;">
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="1" checked id="sex-radio1">
-                                                        <label for="sex-radio1">保姆</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="2" id="sex-radio2">
-                                                        <label for="sex-radio2">月嫂</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="3" id="sex-radio3">
-                                                        <label for="sex-radio3">涉外家政</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="4" id="sex-radio4">
-                                                        <label for="sex-radio4">钟点工</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="5" id="sex-radio5">
-                                                        <label for="sex-radio5">老人陪护</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="6" id="sex-radio6">
-                                                        <label for="sex-radio6">病人陪护</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="7" id="sex-radio7">
-                                                        <label for="sex-radio7">育婴师</label>
-                                                    </div>
-                                                    <div class="radio3 radio-check radio-inline">
-                                                        <input type="radio" name="kind" value="8" id="sex-radio8">
-                                                        <label for="sex-radio8">催乳师</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- 服务价格 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">服务价格</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="price" class="form-control" placeholder="服务价格">
-                                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                                </div>
-                                            </div>
-                                            <!-- 负责人联系方式 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">负责人联系方式</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="peoplePhone" class="form-control" placeholder="负责人联系方式">
-                                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                                </div>
-                                            </div>
-                                            <!-- 服务详细介绍 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">服务详细介绍</label>
-                                                <div class="col-sm-9">
-                                                    <textarea rows="6" name="introduce" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
-                                                    <span class="help-block">剩余xxx字</span>
-                                                </div>
-                                            </div>
-                                            <!-- 注意事项 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">注意事项</label>
-                                                <div class="col-sm-9">
-                                                    <textarea rows="6" name="notice" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
-                                                    <span class="help-block">剩余xxx字</span>
-                                                </div>
-                                            </div>
-                                            <!-- 服务范围 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">服务范围</label>
-                                                <div class="col-sm-3">
-                                                    <select name="provinceId" id="province" class="form-control">
-                                                        <c:forEach var="province" items="${provinces}" >
-                                                            <option value="${province.key}" > ${province.value}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <select name="cityId" id="city" class="form-control" >
-                                                        <c:forEach var="city" items="${cities}">
-                                                            <option value="${city.cityId}">${city.city}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <button type="button" class="btn btn-info" id="add-area" style="width: 100%;">添加</button>
-                                                </div>
-                                            </div>
-                                            <!-- 服务范围项 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label"></label>
-                                                <div class="col-sm-9">
-                                                    <div class="row area">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- 服务特色 -->
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">服务特色</label>
-                                                <div class="col-sm-9">
-                                                    <button class="btn btn-primary upload2">
-                                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <!-- 服务特色项 -->
-                                            <div class="form-group characteristic">
-                                                <div class="col-md-6 col-md-offset-1">
-                                                    <div class="form-group">
-                                                        <label class="col-sm-3 control-label"></label>
-                                                        <div class="col-sm-9 characteristic" id="serviceSpecial-container">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <!-- 服务特色项 -->
+                            <div class="form-group characteristic">
+                                <div class="col-md-6 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-9 characteristic" id="serviceSpecial-container">
                                         </div>
                                     </div>
-                            </form>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-info" id="save">修改</button>
