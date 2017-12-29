@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -303,20 +304,27 @@
                             <thead>
                                 <tr>
                                     <th>服务名称</th>
+                                    <th>服务类型</th>
                                     <th>创建时间</th>
                                     <th>最后修改时间</th>
                                     <th>审核状态</th>
                                     <th>服务详情</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="service-container">
+                            <c:if test="${!empty services}">
+                            <c:forEach var="service" items="${services}">
                                 <tr>
-                                    <td class="select">华峰国际保姆服务</td>
-                                    <td class="select">2017-12-24</td>
-                                    <td class="select">2017-12-24</td>
-                                    <td class="select">审核中/已通过/未通过</td>
-                                    <td><button class="btn btn-info" data-toggle="modal" data-target="#service-modal">查看</button></td>
+                                    <td hidden="hidden">${service.offerServiceId}</td>
+                                    <td class="select">${service.serviceName}</td>
+                                    <td class="select">${service.kind.serKind}</td>
+                                    <td class="select"><fmt:formatDate value="${service.publishTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                    <td class="select"><fmt:formatDate value="${service.updateTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                    <td class="select"><c:if test="${service.status==0}">审核中</c:if><c:if test="${service.status==1}">已通过</c:if></td>
+                                    <td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#service-modal" service-id="${service.offerServiceId}" >查看</button></td>
                                 </tr>
+                            </c:forEach>
+                            </c:if>
                             </tbody>
                         </table>
                         <span>
@@ -330,13 +338,10 @@
     </div>
     <!-- 模态框 -->
     <div class="modal fade" id="service-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">服务详情</h4>
                 </div>
-                <form class="form-horizontal">
                     <div class="modal-body">
                         <div>
                             <h4>服务LOGO图</h4>
@@ -354,97 +359,142 @@
                             <hr>
                             <h4>服务基本信息</h4>
                             <hr>
-                            <!-- 服务名 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="服务名">
+                            <form id="update-service" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <%--厂商id--%>
+                                <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
+                                <!-- 服务名 -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">服务名</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" name="serviceName" class="form-control" placeholder="服务名">
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 服务价格 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务价格</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="服务价格">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 负责人联系方式 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">负责人联系方式</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="负责人联系方式">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 服务详细介绍 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务详细介绍</label>
-                                <div class="col-sm-9">
-                                    <textarea rows="6" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余xxx字</span>
-                                </div>
-                            </div>
-                            <!-- 注意事项 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">注意事项</label>
-                                <div class="col-sm-9">
-                                    <textarea rows="6" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余xxx字</span>
-                                </div>
-                            </div>
-                            <!-- 服务范围 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务范围</label>
-                                <div class="col-sm-3">
-                                    <select name="provinceId" id="province" class="form-control">
-                                        <option>省</option>
-                                        <option value="浙江省">浙江省</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3">
-                                    <select name="cityId" id="city" class="form-control" >
-                                        <option>市</option>
-                                        <option value="杭州市">杭州市</option>
-                                        <option value="温州市">温州市</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" class="btn btn-info" id="add-area" style="width: 100%;">添加</button>
-                                </div>
-                            </div>
-                            <!-- 服务范围项 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"></label>
-                                <div class="col-sm-9">
-                                    <div class="row area">
-                                        <div class="col-sm-11">
-                                            <p>浙江省杭州市</p>
-                                            <button type="button" class="close delete-area"><span>&times;</span></button>
+                                    </div>
+                                    </div>
+                                    <!-- 服务类型 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">服务类型</label>
+                                                <div class="col-sm-9" style="position: relative;top: 5px;">
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="1" checked id="sex-radio1">
+                                                        <label for="sex-radio1">保姆</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="2" id="sex-radio2">
+                                                        <label for="sex-radio2">月嫂</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="3" id="sex-radio3">
+                                                        <label for="sex-radio3">涉外家政</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="4" id="sex-radio4">
+                                                        <label for="sex-radio4">钟点工</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="5" id="sex-radio5">
+                                                        <label for="sex-radio5">老人陪护</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="6" id="sex-radio6">
+                                                        <label for="sex-radio6">病人陪护</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="7" id="sex-radio7">
+                                                        <label for="sex-radio7">育婴师</label>
+                                                    </div>
+                                                    <div class="radio3 radio-check radio-inline">
+                                                        <input type="radio" name="kind" value="8" id="sex-radio8">
+                                                        <label for="sex-radio8">催乳师</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 服务价格 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">服务价格</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="price" class="form-control" placeholder="服务价格">
+                                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                                </div>
+                                            </div>
+                                            <!-- 负责人联系方式 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">负责人联系方式</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="peoplePhone" class="form-control" placeholder="负责人联系方式">
+                                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                                </div>
+                                            </div>
+                                            <!-- 服务详细介绍 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">服务详细介绍</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="6" name="introduce" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
+                                                    <span class="help-block">剩余xxx字</span>
+                                                </div>
+                                            </div>
+                                            <!-- 注意事项 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">注意事项</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="6" name="notice" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
+                                                    <span class="help-block">剩余xxx字</span>
+                                                </div>
+                                            </div>
+                                            <!-- 服务范围 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">服务范围</label>
+                                                <div class="col-sm-3">
+                                                    <select name="provinceId" id="province" class="form-control">
+                                                        <c:forEach var="province" items="${provinces}" >
+                                                            <option value="${province.key}" > ${province.value}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <select name="cityId" id="city" class="form-control" >
+                                                        <c:forEach var="city" items="${cities}">
+                                                            <option value="${city.cityId}">${city.city}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <button type="button" class="btn btn-info" id="add-area" style="width: 100%;">添加</button>
+                                                </div>
+                                            </div>
+                                            <!-- 服务范围项 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label"></label>
+                                                <div class="col-sm-9">
+                                                    <div class="row area">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 服务特色 -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">服务特色</label>
+                                                <div class="col-sm-9">
+                                                    <button class="btn btn-primary upload2">
+                                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- 服务特色项 -->
+                                            <div class="form-group characteristic">
+                                                <div class="col-md-6 col-md-offset-1">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"></label>
+                                                        <div class="col-sm-9 characteristic" id="serviceSpecial-container">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- 服务特色 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务特色</label>
-                                <div class="col-sm-9">
-                                    <button class="btn btn-primary upload2">
-                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- 服务特色项 -->
-                            <div class="form-group characteristic">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-info" id="save">修改</button>
-                    </div>
-                </form>
+                            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-info" id="save">修改</button>
+                </div>
             </div>
         </div>
     </div>
@@ -526,7 +576,41 @@
     </div>
     <script type="text/javascript">
         $(function(){
+            var servicePages = ${servicePages};
+            var pageSize = ${pageSize};
+            var province = $("#province");
+            var city = $("#city");
+            var storeId = ${storeInfo.storeid};
+            var portPath = "<%=portPath%>";
             var cropper;
+            var logoBlob;
+            var logoMIME = "";
+            var serviceSpecialBlob = [];
+            var serviceSpecialFileName = [];
+
+            province.change(function (e) {
+                city.html("");
+                city.append('<option value="NONE" label="市" />');
+                var value = province.val();
+                $.ajax({
+                    url :portPath + 'store/getCitys.do',
+                    type : "post",
+                    data:{
+                        provinceId : value
+                    },
+                    dataType : "json",
+                    success: function(data){
+                        for(var i=0;i<data.length;i++){
+                            var node = '<option value="'+data[i].cityId+ '" >'+data[i].city+'</option>';
+                            city.append(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+
             $('#logo-modal').on('shown.bs.modal', function () {
                 if(cropper == undefined) {
                     cropper = $('#logo-wrap img').cropper({
@@ -544,12 +628,27 @@
                 //表格分页
                 laypage.render({
                     elem: 'page'
-                    ,count: 20 //数据总数，从服务端得到
-                    ,limit: 2
+                    ,count: servicePages*pageSize //数据总数，从服务端得到
+                    ,limit: pageSize
                     ,theme: '#19B5FE'
                     ,groups: 4
                     ,jump: function(obj, first){
                         if(!first){
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"storeAdmin/getSAllSimpleOfferServiceByStoreId.do",
+                                data: {
+                                    storeId:storeId,
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createService(data);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
                         }
                     }
                 });
@@ -598,6 +697,37 @@
                 });
             }
             initTableCheckbox();
+            $("#delete-btn").click(function (event) {
+                var $checked = $("tbody input:checked");
+                var yellow = [];
+                $checked.each(function () {
+                    yellow.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "POST",
+                        url: portPath + "storeAdmin/deleteService.do",
+                        data: {
+                            serviceIds: yellow
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                layer.msg("删除成功！", {
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("删除失败！");
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
+            });
 
             $("#delete").click(function (event) {
                 var $checked = $("tbody input:checked");
@@ -625,6 +755,96 @@
                 $("#service-modal").modal('show');
             });
 
+            //查看细节
+            $(".view-detail").click(function(event) {
+                var serviceId = $(this).attr("service-id");
+                //查看服务细节
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"storeAdmin/getSOfferServiceDetailByServiceId.do",
+                    data: {
+                        serviceId:serviceId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        $("input[name = 'serviceName']:eq(0)").val(data.serviceName);
+                        $("input[name = 'price']:eq(0)").val(data.price);
+                        $("input[name = 'peoplePhone']:eq(0)").val(data.peoplePhone);
+                        $("textarea[name = 'introduce']:eq(0)").val(data.introduce);
+                        $("textarea[name = 'notice']:eq(0)").val(data.notice);
+                        let $area = $(".area");
+                        $area.html("");
+                        for(var i = 0; i<data.cities.length;i++){
+                            $area.append('<div class="col-sm-11 ">'+
+                                '<p>'+data.cities[i].provinces.province+data.cities[i].city+'</p>'+
+                                '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                                '<input type="hidden" name="cityIds" value="'+data.cities[i].cityId+'"  />'+
+                                '</div>');
+                        }
+                        var kind = data.serid;
+                        $("input[name = 'kind']").each(function () {
+                            var value = $(this).val();
+                            if(kind == value){
+                                $(this).attr("checked",'checked');
+                            }
+                        });
+                        var serviceImg = data.serviceImg;
+                        $("#logo").attr("src",serviceImg);
+                        //cropper
+                        $('#logo-modal').on('shown.bs.modal', function () {
+                            if(cropper == undefined) {
+                                cropper = $('#logo-wrap img').cropper({
+                                    aspectRatio: 16 / 9,
+                                    // minContainerWidth: 500,
+                                    crop: function(data) {
+                                        // Output the result data for cropping image.
+                                    }
+                                });
+                            }
+                            cropper.cropper('reset').cropper('replace',serviceImg);
+                        });
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("get",serviceImg, true);
+                        xhr.responseType = "blob";
+                        xhr.onload = function() {
+                            if (this.status == 200) {
+                                logoBlob = this.response;
+                                logoMIME = logoBlob.type;
+                            }
+                        };
+                        xhr.send();
+                        var serviceSpecialContainer = $("#serviceSpecial-container");
+                        for(var i =0;i<data.serviceSpecial.length;i++){
+                            var serviceSpecialImg = data.serviceSpecial[i].specialImg;
+                            let img = document.createElement("img");
+                            img.setAttribute('crossOrigin', 'anonymous');
+                            img.src = serviceSpecialImg;
+                            let canvas = document.createElement("canvas");
+                            canvas.setAttribute("class","serviceSpecial");
+                            img.onload = function() {
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                canvas.getContext("2d").drawImage(img, 0, 0);
+                                serviceSpecialContainer.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                                serviceSpecialBlob = [];
+                                serviceSpecialFileName = [];
+                                $(".serviceSpecial").each(function(index,element){
+                                    element.toBlob(function (blob) {
+                                        serviceSpecialBlob.push(blob);
+                                        var suffix = blob.type.split("/")[1];
+                                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                                        serviceSpecialFileName.push(fileName);
+                                    });
+                                });
+                            };
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+
             //添加服务范围项
             $("#add-area").click(function(event) {
                 let $area = $("#service-modal .area");
@@ -634,11 +854,12 @@
                             '</div>')
             });
             $("#add-area-add").click(function(event) {
-                let $area = $("#add-modal .area");
-                $area.append('<div class="col-sm-11">'+
-                            '<p>'+$("#province-add").val()+$("#city-add").val()+'</p>'+
-                            '<button type="button" class="close delete-area"><span>&times;</span></button>'+
-                            '</div>')
+                let $area = $(".area");
+                $area.append('<div class="col-sm-11 ">'+
+                    '<p>'+$("#province").find("option:selected").text()+$("#city").find("option:selected").text()+'</p>'+
+                    '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                    '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
+                    '</div>');
             });
 
             //删除服务范围项
@@ -672,6 +893,8 @@
             $(document).on('click', '#logo-btn', function(event) {
                 let canvas = cropper.cropper('getCroppedCanvas');
                 canvas.toBlob(function(blob) {
+                    logoBlob = blob;
+                    logoMIME = blob.type;
                     url = URL.createObjectURL(blob);
                     $("#logo").attr('src', url);
                 });
@@ -681,26 +904,91 @@
             //特色
             $(document).on('change','.upload2 input',function() {
                 let $file = $(this);
-                let $canvases = $(this).parent().parent().parent().next();
+                let $canvases = $(this).parent().parent().parent().parent().parent().next().children().children().find('.characteristic');
                 let windowURL = window.URL || window.webkitURL;
                 let files = $file[0].files[0];
                 if(files) {
                     let img = document.createElement("img");
                     img.src = windowURL.createObjectURL(files);
                     let canvas = document.createElement("canvas");
+                    canvas.setAttribute("class","serviceSpecial");
                     img.onload = function() {
                         canvas.width = img.width;
                         canvas.height = img.height;
                         canvas.getContext("2d").drawImage(img, 0, 0);
-                    }
-                    $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                        $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                        serviceSpecialBlob = [];
+                        serviceSpecialFileName = [];
+                        $(".serviceSpecial").each(function(index,element){
+                            element.toBlob(function (blob) {
+                                serviceSpecialBlob.push(blob);
+                                var suffix = blob.type.split("/")[1];
+                                var fileName = "serviceBlobImage"+index+"."+suffix;
+                                serviceSpecialFileName.push(fileName);
+                            });
+                        });
+                    };
                 }
             });
             //删除特色项
             $(document).on('click', '.delete-characteristic', function(event) {
                 $(this).prev().remove();
                 $(this).remove();
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
+                $(".serviceSpecial").each(function(index,element){
+                    element.toBlob(function (blob) {
+                        serviceSpecialBlob.push(blob);
+                        var suffix = blob.type.split("/")[1];
+                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                        serviceSpecialFileName.push(fileName);
+                    });
+                });
             });
+
+            function createService(data) {
+                var container = $("#service-container");
+                container.html("");
+                for(var i = 0;i<data.length;i++){
+                    var publishTime = new Date(Date.parse(data[i].publishTime.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm:ss");
+                    var updateTime = new Date(Date.parse(data[i].updateTime.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm:ss");
+                    var status="";
+                    if(data[i].status==0){
+                        status="审核中";
+                    }else if(data[i].status==1){
+                        status="已通过";
+                    }
+                    var node = '<tr>' +
+                        '<td hidden="hidden">'+data[i].offerServiceId+'</td>' +
+                        '<td class="select">'+data[i].serviceName+'</td>' +
+                        '<td class="select">'+data[i].kind.serKind+'</td>'+
+                        '<td class="select">'+publishTime+'</td>' +
+                        '<td class="select">'+updateTime+'</td>' +
+                        '<td class="select">'+status+'</td>' +
+                        '<td><button class="btn btn-info" data-toggle="modal" data-target="#service-modal" service-id="'+data[i].offerServiceId+'" >查看</button></td>' +
+                        '</tr>';
+                    container.append(node);
+                }
+                var $tbr = $('table tbody tr');
+                var $checkItemTd = $('<td><input type="checkbox" name="checkItem" class="select" /></td>');
+                /*每一行都在最前面插入一个选中复选框的单元格*/
+                $tbr.prepend($checkItemTd);
+            }
+            Date.prototype.Format = function (fmt) { //author: meizz
+                var o = {
+                    "M+": this.getMonth() + 1, //月份
+                    "d+": this.getDate(), //日
+                    "h+": this.getHours(), //小时
+                    "m+": this.getMinutes(), //分
+                    "s+": this.getSeconds(), //秒
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                    "S": this.getMilliseconds() //毫秒
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
         });
     </script>
 </body>

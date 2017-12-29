@@ -15,6 +15,7 @@ import xin.yiliya.service.OfferServiceService;
 import xin.yiliya.service.RegionService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class StoreServiceController {
         model.addAttribute("servicePages",offerServiceSimplePageInfo.getPages());
         model.addAttribute("pageSize",pageSize);
         model.addAttribute("provinces",regionService.getAllProvinces());
+        model.addAttribute("cities",regionService.getAllCitiesByProvince("340000"));
         return "storeAdmin/store_service";
     }
 
