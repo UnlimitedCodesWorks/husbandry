@@ -15,7 +15,6 @@ import xin.yiliya.service.OfferServiceService;
 import xin.yiliya.service.RegionService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class StoreServiceController {
     public String service(Model model){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
-        int pageSize = 1;
+        int pageSize = 10;
         PageInfo<OfferServiceSimple> offerServiceSimplePageInfo = offerServiceService.getSAllSimpleOfferServiceByStoreId(storeId,1,pageSize);
         model.addAttribute("services",offerServiceSimplePageInfo.getList());
         model.addAttribute("servicePages",offerServiceSimplePageInfo.getPages());
@@ -49,7 +48,7 @@ public class StoreServiceController {
     @RequestMapping(value = "/getSAllSimpleOfferServiceByStoreId.do",method = RequestMethod.POST)
     @ResponseBody
     public List<OfferServiceSimple> getSAllSimpleOfferServiceByStoreId(Integer storeId, Integer currentPage){
-        int pageSize = 1;
+        int pageSize = 10;
         return offerServiceService.getSAllSimpleOfferServiceByStoreId(storeId,currentPage,pageSize).getList();
     }
 

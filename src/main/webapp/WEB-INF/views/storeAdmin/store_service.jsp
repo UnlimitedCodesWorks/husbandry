@@ -89,7 +89,7 @@
         }
 
         canvas {
-            width: 60%;
+            width: 100%;
             display: block;
             margin: 0 auto;
         }
@@ -362,8 +362,6 @@
                         <h4>服务基本信息</h4>
                         <hr>
                         <form id="update-service" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <%--厂商id--%>
-                            <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
                             <!-- 服务名 -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">服务名</label>
@@ -431,7 +429,7 @@
                                 <label class="col-sm-3 control-label">服务详细介绍</label>
                                 <div class="col-sm-9">
                                     <textarea rows="6" name="introduce" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余xxx字</span>
+                                    <span class="help-block">剩余300字</span>
                                 </div>
                             </div>
                             <!-- 注意事项 -->
@@ -439,7 +437,7 @@
                                 <label class="col-sm-3 control-label">注意事项</label>
                                 <div class="col-sm-9">
                                     <textarea rows="6" name="notice" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余xxx字</span>
+                                    <span class="help-block">剩余300字</span>
                                 </div>
                             </div>
                             <!-- 服务范围 -->
@@ -589,6 +587,10 @@
             var logoMIME = "";
             var serviceSpecialBlob = [];
             var serviceSpecialFileName = [];
+            var offerServiceId;
+            var serviceSpecialLink = [];
+            var serviceImgLink;
+            var deleteCityIds = [];
 
             province.change(function (e) {
                 city.html("");
@@ -612,6 +614,56 @@
                     }
                 });
             });
+
+            $("#save-btn").click(function () {
+                var formData = new FormData(document.querySelector("#update-service"));
+                var logoSuffix = logoMIME.split("/")[1];
+                var logoFileName = "blobImage."+logoSuffix;
+                formData.append("serviceImg",logoBlob,logoFileName);
+                formData.append("offerServiceId",offerServiceId);
+                formData.append("serviceImgLink",serviceImgLink);
+                for(var i=0;i<serviceSpecialLink.length;i++){
+                    formData.append("serviceSpecialLink",serviceSpecialLink[i]);
+                }
+                for(var i=0;i<deleteCityIds.length;i++){
+                    formData.append("deleteCityIds",deleteCityIds[i]);
+                }
+                for(var i=0;i<serviceSpecialBlob.length;i++){
+                    console.log(serviceSpecialFileName[i]);
+                    formData.append("serviceSpecial",serviceSpecialBlob[i],serviceSpecialFileName[i]);
+                }
+                for(var pair of formData.entries()) {
+                    if(pair[1].length==0){
+                        formData.delete(pair[0]);
+                    }
+                }
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "post",
+                        url: "<%=portPath%>storeAdmin/updateService.do",
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            if (data!=0) {
+                                layer.msg("更新服务成功！",{
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("更新服务失败！");
+                            }
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown, data) {
+                            alert(errorThrown);
+                        }
+                    });
+                });
+            });
+
 
             $('#logo-modal').on('shown.bs.modal', function () {
                 if(cropper == undefined) {
@@ -760,6 +812,10 @@
             //查看细节
             $(".view-detail").click(function(event) {
                 var serviceId = $(this).attr("service-id");
+                deleteCityIds = [];
+                serviceSpecialLink = [];
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
                 //查看服务细节
                 $.ajax({
                     type: "POST",
@@ -769,6 +825,7 @@
                     },
                     dataType: "json",
                     success: function(data){
+                        offerServiceId = data.offerserviceid;
                         $("input[name = 'serviceName']:eq(0)").val(data.serviceName);
                         $("input[name = 'price']:eq(0)").val(data.price);
                         $("input[name = 'peoplePhone']:eq(0)").val(data.peoplePhone);
@@ -782,6 +839,7 @@
                                 '<button type="button" class="close delete-area"><span>&times;</span></button>'+
                                 '<input type="hidden" name="cityIds" value="'+data.cities[i].cityId+'"  />'+
                                 '</div>');
+                            deleteCityIds.push(data.cities[i].cityId);
                         }
                         var kind = data.serid;
                         $("input[name = 'kind']").each(function () {
@@ -791,6 +849,7 @@
                             }
                         });
                         var serviceImg = data.serviceImg;
+                        serviceImgLink = ''+data.serviceImg;
                         $("#logo").attr("src",serviceImg);
                         //cropper
                         $('#logo-modal').on('shown.bs.modal', function () {
@@ -816,11 +875,26 @@
                         };
                         xhr.send();
                         var serviceSpecialContainer = $("#serviceSpecial-container");
+                        serviceSpecialContainer.html("");
                         for(var i =0;i<data.serviceSpecial.length;i++){
                             var serviceSpecialImg = data.serviceSpecial[i].specialImg;
+                            serviceSpecialLink.push(''+data.serviceSpecial[i].specialImg);
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("get",serviceSpecialImg, true);
+                            xhr.responseType = "blob";
+                            xhr.onload = function() {
+                                if (this.status == 200) {
+                                    var blob = this.response;
+                                    serviceSpecialBlob.push(blob);
+                                    var suffix = blob.type.split("/")[1];
+                                    var fileName = "serviceBlobImage"+i+"."+suffix;
+                                    serviceSpecialFileName.push(fileName);
+                                }
+                            };
+                            xhr.send();
                             let img = document.createElement("img");
                             img.setAttribute('crossOrigin', 'anonymous');
-                            img.src = serviceSpecialImg;
+                            img.setAttribute("src",serviceSpecialImg);
                             let canvas = document.createElement("canvas");
                             canvas.setAttribute("class","serviceSpecial");
                             img.onload = function() {
@@ -828,16 +902,6 @@
                                 canvas.height = img.height;
                                 canvas.getContext("2d").drawImage(img, 0, 0);
                                 serviceSpecialContainer.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
-                                serviceSpecialBlob = [];
-                                serviceSpecialFileName = [];
-                                $(".serviceSpecial").each(function(index,element){
-                                    element.toBlob(function (blob) {
-                                        serviceSpecialBlob.push(blob);
-                                        var suffix = blob.type.split("/")[1];
-                                        var fileName = "serviceBlobImage"+index+"."+suffix;
-                                        serviceSpecialFileName.push(fileName);
-                                    });
-                                });
                             };
                         }
                     },
@@ -849,11 +913,12 @@
 
             //添加服务范围项
             $("#add-area").click(function(event) {
-                let $area = $("#service-modal .area");
-                $area.append('<div class="col-sm-11">'+
-                            '<p>'+$("#province").val()+$("#city").val()+'</p>'+
-                            '<button type="button" class="close delete-area"><span>&times;</span></button>'+
-                            '</div>')
+                let $area = $(".area");
+                $area.append('<div class="col-sm-11 ">'+
+                    '<p>'+$("#province").find("option:selected").text()+$("#city").find("option:selected").text()+'</p>'+
+                    '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                    '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
+                    '</div>')
             });
             $("#add-area-add").click(function(event) {
                 let $area = $(".area");
@@ -906,7 +971,7 @@
             //特色
             $(document).on('change','.upload2 input',function() {
                 let $file = $(this);
-                let $canvases = $(this).parent().parent().parent().parent().parent().next().children().children().find('.characteristic');
+                let $canvases = $("#serviceSpecial-container");
                 let windowURL = window.URL || window.webkitURL;
                 let files = $file[0].files[0];
                 if(files) {

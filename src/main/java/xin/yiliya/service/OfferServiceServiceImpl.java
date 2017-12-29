@@ -114,7 +114,9 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         try{
             OfferService offerService = new OfferService();
             BeanUtils.copyProperties(offerService,offerServiceUpdate);
+            offerService.setOfferserviceid(offerServiceUpdate.getOfferServiceId());
             offerService.setUpdateTime(new Date());
+            offerService.setStatus(0);
             if(offerServiceUpdate.getServiceImg()!=null){
                 if(offerServiceUpdate.getServiceImgLink()!=null){
                     aliOssTool.deleteFileByLink(offerServiceUpdate.getServiceImgLink());

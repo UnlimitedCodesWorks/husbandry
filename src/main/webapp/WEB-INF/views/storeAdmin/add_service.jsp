@@ -689,6 +689,8 @@
                     },
                     dataType: "json",
                     success: function(data){
+                        serviceSpecialBlob = [];
+                        serviceSpecialFileName = [];
                         $("input[name = 'serviceName']:eq(0)").val(data.serviceName);
                         $("input[name = 'price']:eq(0)").val(data.price);
                         $("input[name = 'peoplePhone']:eq(0)").val(data.peoplePhone);
@@ -736,8 +738,22 @@
                         };
                         xhr.send();
                         var serviceSpecialContainer = $("#serviceSpecial-container");
+                        serviceSpecialContainer.html("");
                         for(var i =0;i<data.serviceSpecial.length;i++){
                             var serviceSpecialImg = data.serviceSpecial[i].specialImg;
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("get",serviceSpecialImg, true);
+                            xhr.responseType = "blob";
+                            xhr.onload = function() {
+                                if (this.status == 200) {
+                                    var blob = this.response;
+                                    serviceSpecialBlob.push(blob);
+                                    var suffix = blob.type.split("/")[1];
+                                    var fileName = "serviceBlobImage"+i+"."+suffix;
+                                    serviceSpecialFileName.push(fileName);
+                                }
+                            };
+                            xhr.send();
                             let img = document.createElement("img");
                             img.setAttribute('crossOrigin', 'anonymous');
                             img.src = serviceSpecialImg;
@@ -748,16 +764,6 @@
                                 canvas.height = img.height;
                                 canvas.getContext("2d").drawImage(img, 0, 0);
                                 serviceSpecialContainer.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
-                                serviceSpecialBlob = [];
-                                serviceSpecialFileName = [];
-                                $(".serviceSpecial").each(function(index,element){
-                                    element.toBlob(function (blob) {
-                                        serviceSpecialBlob.push(blob);
-                                        var suffix = blob.type.split("/")[1];
-                                        var fileName = "serviceBlobImage"+index+"."+suffix;
-                                        serviceSpecialFileName.push(fileName);
-                                    });
-                                });
                             };
                         }
                     },
