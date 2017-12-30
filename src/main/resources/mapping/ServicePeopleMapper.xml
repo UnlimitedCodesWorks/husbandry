@@ -198,7 +198,7 @@
   </update>
 
   <select id="getAllServicePeopleTemplateByStoreId" parameterType="Integer" resultMap="BaseResultMap">
-    SELECT * FROM servicepeople WHERE store_id=1 AND LENGTH(servicepeople.sp_templatename)>0
+    SELECT * FROM servicepeople WHERE store_id=#{storeId} AND LENGTH(servicepeople.sp_templatename)>0 ORDER BY up_time DESC
   </select>
 
   <select id="getServicePeopleHeadImg" resultType="String">
