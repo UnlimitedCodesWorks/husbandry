@@ -89,7 +89,7 @@
         }
 
         canvas {
-            width: 100%;
+            width: 60%;
             display: block;
             margin: 0 auto;
         }
@@ -479,14 +479,7 @@
                                 </div>
                             </div>
                             <!-- 服务特色项 -->
-                            <div class="form-group characteristic">
-                                <div class="col-md-6 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-9 characteristic" id="serviceSpecial-container">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group characteristic" id="serviceSpecial-container">
                             </div>
                         </form>
                     </div>
@@ -796,7 +789,7 @@
             $(document).on('click','#select-logo',function() {
                 $('#service-modal').modal('hide');
                 $('#logo-modal').modal('show');
-            })
+            });
             $("#logo-modal").on('hidden.bs.modal', function(event) {
                 $("#service-modal").modal('show');
             });
@@ -919,14 +912,6 @@
                     '<button type="button" class="close delete-area"><span>&times;</span></button>'+
                     '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
                     '</div>')
-            });
-            $("#add-area-add").click(function(event) {
-                let $area = $(".area");
-                $area.append('<div class="col-sm-11 ">'+
-                    '<p>'+$("#province").find("option:selected").text()+$("#city").find("option:selected").text()+'</p>'+
-                    '<button type="button" class="close delete-area"><span>&times;</span></button>'+
-                    '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
-                    '</div>');
             });
 
             //删除服务范围项
