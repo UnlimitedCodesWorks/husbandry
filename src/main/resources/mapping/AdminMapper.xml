@@ -120,7 +120,7 @@
     SELECT
     storeid,store_name,phone,email,detail_info
     FROM store
-    WHERE status = 0
+    WHERE status = 0 ORDER BY regist_time DESC
   </select>
   <select id="getAptitudeByStoreId" resultType="string" parameterType="java.lang.Integer">
     SELECT
@@ -133,7 +133,7 @@
     storeid,store_name,phone,email,detail_info
     FROM store
     WHERE status = 0
-    AND store_name LIKE '%${input}%'
+    AND store_name LIKE '%${input}%' ORDER BY regist_time DESC
   </select>
   <resultMap id="getPassStores" type="xin.yiliya.pojo.StoreAdmin">
     <id property="storeId" column="storeid" />
@@ -147,14 +147,14 @@
     SELECT
     storeid,store_name,phone,email,detail_info,regist_time
     FROM store
-    WHERE status = 1
+    WHERE status = 1 ORDER BY regist_time DESC
   </select>
   <select id="getPassStoresBySearch" resultMap="getPassStores" parameterType="java.lang.String">
     SELECT
     storeid,store_name,phone,email,detail_info,regist_time
     FROM store
     WHERE status = 1
-    AND store_name LIKE '%${input}%'
+    AND store_name LIKE '%${input}%' ORDER BY regist_time DESC
   </select>
   <resultMap id="getUnpassServices" type="xin.yiliya.pojo.OfferServiceAdmin">
     <id property="offerServiceId" column="offerserviceid" />
@@ -174,7 +174,7 @@
     FROM offerservice,service,store
     WHERE
     offerservice.store_id = store.storeid AND offerservice.kind = service.serid
-    AND offerservice.status = 0
+    AND offerservice.status = 0 ORDER BY publish_time DESC
   </select>
   <select id="getUnpassServicesBySearch" resultMap="getUnpassServices"
           parameterType="java.lang.String">
@@ -184,11 +184,11 @@
     WHERE
     offerservice.store_id = store.storeid AND offerservice.kind = service.serid
     AND offerservice.status = 0
-    AND store.store_name LIKE '%${input}%'
+    AND store.store_name LIKE '%${input}%' ORDER BY publish_time DESC
   </select>
   <update id="passService" parameterType="Integer">
     UPDATE offerservice
-    SET status = 1
+    SET status = 1,update_time=NOW()
     WHERE offerserviceid = #{offerServiceId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -372,13 +372,13 @@
 
     <update id="storeUpdateOrderCancelStatus">
         update `order`
-        SET status=4
+        SET status=4,end_time=NOW()
         where orderid = #{orderId,jdbcType=INTEGER}
     </update>
 
     <update id="storeCancelRefuseStatus">
         update `order`
-        SET status=6
+        SET status=6,end_time=NOW()
         where orderid = #{orderId,jdbcType=INTEGER}
     </update>
 
@@ -459,6 +459,6 @@
     </delete>
 
     <update id="afterDispatchOrder" parameterType="Integer">
-        UPDATE `order` SET `status`=1 WHERE orderid=#{orderId}
+        UPDATE `order` SET `status`=1,end_time=NOW() WHERE orderid=#{orderId}
     </update>
 </mapper>

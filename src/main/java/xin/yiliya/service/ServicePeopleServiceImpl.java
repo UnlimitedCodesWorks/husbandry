@@ -1,9 +1,9 @@
 package xin.yiliya.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.yiliya.dao.OrderMapper;
@@ -103,7 +103,7 @@ public class ServicePeopleServiceImpl implements ServicePeopleService{
             ServicePeople servicePeople=new ServicePeople();
             BeanUtils.copyProperties(servicePeople,servicePeopleUpdate);
             servicePeople.setUpTime(new Date());
-            if(servicePeopleUpdate.getSphead()!=null){
+            if(!(servicePeopleUpdate.getSphead().isEmpty())){
                 if(servicePeopleUpdate.getSpheadLink()!=null){
                     aliOssTool.deleteFileByLink(servicePeopleUpdate.getSpheadLink());
                 }

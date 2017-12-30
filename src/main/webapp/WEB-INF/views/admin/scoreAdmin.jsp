@@ -194,7 +194,7 @@
                                                         <td class="select"><c:out value="${scoreStore.storeName}"/></td>
                                                         <td class="select"><c:out value="${scoreStore.phone}"/></td>
                                                         <td class="select"><c:out value="${scoreStore.email}"/></td>
-                                                        <td class="select"><c:out value="${scoreStore.grade}"/></td>
+                                                        <td class="select"><c:if test="${scoreStore.grade==0}">未评分</c:if><c:if test="${scoreStore.grade!=0}">${scoreStore.grade}</c:if></td>
                                                         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
                                                     </tr>
                                                 </c:forEach>
@@ -389,9 +389,18 @@
                     var phone=data.list[i].phone;
                     var email=data.list[i].email;
                     var grade=data.list[i].grade;
-                    var node='<tr><td hidden="hidden">'+storeId+'</td><td class="select">'+storeName+'</td>' +
-                        '<td class="select">'+phone+'</td><td class="select">'+email+'</td><td class="select">'+grade+'</td>' +
+                    var node1='<tr><td hidden="hidden">'+storeId+'</td><td class="select">'+storeName+'</td>' +
+                        '<td class="select">'+phone+'</td><td class="select">'+email+'</td><td class="select">';
+                    var node2;
+                    if(grade==0){
+                        node2="未评分";
+                    }
+                    else{
+                        node2=grade;
+                    }
+                    var node3='</td>' +
                         '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td></tr>';
+                    var node=node1+node2+node3;
                     table.append(node);
                 }
                 table.append('</tbody>');

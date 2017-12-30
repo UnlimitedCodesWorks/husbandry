@@ -325,7 +325,7 @@ public class HhfTest {
 //        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
 //
         ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
-        servicePeopleUpdate.setServicepeopleid(28);
+        servicePeopleUpdate.setServicepeopleid(35);
 //        servicePeopleUpdate.setSphead(multipartFile1);
         servicePeopleUpdate.setSpOtherinfo("1111111111");
 //
