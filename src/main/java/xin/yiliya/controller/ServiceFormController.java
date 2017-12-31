@@ -52,9 +52,11 @@ public class ServiceFormController {
     }
 
     @RequestMapping(value = "/submitRequire.do",method = RequestMethod.POST)
-    public String serviceFormDo(@ModelAttribute("requireList") RequireList requireList,@ModelAttribute("require") Require require){
+    public String serviceFormDo(@ModelAttribute("requireList") RequireList requireList,
+                                @ModelAttribute("require") Require require,
+                                @ModelAttribute("orderBigTime") OrderBigTime orderBigTime){
         User user= (User) session.getAttribute("userBean");
-        requireService.addRequireOrder(user.getUserid(),requireList,require);
+        requireService.addRequireOrder(user.getUserid(),requireList,require,orderBigTime);
         return "redirect:/userResident/order.html";
     }
 }

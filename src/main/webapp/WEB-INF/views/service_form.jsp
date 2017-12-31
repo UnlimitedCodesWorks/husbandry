@@ -117,13 +117,13 @@
 
                             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">
                                 <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">
-                                    <input name="smallTimeList[0].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">
+                                    <input name="orderSmallTimeList[0].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">
                                 </div>
                                 <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
                                     时~
                                 </div>
                                 <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">
-                                    <input name="smallTimeList[0].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">
+                                    <input name="orderSmallTimeList[0].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">
                                 </div>
                                 <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
                                     时
@@ -131,7 +131,7 @@
                                 <div class="layui-col-md2 layui-col-sm2 layui-col-xs2"><i class="iconfont service_time_delete">&#xe641;</i></div>
                             </div>
                         </div>
-                        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+                        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="sum-hour-price">
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 service_form_a_time">总时长：0小时</div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6 service_form_a_money">总金额：0元</div>
                         </div>
@@ -227,68 +227,38 @@
             }
         });
 
-        $(document).on('click','i.service_time_delete',function (event) {
-            console.log($('i.service_time_delete').index(this));
-        });
-
         function abc() {
-            var del = $("i.service_time_delete");      //x
-            var mydiv = $(".service_form_main_aa2");  //点周期预约生成的div
-            var times = $(".service_input_times");    //xx时
-            var timeo = $(".service_input_timeo");    //xx时
-            var timem = $(".service_input_month");    //xx月
-            var timed = $(".service_input_day");      //xx天
-            var price = $(".service_form_main_hourprs").text();  //xx元/时
-
-            function calculate() {
-                var x1 = 0;
-                for (var j = 0; j < times.length; j++) {
-                    x1 += (parseInt(timeo.eq(j).val()) - parseInt(times.eq(j).val()));
-                }
-                if (x1 < 0) {
-                    x1 = 0;
-                }
-                var x = ((parseInt(timem.val()) * 30) + (parseInt(timed.val()))) * x1;
-                $(".service_form_a_time").html("总时长：" + x + "小时");
-                $(".service_form_a_money").html("总金额：" + (parseInt(price) * x) + "元");
-            }
             $(".service_input").blur(function() {
                 calculate();
             });
-
-//            del.click(function () {
-//                $(this).parent().parent().remove();
-//                console.log($(this).index());
-//                times = $(".service_input_times");
-//                timeo = $(".service_input_timeo");
-//                calculate();
-//            });
-
-//            var fun1 = function(i) {
-//                del.eq(i).click(function() {
-//                    alert($('.service_time_delete').index(this));
-//                    mydiv.eq(i).remove();
-//                    times = $(".service_input_times");
-//                    timeo = $(".service_input_timeo");
-//                    calculate();
-//                })
-//            }
-//            for (var i = 0; i < del.length; i++) {
-//                fun1(i);
-//            }
         };
+
+        $(document).on('click','.service_time_delete',function (event) {
+            var index=$('.service_time_delete').index(this);
+            $(this).parent().parent().remove();
+            n--;
+            for(var i=index+1;i<=$('.service_time_delete').length;i++){
+                $("input[name='orderSmallTimeList["+i+"].startHour']").attr('name','orderSmallTimeList['+(i-1)+'].startHour');
+                $("input[name='orderSmallTimeList["+i+"].endHour']").attr('name','orderSmallTimeList['+(i-1)+'].endHour');
+            }
+            times = $(".service_input_times");
+            timeo = $(".service_input_timeo");
+            calculate();
+        });
+
         abc();
+
         $(".service_addbtn").click(function() {
             n++;
             var timechose = '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
-                '  <input name="smallTimeList['+n+'].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">' +
+                '  <input name="orderSmallTimeList['+n+'].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">' +
                 '</div>' +
                 ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
                 '时~' +
                 '</div>' +
                 ' <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
-                '<input name="smallTimeList['+n+'].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">' +
+                '<input name="orderSmallTimeList['+n+'].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">' +
                 ' </div>' +
                 ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
                 '  时' +
@@ -298,6 +268,26 @@
             $(".service_form_main_a2").append(timechose);
             abc();
         });
+
+        function calculate() {
+            $('#sum-hidden').remove();
+            var times = $(".service_input_times");    //xx时
+            var timeo = $(".service_input_timeo");    //xx时
+            var timem = $(".service_input_month");    //xx月
+            var timed = $(".service_input_day");      //xx天
+            var price = $(".service_form_main_hourprs").text();  //xx元/时
+            var x1 = 0;
+            for (var j = 0; j < times.length; j++) {
+                x1 += (parseInt(timeo.eq(j).val()) - parseInt(times.eq(j).val()));
+            }
+            if (x1 < 0) {
+                x1 = 0;
+            }
+            var x = ((parseInt(timem.val()) * 30) + (parseInt(timed.val()))) * x1;
+            $(".service_form_a_time").html("总时长：" + x + "小时");
+            $(".service_form_a_money").html("总金额：" + (parseInt(price) * x) + "元");
+            $('#sum-hour-price').append('<input hidden="hidden" type="text" name="sum" value="'+(parseInt(price) * x)+'" id="sum-hidden"/ >');
+        }
     </script>
 </body>
 

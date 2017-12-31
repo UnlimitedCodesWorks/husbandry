@@ -11,7 +11,9 @@ public class OrderBigTime {
 
     private Integer orderId;
 
-    private List<OrderSmallTime> smallTimeList;
+    private String sum;
+
+    private List<OrderSmallTime> orderSmallTimeList;
 
     public Integer getOrderpriceid() {
         return orderpriceid;
@@ -45,11 +47,19 @@ public class OrderBigTime {
         this.orderId = orderId;
     }
 
-    public List<OrderSmallTime> getSmallTimeList() {
-        return smallTimeList;
+    public String getSum() {
+        return sum;
     }
 
-    public void setSmallTimeList(List<OrderSmallTime> smallTimeList) {
-        this.smallTimeList = smallTimeList;
+    public void setSum(String sum) {
+        this.sum = sum == null ? null : sum.trim();
+    }
+
+    public List<OrderSmallTime> getOrderSmallTimeList() {
+        return orderSmallTimeList;
+    }
+
+    public void setOrderSmallTimeList(List<OrderSmallTime> orderSmallTimeList) {
+        this.orderSmallTimeList = orderSmallTimeList;
     }
 }
