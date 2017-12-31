@@ -61,7 +61,7 @@ public class StoreServiceController {
     @RequestMapping(value = "/updateService.do",method = RequestMethod.POST)
     @ResponseBody
     public Boolean updateService(OfferServiceUpdate offerServiceupdate){
-        return offerServiceService.updateService(offerServiceupdate);
+        return offerServiceService.updateService(offerServiceupdate,false);
     }
 
     @RequestMapping(value = "/deleteService.do",method = RequestMethod.POST)

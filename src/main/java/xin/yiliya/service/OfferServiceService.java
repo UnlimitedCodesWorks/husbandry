@@ -16,8 +16,10 @@ public interface OfferServiceService {
     Integer addServiceTemplate(OfferServiceTemplate offerServiceTemplate,OfferServiceAdd offerServiceAdd);
 
     //修改一个服务
+    //参数ifTemplate表示是否修改的是模板，true为修改模板，false为不修改
+    //单纯只修改服务这里填false
     //返回：修改服务是否成功的布尔值
-    Boolean updateService(OfferServiceUpdate offerServiceupdate);
+    Boolean updateService(OfferServiceUpdate offerServiceupdate,Boolean ifTemplate);
 
     //修改一个服务模板
     //返回：修改服务是否成功的布尔值

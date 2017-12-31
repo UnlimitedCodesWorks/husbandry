@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.yiliya.pojo.OfferServiceAdd;
 import xin.yiliya.pojo.OfferServiceTemplate;
+import xin.yiliya.pojo.OfferServiceUpdate;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.OfferServiceService;
 import xin.yiliya.service.RegionService;
@@ -43,12 +45,24 @@ public class StoreServiceTemplateController {
         return "storeAdmin/service_template";
     }
 
+    @RequestMapping(value = "/addServiceTemplate.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Integer addServiceTemplate(OfferServiceTemplate offerServiceTemplate,OfferServiceAdd offerServiceAdd){
+        return offerServiceService.addServiceTemplate(offerServiceTemplate,offerServiceAdd);
+    }
+
+    @RequestMapping(value = "/updateServiceTemplate.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean updateServiceTemplate(OfferServiceTemplate offerServiceTemplate,OfferServiceUpdate offerServiceUpdate){
+        return offerServiceService.updateServiceTemplate(offerServiceTemplate,offerServiceUpdate);
+    }
+
     @RequestMapping(value = "/getServiceTemplate.do",method = RequestMethod.POST)
     @ResponseBody
     public List<OfferServiceTemplate> getServiceTemplate(Integer currentPage){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
-        int pageSize = 7;
+        int pageSize = 1;
         return offerServiceService.getAllOfferServiceTemplateByStoreId(storeId,currentPage,pageSize).getList();
     }
 

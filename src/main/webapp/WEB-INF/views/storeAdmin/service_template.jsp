@@ -310,7 +310,7 @@
                                     <th>模板详情</th>
                                 </tr>
                             </thead>
-                            <tbody id="service-container">
+                            <tbody id="template-container">
                             <c:if test="${!empty serviceTemplates}">
                                 <c:forEach var="template" items="${serviceTemplates}">
                                 <tr>
@@ -322,13 +322,6 @@
                                 </tr>
                                 </c:forEach>
                             </c:if>
-                                <tr>
-                                    <td class="select" hidden="hidden">1</td>
-                                    <td class="select">1</td>
-                                    <td class="select">1</td>
-                                    <td class="select">1</td>
-                                    <td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#template-modal" >查看</button></td>
-                                </tr>
                             </tbody>
                         </table>
                         <span>
@@ -367,11 +360,13 @@
                         <h4>服务基本信息</h4>
                         <hr>
                         <form id="template" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <%--厂商id--%>
+                            <input name="storeId" type="hidden" value="${storeInfo.storeid}" />
                             <!-- 模板名 -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">模板名</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="serviceName" class="form-control" placeholder="模板名">
+                                    <input type="text" name="templateName" class="form-control" placeholder="模板名">
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -379,7 +374,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">模板备注</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="serviceName" class="form-control" placeholder="模板备注">
+                                    <input type="text" name="templateDetail" class="form-control" placeholder="模板备注">
                                     <span class="help-block" style="color: red;display: none;">警告信息</span>
                                 </div>
                             </div>
@@ -522,7 +517,7 @@
                     <h4 class="modal-title">提示</h4>
                 </div>
                 <div class="modal-body">
-                    <p>删除选中的服务？</p>
+                    <p>删除选中的服务模板？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">关闭</button>
@@ -574,30 +569,160 @@
     <script type="text/javascript">
         $(function(){
             var cropper;
+            var serviceTemplatePages = ${serviceTemplatePages};
+            var pageSize = ${pageSize};
+            var province = $("#province");
+            var city = $("#city");
+            var storeId = ${storeInfo.storeid};
+            var portPath = "<%=portPath%>";
+            var logoBlob;
+            var logoMIME = "";
+            var serviceSpecialBlob = [];
+            var serviceSpecialFileName = [];
+            var offerServiceId;
+            var serviceSpecialLink = [];
+            var serviceImgLink;
+            var deleteCityIds = [];
+            var servicetemplateid;
+
+            province.change(function (e) {
+                city.html("");
+                city.append('<option value="NONE" label="市" />');
+                var value = province.val();
+                $.ajax({
+                    url :portPath + 'store/getCitys.do',
+                    type : "post",
+                    data:{
+                        provinceId : value
+                    },
+                    dataType : "json",
+                    success: function(data){
+                        for(var i=0;i<data.length;i++){
+                            var node = '<option value="'+data[i].cityId+ '" >'+data[i].city+'</option>';
+                            city.append(node);
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+
+            $(document).on('click','#add-template',function (event) {
+                var formData = new FormData(document.querySelector("#template"));
+                var logoSuffix = logoMIME.split("/")[1];
+                var logoFileName = "blobImage."+logoSuffix;
+                formData.append("serviceImg",logoBlob,logoFileName);
+                for(var i=0;i<serviceSpecialBlob.length;i++){
+                    formData.append("serviceSpecial",serviceSpecialBlob[i],serviceSpecialFileName[i]);
+                }
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "post",
+                        url: "<%=portPath%>storeAdmin/addServiceTemplate.do",
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            if (data!=0) {
+                                layer.msg("添加服务模板成功！",{
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("添加服务模板失败！");
+                            }
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown, data) {
+                            alert(errorThrown);
+                        }
+                    });
+                });
+            });
+
+
+            $(document).on('click','#save',function (event) {
+                var formData = new FormData(document.querySelector("#template"));
+                var logoSuffix = logoMIME.split("/")[1];
+                var logoFileName = "blobImage."+logoSuffix;
+                formData.append("serviceImg",logoBlob,logoFileName);
+                formData.append("offerServiceId",offerServiceId);
+                formData.append("servicetemplateid",servicetemplateid);
+                formData.append("serviceImgLink",serviceImgLink);
+                for(var i=0;i<serviceSpecialLink.length;i++){
+                    formData.append("serviceSpecialLink",serviceSpecialLink[i]);
+                }
+                for(var i=0;i<deleteCityIds.length;i++){
+                    formData.append("deleteCityIds",deleteCityIds[i]);
+                }
+                for(var i=0;i<serviceSpecialBlob.length;i++){
+                    console.log(serviceSpecialFileName[i]);
+                    formData.append("serviceSpecial",serviceSpecialBlob[i],serviceSpecialFileName[i]);
+                }
+                for(var pair of formData.entries()) {
+                    if(pair[1].length==0){
+                        formData.delete(pair[0]);
+                    }
+                }
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "post",
+                        url: "<%=portPath%>storeAdmin/updateServiceTemplate.do",
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            if (data) {
+                                layer.msg("更新服务模板成功！",{
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("更新服务模板失败！");
+                            }
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown, data) {
+                            alert(errorThrown);
+                        }
+                    });
+                });
+            });
+
 
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
                 //表格分页
                 laypage.render({
                     elem: 'page'
-                    ,count: 10 //数据总数，从服务端得到
-                    ,limit: 5
+                    ,count: serviceTemplatePages*pageSize //数据总数，从服务端得到
+                    ,limit: pageSize
                     ,theme: '#19B5FE'
                     ,groups: 4
                     ,jump: function(obj, first){
                         if(!first){
+                            $.ajax({
+                                type: "POST",
+                                url: portPath+"storeAdmin/getServiceTemplate.do",
+                                data: {
+                                    currentPage:obj.curr
+                                },
+                                dataType: "json",
+                                success: function(data){
+                                    createTemplate(data);
+                                },
+                                error: function(jqXHR){
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
                         }
                     }
                 });
-            });
-
-            //模态框修改按钮
-            $(document).on('click','#save',function (event) {
-                alert("1");
-            });
-            //模态框添加按钮
-            $(document).on('click','#add-template',function (event) {
-                alert("2");
             });
 
             //模板修改logo
@@ -613,6 +738,39 @@
                 }
                 cropper.cropper('reset').cropper('replace','http://t.cn/RCzsdCq');
             });
+
+            $("#delete-btn").click(function (event) {
+                var $checked = $("tbody input:checked");
+                var yellow = [];
+                $checked.each(function () {
+                    yellow.push($(this).parent().parent().children("td").eq(1).html());
+                });
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    $.ajax({
+                        type: "POST",
+                        url: portPath + "storeAdmin/deleteTemplate.do",
+                        data: {
+                            templateIds: yellow
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                layer.msg("删除成功！", {
+                                    time: 1000
+                                });
+                                setTimeout("location.replace(location.href)",1000);
+                            } else {
+                                alert("删除失败！");
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                });
+            });
+
 
             $("#delete").click(function (event) {
                 var $checked = $("tbody input:checked");
@@ -631,6 +789,112 @@
             $("#logo-modal").on('hidden.bs.modal', function(event) {
                 $("#template-modal").modal('show');
             });
+
+            //查看细节
+            $(".view-detail").click(function(event) {
+                var templateId = $(this).attr("template-id");
+                deleteCityIds = [];
+                serviceSpecialLink = [];
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
+                //查看服务细节
+                $.ajax({
+                    type: "POST",
+                    url: portPath+"storeAdmin/getOfferServiceTemplateByTemplateId.do",
+                    data: {
+                        templateId:templateId
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        offerServiceId = data.offerserviceId;
+                        servicetemplateid = data.servicetemplateid;
+                        $("input[name = 'templateName']:eq(0)").val(data.templateName);
+                        $("input[name = 'templateDetail']:eq(0)").val(data.templateDetail);
+                        $("input[name = 'serviceName']:eq(0)").val(data.offerServiceDetail.serviceName);
+                        $("input[name = 'price']:eq(0)").val(data.offerServiceDetail.price);
+                        $("input[name = 'peoplePhone']:eq(0)").val(data.offerServiceDetail.peoplePhone);
+                        $("textarea[name = 'introduce']:eq(0)").val(data.offerServiceDetail.introduce);
+                        $("textarea[name = 'notice']:eq(0)").val(data.offerServiceDetail.notice);
+                        let $area = $(".area");
+                        $area.html("");
+                        for(var i = 0; i<data.offerServiceDetail.cities.length;i++){
+                            $area.append('<div class="col-sm-11 ">'+
+                                '<p>'+data.offerServiceDetail.cities[i].provinces.province+data.offerServiceDetail.cities[i].city+'</p>'+
+                                '<button type="button" class="close delete-area"><span>&times;</span></button>'+
+                                '<input type="hidden" name="cityIds" value="'+data.offerServiceDetail.cities[i].cityId+'"  />'+
+                                '</div>');
+                            deleteCityIds.push(data.offerServiceDetail.cities[i].cityId);
+                        }
+                        var kind = data.offerServiceDetail.serid;
+                        $("input[name = 'kind']").each(function () {
+                            var value = $(this).val();
+                            if(kind == value){
+                                $(this).attr("checked",'checked');
+                            }
+                        });
+                        var serviceImg = data.offerServiceDetail.serviceImg;
+                        serviceImgLink = ''+data.offerServiceDetail.serviceImg;
+                        $("#logo").attr("src",serviceImg);
+                        //cropper
+                        $('#logo-modal').on('shown.bs.modal', function () {
+                            if(cropper == undefined) {
+                                cropper = $('#logo-wrap img').cropper({
+                                    aspectRatio: 16 / 9,
+                                    // minContainerWidth: 500,
+                                    crop: function(data) {
+                                        // Output the result data for cropping image.
+                                    }
+                                });
+                            }
+                            cropper.cropper('reset').cropper('replace',serviceImg);
+                        });
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("get",serviceImg, true);
+                        xhr.responseType = "blob";
+                        xhr.onload = function() {
+                            if (this.status == 200) {
+                                logoBlob = this.response;
+                                logoMIME = logoBlob.type;
+                            }
+                        };
+                        xhr.send();
+                        var serviceSpecialContainer = $("#serviceSpecial-container");
+                        serviceSpecialContainer.html("");
+                        for(var i =0;i<data.offerServiceDetail.serviceSpecial.length;i++){
+                            var serviceSpecialImg = data.offerServiceDetail.serviceSpecial[i].specialImg;
+                            serviceSpecialLink.push(''+data.offerServiceDetail.serviceSpecial[i].specialImg);
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("get",serviceSpecialImg, true);
+                            xhr.responseType = "blob";
+                            xhr.onload = function() {
+                                if (this.status == 200) {
+                                    var blob = this.response;
+                                    serviceSpecialBlob.push(blob);
+                                    var suffix = blob.type.split("/")[1];
+                                    var fileName = "serviceBlobImage"+i+"."+suffix;
+                                    serviceSpecialFileName.push(fileName);
+                                }
+                            };
+                            xhr.send();
+                            let img = document.createElement("img");
+                            img.setAttribute('crossOrigin', 'anonymous');
+                            img.setAttribute("src",serviceSpecialImg);
+                            let canvas = document.createElement("canvas");
+                            canvas.setAttribute("class","serviceSpecial");
+                            img.onload = function() {
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                canvas.getContext("2d").drawImage(img, 0, 0);
+                                serviceSpecialContainer.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                            };
+                        }
+                    },
+                    error: function(jqXHR){
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                });
+            });
+
 
             //添加服务范围项
             $("#add-area").click(function(event) {
@@ -673,6 +937,8 @@
             $(document).on('click', '#logo-btn', function(event) {
                 let canvas = cropper.cropper('getCroppedCanvas');
                 canvas.toBlob(function(blob) {
+                    logoBlob = blob;
+                    logoMIME = blob.type;
                     url = URL.createObjectURL(blob);
                     $("#logo").attr('src', url);
                 });
@@ -695,6 +961,16 @@
                         canvas.height = img.height;
                         canvas.getContext("2d").drawImage(img, 0, 0);
                         $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
+                        serviceSpecialBlob = [];
+                        serviceSpecialFileName = [];
+                        $(".serviceSpecial").each(function(index,element){
+                            element.toBlob(function (blob) {
+                                serviceSpecialBlob.push(blob);
+                                var suffix = blob.type.split("/")[1];
+                                var fileName = "serviceBlobImage"+index+"."+suffix;
+                                serviceSpecialFileName.push(fileName);
+                            });
+                        });
                     };
                 }
             });
@@ -703,6 +979,16 @@
             $(document).on('click', '.delete-characteristic', function(event) {
                 $(this).prev().remove();
                 $(this).remove();
+                serviceSpecialBlob = [];
+                serviceSpecialFileName = [];
+                $(".serviceSpecial").each(function(index,element){
+                    element.toBlob(function (blob) {
+                        serviceSpecialBlob.push(blob);
+                        var suffix = blob.type.split("/")[1];
+                        var fileName = "serviceBlobImage"+index+"."+suffix;
+                        serviceSpecialFileName.push(fileName);
+                    });
+                });
             });
 
             function initTableCheckbox() {
@@ -756,6 +1042,7 @@
             },
             methods: {
                 addTemplate: function (event) {
+                    initForm();
                     data.title='添加模板';
                     data.isAdd=true;
                 }
@@ -772,6 +1059,66 @@
             data.title='模板详情';
             data.isAdd=false;
         });
+
+        function createTemplate(data) {
+            var container = $("#template-container");
+            container.html("");
+            for(var i = 0;i<data.length;i++){
+                var updateTime = new Date(Date.parse(data[i].updateTime.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm:ss");
+                var node = '<tr>' +
+                    '<td class="select" hidden="hidden">'+data[i].servicetemplateid+'</td>' +
+                    '<td class="select">'+data[i].templateName+'</td>' +
+                    '<td class="select">'+data[i].templateDetail+'</td>' +
+                    '<td class="select">'+updateTime+'</td>' +
+                    '<td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#template-modal" template-id="'+data[i].servicetemplateid+'">查看</button></td>' +
+                    '</tr>';
+                container.append(node);
+            }
+            var $tbr = $('table tbody tr');
+            var $checkItemTd = $('<td><input type="checkbox" name="checkItem" class="select" /></td>');
+            /*每一行都在最前面插入一个选中复选框的单元格*/
+            $tbr.prepend($checkItemTd);
+        }
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+
+        function initForm() {
+            logoBlob=undefined;
+            logoMIME = "";
+            serviceSpecialBlob = [];
+            serviceSpecialFileName = [];
+            offerServiceId=undefined;
+            serviceSpecialLink = [];
+            serviceImgLink=undefined;
+            servicetemplateid =undefined;
+            deleteCityIds = [];
+            $("input[name = 'templateName']:eq(0)").val("");
+            $("input[name = 'templateDetail']:eq(0)").val("");
+            $("input[name = 'serviceName']:eq(0)").val("");
+            $("input[name = 'price']:eq(0)").val("");
+            $("input[name = 'peoplePhone']:eq(0)").val("");
+            $(":radio[name='kind'][value='1']").prop("checked", "checked");
+            $("textarea[name = 'introduce']:eq(0)").val("");
+            $("textarea[name = 'notice']:eq(0)").val("");
+            let $area = $(".area");
+            $area.html("");
+            $("#serviceSpecial-container").html("");
+            $("#logo").attr("src","http://t.cn/RCzsdCq");
+        }
     </script>
 </body>
 </html>

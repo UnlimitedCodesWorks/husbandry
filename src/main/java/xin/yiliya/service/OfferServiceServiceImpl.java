@@ -50,15 +50,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
     private OrderService orderService;
 
     @Resource
-    private ConcernServiceMapper concernServiceMapper;
-
-    @Resource
-    private FeedbackMapper feedbackMapper;
-
-    @Resource
-    private ComplainMapper complainMapper;
-
-    @Resource
     private ServiceService serviceService;
 
     public Integer addService(OfferServiceAdd offerServiceAdd, Boolean ifTemplate) {
@@ -110,13 +101,15 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         }
     }
 
-    public Boolean updateService(OfferServiceUpdate offerServiceUpdate) {
+    public Boolean updateService(OfferServiceUpdate offerServiceUpdate,Boolean ifTemplate) {
         try{
             OfferService offerService = new OfferService();
             BeanUtils.copyProperties(offerService,offerServiceUpdate);
             offerService.setOfferserviceid(offerServiceUpdate.getOfferServiceId());
             offerService.setUpdateTime(new Date());
-            offerService.setStatus(0);
+            if(!ifTemplate){
+                offerService.setStatus(0);
+            }
             if(offerServiceUpdate.getServiceImg()!=null){
                 if(offerServiceUpdate.getServiceImgLink()!=null){
                     aliOssTool.deleteFileByLink(offerServiceUpdate.getServiceImgLink());
@@ -167,7 +160,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
 
     public Boolean updateServiceTemplate(OfferServiceTemplate offerServiceTemplate, OfferServiceUpdate offerServiceUpdate) {
         try{
-            updateService(offerServiceUpdate);
+            updateService(offerServiceUpdate,true);
             offerServiceTemplateMapper.updateByPrimaryKeySelective(offerServiceTemplate);
             return true;
         }catch (Exception e){
