@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import xin.yiliya.pojo.OfferServiceTemplate;
 import xin.yiliya.pojo.Store;
 import xin.yiliya.service.OfferServiceService;
+import xin.yiliya.service.RegionService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,9 @@ public class StoreServiceTemplateController {
     @Resource
     private OfferServiceService offerServiceService;
 
+    @Resource
+    private RegionService regionService;
+
     @RequestMapping(value = "/serviceTemplate.html",method = RequestMethod.GET)
     public String serviceTemplate(Model model){
         Store store = (Store) session.getAttribute("storeBean");
@@ -34,6 +38,8 @@ public class StoreServiceTemplateController {
         model.addAttribute("serviceTemplates",offerServiceTemplatePageInfo.getList());
         model.addAttribute("serviceTemplatePages",offerServiceTemplatePageInfo.getPages());
         model.addAttribute("pageSize",pageSize);
+        model.addAttribute("provinces",regionService.getAllProvinces());
+        model.addAttribute("cities",regionService.getAllCitiesByProvince("340000"));
         return "storeAdmin/service_template";
     }
 

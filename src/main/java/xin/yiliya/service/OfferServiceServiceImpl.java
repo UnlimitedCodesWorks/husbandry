@@ -280,7 +280,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
 
     public OfferServiceTemplate getOfferServiceTemplateByTemplateId(Integer templateId) {
         OfferServiceTemplate offerServiceTemplate = offerServiceTemplateMapper.selectByPrimaryKey(templateId);
-        offerServiceTemplate.setOfferServiceDetail(getOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));
+        offerServiceTemplate.setOfferServiceDetail(getTOfferServiceDetailByServiceId(offerServiceTemplate.getOfferserviceId()));
         return offerServiceTemplate;
     }
 

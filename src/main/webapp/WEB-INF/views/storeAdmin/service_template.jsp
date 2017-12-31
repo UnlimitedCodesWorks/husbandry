@@ -6,6 +6,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -309,11 +310,23 @@
                                 </tr>
                             </thead>
                             <tbody id="service-container">
+                            <c:if test="${!empty serviceTemplates}">
+                                <c:forEach var="template" items="${serviceTemplates}">
                                 <tr>
-                                    <td class="select">华峰服务</td>
-                                    <td class="select">保姆</td>
-                                    <td class="select">2017-12-30</td>
-                                    <td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#template-modal">查看</button></td>
+                                    <td class="select" hidden="hidden">${template.servicetemplateid}</td>
+                                    <td class="select">${template.templateName}</td>
+                                    <td class="select">${template.templateDetail}</td>
+                                    <td class="select"><fmt:formatDate value="${template.updateTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                    <td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#template-modal" template-id="${template.servicetemplateid}">查看</button></td>
+                                </tr>
+                                </c:forEach>
+                            </c:if>
+                                <tr>
+                                    <td class="select" hidden="hidden">1</td>
+                                    <td class="select">1</td>
+                                    <td class="select">1</td>
+                                    <td class="select">1</td>
+                                    <td><button class="btn btn-info view-detail" data-toggle="modal" data-target="#template-modal" >查看</button></td>
                                 </tr>
                             </tbody>
                         </table>

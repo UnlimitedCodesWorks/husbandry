@@ -21,10 +21,11 @@
     <result property="offerserviceId" column="offerservice_id" />
     <result property="templateName" column="template_name" />
     <result property="templateDetail" column="template_detail" />
+    <result property="updateTime" column="update_time" />
   </resultMap>
   <select id="getAllOfferServiceTemplateByStoreId" resultMap="getAllOfferServiceTemplateByStoreId" parameterType="java.lang.Integer">
     SELECT
-    servicetemplateid,offerservice_id,template_name,template_detail
+    servicetemplateid,offerservice_id,template_name,template_detail,update_time
     FROM offerservicetemplate,offerservice
     WHERE offerservicetemplate.offerservice_id = offerservice.offerserviceid
     AND offerservice.store_id = #{storeId,jdbcType=INTEGER}

@@ -1,5 +1,6 @@
 package xin.yiliya.pojo;
 
+import java.util.Date;
 import java.util.List;
 
 public class OfferServiceTemplate {
@@ -10,6 +11,8 @@ public class OfferServiceTemplate {
     private String templateDetail;
 
     private String templateName;
+
+    private Date updateTime;
 
     private OfferServiceDetail offerServiceDetail;
 
@@ -51,5 +54,13 @@ public class OfferServiceTemplate {
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName == null ? null : templateName.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
