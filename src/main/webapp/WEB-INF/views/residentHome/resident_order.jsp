@@ -129,7 +129,7 @@
 																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-																<p>￥${order.offerService.price}</p>
+																<p>￥${order.offerService.price}/小时</p>
 															</div>
 															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 																<p>${order.offerService.introduce}</p>
@@ -191,7 +191,7 @@
 																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-																<p>￥${order.offerService.price}</p>
+																<p>￥${order.offerService.price}/小时</p>
 															</div>
 															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 																<p>${order.offerService.introduce}</p>
@@ -258,7 +258,7 @@
 																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-																<p>￥${order.offerService.price}</p>
+																<p>￥${order.offerService.price}/小时</p>
 															</div>
 															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 																<p>${order.offerService.introduce}</p>
@@ -328,7 +328,7 @@
 																<a href="<%=portPath%>service/detail/${order.offerService.offerserviceid}">${order.offerService.serviceName}</a>
 															</div>
 															<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">
-																<p>￥${order.offerService.price}</p>
+																<p>￥${order.offerService.price}/小时</p>
 															</div>
 															<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 																<p>${order.offerService.introduce}</p>
@@ -681,7 +681,7 @@
                 '<a href="'+href+'">'+data.list[i].offerService.serviceName+'</a>' +
                 '</div>' +
                 '<div class="layui-col-md4 layui-col-sm4 layui-col-xs12 price-wrap">' +
-                '<p>￥'+data.list[i].offerService.price+'</p>' +
+                '<p>￥'+data.list[i].offerService.price+'/小时</p>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
                 '<p>'+data.list[i].offerService.introduce+'</p>' +

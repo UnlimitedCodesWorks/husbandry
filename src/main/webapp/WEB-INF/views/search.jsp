@@ -128,8 +128,8 @@
             <ul class="layui-col-md10 layui-col-sm10 layui-col-sm-offset1 layui-col-xs12 layui-col-md-offset1 search_main_ul_ul"  >
                 <a href="<%=portPath%>service/detail/${offerService.offerServiceId}"><img src="${offerService.serviceImg}" onerror="this.src = '../../resources/images/house.jpg'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img"></a>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-                    <div class="layui-col-md4 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}</div>
-                    <div class="layui-col-md8 layui-col-sm7 layui-col-xs7 search_price_noise">市场价：${offerService.marketPrice}<c:if test="${offerService.priceJudge ==true}"><i class="iconfont price_high">&#xe702;</i><div class="price_high1">高于市场价</div></c:if> <c:if test="${offerService.priceJudge ==false}"><i class="iconfont price_low">&#xe6e5;</i><div class="price_low1">低于市场价</div></c:if></div>
+                    <div class="layui-col-md4 layui-col-sm5 layui-col-xs5 search_price text1">＄${offerService.price}/小时</div>
+                    <div class="layui-col-md8 layui-col-sm7 layui-col-xs7 search_price_noise">市场价：${offerService.marketPrice}/小时<c:if test="${offerService.priceJudge ==true}"><i class="iconfont price_high">&#xe702;</i><div class="price_high1">高于市场价</div></c:if> <c:if test="${offerService.priceJudge ==false}"><i class="iconfont price_low">&#xe6e5;</i><div class="price_low1">低于市场价</div></c:if></div>
                 </div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href='<%=portPath%>service/detail/${offerService.offerServiceId}'">${fn:replace(offerService.serviceName,content,redContent)}</div>
                 <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">
@@ -450,9 +450,9 @@
                 '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">'
                 +'</a>'+
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
-                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
+                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'/小时</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' +
-                '市场价：'+data.list[i].marketPrice+priceJudge+'</div>' +
+                '市场价：'+data.list[i].marketPrice+'/小时'+priceJudge+'</div>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href=\''+path+'\'">'+serviceName+'</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
@@ -507,9 +507,9 @@
                 '<img src="'+data.list[i].serviceImg+'" onerror="this.src = \'../../resources/images/house.jpg\'" class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_main_ul_img">'
                 +'</a>'+
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">' +
-                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'</div>' +
+                '<div class="layui-col-md5 layui-col-sm5 layui-col-xs5 search_price text1">＄'+data.list[i].price+'/小时</div>' +
                 '<div class="layui_col-md7 layui-col-sm7 layui-col-xs7 search_price_noise">' +
-                '市场价：'+data.list[i].marketPrice+priceJudge+'</div>' +
+                '市场价：'+data.list[i].marketPrice+'/小时'+priceJudge+'</div>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_service" onclick="location.href=\''+path+'\'">'+serviceName+'</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 search_comsco ">' +
