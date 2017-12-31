@@ -41,6 +41,7 @@
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
     <script type="text/javascript" src="../../../resources/layui.js"></script>
     <script type="text/javascript" src="../../../resources/js/cropper.js"></script>
+    <script type="text/javascript" src="../../../resources/js/vue.js"></script>
     <style type="text/css">
         body {
             font-size: 13px;
@@ -332,7 +333,7 @@
                         </table>
                         <span>
                             <button class="btn btn-danger" id="delete">删除模板</button>
-                            <button class="btn btn-info" id="add" data-toggle="modal" data-target="#template-add-modal">添加模板</button>
+                            <button class="btn btn-info" id="add" data-toggle="modal" data-target="#template-modal" v-on:click="addTemplate">添加模板</button>
                         </span>
                         <div id="page" class="pull-right"></div>
                     </div>
@@ -346,7 +347,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">模板详情</h4>
+                    <h4 class="modal-title">{{title}}</h4>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -366,6 +367,22 @@
                         <h4>服务基本信息</h4>
                         <hr>
                         <form id="template" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <!-- 模板名 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">模板名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="serviceName" class="form-control" placeholder="模板名">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
+                            <!-- 模板备注 -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">模板备注</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="serviceName" class="form-control" placeholder="模板备注">
+                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
+                                </div>
+                            </div>
                             <!-- 服务名 -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">服务名</label>
@@ -490,162 +507,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-info" id="save">修改</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 模态框-添加模板 -->
-    <div class="modal fade" id="template-add-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">添加服务模板</h4>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <h4>服务LOGO图</h4>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6" style="height: 150px;">
-                                <img id="logo-add" src="http://t.cn/RCzsdCq" style="height: 100%;float: right;">
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                <button type="button" class="btn btn-primary" id="select-logo-add">
-                                    <i class="icon fa fa-cloud-upload"></i> 更换
-                                </button>
-                            </div>
-                        </div>
-                        <hr>
-                        <h4>服务基本信息</h4>
-                        <hr>
-                        <form id="add-template" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <!-- 服务名 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="serviceName" class="form-control" placeholder="服务名">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 服务类型 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务类型</label>
-                                <div class="col-sm-9" style="position: relative;top: 5px;">
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="1" checked id="sex-radio-add1">
-                                        <label for="sex-radio1">保姆</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="2" id="sex-radio-add2">
-                                        <label for="sex-radio2">月嫂</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="3" id="sex-radio-add3">
-                                        <label for="sex-radio3">涉外家政</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="4" id="sex-radio-add4">
-                                        <label for="sex-radio4">钟点工</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="5" id="sex-radio-add5">
-                                        <label for="sex-radio5">老人陪护</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="6" id="sex-radio-add6">
-                                        <label for="sex-radio6">病人陪护</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="7" id="sex-radio-add7">
-                                        <label for="sex-radio7">育婴师</label>
-                                    </div>
-                                    <div class="radio3 radio-check radio-inline">
-                                        <input type="radio" name="kind" value="8" id="sex-radio-add8">
-                                        <label for="sex-radio8">催乳师</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 服务价格 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务价格</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="price" class="form-control" placeholder="服务价格">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 负责人联系方式 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">负责人联系方式</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="peoplePhone" class="form-control" placeholder="负责人联系方式">
-                                    <span class="help-block" style="color: red;display: none;">警告信息</span>
-                                </div>
-                            </div>
-                            <!-- 服务详细介绍 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务详细介绍</label>
-                                <div class="col-sm-9">
-                                    <textarea rows="6" name="introduce" class="form-control" placeholder="服务详细介绍" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余300字</span>
-                                </div>
-                            </div>
-                            <!-- 注意事项 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">注意事项</label>
-                                <div class="col-sm-9">
-                                    <textarea rows="6" name="notice" class="form-control" placeholder="注意事项" style="resize: none;"></textarea>
-                                    <span class="help-block">剩余300字</span>
-                                </div>
-                            </div>
-                            <!-- 服务范围 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务范围</label>
-                                <div class="col-sm-3">
-                                    <select name="provinceId" id="province-add" class="form-control">
-                                        <c:forEach var="province" items="${provinces}" >
-                                            <option value="${province.key}" > ${province.value}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3">
-                                    <select name="cityId" id="city-add" class="form-control" >
-                                        <c:forEach var="city" items="${cities}">
-                                            <option value="${city.cityId}">${city.city}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" class="btn btn-info" id="add-area-add" style="width: 100%;">添加</button>
-                                </div>
-                            </div>
-                            <!-- 服务范围项 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"></label>
-                                <div class="col-sm-9">
-                                    <div class="row area" id="area-add">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 服务特色 -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">服务特色</label>
-                                <div class="col-sm-9">
-                                    <button class="btn btn-primary upload" id="upload-add2">
-                                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- 服务特色项 -->
-                            <div class="form-group characteristic" id="serviceSpecial-container-add">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-info" id="save-add">添加</button>
+                    <button type="button" class="btn btn-info" id="add-template" v-if="isAdd">添加</button>
+                    <button type="button" class="btn btn-info" id="save" v-else>修改</button>
                 </div>
             </div>
         </div>
@@ -708,33 +571,9 @@
             </div>
         </div>
     </div>
-    <!-- 添加模板修改LOGO -->
-    <div class="modal fade" id="logo-add-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">修改服务LOGO</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="logo-add-wrap" style="height: 500px;">
-                        <img src="">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary upload" id="upload-add">
-                        <input type="file"><i class="icon fa fa-cloud-upload"></i> 选择图片
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="logo-add-btn">修改</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <script type="text/javascript">
         $(function(){
             var cropper;
-            var cropper2;
 
             layui.use('laypage', function(){
                 var laypage = layui.laypage;
@@ -752,6 +591,15 @@
                 });
             });
 
+            //模态框修改按钮
+            $(document).on('click','#save',function (event) {
+                alert("1");
+            });
+            //模态框添加按钮
+            $(document).on('click','#add-template',function (event) {
+                alert("2");
+            });
+
             //模板修改logo
             $('#logo-modal').on('shown.bs.modal', function () {
                 if(cropper == undefined) {
@@ -764,19 +612,6 @@
                     });
                 }
                 cropper.cropper('reset').cropper('replace','http://t.cn/RCzsdCq');
-            });
-            //添加模板修改logo
-            $('#logo-add-modal').on('shown.bs.modal', function () {
-                if(cropper2 == undefined) {
-                    cropper2 = $('#logo-add-wrap img').cropper({
-                        aspectRatio: 16 / 9,
-                        // minContainerWidth: 500,
-                        crop: function(data) {
-                            // Output the result data for cropping image.
-                        }
-                    });
-                }
-                cropper2.cropper('reset').cropper('replace','http://t.cn/RCzsdCq');
             });
 
             $("#delete").click(function (event) {
@@ -796,13 +631,6 @@
             $("#logo-modal").on('hidden.bs.modal', function(event) {
                 $("#template-modal").modal('show');
             });
-            $(document).on('click','#select-logo-add',function() {
-                $('#template-add-modal').modal('hide');
-                $('#logo-add-modal').modal('show');
-            });
-            $("#logo-add-modal").on('hidden.bs.modal', function(event) {
-                $("#template-add-modal").modal('show');
-            });
 
             //添加服务范围项
             $("#add-area").click(function(event) {
@@ -811,14 +639,6 @@
                     '<p>'+$("#province").find("option:selected").text()+$("#city").find("option:selected").text()+'</p>'+
                     '<button type="button" class="close delete-area"><span>&times;</span></button>'+
                     '<input type="hidden" name="cityIds" value="'+$("#city").val()+'"  />'+
-                    '</div>')
-            });
-            $("#add-area-add").click(function(event) {
-                let $area = $("#area-add");
-                $area.append('<div class="col-sm-11 ">'+
-                    '<p>'+$("#province-add").find("option:selected").text()+$("#city-add").find("option:selected").text()+'</p>'+
-                    '<button type="button" class="close delete-area"><span>&times;</span></button>'+
-                    '<input type="hidden" name="cityIds" value="'+$("#city-add").val()+'"  />'+
                     '</div>')
             });
 
@@ -848,27 +668,6 @@
                     imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
                 }
             });
-            //添加模板logo
-            $("#upload-add input").change(function(event) {
-                let $file = $(this);
-                let fileObj = $file[0];
-                let windowURL = window.URL || window.webkitURL;
-                let dataURL;
-                let $img = $("#logo-add-wrap img");
-                if(fileObj && fileObj.files && fileObj.files[0]){
-                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
-                    $img.attr('src',dataURL);
-                    //cropper
-                    $.fn.cropper2;
-                    cropper2.cropper('reset').cropper('replace',dataURL);
-                }
-                else{
-                    dataURL = $file.val();
-                    let imgObj = $("#head-wrap img");
-                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
-                }
-            });
 
             //点击修改模板logo
             $(document).on('click', '#logo-btn', function(event) {
@@ -878,15 +677,6 @@
                     $("#logo").attr('src', url);
                 });
                 $("#logo-modal").modal('hide');
-            });
-            //点击修改添加模板logo
-            $(document).on('click', '#logo-add-btn', function(event) {
-                let canvas = cropper2.cropper('getCroppedCanvas');
-                canvas.toBlob(function(blob) {
-                    url = URL.createObjectURL(blob);
-                    $("#logo-add").attr('src', url);
-                });
-                $("#logo-add-modal").modal('hide');
             });
 
             //模板特色
@@ -900,25 +690,6 @@
                     img.src = windowURL.createObjectURL(files);
                     let canvas = document.createElement("canvas");
                     canvas.setAttribute("class","serviceSpecial");
-                    img.onload = function() {
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        canvas.getContext("2d").drawImage(img, 0, 0);
-                        $canvases.append(canvas,'<div class="delete-characteristic"><p class="fa fa-trash-o"></p></div>');
-                    };
-                }
-            });
-            //添加模板特色
-            $(document).on('change','#upload-add2 input',function() {
-                let $file = $(this);
-                let $canvases = $("#serviceSpecial-container-add");
-                let windowURL = window.URL || window.webkitURL;
-                let files = $file[0].files[0];
-                if(files) {
-                    let img = document.createElement("img");
-                    img.src = windowURL.createObjectURL(files);
-                    let canvas = document.createElement("canvas");
-                    canvas.setAttribute("class","serviceSpecial-add");
                     img.onload = function() {
                         canvas.width = img.width;
                         canvas.height = img.height;
@@ -977,6 +748,29 @@
                 });
             }
             initTableCheckbox();
+        });
+
+        var toggle = new Vue({
+            el: '#add',
+            data: {
+            },
+            methods: {
+                addTemplate: function (event) {
+                    data.title='添加模板';
+                    data.isAdd=true;
+                }
+            }
+        });
+        var data = new Vue({
+            el: '#template-modal',
+            data: {
+                title: '模板详情',
+                isAdd: false
+            }
+        });
+        $(document).on('click','.view-detail',function (event) {
+            data.title='模板详情';
+            data.isAdd=false;
         });
     </script>
 </body>
