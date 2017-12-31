@@ -159,7 +159,7 @@ jQuery(document).ready(function($) {
     $('.layui-btn-danger').click(function(event) {
         layer.open({
             type: 1,
-            title: '投诉',
+            title: '联系商家',
             area: layerWidth,
             anim: 2,
             content: $('#complaint-modal')
@@ -219,11 +219,11 @@ jQuery(document).ready(function($) {
                   dataType: "json",
                   success: function(data){
                       if(data!=0){
-                          layer.msg("投诉成功",{
+                          layer.msg("提交成功",{
                               time: 1000
                           });
                       }else {
-                          layer.msg("投诉失败",{
+                          layer.msg("提交失败",{
                               time: 1000
                           });
                       }

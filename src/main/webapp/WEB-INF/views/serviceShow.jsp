@@ -147,7 +147,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</div>
 								<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
 									<button class="layui-btn layui-btn-danger">
-									<i class="iconfont">&#xe66e;</i> 投诉
+									<i class="iconfont">&#xe66e;</i> 联系商家
 									</button>
 								</div>
 							</div>
@@ -368,11 +368,11 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 投诉 -->
 	<div id="complaint-modal" class="modal">
 		<div class="layui-fluid">
-			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="color: #FF5722;">投诉</h2>
+			<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12" style="color: #FF5722;">联系商家</h2>
 			<hr>
 			<form class="layui-form" action="">
 				<div class="layui-form-item layui-form-text">
-					<textarea placeholder="请输入投诉理由" required lay-verify="required" class="layui-textarea" rows="6" id="complain-content"></textarea>
+					<textarea placeholder="请输入内容" required lay-verify="required" class="layui-textarea" rows="6" id="complain-content"></textarea>
 					<p>至多输入300个字</p>
 					<button class="layui-btn" lay-submit id="complaint-submit" style="background: #FF5722;">提交</button>
 				</div>
