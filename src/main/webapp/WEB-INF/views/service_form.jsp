@@ -227,8 +227,12 @@
             }
         });
 
+        $(document).on('click','i.service_time_delete',function (event) {
+            console.log($('i.service_time_delete').index(this));
+        });
+
         function abc() {
-            var del = $(".service_time_delete");      //x
+            var del = $("i.service_time_delete");      //x
             var mydiv = $(".service_form_main_aa2");  //点周期预约生成的div
             var times = $(".service_input_times");    //xx时
             var timeo = $(".service_input_timeo");    //xx时
@@ -254,23 +258,24 @@
 
 //            del.click(function () {
 //                $(this).parent().parent().remove();
+//                console.log($(this).index());
 //                times = $(".service_input_times");
 //                timeo = $(".service_input_timeo");
 //                calculate();
-//            })
+//            });
 
-            var fun1 = function(i) {
-                del.eq(i).click(function() {
-                    alert($('.service_time_delete').index(this));
-                    mydiv.eq(i).remove();
-                    times = $(".service_input_times");
-                    timeo = $(".service_input_timeo");
-                    calculate();
-                })
-            }
-            for (var i = 0; i < del.length; i++) {
-                fun1(i);
-            }
+//            var fun1 = function(i) {
+//                del.eq(i).click(function() {
+//                    alert($('.service_time_delete').index(this));
+//                    mydiv.eq(i).remove();
+//                    times = $(".service_input_times");
+//                    timeo = $(".service_input_timeo");
+//                    calculate();
+//                })
+//            }
+//            for (var i = 0; i < del.length; i++) {
+//                fun1(i);
+//            }
         };
         abc();
         $(".service_addbtn").click(function() {
