@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.yiliya.dao.OrderBigTimeMapper">
+  <resultMap id="BaseResultMap" type="xin.yiliya.pojo.OrderBigTime">
+    <id column="orderpriceid" jdbcType="INTEGER" property="orderpriceid" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderpriceid, month, day, order_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderbigtime
+    where orderpriceid = #{orderpriceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderbigtime
+    where orderpriceid = #{orderpriceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xin.yiliya.pojo.OrderBigTime">
+    insert into orderbigtime (orderpriceid, month, day, 
+      order_id)
+    values (#{orderpriceid,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{day,jdbcType=INTEGER}, 
+      #{orderId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="xin.yiliya.pojo.OrderBigTime">
+    insert into orderbigtime
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderpriceid != null">
+        orderpriceid,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderpriceid != null">
+        #{orderpriceid,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.yiliya.pojo.OrderBigTime">
+    update orderbigtime
+    <set>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderpriceid = #{orderpriceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.yiliya.pojo.OrderBigTime">
+    update orderbigtime
+    set month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER}
+    where orderpriceid = #{orderpriceid,jdbcType=INTEGER}
+  </update>
+</mapper>

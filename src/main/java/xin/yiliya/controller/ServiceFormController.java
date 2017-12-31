@@ -6,14 +6,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import xin.yiliya.pojo.Require;
-import xin.yiliya.pojo.RequireContent;
-import xin.yiliya.pojo.RequireList;
-import xin.yiliya.pojo.User;
-import xin.yiliya.service.OrderFormService;
-import xin.yiliya.service.RequireService;
-import xin.yiliya.service.ServiceService;
-import xin.yiliya.service.UserService;
+import xin.yiliya.pojo.*;
+import xin.yiliya.service.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -37,6 +31,9 @@ public class ServiceFormController {
     @Resource
     private RequireService requireService;
 
+    @Resource
+    OfferServiceService offerServiceService;
+
     @RequestMapping(value = "/view.html",method = RequestMethod.GET)
     public String serviceFormView(@RequestParam(value = "kind")Integer kind,
                                    @RequestParam(value = "serviceId")Integer serviceId,
@@ -49,6 +46,8 @@ public class ServiceFormController {
         model.addAttribute("serviceId",serviceId);
         model.addAttribute("requireList",new RequireList());
         model.addAttribute("require",new Require());
+        model.addAttribute("perHour",offerServiceService.getOfferServiceByServiceId(serviceId).getPrice());
+        model.addAttribute("orderBigTime",new OrderBigTime());
         return "service_form";
     }
 

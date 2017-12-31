@@ -97,18 +97,18 @@
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs24 service_form_main_a1">
                             <div class="layui-col-md4 layui-col-sm3 layui-col-xs6">
                                 <div class="layui-col-md8 layui-col-sm8 layui-col-xs8">
-                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_month">
+                                    <input name="month" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_month">
                                 </div>
                                 <div class="layui-col-md3 layui-col-sm3 layui-col-xs3">月</div>
                             </div>
                             <div class="layui-col-md3 layui-col-sm3 layui-col-xs6">
                                 <div class="layui-col-md9 layui-col-sm8 layui-col-xs8">
-                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_day">
+                                    <input name="day" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_day">
                                 </div>
                                 <div class="layui-col-md3 layui-col-sm3 layui-col-xs3">天</div>
                             </div>
                             <div class="layui-col-md3 layui-col-sm3 layui-col-xs6 ">
-                                <span class="service_form_main_hourprs">15</span>元/小时
+                                <span class="service_form_main_hourprs">${perHour}</span>元/小时
                             </div>
                             <button type="button" class="layui-btn layui-btn-primary layui-col-md2 layui-col-sm3 layui-col-xs5 service_addbtn">周期服务</button>
                         </div>
@@ -117,13 +117,13 @@
 
                             <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">
                                 <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">
-                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">
+                                    <input name="smallTimeList[0].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">
                                 </div>
                                 <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
                                     时~
                                 </div>
                                 <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">
-                                    <input type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">
+                                    <input name="smallTimeList[0].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">
                                 </div>
                                 <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">
                                     时
@@ -191,8 +191,109 @@
 
     <script type="text/javascript" src="../../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../resources/layui.js"></script>
-    <script type="text/javascript" src="../../resources/js/service_form.js"></script>
     <script type="text/javascript" src="../../resources/js/vue.js"></script>
+    <script>
+        var n=0;
+        $(function() {
+            layui.use('element', function(){
+                //实例化element
+                var element = layui.element;
+                //初始化动态元素
+                element.init();
+                //tab切换监听
+                element.on('tab(demo)',function (data) {
+                    console.log(data);
+                });
+            });
+
+            layui.use('form', function() {
+                //实例化form
+                var form = layui.form;
+            });
+            var nav = new Vue({
+                el: 'nav',
+                data: {
+                    isLogin: false
+                }
+            });
+        });
+        $(window).resize(function() {
+            if ($(window).width() < 768) {
+                $(".layui-form-checkbox").css("width", "100%");
+                $(".layui-form-radio").css("width", "100%");
+            } else {
+                $(".layui-form-checkbox").css("width", "45%");
+                $(".layui-form-radio").css("width", "45%");
+            }
+        });
+
+        function abc() {
+            var del = $(".service_time_delete");      //x
+            var mydiv = $(".service_form_main_aa2");  //点周期预约生成的div
+            var times = $(".service_input_times");    //xx时
+            var timeo = $(".service_input_timeo");    //xx时
+            var timem = $(".service_input_month");    //xx月
+            var timed = $(".service_input_day");      //xx天
+            var price = $(".service_form_main_hourprs").text();  //xx元/时
+
+            function calculate() {
+                var x1 = 0;
+                for (var j = 0; j < times.length; j++) {
+                    x1 += (parseInt(timeo.eq(j).val()) - parseInt(times.eq(j).val()));
+                }
+                if (x1 < 0) {
+                    x1 = 0;
+                }
+                var x = ((parseInt(timem.val()) * 30) + (parseInt(timed.val()))) * x1;
+                $(".service_form_a_time").html("总时长：" + x + "小时");
+                $(".service_form_a_money").html("总金额：" + (parseInt(price) * x) + "元");
+            }
+            $(".service_input").blur(function() {
+                calculate();
+            });
+
+//            del.click(function () {
+//                $(this).parent().parent().remove();
+//                times = $(".service_input_times");
+//                timeo = $(".service_input_timeo");
+//                calculate();
+//            })
+
+            var fun1 = function(i) {
+                del.eq(i).click(function() {
+                    alert($('.service_time_delete').index(this));
+                    mydiv.eq(i).remove();
+                    times = $(".service_input_times");
+                    timeo = $(".service_input_timeo");
+                    calculate();
+                })
+            }
+            for (var i = 0; i < del.length; i++) {
+                fun1(i);
+            }
+        };
+        abc();
+        $(".service_addbtn").click(function() {
+            n++;
+            var timechose = '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service_form_main_aa2">' +
+                '<div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
+                '  <input name="smallTimeList['+n+'].startHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_times">' +
+                '</div>' +
+                ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
+                '时~' +
+                '</div>' +
+                ' <div class="layui-col-md4 layui-col-sm4 layui-col-xs3">' +
+                '<input name="smallTimeList['+n+'].endHour" type="text" required lay-verify="required" value="0" autocomplete="off" class="layui-input service_input service_input_timeo">' +
+                ' </div>' +
+                ' <div class="layui-col-md1 layui-col-sm1 layui-col-xs2">' +
+                '  时' +
+                '</div>' +
+                ' <div class="layui-col-md2 layui-col-sm2 layui-col-xs2"><i class="iconfont service_time_delete">&#xe641;</i></div>' +
+                '</div>';
+            $(".service_form_main_a2").append(timechose);
+            abc();
+        });
+    </script>
 </body>
 
 </html>
