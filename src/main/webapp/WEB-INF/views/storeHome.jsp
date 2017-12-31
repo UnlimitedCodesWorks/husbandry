@@ -55,7 +55,7 @@
 						<dl class="layui-nav-child">
 							<dd><a href="<%=portPath%>store/information/${store.storeid}">商户中心<span class="layui-badge-dot"></span></a></dd>
 							<dd><a href="<%=portPath%>storeAdmin/information.html">商户后台</a></dd>
-							<dd><a href="<%=portPath%>storeAdmin/information.html">消息中心</a></dd>
+							<dd><a href="<%=portPath%>storeAdmin/message.html">消息中心</a></dd>
 							<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 						</dl>
 					</c:if>
