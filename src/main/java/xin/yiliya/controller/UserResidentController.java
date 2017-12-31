@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import xin.yiliya.pojo.*;
-import xin.yiliya.service.OrderService;
-import xin.yiliya.service.RegionService;
-import xin.yiliya.service.UserConcernService;
-import xin.yiliya.service.UserService;
+import xin.yiliya.service.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -35,6 +32,9 @@ public class UserResidentController extends BaseController {
 
     @Resource
     private UserConcernService userConcernService;
+
+    @Resource
+    private FeedbackService feedbackService;
 
     @RequestMapping(value = "/information/{userId}",method = RequestMethod.GET)
     public String information(@PathVariable("userId") Integer hrefUserId,Model model){
@@ -135,6 +135,20 @@ public class UserResidentController extends BaseController {
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         return "residentHome/resident_refund";
+    }
+
+    @RequestMapping(value = "/message.html",method = RequestMethod.GET)
+    public String message(Model model){
+        User user = (User) session.getAttribute("userBean");
+        User newUser = userService.getUserInfo(user.getUserid());
+        Integer userId = user.getUserid();
+        int pageSize = 1;
+        PageInfo<FeedbackSimple> feedbackSimplePageInfo = feedbackService.getAllFeedbackByUserId(userId,1,pageSize);
+        model.addAttribute("user",newUser);
+        model.addAttribute("feedbacks",feedbackSimplePageInfo.getList());
+        model.addAttribute("feedbackPages",feedbackSimplePageInfo.getPages());
+        model.addAttribute("pageSize",pageSize);
+        return "1";
     }
 
     @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
@@ -244,6 +258,26 @@ public class UserResidentController extends BaseController {
     @ResponseBody
     public String getCancelReason(Integer cancelId){
         return orderService.getCancelReason(cancelId);
+    }
+
+    @RequestMapping(value = "getAllNewsByStoreId.do",method = RequestMethod.POST)
+    @ResponseBody
+    public List<FeedbackSimple> getAllFeedbackByUserId(Integer currentPage,Integer userId){
+        int pageSize = 1;
+        return feedbackService.getAllFeedbackByUserId(userId,currentPage,pageSize).getList();
+    }
+
+    @RequestMapping(value = "deleteFeedbacks.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean deleteNews(@RequestParam(value = "feedbackIds[]") Integer[] feedbackIds){
+        Boolean b = false;
+        for(Integer feedbackId : feedbackIds){
+            b = feedbackService.deleteFeedbackById(feedbackId);
+            if(!b){
+                break;
+            }
+        }
+        return b;
     }
 
 }
