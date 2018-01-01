@@ -80,15 +80,15 @@ public class UserResidentController extends BaseController {
         PageInfo<OrderShow> dispatchedOrders = orderService.getAllUserSendOrder(userId,1,pageSize);
         model.addAttribute("dispatchedOrders",dispatchedOrders.getList());
         model.addAttribute("dispatchedOrderPages",dispatchedOrders.getPages());
-        model.addAttribute("dispatchedOrderNum",dispatchedOrders.getTotal());
+        model.addAttribute("dispatchedOrderNum",dispatchedOrders.getEndRow());
         PageInfo<OrderShow> confirmedOrders = orderService.getAllUserSureOrder(userId,1,pageSize);
         model.addAttribute("confirmedOrders",confirmedOrders.getList());
         model.addAttribute("confirmedOrderPages",confirmedOrders.getPages());
-        model.addAttribute("confirmedOrderNum",confirmedOrders.getTotal());
+        model.addAttribute("confirmedOrderNum",confirmedOrders.getEndRow());
         PageInfo<OrderShow> remarkedOrders = orderService.getAllUserAssessOrder(userId,1,pageSize);
         model.addAttribute("remarkedOrders",remarkedOrders.getList());
         model.addAttribute("remarkedOrderPages",remarkedOrders.getPages());
-        model.addAttribute("remarkedOrderNum",remarkedOrders.getTotal());
+        model.addAttribute("remarkedOrderNum",remarkedOrders.getEndRow());
         model.addAttribute("user",newUser);
         model.addAttribute("updateUser",new UpdateUser());
         model.addAttribute("pageSize",pageSize);
