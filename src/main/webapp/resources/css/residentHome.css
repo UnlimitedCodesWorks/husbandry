@@ -233,6 +233,15 @@ h2 {
 	line-height: 38px;
 }
 
+.tab3 .price-total {
+	float: right;
+	font-size: 18px;
+	display: inline-block;
+	height: 38.4px;
+	line-height: 38.4px;
+	color: #5FB878;
+}
+
 .tab3-1 .layui-container {
 	width: 100%;
 }
@@ -448,6 +457,9 @@ h2 {
 	.tab5 .row2 .service-wrap p {
 		text-align: left;
 	}
+	.tab3-1 .price-total {
+		width: 100%;
+	}
 }
 
 .tab5 .row2 .detail-wrap p {
@@ -500,6 +512,15 @@ h2 {
 .tab6 .row2 .reply-wrap p {
 	color: #5FB878;
 	font-size: 18px;
+	display: inline-block;
+}
+
+.tab6 .row2 .reply-wrap span {
+	color: #a8a8a8;
+	display: inline-block;
+	height: 24px;
+	line-height: 30px;
+	float: right;
 }
 
 .tab6 .row2 .detail-wrap p {

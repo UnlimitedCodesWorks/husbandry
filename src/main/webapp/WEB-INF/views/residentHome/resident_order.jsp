@@ -42,8 +42,8 @@
 				<li class="layui-nav-item" v-else>
 					<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
 					<dl class="layui-nav-child">
-						<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
-						<dd><a href="<%=portPath%>userResident/message.html">消息中心</a></dd>
+						<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心</a></dd>
+						<dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">9</span></a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
 				</li>
@@ -175,6 +175,7 @@
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待派遣</p>
+														<span class="price-total">总价：XXXXXX</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
 														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">

@@ -42,8 +42,8 @@
                 <li class="layui-nav-item" v-else>
                     <a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
-                        <dd><a href="<%=portPath%>userResident/message.html">消息中心</a></dd>
+                        <dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心</a></dd>
+                        <dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">9</span></a></dd>
                         <dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
                     </dl>
                 </li>
@@ -105,13 +105,18 @@
                             <hr>
                             <!-- 公司名&关注&服务名 -->
                             <div class="layui-row layui-col-space10 row1">
-                                <div class="layui-col-md10 layui-col-sm12 layui-col-xs12 name-wrap">
+                                <div class="layui-col-md8 layui-col-sm12 layui-col-xs12 name-wrap">
                                     <a href="<%=portPath%>store/information/${feedback.store.storeid}">${feedback.store.storeName}</a>
                                     <a href="<%=portPath%>service/detail/${feedback.service.offerserviceid}" class="service">${feedback.service.serviceName}</a>
                                 </div>
-                                <div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
+                                <div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
                                     <button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${feedback.service.offerserviceid}'">
                                         <i class="iconfont">&#xe611;</i> 关注服务
+                                    </button>
+                                </div>
+                                <div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
+                                    <button class="layui-btn layui-btn-danger delete-message">
+                                        <i class="iconfont">&#xe615;</i> 删除消息
                                     </button>
                                 </div>
                             </div>
@@ -128,7 +133,8 @@
                                             </p>
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 reply-wrap">
-                                            <p>商户回复：</p>
+                                            <p>商户回复</p>
+                                            <span>回复时间：2018-01-01 16:40:20</span>
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
                                             <p>${feedback.content} </p>
@@ -213,6 +219,21 @@
                     });
                 }
             }
+        });
+    });
+
+
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        $(document).on('click','.delete-message',function (event) {
+            layer.confirm('您确定要删除该条消息？', {
+                btn: ['确定','取消']
+            }, function(){
+                layer.msg('删除成功', {
+                    time: 1000
+                });
+            }, function(){
+            });
         });
     });
 
