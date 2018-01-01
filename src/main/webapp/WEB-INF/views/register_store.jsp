@@ -31,7 +31,7 @@ String registerPath =
     <f:form  class="layui-form"   modelAttribute="registerStore"  enctype="multipart/form-data" method="post"  >
     <div class="layui-row">
         <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_main">
-            <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title">商户注册</div>
+            <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1 register_store_title"><img src="../../resources/images/register_store.png"> 商户注册</div>
             <div class="layui-col-md10 layui-col-md-offset1 layui-col-sm10 layui-col-xs10 layui-col-xs-offset1 layui-col-sm-offset1">
 
                     <div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
