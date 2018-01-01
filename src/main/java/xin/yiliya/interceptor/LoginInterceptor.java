@@ -12,9 +12,6 @@ import javax.servlet.http.HttpSession;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Resource
-    private FeedbackService feedbackService;
-
     public boolean preHandle(HttpServletRequest httpServletRequest,
                              HttpServletResponse httpServletResponse, Object o) throws Exception {
         HttpSession session = httpServletRequest.getSession();
@@ -31,10 +28,6 @@ public class LoginInterceptor implements HandlerInterceptor {
                            HttpServletResponse httpServletResponse,
                            Object o,
                            ModelAndView modelAndView) throws Exception {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("userBean");
-        Integer userId = user.getUserid();
-        modelAndView.addObject("feedbackNum",feedbackService.getUnreadNumByUserId(userId));
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest,

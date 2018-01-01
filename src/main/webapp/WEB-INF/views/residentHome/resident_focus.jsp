@@ -43,7 +43,7 @@
 					<a href="<%=portPath%>userResident/information/${oldUser.userid}"><img src="${oldUser.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${oldUser.userName}</a>
 					<dl class="layui-nav-child">
 						<dd><a href="<%=portPath%>userResident/information/${oldUser.userid}">个人中心</a></dd>
-						<dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">9</span></a></dd>
+						<dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">${feedbackNum}</span></a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
 				</li>

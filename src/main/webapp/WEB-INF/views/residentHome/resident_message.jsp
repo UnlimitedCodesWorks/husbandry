@@ -7,6 +7,7 @@
 %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@
                     <a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
                     <dl class="layui-nav-child">
                         <dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心</a></dd>
-                        <dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">9</span></a></dd>
+                        <dd><a href="<%=portPath%>userResident/message.html">消息中心<span class="layui-badge">${feedbackNum}</span></a></dd>
                         <dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
                     </dl>
                 </li>
@@ -115,7 +116,7 @@
                                     </button>
                                 </div>
                                 <div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
-                                    <button class="layui-btn layui-btn-danger delete-message">
+                                    <button class="layui-btn layui-btn-danger delete-message" feedback-id="${feedback.feedbackid}" >
                                         <i class="iconfont">&#xe615;</i> 删除消息
                                     </button>
                                 </div>
@@ -134,7 +135,7 @@
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 reply-wrap">
                                             <p>商户回复</p>
-                                            <span>回复时间：2018-01-01 16:40:20</span>
+                                            <span>回复时间：<fmt:formatDate value="${feedback.time}" pattern="yyyy-MM-dd HH:mm:ss" /></span>
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
                                             <p>${feedback.content} </p>
@@ -226,17 +227,44 @@
     layui.use('layer', function(){
         var layer = layui.layer;
         $(document).on('click','.delete-message',function (event) {
+            var feedbackId = $(this).attr("feedback-id");
             layer.confirm('您确定要删除该条消息？', {
                 btn: ['确定','取消']
             }, function(){
-                layer.msg('删除成功', {
-                    time: 1000
-                });
+               deleteFeedback(feedbackId);
             }, function(){
             });
         });
     });
 
+    function deleteFeedback(feedbackId) {
+        var yellow = [];
+        yellow.push(feedbackId);
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            $.ajax({
+                type: "POST",
+                url: portPath + "userResident/deleteFeedbacks.do",
+                data: {
+                    feedbackIds: yellow
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        layer.msg("删除成功！", {
+                            time: 1000
+                        });
+                        setTimeout("location.replace(location.href)",1000);
+                    } else {
+                        alert("删除失败！");
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        });
+    }
 
     function createFeedbacks(data) {
         var container = $("#message-container");
@@ -244,6 +272,7 @@
         for(var i = 0;i<data.length;i++){
             var storeLink = portPath+'store/information/'+data[i].store.storeid;
             var serviceLink = portPath+'service/detail/'+data[i].service.offerserviceid;
+            var time = new Date(Date.parse(data[i].time.replace(/-/g, "/"))).Format("yyyy-MM-dd hh:mm:ss");
             var node = ' <hr>' +
                 '<!-- 公司名&关注&服务名 -->' +
                 '<div class="layui-row layui-col-space10 row1">' +
@@ -256,6 +285,11 @@
                 '<i class="iconfont">&#xe611;</i> 关注服务' +
                 '</button>' +
                 '</div>' +
+                    '<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">' +
+                '<button class="layui-btn layui-btn-danger delete-message" feedback-id="'+data[i].feedbackid+'" >' +
+                '<i class="iconfont">&#xe615;</i> 删除消息' +
+                '</button>' +
+                ' </div>'+
                 '</div>' +
                 '<div class="layui-row layui-col-space10 row2">' +
                 '<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">' +
@@ -271,6 +305,7 @@
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 reply-wrap">' +
                 '<p>商户回复：</p>' +
+                    '<span>回复时间：'+time+'</span>'+
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
                 '<p>'+data[i].content+' </p>' +
@@ -280,6 +315,22 @@
                 '</div>';
             container.append(node);
         }
+    }
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
     }
 </script>
 </html>

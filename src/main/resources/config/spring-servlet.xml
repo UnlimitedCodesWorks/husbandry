@@ -61,6 +61,20 @@ mvc:annotation-driven默认加载很多的参数绑定方法，
             <mvc:mapping path="/admin/*Search.do"/>
             <bean class="xin.yiliya.interceptor.AdminInterceptor"/>
         </mvc:interceptor>
+
+        <!-- 配置用户消息拦截器 -->
+        <mvc:interceptor>
+            <!-- /userResident路径下的所有页面 -->
+            <mvc:mapping path="/userResident/*.html"/>
+            <mvc:mapping path="/userResident/*/*"/>
+            <!-- /search路径下的所有页面 -->
+            <mvc:mapping path="/search/*.html"/>
+            <mvc:mapping path="/serviceForm/*.html" />
+            <mvc:mapping path="/service/*.html" />
+            <mvc:mapping path="/index.html" />
+            <mvc:mapping path="/store/information/*" />
+            <bean class="xin.yiliya.interceptor.UserNewsInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <mvc:annotation-driven>
