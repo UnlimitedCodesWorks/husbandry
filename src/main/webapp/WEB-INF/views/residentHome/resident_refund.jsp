@@ -110,6 +110,9 @@
 											<c:if test="${order.status==4}">
 												<p>退款状态：退款成功</p>
 											</c:if>
+											<c:if test="${order.status==6}">
+												<p>退款状态：拒绝退款</p>
+											</c:if>
 										</div>
 										<div class="layui-col-md2 layui-col-sm6 layui-col-xs12">
 											<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
@@ -134,7 +137,7 @@
 													<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：${order.orderNumber}</p>
 												</div>
 												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">
-													<p>退款金额：￥${order.offerService.price}</p>
+													<p>退款金额：￥${order.orderBigTime.sum}</p>
 												</div>
 												<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
 													<p>${order.offerService.introduce}</p>
@@ -229,6 +232,9 @@
             }else if(data[i].status ==4){
                 line = '<p>退款状态：退款成功</p>';
             }
+            else if(data[i].status ==6){
+                line = '<p>退款状态：拒绝退款</p>';
+			}
 			var href= portPath+"service/detail/"+data[i].offerService.offerserviceid;
             var storePath = portPath+"store/information/"+data[i].storeInfo.storeid;
             container.html("");
@@ -263,7 +269,7 @@
                 '<p class="layui-col-md6 layui-col-sm6 layui-col-xs12">退款编号：'+data[i].orderNumber+'</p>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 price-wrap">' +
-                '<p>退款金额：￥'+data[i].offerService.price+'</p>' +
+                '<p>退款金额：￥'+data[i].orderBigTime.sum+'</p>' +
                 '</div>' +
                 '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
                 '<p>'+data[i].offerService.introduce+'</p>' +
