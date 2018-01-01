@@ -43,6 +43,7 @@
                     <a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
                     <dl class="layui-nav-child">
                         <dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
+                        <dd><a href="<%=portPath%>userResident/message.html">消息中心</a></dd>
                         <dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
                     </dl>
                 </li>
@@ -98,41 +99,45 @@
                     <h3><i class="iconfont title">&#xe694;</i> 消息中心</h3>
                     <hr class="layui-bg-green">
                     <div class="layui-fluid">
-                        <div class="message-wrap">
+                        <div class="message-wrap" id="message-container">
+                            <c:if test="${!empty feedbacks}">
+                                <c:forEach var="feedback" items="${feedbacks}">
                             <hr>
                             <!-- 公司名&关注&服务名 -->
                             <div class="layui-row layui-col-space10 row1">
                                 <div class="layui-col-md10 layui-col-sm12 layui-col-xs12 name-wrap">
-                                    <a href="javascript:;">华峰国际有限公南美洲分公司</a>
-                                    <a href="javascript:;" class="service">保姆服务</a>
+                                    <a href="<%=portPath%>store/information/${feedback.store.storeid}">${feedback.store.storeName}</a>
+                                    <a href="<%=portPath%>service/detail/${feedback.service.offerserviceid}" class="service">${feedback.service.serviceName}</a>
                                 </div>
                                 <div class="layui-col-md2 layui-col-sm12 layui-col-xs12">
-                                    <button class="layui-btn">
+                                    <button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${feedback.service.offerserviceid}'">
                                         <i class="iconfont">&#xe611;</i> 关注服务
                                     </button>
                                 </div>
                             </div>
                             <div class="layui-row layui-col-space10 row2">
                                 <div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">
-                                    <img src="../../../resources/images/家居9.jpg">
+                                    <img src="${feedback.service.serviceImg}" onerror="this.src='../../../resources/images/家居9.jpg'">
                                 </div>
                                 <!-- 已发消息&回复消息 -->
                                 <div class="layui-col-md9 layui-col-sm8 layui-col-xs12">
                                     <div class="layui-row row2-1 layui-col-space10">
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">
                                             <p class="layui-col-md12 layui-col-sm12 layui-col-xs12">您发送的内容：
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique odit aperiam laudantium cupiditate, commodi, suscipit provident, voluptates eum rerum quisquam autem vero, ea eos a libero quod. Earum, nam, cum!</span>
+                                                <span>${feedback.complain.reason}</span>
                                             </p>
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 reply-wrap">
                                             <p>商户回复：</p>
                                         </div>
                                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa harum maiores repellat minima illo laudantium ducimus cumque facere ullam, facilis asperiores, dolore beatae libero doloribus tempora, architecto quo. Reprehenderit, omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                            <p>${feedback.content} </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
                     </div>
                     <div id="message-page"></div>
@@ -176,6 +181,8 @@
     var updatePath = "<%=updatePath%>";
     var pageSize = "${pageSize}";
     var portPath = "<%=portPath%>";
+    var feedbackPages = ${feedbackPages};
+    var userId = ${user.userid};
 
     layui.use('laypage', function() {
         var laypage = layui.laypage;
@@ -183,16 +190,75 @@
         //退款详情
         laypage.render({
             elem: 'message-page', //这里是ID，不用加 # 号
-            count: 20, //数据总数，从服务端得到
-            limit: 10,
+            count: feedbackPages*pageSize, //数据总数，从服务端得到
+            limit: pageSize,
             jump: function(obj, first){
                 //obj包含了当前分页的所有参数，比如：
                 //首次不执行
                 if(!first){
-
+                    $.ajax({
+                        type: "POST",
+                        url: portPath+"userResident/getAllFeedbackByUserId.do",
+                        data: {
+                            userId:userId,
+                            currentPage:obj.curr
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            createFeedbacks(data);
+                        },
+                        error: function(jqXHR){
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
                 }
             }
         });
     });
+
+
+    function createFeedbacks(data) {
+        var container = $("#message-container");
+        container.html("");
+        for(var i = 0;i<data.length;i++){
+            var storeLink = portPath+'store/information/'+data[i].store.storeid;
+            var serviceLink = portPath+'service/detail/'+data[i].service.offerserviceid;
+            var node = ' <hr>' +
+                '<!-- 公司名&关注&服务名 -->' +
+                '<div class="layui-row layui-col-space10 row1">' +
+                '<div class="layui-col-md10 layui-col-sm12 layui-col-xs12 name-wrap">' +
+                '<a href="'+storeLink+'">'+data[i].store.storeName+'</a>' +
+                '<a href="'+serviceLink+'" class="service">'+data[i].service.serviceName+'</a>' +
+                '</div>' +
+                '<div class="layui-col-md2 layui-col-sm12 layui-col-xs12">' +
+                '<button class="layui-btn" onclick="location.href=\''+serviceLink+'\'">' +
+                '<i class="iconfont">&#xe611;</i> 关注服务' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '<div class="layui-row layui-col-space10 row2">' +
+                '<div class="layui-col-md3 layui-col-sm4 layui-col-xs12 img-wrap">' +
+                '<img src="'+data[i].service.serviceImg+'" onerror="this.src=\'../../../resources/images/家居9.jpg\'">' +
+                '</div>' +
+                '<!-- 已发消息&回复消息 -->' +
+                '<div class="layui-col-md9 layui-col-sm8 layui-col-xs12">' +
+                '<div class="layui-row row2-1 layui-col-space10">' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 service-wrap">' +
+                '<p class="layui-col-md12 layui-col-sm12 layui-col-xs12">您发送的内容：' +
+                '<span>'+data[i].complain.reason+'</span>' +
+                '</p>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 reply-wrap">' +
+                '<p>商户回复：</p>' +
+                '</div>' +
+                '<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 detail-wrap">' +
+                '<p>'+data[i].content+' </p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            container.append(node);
+        }
+    }
 </script>
 </html>

@@ -21,15 +21,26 @@
     <association property="service" column="service_id" javaType="xin.yiliya.pojo.OfferService">
       <id property="offerserviceid" column="offerserviceid" />
       <result property="serviceName" column="service_name" />
+      <result property="serviceImg" column="service_img" />
+    </association>
+    <association property="store" column="store_id" javaType="xin.yiliya.pojo.Store">
+      <id property="storeid" column="storeid" />
+      <result property="storeName" column="store_name" />
+    </association>
+    <association property="complain" column="complain_id" javaType="xin.yiliya.pojo.Complain" >
+      <id property="complainid" column="complainid" />
+      <result property="reason" column="reason" />
     </association>
   </resultMap>
   <select id="getAllFeedbackByUserId" resultMap="getAllFeedbackByUserId" parameterType="java.lang.Integer">
     SELECT
-    feedbackid,time,content,service_id,offerserviceid,service_name
-    FROM feedback,user,offerservice
-    WHERE feedback.user_id = user.userid
-    AND feedback.service_id = offerservice.offerserviceid
-    AND user_id = #{userId,jdbcType=INTEGER}
+    DISTINCT feedbackid,feedback.time,content,feedback.service_id,offerserviceid,service_name,
+    service_img,storeid,store_name,complainid,reason
+    FROM feedback,user,offerservice,store,complain
+    WHERE feedback.service_id = offerservice.offerserviceid
+    AND offerservice.store_id = store.storeid
+    AND feedback.complain_id = complain.complainid
+    AND feedback.user_id = #{userId,jdbcType=INTEGER}
     ORDER BY feedback.time DESC
   </select>
   <select id="getUnreadNumByUserId" resultType="int" parameterType="java.lang.Integer">
@@ -67,6 +78,9 @@
       <if test="content != null">
         content,
       </if>
+      <if test="complainId != null">
+        complain_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="feedbackid != null">
@@ -86,6 +100,9 @@
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="complainId != null">
+        #{complainId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

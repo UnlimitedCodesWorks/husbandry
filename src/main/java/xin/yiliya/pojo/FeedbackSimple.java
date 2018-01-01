@@ -7,6 +7,10 @@ public class FeedbackSimple {
 
     private OfferService service;
 
+    private Store store;
+
+    private Complain complain;
+
     private Date time;
 
     private String content;
@@ -41,5 +45,21 @@ public class FeedbackSimple {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Complain getComplain() {
+        return complain;
+    }
+
+    public void setComplain(Complain complain) {
+        this.complain = complain;
     }
 }

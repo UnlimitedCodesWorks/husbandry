@@ -142,13 +142,13 @@ public class UserResidentController extends BaseController {
         User user = (User) session.getAttribute("userBean");
         User newUser = userService.getUserInfo(user.getUserid());
         Integer userId = user.getUserid();
-        int pageSize = 1;
+        int pageSize = 10;
         PageInfo<FeedbackSimple> feedbackSimplePageInfo = feedbackService.getAllFeedbackByUserId(userId,1,pageSize);
         model.addAttribute("user",newUser);
         model.addAttribute("feedbacks",feedbackSimplePageInfo.getList());
         model.addAttribute("feedbackPages",feedbackSimplePageInfo.getPages());
         model.addAttribute("pageSize",pageSize);
-        return "1";
+        return "residentHome/resident_message";
     }
 
     @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
@@ -260,10 +260,10 @@ public class UserResidentController extends BaseController {
         return orderService.getCancelReason(cancelId);
     }
 
-    @RequestMapping(value = "getAllNewsByStoreId.do",method = RequestMethod.POST)
+    @RequestMapping(value = "getAllFeedbackByUserId.do",method = RequestMethod.POST)
     @ResponseBody
     public List<FeedbackSimple> getAllFeedbackByUserId(Integer currentPage,Integer userId){
-        int pageSize = 1;
+        int pageSize = 10;
         return feedbackService.getAllFeedbackByUserId(userId,currentPage,pageSize).getList();
     }
 

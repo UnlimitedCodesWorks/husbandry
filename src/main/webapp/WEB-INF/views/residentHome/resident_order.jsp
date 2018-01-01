@@ -43,6 +43,7 @@
 					<a href="<%=portPath%>userResident/information/${user.userid}"><img src="${user.headImg}" onerror="this.src='http://t.cn/RCzsdCq'" class="layui-nav-img">${user.userName}</a>
 					<dl class="layui-nav-child">
 						<dd><a href="<%=portPath%>userResident/information/${user.userid}">个人中心<span class="layui-badge-dot"></span></a></dd>
+						<dd><a href="<%=portPath%>userResident/message.html">消息中心</a></dd>
 						<dd><a href="<%=portPath%>login/exit.do">登出</a></dd>
 					</dl>
 				</li>
@@ -75,6 +76,7 @@
     			<li class="layui-this"><i class="iconfont">&#xe6c1;</i> 我的订单</li>
     			<a href="<%=portPath%>userResident/focus/${user.userid}"><li><i class="iconfont">&#xe611;</i> 我关注的</li></a>
     			<a href="<%=portPath%>userResident/refund.html"><li><i class="iconfont">&#xe614;</i> 退款详情</li></a>
+				<a href="<%=portPath%>userResident/message.html"><li><i class="iconfont">&#xe694;</i> 消息中心</li></a>
   			</ul>
   			<div class="layui-tab-content">
   				<!-- 我的信息 -->
