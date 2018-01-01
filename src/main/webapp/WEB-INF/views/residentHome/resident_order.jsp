@@ -112,7 +112,8 @@
 												<div class="layui-row layui-col-space10 row1">
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
-															<p>订单状态：已完成</p>
+														<p>订单状态：已完成</p>
+														<span class="price-total">总价：￥${order.orderBigTime.sum}</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
 														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
@@ -175,7 +176,7 @@
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待派遣</p>
-														<span class="price-total">总价：XXXXXX</span>
+														<span class="price-total">总价：￥${order.orderBigTime.sum}</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
 														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
@@ -243,6 +244,7 @@
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待确认</p>
+														<span class="price-total">总价：￥${order.orderBigTime.sum}</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
 														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
@@ -313,6 +315,7 @@
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：已确认</p>
+														<span class="price-total">总价：￥${order.orderBigTime.sum}</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
 														<button class="layui-btn" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
@@ -666,6 +669,7 @@
                 '<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">' +
                 '<a href="'+storePath+'">'+data.list[i].storeInfo.storeName+'</a>' +
                 line +
+				'<span class="price-total">总价：￥'+data.list[i].orderBigTime.sum+'</span>'	+
                 '</div>' +
                 '<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">' +
                 '<button class="layui-btn" onclick="location.href=\''+href+'\'" >' +
