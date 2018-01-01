@@ -149,8 +149,6 @@
 				</div>
   			</div>
 		</div>
-	</div>
-	</div>
 	<footer>
 		<p>Husbandry-&copy2017</p>
 	</footer>
@@ -177,9 +175,8 @@
 				<div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="head-img-wrap">
 					<img id="head-img">
 				</div>
+			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 </body>
 <script>

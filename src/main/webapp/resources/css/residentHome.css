@@ -463,6 +463,53 @@ h2 {
 	padding-top: 10px;
 }
 
+.tab6 .message-wrap {
+	width: 100%;
+}
+
+.tab6 .row1 a {
+	height: 100%;
+	font-size: 18px;
+	line-height: 38.4px;
+	display: inline-block;
+	padding-right: 10px;
+	/*	overflow : hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;*/
+}
+
+.tab6 .row1 .service {
+	color: #1E9FFF;
+}
+
+.tab6 .row1 button {
+	width: 100%;
+}
+
+.tab6 .row2 .img-wrap {
+	height: 150px;
+}
+
+.tab6 .row2 .img-wrap img {
+	width: 100%;
+	height: 100%;
+}
+
+.tab6 .row2 .reply-wrap p {
+	color: #5FB878;
+	font-size: 18px;
+}
+
+.tab6 .row2 .detail-wrap p {
+	font-size: 16px;
+}
+
+.tab6 #message-page {
+	margin-top: 10px;
+}
+
 footer {
 	background: #393D49;
 	height: 100px;
