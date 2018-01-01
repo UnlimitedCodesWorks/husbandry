@@ -33,6 +33,15 @@
             <id column="storeid" jdbcType="INTEGER" property="storeid" />
             <result column="store_name" jdbcType="VARCHAR" property="storeName" />
         </association>
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <result column="month" jdbcType="INTEGER" property="month"></result>
+            <result column="day" jdbcType="INTEGER" property="day"></result>
+            <result column="sum" jdbcType="VARCHAR" property="sum"></result>
+            <collection property="orderSmallTimeList" ofType="xin.yiliya.pojo.OrderSmallTime">
+                <result property="startHour" column="start_hour" jdbcType="INTEGER"></result>
+                <result property="endHour" column="end_hour" jdbcType="INTEGER"></result>
+            </collection>
+        </association>
     </resultMap>
 
     <resultMap id="Base_cancel" type="xin.yiliya.pojo.OrderCancel">
@@ -60,6 +69,9 @@
             <id column="cancelid" jdbcType="INTEGER" property="cancelid" />
             <result column="reason" jdbcType="VARCHAR" property="reason" />
             <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+        </association>
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <result column="sum" jdbcType="VARCHAR" property="sum"></result>
         </association>
     </resultMap>
 
@@ -116,14 +128,14 @@
     <sql id="BaseSQL">
         orderid,order_number,service_id,user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
-        offerservice.`status` AS state,storeid,store_name
+        offerservice.`status` AS state,storeid,store_name,month,day,sum,start_hour,end_hour
     </sql>
 
     <sql id="BaseCancel">
         orderid,order_number,service_id,`order`.user_id,`order`.`status`,start_time,
         offerserviceid,service_name,service_img,kind,price,people_phone,introduce,
         offerservice.`status` AS state,storeid,store_name,cancelid,reason,
-        order_id
+        cancel.order_id AS order_id,sum
     </sql>
 
     <sql id="store_handle">
@@ -149,42 +161,47 @@
     </select>
 
     <select id="getAllUserOrder" resultMap="Base_1">
-        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store,orderbigtime,ordersmalltime
         WHERE service_id=offerserviceid
         AND store_id=storeid
         AND `order`.user_id=#{userId}
         AND `order`.`status`=5
+        AND orderbigtime.order_id=`order`.orderid AND orderbigtime_id=orderpriceid
         ORDER BY start_time DESC
     </select>
 
     <select id="getAllUserSendOrder" resultMap="Base_1">
-        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store,orderbigtime,ordersmalltime
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=0
+        AND orderbigtime.order_id=`order`.orderid AND orderbigtime_id=orderpriceid
         ORDER BY start_time DESC
     </select>
 
     <select id="getAllUserSureOrder" resultMap="Base_1">
-        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
+        SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store,orderbigtime,ordersmalltime
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=1
+        AND orderbigtime.order_id=`order`.orderid AND orderbigtime_id=orderpriceid
         ORDER BY end_time DESC
     </select>
 
     <select id="getAllUserAssessOrder" resultMap="Base_1">
-       SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store
+       SELECT <include refid="BaseSQL" /> FROM `order`,offerservice,store,orderbigtime,ordersmalltime
         WHERE service_id=offerserviceid
         AND store_id=storeid AND `order`.user_id=#{userId} and `order`.`status`=2
+        AND orderbigtime.order_id=`order`.orderid AND orderbigtime_id=orderpriceid
         ORDER BY end_time DESC
     </select>
 
     <select id="getAllUserCancelOrder" resultMap="Base_cancel">
         SELECT <include refid="BaseCancel" />
-         FROM `order`,offerservice,store,cancel
+         FROM `order`,offerservice,store,cancel,orderbigtime
         WHERE cancel.order_id=`order`.orderid
         AND `order`.service_id=offerservice.offerserviceid
         AND store_id=store.storeid
         AND `order`.user_id=#{userId}
+        AND `order`.orderid=orderbigtime.order_id
         ORDER BY cancel.cancel_time DESC
     </select>
 

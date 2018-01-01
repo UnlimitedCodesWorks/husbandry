@@ -20,6 +20,8 @@ public class OrderShow {
 
     private StoreInfo storeInfo;
 
+    private OrderBigTime orderBigTime;
+
     public Integer getOrderid() {
         return orderid;
     }
@@ -82,5 +84,13 @@ public class OrderShow {
 
     public void setStoreInfo(StoreInfo storeInfo) {
         this.storeInfo = storeInfo;
+    }
+
+    public OrderBigTime getOrderBigTime() {
+        return orderBigTime;
+    }
+
+    public void setOrderBigTime(OrderBigTime orderBigTime) {
+        this.orderBigTime = orderBigTime;
     }
 }

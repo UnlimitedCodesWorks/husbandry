@@ -26,6 +26,8 @@ public class OrderCancel {
 
     private User user;
 
+    private OrderBigTime orderBigTime;
+
     public Integer getOrderid() {
         return orderid;
     }
@@ -112,5 +114,13 @@ public class OrderCancel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public OrderBigTime getOrderBigTime() {
+        return orderBigTime;
+    }
+
+    public void setOrderBigTime(OrderBigTime orderBigTime) {
+        this.orderBigTime = orderBigTime;
     }
 }

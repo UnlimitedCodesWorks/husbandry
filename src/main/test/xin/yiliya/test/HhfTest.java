@@ -137,11 +137,11 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待派遣订单
-//        PageInfo<OrderShow> info=orderService.getAllUserSendOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserSendOrder(24,1,100);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待确认订单
-//        PageInfo<OrderShow> info=orderService.getAllUserSureOrder(15,1,2);
+//        PageInfo<OrderShow> info=orderService.getAllUserSureOrder(24,1,100);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户等待评价订单
@@ -157,8 +157,8 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户退款订单
-//        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(15,1,2);
-//        System.out.print(JSON.toJSONString(info,true));
+        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(24,1,2);
+        System.out.print(JSON.toJSONString(info,true));
 
         //确认需求表单生成订单order
 //        RequireList requires=new RequireList();
@@ -324,13 +324,13 @@ public class HhfTest {
 //        FileInputStream input1 = new FileInputStream(file1);
 //        MultipartFile multipartFile1 = new MockMultipartFile("test.jpg",file1.getName(),"image/jpeg", IOUtils.toByteArray(input1));
 //
-        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
-        servicePeopleUpdate.setServicepeopleid(35);
+//        ServicePeopleUpdate servicePeopleUpdate=new ServicePeopleUpdate();
+//        servicePeopleUpdate.setServicepeopleid(35);
 //        servicePeopleUpdate.setSphead(multipartFile1);
-        servicePeopleUpdate.setSpOtherinfo("1111111111");
+//        servicePeopleUpdate.setSpOtherinfo("1111111111");
 //
-        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
-        System.out.print(b);
+//        Boolean b=servicePeopleService.updateServicePeopleTemlate(servicePeopleUpdate);
+//        System.out.print(b);
 
         //根据服务人员名字显示模板
 //        ServicePeople servicePeople=servicePeopleService.getServicePeople("aaa");
