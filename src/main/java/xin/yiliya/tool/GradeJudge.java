@@ -10,7 +10,7 @@ public class GradeJudge {
         }else if(grade>=6 && grade<8){
             return "正常";
         }else if(grade ==0){
-            return "";
+            return "无评分";
         }
         return "优秀";
     }
