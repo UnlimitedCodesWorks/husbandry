@@ -117,6 +117,9 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
                     gradeDay++;
                 }
             }
+            if(gradeSum==0){
+                gradeDay++;
+            }
             storeEvalutePerMonth.setDays(storeEvalutePerDays);
             storeEvalutePerMonth.setGrade(Float.parseFloat(decimalFormat.format(gradeSum/gradeDay)));
             storeEvalutePerMonth.setStatus(GradeJudge.judge(storeEvalutePerMonth.getGrade()));

@@ -132,6 +132,9 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
                     gradeDay++;
                 }
             }
+            if(gradeDay==0){
+                gradeDay++;
+            }
             serviceEvalutePerMonth.setDays(serviceEvalutePerDays);
             serviceEvalutePerMonth.setGrade(Float.parseFloat(decimalFormat.format(gradeSum/gradeDay)));
             serviceEvalutePerMonth.setStatus(GradeJudge.judge(serviceEvalutePerMonth.getGrade()));
