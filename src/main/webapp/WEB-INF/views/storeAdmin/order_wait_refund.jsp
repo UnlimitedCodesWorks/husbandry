@@ -245,6 +245,7 @@
                                     <th>服务名称</th>
                                     <th>创建时间</th>
                                     <th>订单发起人</th>
+                                    <th>退款金额</th>
                                     <th>退款理由</th>
                                 </tr>
                             </thead>
@@ -262,6 +263,7 @@
                                             <td><c:out value="${cancelOrder.offerService.serviceName}"/></td>
                                             <td><fmt:formatDate value="${cancelOrder.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><c:out value="${cancelOrder.user.userName}"/></td>
+                                            <td><c:out value="${cancelOrder.orderBigTime.sum}"/></td>
                                             <td><c:out value="${cancelOrder.cancel.reason}"/></td>
                                         </tr>
                                     </c:forEach>
@@ -385,6 +387,7 @@
                     '<th>服务名称</th>' +
                     '<th>创建时间</th>' +
                     '<th>订单发起人</th>' +
+                    '<th>退款金额</th>'+
                     '<th>退款理由</th>' +
                     '</tr>' +
                     '</thead><tbody>';
@@ -395,6 +398,7 @@
                     var serviceName=data.list[i].offerService.serviceName;
                     var startTime=data.list[i].startTime;
                     var userName=data.list[i].user.userName;
+                    var money=data.list[i].orderBigTime.sum;
                     var reason=data.list[i].cancel.reason;
                     var node='<tr>\n' +
                         '<td hidden="hidden">'+orderId+'</td>\n' +
@@ -402,6 +406,7 @@
                         '<td>'+serviceName+'</td>\n' +
                         '<td>'+startTime+'</td>\n' +
                         '<td>'+userName+'</td>\n' +
+                        '<td>'+money+'</td>'+
                         '<td>'+reason+'</td>\n' +
                         '</tr>';
                     table.append(node);

@@ -359,7 +359,7 @@
                     var startTime=data.list[i].startTime;
                     var endTime=data.list[i].endTime;
                     var userName=data.list[i].user.userName;
-                    var money=data.list[i].orderBigTime.sum
+                    var money=data.list[i].orderBigTime.sum;
                     var finishStatus=(data.list[i].status==2)?"交易成功":"退款成功";
                     var node='<tr>\n' +
                         '<td>'+orderNumber+'</td>\n' +

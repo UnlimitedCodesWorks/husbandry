@@ -129,6 +129,9 @@
         <association property="offerService" javaType="xin.yiliya.pojo.OfferService">
             <result property="serviceName" jdbcType="VARCHAR" column="serviceName"/>
         </association>
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <result property="sum" column="sum" jdbcType="VARCHAR"></result>
+        </association>
     </resultMap>
 
     <resultMap id="user_requires" type="xin.yiliya.pojo.UserRequire">
@@ -172,7 +175,7 @@
 
     <sql id="store_cancel">
         orderid,`order`.order_number,`order`.user_id,`order`.`status`,`order`.start_time,serkind,
-        `user`.user_name,cancelid,reason,service_name AS serviceName
+        `user`.user_name,cancelid,reason,service_name AS serviceName,sum
     </sql>
 
     <sql id="time">
@@ -239,9 +242,10 @@
 
     <select id="getAllStoreHandleOrder" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
+        AND orderbigtime.order_id=`order`.orderid
         AND kind=serid
         AND `order`.`status`=0
         AND offerservice.`status`=1
@@ -250,8 +254,9 @@
 
     <select id="getAllStoreSureOrder" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
+        AND orderbigtime.order_id=`order`.orderid
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status`=1
@@ -261,9 +266,10 @@
 
     <select id="getAllStoreCancelOrder" resultMap="store_cancel">
         SELECT <include refid="store_cancel" />
-        FROM offerservice,`order`,cancel,`user`,service
+        FROM offerservice,`order`,cancel,`user`,service,orderbigtime
         WHERE offerservice.offerserviceid=`order`.service_id
         AND `order`.orderid=cancel.order_id
+        AND orderbigtime.order_id=`order`.orderid
         AND `order`.user_id=`user`.userid
         AND offerservice.kind=service.serid
         AND offerservice.`status`=1
@@ -285,10 +291,11 @@
 
     <select id="getAllStoreHandleByNumberSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
         AND kind=serid
+        AND orderbigtime.order_id=`order`.orderid
         AND `order`.`status`=0
         AND offerservice.`status`=1
         AND store_id=#{storeId}
@@ -297,10 +304,11 @@
 
     <select id="getAllStoreHandleByUserSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
         AND kind=serid
+        AND orderbigtime.order_id=`order`.orderid
         AND `order`.`status`=0
         AND offerservice.`status`=1
         AND store_id=#{storeId}
@@ -309,9 +317,10 @@
 
     <select id="getAllStoreSureByNumberSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
+        AND orderbigtime.order_id=`order`.orderid
         AND kind=serid
         AND `order`.`status`=1
         AND offerservice.`status`=1
@@ -321,9 +330,10 @@
 
     <select id="getAllStoreSureByUserSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
+        AND orderbigtime.order_id=`order`.orderid
         AND kind=serid
         AND `order`.`status`=1
         AND offerservice.`status`=1
@@ -333,9 +343,10 @@
 
     <select id="getAllStoreCancelByNumberSearch" resultMap="store_cancel">
         SELECT <include refid="store_cancel" />
-        FROM offerservice,`order`,cancel,`user`,service
+        FROM offerservice,`order`,cancel,`user`,service,orderbigtime
         WHERE offerservice.offerserviceid=`order`.service_id
         AND `order`.orderid=cancel.order_id
+        AND orderbigtime.order_id=`order`.orderid
         AND `order`.user_id=`user`.userid
         AND offerservice.kind=service.serid
         AND offerservice.`status`=1
@@ -345,10 +356,11 @@
 
     <select id="getAllStoreCancelByUserSearch" resultMap="store_cancel">
         SELECT <include refid="store_cancel" />
-        FROM offerservice,`order`,cancel,`user`,service
+        FROM offerservice,`order`,cancel,`user`,service,orderbigtime
         WHERE offerservice.offerserviceid=`order`.service_id
         AND `order`.orderid=cancel.order_id
         AND `order`.user_id=`user`.userid
+        AND orderbigtime.order_id=`order`.orderid
         AND offerservice.kind=service.serid
         AND offerservice.`status`=1
         AND `order`.`status`=3 AND offerservice.store_id=#{storeId}

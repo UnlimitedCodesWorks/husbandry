@@ -290,6 +290,7 @@
                                     <th>创建时间</th>
                                     <th>处理时间</th>
                                     <th>订单发起人</th>
+                                    <th>订单金额</th>
                                     <th>派遣详细信息</th>
                                 </tr>
                             </thead>
@@ -308,6 +309,7 @@
                                             <td><fmt:formatDate value="${sureOrder.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><fmt:formatDate value="${sureOrder.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><c:out value="${sureOrder.user.userName}"/></td>
+                                            <td><c:out value="${sureOrder.orderBigTime.sum}"/></td>
                                             <td><button class="btn btn-info updatePeople" data-toggle="modal" data-target="#staff-modal">更改</button></td>
                                         </tr>
                                     </c:forEach>
@@ -445,6 +447,7 @@
                         '<th>创建时间</th>\n' +
                         '<th>处理时间</th>\n' +
                         '<th>订单发起人</th>\n' +
+                        '<th>订单金额</th>'+
                         '<th>派遣详细信息</th>\n' +
                         '</tr>\n' +
                         '</thead>\n' +
@@ -457,6 +460,7 @@
                         var startTime=data.list[i].startTime;
                         var endTime=data.list[i].endTime;
                         var userName=data.list[i].user.userName;
+                        var money=data.list[i].orderBigTime.sum;
                         var node='<tr>\n' +
                             '<td hidden="hidden">'+orderId+'</td>\n' +
                             '<td>'+orderNumber+'</td>\n' +
@@ -464,6 +468,7 @@
                             '<td>'+startTime+'</td>\n' +
                             '<td>'+endTime+'</td>\n' +
                             '<td>'+userName+'</td>\n' +
+                            '<td>'+money+'</td>'+
                             '<td><button class="btn btn-info updatePeople" data-toggle="modal" data-target="#staff-modal">更改</button></td>\n' +
                             '</tr>';
                         table.append(node);

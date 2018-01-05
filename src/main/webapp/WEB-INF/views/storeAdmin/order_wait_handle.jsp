@@ -289,6 +289,7 @@
                                     <th>服务名称</th>
                                     <th>创建时间</th>
                                     <th>订单发起人</th>
+                                    <th>订单金额</th>
                                     <th>订单需求</th>
                                     <th>订单状态</th>
                                     <th>派遣</th>
@@ -308,6 +309,7 @@
                                             <td><c:out value="${waitOrder.offerService.serviceName}"/></td>
                                             <td><fmt:formatDate value="${waitOrder.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><c:out value="${waitOrder.user.userName}"/></td>
+                                            <td><c:out value="${waitOrder.orderBigTime.sum}"/></td>
                                             <td><button class="btn btn-info look_requires" data-toggle="modal" data-target="#demand-modal">查看</button></td>
                                             <td>已支付</td>
                                             <td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>
@@ -463,6 +465,7 @@
                         '<th>服务名称</th>\n' +
                         '<th>创建时间</th>\n' +
                         '<th>订单发起人</th>\n' +
+                        '<th>订单金额</th>'+
                         '<th>订单需求</th>\n' +
                         '<th>订单状态</th>\n' +
                         '<th>派遣</th>\n' +
@@ -476,12 +479,14 @@
                         var serviceName=data.list[i].offerService.serviceName;
                         var startTime=data.list[i].startTime;
                         var userName=data.list[i].user.userName;
+                        var money=data.list[i].orderBigTime.sum;
                         var node='<tr>\n' +
                             '<td hidden="hidden">'+orderId+'</td>\n' +
                             '<td>'+orderNumber+'</td>\n' +
                             '<td>'+serviceName+'</td>\n' +
                             '<td>'+startTime+'</td>\n' +
                             '<td>'+userName+'</td>\n' +
+                            '<td>'+money+'</td>'+
                             '<td><button class="btn btn-info look_requires" data-toggle="modal" data-target="#demand-modal">查看</button></td>\n' +
                             '<td>已支付</td>\n' +
                             '<td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal" class="dispatch">派遣</button></td>\n' +
