@@ -4,10 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import xin.yiliya.pojo.OrderSimple;
-import xin.yiliya.pojo.ServicePeople;
-import xin.yiliya.pojo.ServicePeopleTemp;
-import xin.yiliya.pojo.Store;
+import xin.yiliya.pojo.*;
 import xin.yiliya.service.OrderService;
 import xin.yiliya.service.ServicePeopleService;
 
@@ -99,6 +96,12 @@ public class StoreWaitController extends BaseController{
     public String dispatchTemplateDo(@ModelAttribute("servicePeopleTemp") ServicePeopleTemp servicePeopleTemp){
         servicePeopleService.addTempServicePeople(servicePeopleTemp,true);
         return "redirect:/storeAdmin/storeWait.html";
+    }
+
+    @RequestMapping(value = "/lookRequires.do",method = RequestMethod.POST)
+    @ResponseBody
+    public UserRequire getUserRequires(Integer orderId){
+        return orderService.getUserRequires(orderId);
     }
 
 }

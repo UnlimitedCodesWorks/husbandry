@@ -308,7 +308,7 @@
                                             <td><c:out value="${waitOrder.offerService.serviceName}"/></td>
                                             <td><fmt:formatDate value="${waitOrder.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><c:out value="${waitOrder.user.userName}"/></td>
-                                            <td><button class="btn btn-info" data-toggle="modal" data-target="#demand-modal">查看</button></td>
+                                            <td><button class="btn btn-info look_requires" data-toggle="modal" data-target="#demand-modal">查看</button></td>
                                             <td>已支付</td>
                                             <td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal">派遣</button></td>
                                         </tr>
@@ -331,24 +331,7 @@
                     <h4 class="modal-title">用户需求</h4>
                 </div>
                 <form class="form-horizontal">
-                    <div class="modal-body">
-                        <div>
-                            <!-- 需求 -->
-                            <div class="row">
-                                <div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">需求1</div>
-                                <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam doloremque commodi ut perferendis dolore rem non atque quibusdam placeat repudiandae sint, aut reiciendis cum, inventore aspernatur quae vero fugit iusto.</p>
-                                </div>
-                            </div>
-                            <!-- 需求 -->
-                            <div class="row">
-                                <div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">需求2</div>
-                                <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam doloremque commodi ut perferendis dolore rem non atque quibusdam placeat repudiandae sint, aut reiciendis cum, inventore aspernatur quae vero fugit iusto.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="modal-body" id="require-body"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
@@ -499,7 +482,7 @@
                             '<td>'+serviceName+'</td>\n' +
                             '<td>'+startTime+'</td>\n' +
                             '<td>'+userName+'</td>\n' +
-                            '<td><button class="btn btn-info" data-toggle="modal" data-target="#demand-modal">查看</button></td>\n' +
+                            '<td><button class="btn btn-info look_requires" data-toggle="modal" data-target="#demand-modal">查看</button></td>\n' +
                             '<td>已支付</td>\n' +
                             '<td><button class="dispatch btn btn-info" data-toggle="modal" data-target="#staff-modal" class="dispatch">派遣</button></td>\n' +
                             '</tr>';
@@ -507,7 +490,40 @@
                         table.append('</tbody>');
                     }
                     dispatchTemp();
+                    lookRequires();
                 }
+
+                function lookRequires() {
+                    $('.look_requires').click(function () {
+                        var orderId=$(this).parent().parent().children("td").eq(0).html();
+                        $.ajax({
+                            url :portPath + 'storeAdmin/lookRequires.do',
+                            type : "post",
+                            data:{orderId:orderId},
+                            async: true,
+                            success: function(data){
+                                $('#user_requires').remove();
+                                var node1='<div id="user_requires">\n';
+                                var node2='';
+                                for(var i=0;i<data.requireList.length;i++){
+                                    node2=node2+'<div class="row">\n' +
+                                        '<div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">'+data.requireList[i].problem+'</div>\n' +
+                                        '<div class="col-md-12">\n' +
+                                        '<p>'+data.requireList[i].requireContents[0].content+'</p>\n' +
+                                        '</div>\n' +
+                                        '</div>\n';
+                                }
+                                var node3='</div>';
+                                var node=node1+node2+node3;
+                                $('#require-body').append(node);
+                            },
+                            error: function(jqXHR){
+                                alert("发生错误：" + jqXHR.status);
+                            }
+                        });
+                    });
+                }
+                lookRequires();
 
                 function dispatchTemp() {
                     $('.dispatch').click(function () {
