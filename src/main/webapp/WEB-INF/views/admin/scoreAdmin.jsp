@@ -178,7 +178,6 @@
                                                 <th>商户电话</th>
                                                 <th>商户邮箱</th>
                                                 <th>商户评分</th>
-                                                <th>服务评分详情</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -195,7 +194,6 @@
                                                         <td class="select"><c:out value="${scoreStore.phone}"/></td>
                                                         <td class="select"><c:out value="${scoreStore.email}"/></td>
                                                         <td class="select"><c:if test="${scoreStore.grade==0}">未评分</c:if><c:if test="${scoreStore.grade!=0}">${scoreStore.grade}</c:if></td>
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td>
                                                     </tr>
                                                 </c:forEach>
                                             </c:if>
@@ -381,7 +379,7 @@
                 var table=$('#scoreTable');
                 table.find('thead').remove();
                 table.find('tbody').remove();
-                var theadNode='<thead><tr><th>商户名称</th><th>商户电话</th><th>商户邮箱</th><th>商户评分</th><th>服务评分详情</th></tr></thead><tbody>';
+                var theadNode='<thead><tr><th>商户名称</th><th>商户电话</th><th>商户邮箱</th><th>商户评分</th></tr></thead><tbody>';
                 table.append(theadNode);
                 for(var i=0;i<data.list.length;i++){
                     var storeId=data.list[i].storeId;
@@ -399,7 +397,7 @@
                         node2=grade;
                     }
                     var node3='</td>' +
-                        '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">查看</button></td></tr>';
+                        '</tr>';
                     var node=node1+node2+node3;
                     table.append(node);
                 }

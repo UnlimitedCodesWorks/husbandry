@@ -187,7 +187,8 @@
                                 <h3 class="box-title">每月订单成交量</h3>
                                     <select class="selectpicker" name="timeYear" id="orderSelect">
                                         <option>2016</option>
-                                        <option selected="selected">2017</option>
+                                        <option>2017</option>
+                                        <option selected="selected">2018</option>
                                     </select>
                                     <button type="button" class="btn btn-primary btn-xs" id="monthOrder">查询</button>
                                 <div class="box-tools pull-right">

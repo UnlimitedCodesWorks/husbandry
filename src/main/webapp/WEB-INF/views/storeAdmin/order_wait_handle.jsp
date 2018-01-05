@@ -507,6 +507,10 @@
                             data:{orderId:orderId},
                             async: true,
                             success: function(data){
+                                var start=new Date(data.startTime).format("yyyy-MM-dd");
+                                var days=data.orderBigTime.day;
+                                var months=data.orderBigTime.month;
+                                var endTime=new Date(start).DateAdd("d",days).DateAdd("m",months).format("yyyy-MM-dd");
                                 $('#user_requires').remove();
                                 var node1='<div id="user_requires">\n';
                                 var node2='';
@@ -518,8 +522,18 @@
                                         '</div>\n' +
                                         '</div>\n';
                                 }
-                                var node3='</div>';
-                                var node=node1+node2+node3;
+                                var node3='<div class="row">\n' +
+                                    '<div class="col-md-12" style="font-size: 18px;margin-bottom: 10px;">客户服务周期及时间段选定</div>\n' +
+                                    '<div class="col-md-12">\n' +
+                                    '<p>时间周期：'+start+'~'+endTime+'</p>\n';
+                                var node4='<p style="margin-top:5px;">时间段点：';
+                                for(var i=0;i<data.orderBigTime.orderSmallTimeList.length;i++){
+                                    node4=node4+data.orderBigTime.orderSmallTimeList[i].startHour+':00~'+data.orderBigTime.orderSmallTimeList[i].endHour+':00&nbsp;&nbsp;&nbsp;&nbsp;';
+                                }
+                                var node5='</p>\n' +
+                                    '</div>\n' +
+                                    '</div></div>\n'
+                                var node=node1+node2+node3+node4+node5;
                                 $('#require-body').append(node);
                             },
                             error: function(jqXHR){
@@ -868,6 +882,20 @@
                     }
                 }
                 return fmt;
+            };
+
+            Date.prototype.DateAdd = function(strInterval, Number) {
+                var dtTmp = this;
+                switch (strInterval) {
+                    case 's' :return new Date(Date.parse(dtTmp) + (1000 * Number));
+                    case 'n' :return new Date(Date.parse(dtTmp) + (60000 * Number));
+                    case 'h' :return new Date(Date.parse(dtTmp) + (3600000 * Number));
+                    case 'd' :return new Date(Date.parse(dtTmp) + (86400000 * Number));
+                    case 'w' :return new Date(Date.parse(dtTmp) + ((86400000 * 7) * Number));
+                    case 'q' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number*3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+                    case 'm' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+                    case 'y' :return new Date((dtTmp.getFullYear() + Number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+                }
             };
 
             function getImg() {

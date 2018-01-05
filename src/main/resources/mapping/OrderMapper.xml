@@ -136,6 +136,7 @@
 
     <resultMap id="user_requires" type="xin.yiliya.pojo.UserRequire">
         <result property="orderId" column="orderid" />
+        <result property="startTime" column="start_time"/>
         <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
             <id column="orderpriceid" jdbcType="INTEGER" property="orderpriceid"/>
             <result column="month" jdbcType="INTEGER" property="month" />
@@ -396,7 +397,7 @@
     </select>
 
     <select id="getUserRequires" parameterType="Integer" resultMap="user_requires">
-        SELECT orderid,orderpriceid,month,day,sum,ordertimeid,start_hour,end_hour,requireid,problem,content
+        SELECT orderid,start_time,orderpriceid,month,day,sum,ordertimeid,start_hour,end_hour,requireid,problem,content
         from `order`,`require`,requirecontent,orderbigtime,ordersmalltime
         WHERE `order`.orderid=`require`.order_id
         AND `require`.requireid=requirecontent.require_id

@@ -1,10 +1,13 @@
 package xin.yiliya.pojo;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserRequire {
 
     private Integer orderId;
+
+    private Date startTime;
 
     private List<Require> requireList;
 
@@ -16,6 +19,14 @@ public class UserRequire {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public List<Require> getRequireList() {
