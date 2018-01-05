@@ -21,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/residentHome.css">
 	<link rel="stylesheet" type="text/css" href="../../../resources/css/cropper.css">
+	<link rel="stylesheet" type="text/css" href="../../../resources/font/font-awesome/css/font-awesome.min.css">
 	<title>智慧社区-居民个人中心</title>
 </head>
 <body>
@@ -244,6 +245,7 @@
 													<div class="layui-col-md10 layui-col-sm10 layui-col-xs12 name-wrap">
 														<a href="<%=portPath%>store/information/${order.storeInfo.storeid}">${order.storeInfo.storeName}</a>
 														<p>订单状态：待确认</p>
+														<a href="javascript:;" class="service-cycle" data-orderId="${order.orderid}">查看服务周期</a>
 														<span class="price-total">总价：￥${order.orderBigTime.sum}</span>
 													</div>
 													<div class="layui-col-md2 layui-col-sm2 layui-col-xs12">
@@ -422,6 +424,26 @@
 				</div>
 		</div>
 	</div>
+	</div>
+	<!-- 服务周期 -->
+	<div id="service-cycle">
+		<div class="layui-row" style="margin-top: 20px;">
+			<div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+				<p class="cycle-time" id="start-time"></p>
+			</div>
+			<div class="layui-col-md8 layui-col-sm8 layui-col-xs8">
+				<h3 class="progressbar-title" style="margin-bottom: 20px;">每日<span></span></h3>
+				<div class="progress">
+					<div class="layui-progress-bar" style="width: 10%; background: #92c26a;">
+						<span class="progress-icon fa fa-check" style="border-color:#92c26a; color:#92c26a;"></span>
+						<div class="progress-value"></div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+				<p class="cycle-time" id="end-time">2018-1-31</p>
+			</div>
+		</div>
 	</div>
 		<form id="uploadForm" enctype="multipart/form-data">
 
@@ -624,7 +646,7 @@
 				case 1:
                     container = $(".layui-container:eq(3)");
                     container.html("");
-                    line = "<p>订单状态：待确认</p>";
+                    line = "<p>订单状态：待确认</p>"+"<a href='javascript:;' class='service-cycle' data-orderId='"+orderId+"'>查看服务周期</a>";
                     buttons = '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
                         '<button class="layui-btn layui-btn-danger refund" data-orderId="'+orderId+'" >' +
                         '<i class="iconfont">&#xe614;</i> 撤销订单' +
