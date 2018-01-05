@@ -280,4 +280,10 @@ public class UserResidentController extends BaseController {
         return b;
     }
 
+    @RequestMapping(value = "/getOrderTime.do",method = RequestMethod.POST)
+    @ResponseBody
+    public OrderShow getOrderTime(Integer orderId){
+        return orderService.getOrderTimeById(orderId);
+    }
+
 }

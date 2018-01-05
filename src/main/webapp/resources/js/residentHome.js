@@ -171,7 +171,116 @@ jQuery(document).ready(function($) {
             });
 
         });
+
+        //查看服务周期
+        $(document).on('click', '.tab3-1 .service-cycle', function (event) {
+            var value = $(this).attr("data-orderId");
+            var now;
+            var startTime;
+            var endTime;
+            var days;
+            var months;
+            var dateDeltaNow;
+            var dateDeltaEnd;
+            var percentage;
+            var smallTime;
+            $.ajax({
+                type: "POST",
+                url: "getOrderTime.do",
+                data: {
+                    orderId:value
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#service-cycle .progressbar-title span").html("");
+                    now = getNowDate();
+                    startTime = new Date(data.startTime).Format("yyyy-MM-dd");
+                    days = data.orderBigTime.day;
+                    months = data.orderBigTime.month;
+                    endTime = new Date(startTime).DateAdd("d", days).DateAdd("m", months).Format("yyyy-MM-dd");
+                    dateDeltaNow = new Date(startTime).DateDiff("d", new Date(now));
+                    dateDeltaEnd = new Date(startTime).DateDiff("d", new Date(endTime));
+                    percentage = (dateDeltaNow/dateDeltaEnd)*100;
+                    smallTime = data.orderBigTime.orderSmallTimeList;
+					for(var i=0; i<smallTime.length; i++) {
+						$("#service-cycle .progressbar-title span").append(" "+smallTime[i].startHour+":00~"+smallTime[i].endHour+":00");
+					}
+                    if(percentage>=100) {
+                        $("#service-cycle .progress-value").html("已完成");
+                        $("#service-cycle .layui-progress-bar").css('width', '100%');
+					}
+					else {
+                        $("#service-cycle .progress-value").html(now);
+                        $("#service-cycle .layui-progress-bar").css('width', percentage+'%');
+					}
+                    $("#start-time").html(startTime);
+                    $("#end-time").html(endTime);
+                    layer.open({
+                        type: 1,
+                        title: '服务周期',
+                        area: layerWidth,
+                        anim: 2,
+                        content: $('#service-cycle')
+                    });
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        });
 	});
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
+    Date.prototype.DateAdd = function(strInterval, Number) {
+        var dtTmp = this;
+        switch (strInterval) {
+            case 's' :return new Date(Date.parse(dtTmp) + (1000 * Number));
+            case 'n' :return new Date(Date.parse(dtTmp) + (60000 * Number));
+            case 'h' :return new Date(Date.parse(dtTmp) + (3600000 * Number));
+            case 'd' :return new Date(Date.parse(dtTmp) + (86400000 * Number));
+            case 'w' :return new Date(Date.parse(dtTmp) + ((86400000 * 7) * Number));
+            case 'q' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number*3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+            case 'm' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+            case 'y' :return new Date((dtTmp.getFullYear() + Number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+        }
+    };
+
+    Date.prototype.DateDiff = function(strInterval, dtEnd) {
+        var dtStart = this;
+        if (typeof dtEnd == 'string' )//如果是字符串转换为日期型
+        {
+            dtEnd = StringToDate(dtEnd);
+        }
+        switch (strInterval) {
+            case 's' :return parseInt((dtEnd - dtStart) / 1000);
+            case 'n' :return parseInt((dtEnd - dtStart) / 60000);
+            case 'h' :return parseInt((dtEnd - dtStart) / 3600000);
+            case 'd' :return parseInt((dtEnd - dtStart) / 86400000);
+            case 'w' :return parseInt((dtEnd - dtStart) / (86400000 * 7));
+            case 'm' :return (dtEnd.getMonth()+1)+((dtEnd.getFullYear()-dtStart.getFullYear())*12) - (dtStart.getMonth()+1);
+            case 'y' :return dtEnd.getFullYear() - dtStart.getFullYear();
+        }
+    };
+
+    function getNowDate() {
+		var date = new Date().Format("yyyy-MM-dd");
+		return date;
+    }
 
 	var nav = new Vue({
 		el: 'nav',
