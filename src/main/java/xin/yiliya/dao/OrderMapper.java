@@ -56,7 +56,7 @@ public interface OrderMapper {
     List<OrderSimple> getAllStoreFinishByUserSearch(@Param(value="input")String input,
                                                       @Param(value="storeId") Integer storeId);
 
-    List<Require> getUserRequires(Integer orderId);
+    UserRequire getUserRequires(Integer orderId);
 
     Integer addUserOrderCancel(Cancel cancel);
 
