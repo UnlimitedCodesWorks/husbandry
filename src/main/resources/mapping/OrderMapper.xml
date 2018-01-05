@@ -44,6 +44,19 @@
         </association>
     </resultMap>
 
+    <resultMap id="orderTime" type="xin.yiliya.pojo.OrderShow">
+        <result property="startTime" column="start_time" />
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <result column="month" jdbcType="INTEGER" property="month"></result>
+            <result column="day" jdbcType="INTEGER" property="day"></result>
+            <result column="sum" jdbcType="VARCHAR" property="sum"></result>
+            <collection property="orderSmallTimeList" ofType="xin.yiliya.pojo.OrderSmallTime">
+                <result property="startHour" column="start_hour" jdbcType="INTEGER"></result>
+                <result property="endHour" column="end_hour" jdbcType="INTEGER"></result>
+            </collection>
+        </association>
+    </resultMap>
+
     <resultMap id="Base_cancel" type="xin.yiliya.pojo.OrderCancel">
         <id property="orderid" column="orderid" />
         <result property="orderNumber" column="order_number" />
@@ -145,6 +158,10 @@
     <sql id="store_cancel">
         orderid,`order`.order_number,`order`.user_id,`order`.`status`,`order`.start_time,serkind,
         `user`.user_name,cancelid,reason,service_name AS serviceName
+    </sql>
+
+    <sql id="time">
+        start_time,month,day,sum,start_hour,end_hour
     </sql>
 
     <select id="getServiceTypeFinish" resultType="Integer">
@@ -478,4 +495,12 @@
     <update id="afterDispatchOrder" parameterType="Integer">
         UPDATE `order` SET `status`=1,end_time=NOW() WHERE orderid=#{orderId}
     </update>
+
+    <select id="getOrderTimeById" parameterType="Integer" resultMap="orderTime">
+        SELECT <include refid="time" />
+        from `order`,orderbigtime,ordersmalltime
+        WHERE `order`.orderid=orderbigtime.order_id
+        and orderbigtime.orderpriceid=ordersmalltime.orderbigtime_id
+        AND `order`.orderid=#{orderId}
+    </select>
 </mapper>

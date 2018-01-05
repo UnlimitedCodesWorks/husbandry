@@ -102,4 +102,7 @@ public interface OrderService {
     //商户拒绝客户退款
     Boolean StoreRefuseCancelOrder(Integer orderId);
 
+    //查看订单周期
+    OrderShow getOrderTimeById(Integer orderId);
+
 }

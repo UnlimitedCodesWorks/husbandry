@@ -83,4 +83,6 @@ public interface OrderMapper {
     String getCancelReason(Integer cancelId);
 
     Integer afterDispatchOrder(int orderId);
+
+    OrderShow getOrderTimeById(Integer orderId);
 }

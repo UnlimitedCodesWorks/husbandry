@@ -157,8 +157,8 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户退款订单
-        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(24,1,2);
-        System.out.print(JSON.toJSONString(info,true));
+//        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(24,1,2);
+//        System.out.print(JSON.toJSONString(info,true));
 
         //确认需求表单生成订单order
 //        RequireList requires=new RequireList();
@@ -254,7 +254,7 @@ public class HhfTest {
 //        System.out.print(n);
 
         //获取商家订单需求
-//        List<Require> requires=orderService.getUserRequires(10);
+//        List<Require> requires=orderService.getUserRequires(23);
 //        System.out.print(JSON.toJSONString(requires,true));
 
         //某服务类型服务订单完成的次数(不包括退款)
@@ -387,5 +387,9 @@ public class HhfTest {
 //        servicePeopleTemp.setOrderId(6);
 //        Boolean b=servicePeopleService.addTempServicePeople(servicePeopleTemp);
 //        System.out.print(b);
+
+        //根据订单id获取时间周期
+        OrderShow orderShow=orderService.getOrderTimeById(35);
+        System.out.print(JSON.toJSONString(orderShow,true));
     }
 }

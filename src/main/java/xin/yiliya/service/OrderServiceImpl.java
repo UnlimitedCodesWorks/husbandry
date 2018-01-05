@@ -217,4 +217,7 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.sureCount(storeId);
     }
 
+    public OrderShow getOrderTimeById(Integer orderId) {
+        return orderMapper.getOrderTimeById(orderId);
+    }
 }
