@@ -182,9 +182,8 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    public List<Require> getUserRequires(Integer orderId) {
-        List<Require> requires=orderMapper.getUserRequires(orderId);
-        return requires;
+    public UserRequire getUserRequires(Integer orderId) {
+        return orderMapper.getUserRequires(orderId);
     }
 
     public Boolean storeSureCancelOrder(Integer orderId) {

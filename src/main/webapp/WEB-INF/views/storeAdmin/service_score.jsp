@@ -239,7 +239,7 @@
                     				<th>服务名称</th>
                     				<th>创建时间</th>
                     				<th>服务评分</th>
-                    				<th>服务评分状态</th>
+                    				<th>总体评分状态</th>
                     			</tr>
                     		</thead>
                     		<tbody>
@@ -319,7 +319,7 @@
                 var table=$('#serviceScoreTable');
                 table.find('thead').remove();
                 table.find('tbody').remove();
-                var theadNode='<thead><tr><th>服务名称</th><th>创建时间</th><th>服务评分</th><th>服务评分状态</th></tr></thead><tbody>';
+                var theadNode='<thead><tr><th>服务名称</th><th>创建时间</th><th>服务评分</th><th>总体评分状态</th></tr></thead><tbody>';
                 table.append(theadNode);
                 for(var i=0;i<data.list.length;i++){
                     var serviceId=data.list[i].offerServiceId;
@@ -355,7 +355,7 @@
                                 daynum.push(data.days[i].dayNum);
                                 grade.push(data.days[i].grade);
                             }
-                            if(data.grade>0 && data.grade<3){
+                            if(data.grade>=0 && data.grade<3){
                                 node='<div class="alert alert-danger">';
                             }
                             else if(data.grade>3 && data.grade<6){
@@ -367,7 +367,7 @@
                             var node1='服务名称：'+data.serviceName+
                                 '&nbsp;&nbsp;&nbsp;&nbsp;该月平均分：'+data.grade+'分' +
                                 '&nbsp;&nbsp;&nbsp;&nbsp;时间：'+data.date+
-                                '&nbsp;&nbsp;&nbsp;&nbsp;状态：'+data.status+'</div>\n' +
+                                '&nbsp;&nbsp;&nbsp;&nbsp;当月服务状态：'+data.status+'</div>\n' +
                                 '<div class="card">\n' +
                                 '<div class="card-header">\n' +
                                 '<div class="card-title">\n' +

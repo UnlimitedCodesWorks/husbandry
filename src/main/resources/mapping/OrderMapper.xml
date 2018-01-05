@@ -128,13 +128,25 @@
         </association>
     </resultMap>
 
-    <resultMap id="user_requires" type="xin.yiliya.pojo.Require">
-        <id column="requireid" property="requireid"/>
-        <result column="order_id" property="orderId"/>
-        <result column="problem" property="problem"/>
-        <collection property="requireContents" ofType="xin.yiliya.pojo.RequireContent">
-            <id column="contentid" property="contentid"/>
-            <result column="content" property="content"/>
+    <resultMap id="user_requires" type="xin.yiliya.pojo.UserRequire">
+        <result property="orderId" column="orderid" />
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <id column="orderpriceid" jdbcType="INTEGER" property="orderpriceid"/>
+            <result column="month" jdbcType="INTEGER" property="month" />
+            <result column="day" jdbcType="INTEGER" property="day" />
+            <result column="sum" jdbcType="VARCHAR" property="sum" />
+            <collection property="orderSmallTimeList" ofType="xin.yiliya.pojo.OrderSmallTime">
+                <id column="ordertimeid" jdbcType="INTEGER" property="ordertimeid" />
+                <result column="start_hour" jdbcType="INTEGER" property="startHour" />
+                <result column="end_hour" jdbcType="INTEGER" property="endHour" />
+            </collection>
+        </association>
+        <collection property="requireList" ofType="xin.yiliya.pojo.Require">
+            <id column="requireid" property="requireid"></id>
+            <result property="problem" column="problem" jdbcType="VARCHAR"></result>
+            <collection property="requireContents" ofType="xin.yiliya.pojo.RequireContent">
+                <result property="content" column="content" jdbcType="VARCHAR"/>
+            </collection>
         </collection>
     </resultMap>
 
@@ -365,11 +377,14 @@
         ORDER BY end_time DESC
     </select>
 
-    <select id="getUserRequires" resultMap="user_requires">
-        SELECT requireid,order_id,problem,contentid,content
-        FROM `require`,requirecontent
-        WHERE order_id=#{orderId}
-        AND requireid=require_id
+    <select id="getUserRequires" parameterType="Integer" resultMap="user_requires">
+        SELECT orderid,orderpriceid,month,day,sum,ordertimeid,start_hour,end_hour,requireid,problem,content
+        from `order`,`require`,requirecontent,orderbigtime,ordersmalltime
+        WHERE `order`.orderid=`require`.order_id
+        AND `require`.requireid=requirecontent.require_id
+        AND `order`.orderid=orderbigtime.order_id
+        AND orderbigtime.orderpriceid=ordersmalltime.orderbigtime_id
+        AND `order`.orderid=#{orderId}
     </select>
 
     <insert id="addUserOrderCancel" keyProperty="cancelid" useGeneratedKeys="true" parameterType="xin.yiliya.pojo.Cancel">

@@ -254,8 +254,8 @@ public class HhfTest {
 //        System.out.print(n);
 
         //获取商家订单需求
-//        List<Require> requires=orderService.getUserRequires(23);
-//        System.out.print(JSON.toJSONString(requires,true));
+        UserRequire userRequire=orderService.getUserRequires(35);
+        System.out.print(JSON.toJSONString(userRequire,true));
 
         //某服务类型服务订单完成的次数(不包括退款)
 //        int n=orderService.getServiceTypeFinish(3);
@@ -363,7 +363,7 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,1,100),true));
 
         //获得某月份的服务评分曲线信息
-//        System.out.print(JSON.toJSONString(offerServiceService.getAllSimpleOfferServiceByStoreId(1,2,2),true));
+//        System.out.print(JSON.toJSONString(serviceEvaluateService.getGradePerMonthBySeviceId(2,"服务二",new Date()),true));
 
         //模糊搜索,获取商户待退款订单
 //        PageInfo<OrderCancel> pageInfo=orderService.getAllStoreCancelOrder("230","按订单号搜索",1,1,1);
@@ -389,7 +389,7 @@ public class HhfTest {
 //        System.out.print(b);
 
         //根据订单id获取时间周期
-        OrderShow orderShow=orderService.getOrderTimeById(35);
-        System.out.print(JSON.toJSONString(orderShow,true));
+//        OrderShow orderShow=orderService.getOrderTimeById(35);
+//        System.out.print(JSON.toJSONString(orderShow,true));
     }
 }

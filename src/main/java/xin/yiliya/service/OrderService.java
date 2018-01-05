@@ -94,7 +94,7 @@ public interface OrderService {
     PageInfo<OrderSimple> getAllStoreFinishOrder(String input,String type,Integer storeId, int currentPage, int pageSize);
 
     //获取每个订单用户的需求
-    List<Require> getUserRequires(Integer orderId);
+    UserRequire getUserRequires(Integer orderId);
 
     //商户通过客户退款
     Boolean storeSureCancelOrder(Integer orderId);
