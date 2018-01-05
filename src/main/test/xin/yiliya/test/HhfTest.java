@@ -218,7 +218,7 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取商户待已完成订单
-//        PageInfo<OrderSimple> info=orderService.getAllStoreFinishOrder(5,2,2);
+//        PageInfo<OrderSimple> info=orderService.getAllStoreFinishOrder(1,1,100);
 //        System.out.print(JSON.toJSONString(info,true));
 
         //客户撤销订单
@@ -254,8 +254,8 @@ public class HhfTest {
 //        System.out.print(n);
 
         //获取商家订单需求
-        UserRequire userRequire=orderService.getUserRequires(35);
-        System.out.print(JSON.toJSONString(userRequire,true));
+//        UserRequire userRequire=orderService.getUserRequires(35);
+//        System.out.print(JSON.toJSONString(userRequire,true));
 
         //某服务类型服务订单完成的次数(不包括退款)
 //        int n=orderService.getServiceTypeFinish(3);

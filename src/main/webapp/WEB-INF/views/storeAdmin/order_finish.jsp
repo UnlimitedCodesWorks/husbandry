@@ -246,6 +246,7 @@
                                     <th>创建时间</th>
                                     <th>完成时间</th>
                                     <th>订单发起人</th>
+                                    <th>订单金额</th>
                                     <th>完成状态</th>
                                 </tr>
                             </thead>
@@ -263,6 +264,7 @@
                                             <td><fmt:formatDate value="${finishOrder.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><fmt:formatDate value="${finishOrder.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                             <td><c:out value="${finishOrder.user.userName}"/></td>
+                                            <td><c:out value="${finishOrder.orderBigTime.sum}"/></td>
                                             <c:if test="${finishOrder.status==2}">
                                                 <td>交易成功</td>
                                             </c:if>
@@ -346,6 +348,7 @@
                     '<th>创建时间</th>' +
                     '<th>完成时间</th>' +
                     '<th>订单发起人</th>' +
+                    '<th>订单金额</th>'+
                     '<th>完成状态</th>'+
                     '</tr>' +
                     '</thead><tbody>';
@@ -356,6 +359,7 @@
                     var startTime=data.list[i].startTime;
                     var endTime=data.list[i].endTime;
                     var userName=data.list[i].user.userName;
+                    var money=data.list[i].orderBigTime.sum
                     var finishStatus=(data.list[i].status==2)?"交易成功":"退款成功";
                     var node='<tr>\n' +
                         '<td>'+orderNumber+'</td>\n' +
@@ -363,6 +367,7 @@
                         '<td>'+startTime+'</td>\n' +
                         '<td>'+endTime+'</td>\n' +
                         '<td>'+userName+'</td>\n' +
+                        '<td>'+money+'</td>'+
                         '<td>'+finishStatus+'</td>\n' +
                         '</tr>';
                     table.append(node);

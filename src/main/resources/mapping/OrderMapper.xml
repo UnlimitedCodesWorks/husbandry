@@ -105,6 +105,9 @@
         <association property="offerService" javaType="xin.yiliya.pojo.OfferService">
             <result property="serviceName" jdbcType="VARCHAR" column="serviceName"/>
         </association>
+        <association property="orderBigTime" javaType="xin.yiliya.pojo.OrderBigTime">
+            <result column="sum" jdbcType="VARCHAR" property="sum"></result>
+        </association>
     </resultMap>
 
     <resultMap id="store_cancel" type="xin.yiliya.pojo.OrderCancel">
@@ -164,7 +167,7 @@
     </sql>
 
     <sql id="store_handle">
-        orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name,service_name AS serviceName
+        orderid,order_number,start_time,end_time,`order`.`status`,serid,serKind,userid,user_name,service_name AS serviceName,orderbigtime.sum AS sum
     </sql>
 
     <sql id="store_cancel">
@@ -269,9 +272,10 @@
 
     <select id="getAllStoreFinishOrder" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
+        AND orderbigtime.order_id=`order`.orderid
         AND kind=serid
         AND `order`.`status` IN(2,4)
         AND store_id=#{storeId}
@@ -353,8 +357,9 @@
 
     <select id="getAllStoreFinishByNumberSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
+        AND orderbigtime.order_id=`order`.orderid
         AND service_id=offerserviceid
         AND kind=serid
         AND `order`.`status` IN(2,4)
@@ -366,9 +371,10 @@
 
     <select id="getAllStoreFinishByUserSearch" resultMap="store_handle">
         SELECT <include refid="store_handle" />
-        FROM `user`,`order`,offerservice,service
+        FROM `user`,`order`,offerservice,service,orderbigtime
         WHERE `order`.user_id=`user`.userid
         AND service_id=offerserviceid
+        AND orderbigtime.order_id=`order`.orderid
         AND kind=serid
         AND `order`.`status` IN(2,4)
         AND store_id=#{storeId}

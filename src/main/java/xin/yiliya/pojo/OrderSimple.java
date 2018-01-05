@@ -20,6 +20,8 @@ public class OrderSimple {
 
     private OfferService offerService;
 
+    private OrderBigTime orderBigTime;
+
     public Integer getOrderid() {
         return orderid;
     }
@@ -82,5 +84,13 @@ public class OrderSimple {
 
     public void setOfferService(OfferService offerService) {
         this.offerService = offerService;
+    }
+
+    public OrderBigTime getOrderBigTime() {
+        return orderBigTime;
+    }
+
+    public void setOrderBigTime(OrderBigTime orderBigTime) {
+        this.orderBigTime = orderBigTime;
     }
 }
