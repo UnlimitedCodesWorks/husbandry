@@ -226,7 +226,7 @@ public class AdminController {
     @RequestMapping(value = "/serviceDetail.do",method = RequestMethod.POST)
     @ResponseBody
     public OfferServiceDetail getServiceDetailDo(Integer offerServiceId){
-        return offerServiceService.getOfferServiceDetailByServiceId(offerServiceId);
+        return offerServiceService.getSOfferServiceDetailByServiceId(offerServiceId);
     }
 
     @RequestMapping(value = "/useStore.html",method = RequestMethod.GET)
