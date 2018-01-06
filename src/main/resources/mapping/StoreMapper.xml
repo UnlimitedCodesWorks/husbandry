@@ -128,7 +128,9 @@
     SELECT
     <include refid="selectStoreSimpleByStoreId" />
     from offerservice,store
-    where offerservice.store_id = store.storeid and store.storeid = #{storeId,jdbcType=INTEGER}
+    where offerservice.store_id = store.storeid
+    AND store.storeid = #{storeId,jdbcType=INTEGER}
+    AND offerservice.`status`=1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
