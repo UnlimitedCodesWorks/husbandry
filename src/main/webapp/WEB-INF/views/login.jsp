@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../resources/css/layui.css">
     <link rel="stylesheet" href="../../resources/css/login.css">
-    <title>智慧社区-登陆</title>
+    <title>智慧社区-登录</title>
 </head>
 
 <body>
