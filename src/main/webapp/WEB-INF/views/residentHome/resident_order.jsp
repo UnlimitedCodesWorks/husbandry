@@ -357,7 +357,7 @@
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-primary">
+																<button class="layui-btn layui-btn-primary" onclick="location.href='<%=portPath%>service/detail/${order.offerService.offerserviceid}'">
 																	<i class="iconfont evaluate">&#xe62b;</i> 评价
 																</button>
 															</div>
@@ -678,7 +678,7 @@
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-primary">' +
+                        '<button class="layui-btn layui-btn-primary" onclick="location.href=\"'+href+'\"">' +
                         '<i class="iconfont evaluate">&#xe62b;</i> 评价' +
                         '</button>' +
                         '</div>';

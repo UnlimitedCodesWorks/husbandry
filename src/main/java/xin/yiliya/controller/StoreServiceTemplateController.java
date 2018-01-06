@@ -35,7 +35,7 @@ public class StoreServiceTemplateController {
     public String serviceTemplate(Model model){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
-        int pageSize = 1;
+        int pageSize = 10;
         PageInfo<OfferServiceTemplate> offerServiceTemplatePageInfo = offerServiceService.getAllOfferServiceTemplateByStoreId(storeId,1,pageSize);
         model.addAttribute("serviceTemplates",offerServiceTemplatePageInfo.getList());
         model.addAttribute("serviceTemplatePages",offerServiceTemplatePageInfo.getPages());
@@ -62,7 +62,7 @@ public class StoreServiceTemplateController {
     public List<OfferServiceTemplate> getServiceTemplate(Integer currentPage){
         Store store = (Store) session.getAttribute("storeBean");
         Integer storeId = store.getStoreid();
-        int pageSize = 1;
+        int pageSize = 10;
         return offerServiceService.getAllOfferServiceTemplateByStoreId(storeId,currentPage,pageSize).getList();
     }
 
