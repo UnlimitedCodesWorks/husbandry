@@ -55,6 +55,15 @@ $(function() {
     });
 });
 
+$(window).resize(function() {
+    if ($(window).width() < 992) {
+        $(".search_main").css("height", "1400px");
+
+    } else {
+        $(".search_main").css("height", "700px");
+
+    }
+});
 
 
 
