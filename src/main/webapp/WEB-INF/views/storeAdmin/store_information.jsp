@@ -391,7 +391,7 @@
                             <div class="col-md-6 col-md-offset-1">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">修改头像</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="head-wrap">
                                             <div>
                                                 <a href="" data-toggle="modal" data-target="#head-modal">修改头像</a>
@@ -410,7 +410,7 @@
                             <div class="col-md-6 col-md-offset-1">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">修改LOGO</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <img id="logo" src="${storeDetail.logoImg}" onerror="this.src='http://t.cn/RCzsdCq'">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#logo-modal"><i class="icon fa fa-pencil-square-o"></i> 点击修改</button>
                                     </div>
