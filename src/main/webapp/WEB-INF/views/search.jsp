@@ -487,6 +487,7 @@
             var serviceName = data.list[i].serviceName;
             var storeName = data.list[i].store.storeName;
             var path = portPath+"service/detail/"+data.list[i].offerServiceId;
+            var storePath = portPath+"store/information/"+data.list[i].store.storeid;
             if(content.length!=0){
                 serviceName=serviceName.replace(content,redContent);
                 storeName=storeName.replace(content,redContent);
