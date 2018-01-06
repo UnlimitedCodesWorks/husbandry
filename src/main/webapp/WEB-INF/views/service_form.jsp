@@ -166,7 +166,7 @@
                         <font>选择预约您中意的家政服务</font>
                     </div>
                     <div class="layui-col-md9 layui-col-sm12 layui-col-xs12 layui-col-md-offset1 service_advert_spt2_img">
-                        <img src="../../resources/images/stp1.png">
+                        <img src="../../resources/images/stp2.png">
                     </div>
                 </div>
 
