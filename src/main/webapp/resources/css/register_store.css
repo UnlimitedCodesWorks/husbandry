@@ -344,3 +344,22 @@
     height: inherit;
     width: 100%;
 }
+
+.upload {
+    position: relative;
+    cursor: default;
+    overflow: hidden;
+    float: left;
+    margin-top: 20px;
+}
+
+.upload input {
+    opacity: 0;
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    cursor: pointer;
+}

@@ -87,6 +87,10 @@
         .btn-info {
             margin: 0;
         }
+
+        #user_requires .row:hover {
+            background: #efefef;
+        }
     </style>
 </head>
 

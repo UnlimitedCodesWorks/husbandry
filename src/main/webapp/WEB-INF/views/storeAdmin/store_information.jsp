@@ -104,6 +104,11 @@
             display: inline-block;
             cursor: pointer;
         }
+
+        #logo {
+            width: 160px;
+            height: 40px;
+        }
     </style>
 </head>
 
@@ -406,6 +411,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">修改LOGO</label>
                                     <div class="col-sm-3">
+                                        <img id="logo" src="${storeDetail.logoImg}" onerror="this.src='http://t.cn/RCzsdCq'">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#logo-modal"><i class="icon fa fa-pencil-square-o"></i> 点击修改</button>
                                     </div>
                                     <div class="col-sm-3">
@@ -429,7 +435,7 @@
                         <div class="row">
                             <div class="col-md-6 col-md-offset-1">
                                 <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-3">
+                                    <div class="col-sm-offset-3 col-sm-6">
                                         <button type="button" class="btn btn-primary" style="width: 100%;" id="update-btn">保存</button>
                                     </div>
                                 </div>
@@ -566,7 +572,7 @@
             $('#logo-modal').on('shown.bs.modal', function () {
                 if(cropper2 == undefined) {
                     cropper2 = $('#logo-wrap img').cropper({
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 4 / 1,
                         // minContainerWidth: 500,
                         crop: function(data) {
                             // Output the result data for cropping image.
@@ -640,6 +646,8 @@
                 canvas.toBlob(function (blob) {
                    logoBlob = blob;
                    logoMIME = blob.type;
+                    url = URL.createObjectURL(blob);
+                    $("#logo").attr('src', url);
                 });
                 $("#logo-modal").modal('hide');
             });

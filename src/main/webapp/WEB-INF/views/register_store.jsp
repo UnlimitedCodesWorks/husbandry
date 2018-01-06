@@ -108,9 +108,11 @@ String registerPath =
                             </span>
                         </div>
                         <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 layui-form-item register_store_property">
-                            <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_porperty_text">资产证明</span>
+                            <span class="layui-col-md4 layui-col-sm2 layui-col-xs4 register_store_porperty_text">资质证明</span>
                             <span class="layui-col-md8 layui-col-sm10 layui-col-xs4">
-                                <input type="file" name="aptitudeImgs" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)">
+                                <button class="layui-btn layui-btn-primary upload">
+                                    <input type="file" name="aptitudeImgs" id="porperty_input" multiple class="register_store_porperty_input" onchange="imgPreview2(this)"> 选择文件
+                                </button>
                             </span>
                             <div id="register_store_porperty_show" class="layui-col-md12 layui-col-sm12 layui-col-xs12 register_store_porperty_show">
                             </div>

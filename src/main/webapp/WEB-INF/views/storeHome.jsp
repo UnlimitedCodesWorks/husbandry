@@ -86,7 +86,7 @@
 					<!-- 名字&评分&粉丝&按钮组 -->
 					<div class="layui-col-md10 layui-col-sm10">
 						<div class="row layui-row layui-col-space10">
-							<div class="layui-col-md6 layui-col-sm6">
+							<div class="layui-col-md10 layui-col-sm10">
 								<div class="row-in layui-row layui-col-space10">
 									<div class="layui-col-md12">
 										<h3>${storeInfo.storeName}</h3>
@@ -105,10 +105,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="layui-col-md6 layui-col-sm6">
+							<div class="layui-col-md2 layui-col-sm2">
 								<div class="row-in2 layui-row layui-col-space10">
 									<c:if test="${!empty user}">
-									<div class="layui-col-md4 layui-col-sm12" id="concern-container">
+									<div class="layui-col-md12 layui-col-sm12" id="concern-container">
 										<c:if test="${!userConcern}">
 										<button class="layui-btn" onclick="concernStore()">
 											<i class="iconfont">&#xe611;</i> 关注
@@ -122,7 +122,7 @@
 									</div>
 									</c:if>
 									<c:if test="${!empty store}">
-									<div class="layui-col-md4 layui-col-sm12">
+									<div class="layui-col-md12 layui-col-sm12">
 										<button class="layui-btn layui-btn-normal" onclick="window.location.href='<%=portPath%>storeAdmin/information.html'">
 											<i class="iconfont">&#xe722;</i>后台管理
 										</button>
@@ -291,7 +291,7 @@
 								</c:forEach>
 							</c:if>
    						</div>
-   						<div class="layui-fulid" style="height: 120px;">
+   						<div class="layui-fulid" style="height: 120px;padding-top: 55px;">
 							<div id="comment-page"></div>
 						</div>
    					</div>
