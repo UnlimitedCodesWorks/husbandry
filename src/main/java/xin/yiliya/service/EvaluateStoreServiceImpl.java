@@ -94,11 +94,14 @@ public class EvaluateStoreServiceImpl implements EvaluateStoreService {
         StoreEvalutePerMonth storeEvalutePerMonth = new StoreEvalutePerMonth();
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
             String nowTime = dateFormat.format(time);
-            String[] date = nowTime.split("-");
+            String nowTime1 = dateFormat1.format(time);
+            String[] date = nowTime1.split("-");
             int year = Integer.valueOf(date[0]);
             int month = Integer.valueOf(date[1]);
-            int days = DateManager.getDaysByYearAndMonth(year,month);
+            //int days = DateManager.getDaysByYearAndMonth(year,month);
+            int days = Integer.valueOf(date[2]);
             storeEvalutePerMonth.setDate(time);
             storeEvalutePerMonth.setStoreName(storeName);
             List<StoreEvalutePerDay> storeEvalutePerDays = new LinkedList<StoreEvalutePerDay>();

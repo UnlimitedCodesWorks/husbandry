@@ -212,7 +212,7 @@
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" data-serviceName="${order.offerService.serviceName}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
@@ -281,12 +281,12 @@
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" data-serviceName="${order.offerService.serviceName}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-primary orderConfirm" data-orderId="${order.orderid}" >
+																<button class="layui-btn layui-btn-primary orderConfirm" data-orderId="${order.orderid}"  >
 																	<i class="iconfont confirm">&#xe6e2;</i> 确认订单
 																</button>
 															</div>
@@ -352,7 +352,7 @@
 																</button>
 															</div>
 															<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">
-																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" >
+																<button class="layui-btn layui-btn-normal check-progress" data-orderId="${order.orderid}" data-serviceName="${order.offerService.serviceName}" >
 																	<i class="iconfont">&#xe608;</i> 查看服务进展
 																</button>
 															</div>
@@ -636,7 +636,7 @@
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" data-serviceName="'+data.list[i].offerService.serviceName+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
@@ -653,7 +653,7 @@
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" data-serviceName="'+data.list[i].offerService.serviceName+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
@@ -673,7 +673,7 @@
                         '</button>' +
                         '</div>' +
                         '<div class="layui-col-md12 layui-col-sm4 layui-col-xs12">' +
-                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" >' +
+                        '<button class="layui-btn layui-btn-normal check-progress" data-orderId="'+orderId+'" data-serviceName="'+data.list[i].offerService.serviceName+'" >' +
                         '<i class="iconfont">&#xe608;</i> 查看服务进展' +
                         '</button>' +
                         '</div>' +
@@ -828,7 +828,12 @@
     function createServicePeople(data) {
         var container = $("#service-container");
         container.html("");
-        var status = data[0].orderStatus;
+        var status;
+        if(data.length==0){
+            status = 0;
+		}else {
+            status = data[0].orderStatus;
+		}
         var node;
         switch (status){
 			case 0:
@@ -845,9 +850,7 @@
                     '<div class="state-detail" id="process3"><p>订单交易成功</p></div>' +
                     '</div>' +
                     '</div>' +
-                    '<hr>' +
-                    '<!-- 员工 -->' +
-                    '<h2 class="layui-col-md12 layui-col-sm12 layui-col-xs12">服务人员情况</h2>';
+                    '<hr>' ;
 				break;
 			case 1:
                 node = '<!-- 状态 -->' +

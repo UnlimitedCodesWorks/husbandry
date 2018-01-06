@@ -35,6 +35,7 @@ jQuery(document).ready(function($) {
   		var layer = layui.layer;
   		$(".check-progress").click(function(event) {
   			var value = $(this).attr("data-orderId");
+            var serviceName = $(this).attr("data-serviceName");
             $.ajax({
                 type: "POST",
                 url: portPath+"userResident/getOrderServicePeople.do",
@@ -46,7 +47,7 @@ jQuery(document).ready(function($) {
                     createServicePeople(data);
                     layer.open({
                         type: 1,
-                        title: ''+data[0].serviceName+'服务进展状态',
+                        title: ''+serviceName+'服务进展状态',
                         area: layerWidth,
                         anim: 2,
                         content: $('#service-progress')

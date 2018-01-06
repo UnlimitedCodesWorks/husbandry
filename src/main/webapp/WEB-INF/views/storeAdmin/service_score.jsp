@@ -41,6 +41,11 @@
     <script type="text/javascript" src="../../../resources/js/app.js"></script>
     <script type="text/javascript" src="../../../resources/layui.js"></script>
     <script type="text/javascript" src="../../../resources/js/Chart.min.js"></script>
+    <style type="text/css">
+        .chart{
+            padding: 30px;
+        }
+    </style>
 </head>
 
 <body class="flat-blue">

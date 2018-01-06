@@ -108,22 +108,25 @@ public class ServiceEvaluateServiceImpl implements ServiceEvaluateService {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         ServiceEvalutePerMonth serviceEvalutePerMonth = new ServiceEvalutePerMonth();
         try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM");
             String nowTime = dateFormat.format(time);
+            String nowTime1 = dateFormat1.format(time);
             String[] date = nowTime.split("-");
             int year = Integer.valueOf(date[0]);
             int month = Integer.valueOf(date[1]);
-            int days = DateManager.getDaysByYearAndMonth(year,month);
+            //int days = DateManager.getDaysByYearAndMonth(year,month);
+            int days = Integer.valueOf(date[2]);
             serviceEvalutePerMonth.setDate(time);
             serviceEvalutePerMonth.setServiceName(serviceName);
             List<ServiceEvalutePerDay> serviceEvalutePerDays = new LinkedList<ServiceEvalutePerDay>();
             float gradeSum = 0;
             int gradeDay = 0;
-            String startTime = nowTime + "-1"+" 00:00:00";
+            String startTime = nowTime1 + "-1"+" 00:00:00";
             for(int i=0;i<days;i++){
                 ServiceEvalutePerDay serviceEvalutePerDay = new ServiceEvalutePerDay();
                 serviceEvalutePerDay.setDayNum(i+1);
-                String endTime = nowTime + "-" +(i+1)+" 23:59:59";
+                String endTime = nowTime1 + "-" +(i+1)+" 23:59:59";
                 serviceEvalutePerDay.setGrade(Float.parseFloat(decimalFormat.format(evaluateServiceMapper.getGradePerDayBySeviceId(serviceId,startTime,endTime))));
                 serviceEvalutePerDay.setStatus(GradeJudge.judge(serviceEvalutePerDay.getGrade()));
                 serviceEvalutePerDays.add(serviceEvalutePerDay);
