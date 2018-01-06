@@ -379,7 +379,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">服务价格</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="price" class="form-control" placeholder="服务价格" required>
+                                            <input type="text" name="price" class="form-control" placeholder="服务价格（/小时）" required>
                                             <span class="help-block" style="color: red;display: none;">错误信息</span>
                                         </div>
                                     </div>
