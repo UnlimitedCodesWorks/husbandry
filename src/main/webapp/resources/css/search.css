@@ -162,9 +162,10 @@ font:hover{
 }
 
 .search_price {
-    font-size: 20px;
-    padding: 5px 0px 5px 5px;
+    font-size: 16px;
+    padding: 7px 0px 5px 5px;
     color: #5FB878;
+
     font-weight: bolder;
     float: left;
 }
