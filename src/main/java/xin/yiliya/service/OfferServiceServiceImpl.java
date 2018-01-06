@@ -307,7 +307,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 break;
             case Rank.PRICE_ASC :
                 PageHelper.startPage(currentPage,pageSize);
-                PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -322,10 +321,16 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                         object.setPriceJudge(false);
                     }
                 }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(Float.parseFloat(o1.getPrice())>Float.parseFloat(o2.getPrice())) return 1;
+                        else if(Float.parseFloat(o1.getPrice())<Float.parseFloat(o2.getPrice())) return -1;
+                        return 0;
+                    }
+                });
                 break;
             case Rank.PRICE_DESC :
                 PageHelper.startPage(currentPage,pageSize);
-                PageHelper.orderBy("price desc");
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -340,6 +345,13 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                         object.setPriceJudge(false);
                     }
                 }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(Float.parseFloat(o1.getPrice())<Float.parseFloat(o2.getPrice())) return 1;
+                        else if(Float.parseFloat(o1.getPrice())>Float.parseFloat(o2.getPrice())) return -1;
+                        return 0;
+                    }
+                });
                 break;
             case Rank.GRADE_ASC :
                 PageHelper.startPage(currentPage,pageSize);
@@ -475,7 +487,6 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 break;
             case Rank.PRICE_ASC :
                 PageHelper.startPage(currentPage,pageSize);
-                PageHelper.orderBy("price");
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -490,10 +501,16 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                         object.setPriceJudge(false);
                     }
                 }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(Float.parseFloat(o1.getPrice())>Float.parseFloat(o2.getPrice())) return 1;
+                        else if(Float.parseFloat(o1.getPrice())<Float.parseFloat(o2.getPrice())) return -1;
+                        return 0;
+                    }
+                });
                 break;
             case Rank.PRICE_DESC :
                 PageHelper.startPage(currentPage,pageSize);
-                PageHelper.orderBy("price desc");
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
@@ -508,6 +525,13 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                         object.setPriceJudge(false);
                     }
                 }
+                Collections.sort(list,new Comparator<OfferServiceSimple>(){
+                    public int compare(OfferServiceSimple o1, OfferServiceSimple o2) {
+                        if(Float.parseFloat(o1.getPrice())<Float.parseFloat(o2.getPrice())) return 1;
+                        else if(Float.parseFloat(o1.getPrice())>Float.parseFloat(o2.getPrice())) return -1;
+                        return 0;
+                    }
+                });
                 break;
             case Rank.GRADE_ASC :
                 PageHelper.startPage(currentPage,pageSize);
