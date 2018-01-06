@@ -95,13 +95,14 @@
     				<hr class="layui-bg-green">
     				<div class="layui-container">
 						<c:if test="${ifCommon}">
-    					<f:form  class="layui-form" modelAttribute="updateUser"  action="<%=formPath%>" method="post">
+    					<form  class="layui-form" action="<%=formPath%>" method="post">
+							<input type="hidden" name="registNum" value="${user.registNum}" />
     						<!-- 昵称 -->
     						<div class="layui-form-item">
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">昵称：</label>
 	    							<div class="layui-input-block">
-	      								<f:input path="userName" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
+	      								<input name="userName" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="${user.userName}" />
 	    							</div>
 	    						</div>
 	    						<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
@@ -151,7 +152,7 @@
     							<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 	    							<label class="layui-form-label">所处社区：</label>
 	    							<div class="layui-input-block">
-	      								<f:input  path="community" required="required"  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
+	      								<input  name="community" required="required"  lay-verify="required" placeholder="请输入您的社区" autocomplete="off" class="layui-input" value="${user.community}" />
 	    							</div>
 	    						</div>
     						</div>
@@ -187,7 +188,7 @@
      								</button>
     							</div>
   							</div>
-    					</f:form>
+    					</form>
 						</c:if>
 						<c:if test="${!ifCommon}">
 								<!-- 昵称 -->
@@ -209,7 +210,7 @@
 									<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
 										<label class="layui-form-label">登记号：</label>
 										<div class="layui-input-block">
-											<input name="registNum"  required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled />
+											<input  required="required"  lay-verify="required" value="${user.registNum}" autocomplete="off" class="layui-input" disabled />
 										</div>
 									</div>
 								</div>

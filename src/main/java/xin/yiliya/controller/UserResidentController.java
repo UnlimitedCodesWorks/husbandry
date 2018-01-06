@@ -153,8 +153,10 @@ public class UserResidentController extends BaseController {
 
     @RequestMapping(value = "/updateUser.do",method = RequestMethod.POST)
     public String updateUser(@ModelAttribute("updateUser") UpdateUser updateUser){
+        User user = (User) session.getAttribute("userBean");
+        Integer userId = user.getUserid();
         userService.userMyInfoUpdate(updateUser);
-        return "redirect:/userResident/information.html";
+        return "redirect:/userResident/information/"+userId;
     }
 
     @RequestMapping(value = "/updateSecurity.do",method = RequestMethod.POST)
