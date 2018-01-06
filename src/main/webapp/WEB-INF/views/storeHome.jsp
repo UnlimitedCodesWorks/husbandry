@@ -93,7 +93,7 @@
 									</div>
 									<div class="layui-col-md12">
 										<el-rate
-	    									v-model="<fmt:formatNumber type="number" value="${storeInfo.grade/2}" maxFractionDigits="1"/>"
+	    									v-model="value"
 	  										disabled
 					  						show-score
 					  						text-color="#ff9900"
@@ -344,6 +344,7 @@
     var storeId = ${storeId};
     var portPath = "<%=portPath%>";
     var userId ="${user.userid}";
+    var score = ${storeInfo.grade/2};
     var schema = true;
 
     function support(evaluateId,praise,e) {

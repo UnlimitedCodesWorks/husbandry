@@ -222,7 +222,7 @@ jQuery(document).ready(function($) {
     el: '.wrap-head',
     data() {
       return {
-        value: 4.5
+        value: score
       }
     }
   });
