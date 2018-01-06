@@ -394,7 +394,7 @@
                         node2="未评分";
                     }
                     else{
-                        node2=grade;
+                        node2=grade.toFixed(1);
                     }
                     var node3='</td>' +
                         '</tr>';

@@ -73,6 +73,7 @@ mvc:annotation-driven默认加载很多的参数绑定方法，
             <mvc:mapping path="/service/*.html" />
             <mvc:mapping path="/index.html" />
             <mvc:mapping path="/store/information/*" />
+            <mvc:mapping path="/service/detail/*" />
             <bean class="xin.yiliya.interceptor.UserNewsInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

@@ -333,7 +333,7 @@
                     var grade=data.list[i].grade;
                     var status=data.list[i].status;
                     var node='<tr style="cursor: pointer;"><td hidden="hidden">'+serviceId+'</td><td>'+serviceName+'</td>' +
-                        '<td>'+publishTime+'</td><td>'+grade+'</td><td>'+status+'</td>' +
+                        '<td>'+publishTime+'</td><td>'+grade.toFixed(1)+'</td><td>'+status+'</td>' +
                         '</tr>';
                     table.append(node);
                 }
@@ -342,7 +342,7 @@
             }
 
             function clickTr() {
-                $('tr').click(function(event) {
+                $('tbody tr').click(function(event) {
                     $('tr').removeClass('info');
                     $(this).addClass('info');
                     var serviceId=$(this).children(":first").html();
@@ -355,7 +355,7 @@
                             $('#lineChart div').remove();
                             var daynum=[];
                             var grade=[];
-                            var node;
+                            var node='';
                             for(var i=0;i<data.days.length;i++){
                                 daynum.push(data.days[i].dayNum);
                                 grade.push(data.days[i].grade);
@@ -363,11 +363,14 @@
                             if(data.grade>=0 && data.grade<3){
                                 node='<div class="alert alert-danger">';
                             }
-                            else if(data.grade>3 && data.grade<6){
+                            else if(data.grade>=3 && data.grade<6){
                                 node='<div class="alert alert-warning">';
                             }
-                            else if(data.grade>6 && data.grade<8){
+                            else if(data.grade>=6 && data.grade<8){
                                 node='<div class="alert alert-info">';
+                            }
+                            else if(data.grade>=8 && data.grade<=10){
+                                node='<div class="alert alert-success">';
                             }
                             var node1='服务名称：'+data.serviceName+
                                 '&nbsp;&nbsp;&nbsp;&nbsp;该月平均分：'+data.grade+'分' +
