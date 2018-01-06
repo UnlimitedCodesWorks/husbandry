@@ -188,7 +188,7 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="<%=portPath%>storeAdmin/message.html">系统消息<span class="badge" style="margin-left: 130px;">${unReadNewsNum}</span></a>
                                             </li>
-                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 130px;">0</span></a>
+                                            <li><a href="<%=portPath%>storeAdmin/complain.html">用户投诉<span class="badge" style="margin-left: 130px;">${unReadComplainNum}</span></a>
                                             </li>
                                         </ul>
                                     </div>
