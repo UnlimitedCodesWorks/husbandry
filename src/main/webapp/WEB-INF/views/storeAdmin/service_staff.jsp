@@ -298,7 +298,7 @@
                         <span>
                             <c:if test="${empty servicePeopleList}">
                                 <button class="btn btn-danger" disabled="disabled">删除</button>
-                                <button class="btn btn-info" disabled="disabled">添加模板</button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#add-modal">添加模板</button>
                             </c:if>
                             <c:if test="${!empty servicePeopleList}">
                                 <button class="btn btn-danger" id="delete">删除</button>
