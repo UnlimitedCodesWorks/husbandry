@@ -207,13 +207,13 @@
                                 <div id="component-example" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="store_service.html">我的服务</a>
+                                            <li><a href="<%=portPath%>storeAdmin/service.html">我的服务</a>
                                             </li>
-                                            <li><a href="add_service.html">添加服务</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceAdd.html">添加服务</a>
                                             </li>
                                             <li><a href="<%=portPath%>storeAdmin/serviceScore.html">服务评分</a>
                                             </li>
-                                            <li><a href="service_template.html">服务模板</a>
+                                            <li><a href="<%=portPath%>storeAdmin/serviceTemplate.html">服务模板</a>
                                             </li>
                                         </ul>
                                     </div>
