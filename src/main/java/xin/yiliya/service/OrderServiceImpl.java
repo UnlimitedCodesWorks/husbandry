@@ -29,6 +29,10 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.getServiceTypeFinish(serid);
     }
 
+    public Integer getServiceIdFinish(int serviceId) {
+        return orderMapper.getServiceIdFinish(serviceId);
+    }
+
     public Integer getStoreServiceFinish(int storeId) {
         return orderMapper.getStoreServiceFinish(storeId);
     }

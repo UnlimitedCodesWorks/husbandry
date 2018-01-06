@@ -12,6 +12,8 @@ public interface OrderMapper {
 
     Integer getServiceTypeFinish(int serid);
 
+    Integer getServiceIdFinish(int serviceId);
+
     Integer getStoreServiceFinish(int storeId);
 
     List<OrderShow> getAllUserOrder(Integer userId);

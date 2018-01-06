@@ -537,4 +537,9 @@
         and orderbigtime.orderpriceid=ordersmalltime.orderbigtime_id
         AND `order`.orderid=#{orderId}
     </select>
+    <select id="getServiceIdFinish" resultType="_int" parameterType="_int">
+        SELECT COUNT(*) FROM offerservice,`order`
+        WHERE offerservice.offerserviceid=#{serviceId} AND `order`.service_id=offerserviceid
+        AND `order`.`status`=2
+    </select>
 </mapper>

@@ -13,6 +13,9 @@ public interface OrderService {
     //某服务类型服务订单完成的次数(不包括退款)
     Integer getServiceTypeFinish(int serid);
 
+    //某服务id服务订单完成的次数（不包括退款）
+    Integer getServiceIdFinish(int serviceId);
+
     //厂商所有服务的成交量总和(不包括退款)
     Integer getStoreServiceFinish(int storeId);
 

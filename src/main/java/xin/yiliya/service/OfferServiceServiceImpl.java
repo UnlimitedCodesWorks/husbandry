@@ -235,7 +235,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
         offerServiceDetail.setCities(offerServiceMapper.getCitiesByServiceId(offerServiceDetail.getOfferserviceid()));
         offerServiceDetail.setMarkNum(serviceEvaluateService.getAllEvaluateByServiceId(serviceId,true,1,0,1).getList().size());
         offerServiceDetail.setGrade(serviceEvaluateService.getGradeByServiceId(serviceId));
-        offerServiceDetail.setOrderNum(orderService.getServiceTypeFinish(serviceId));
+        offerServiceDetail.setOrderNum(orderService.getServiceIdFinish(serviceId));
         float marketPrice = serviceService.getServiceKindPrice(offerServiceDetail.getSerid());
         if(marketPrice< Float.parseFloat(offerServiceDetail.getPrice())){
             offerServiceDetail.setPriceJudgement(true);
@@ -286,7 +286,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -310,7 +310,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -334,7 +334,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -358,7 +358,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -382,7 +382,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -406,7 +406,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -430,7 +430,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByCityAndKind(serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -466,7 +466,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -490,7 +490,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -514,7 +514,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -538,7 +538,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -562,7 +562,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -586,7 +586,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
@@ -610,7 +610,7 @@ public class OfferServiceServiceImpl implements OfferServiceService {
                 list = offerServiceMapper.getServicesByInput(input,serviceKind,ciid);
                 for(OfferServiceSimple object: list){
                     object.setGrade(serviceEvaluateService.getGradeByServiceId(object.getOfferServiceId()));
-                    object.setMarkNum(orderService.getServiceTypeFinish(object.getOfferServiceId()));
+                    object.setMarkNum(orderService.getServiceIdFinish(object.getOfferServiceId()));
                     object.setGradeNum(
                             evaluateServiceMapper.getGradeNumByServiceId(object.getOfferServiceId()));
                     float marketPrice = serviceService.getServiceKindPrice(object.getKind().getSerid());
