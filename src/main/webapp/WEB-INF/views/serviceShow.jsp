@@ -79,11 +79,11 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</div>
 								<!-- 服务类别 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p><i class="iconfont">&#xe603;</i> 类&emsp;&emsp;别：<span>${service.kind}服务</span></p>
+									<p><i class="iconfont">&#xe603;</i> 类&emsp;&emsp;&emsp;别：<span>${service.kind}服务</span></p>
 								</div>
 								<!-- 负责人 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-									<p><i class="iconfont">&#xe645;</i> 负&ensp;责&ensp;人 电 话：<span>${service.peoplePhone}</span></p>
+									<p><i class="iconfont">&#xe645;</i> 负责人电话：<span>${service.peoplePhone}</span></p>
 								</div>
 							</div>
 						</div>
@@ -106,7 +106,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<!-- 评分 -->
 								<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
 									<el-rate
-    									v-model="${service.grade/2}"
+    									v-model="value"
   										disabled
 				  						show-score
 				  						text-color="#ff9900"
@@ -390,6 +390,7 @@ String portPath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var userId = "${user.userid}";
     var serviceId = "${service.offerserviceid}";
     var schema = true;
+    var score = ${service.grade/2};
 
 	function support(evaluateId,praise,e) {
         $.ajax({

@@ -97,7 +97,7 @@
 	  										disabled
 					  						show-score
 					  						text-color="#ff9900"
-					  						score-template="<fmt:formatNumber type="number" value="${storeInfo.grade}" maxFractionDigits="1"/>">
+					  						score-template="<c:if test="${storeInfo.grade==0}">未评分</c:if><c:if test="${storeInfo.grade!=0}">${storeInfo.grade}</c:if>">
 				  						</el-rate>
 									</div>
 									<div class="layui-col-md12">

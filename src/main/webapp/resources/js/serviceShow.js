@@ -248,6 +248,7 @@ jQuery(document).ready(function($) {
     el: '.wrap-head',
     data() {
       return {
+          value: score
       }
     }
   });
