@@ -230,7 +230,7 @@
                                 <div class="modal-body" id="handleBody">
                                     <div class="form-group">
                                         <label for="type">类别</label>
-                                        <select class="form-control" id="type" name="stype">
+                                        <select class="form-control" id="type" name="type">
                                             <option>公告通知</option>
                                             <option>活动消息</option>
                                         </select>
