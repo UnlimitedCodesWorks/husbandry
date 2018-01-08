@@ -82,6 +82,9 @@ public class HhfTest {
     @Autowired
     ServiceService serviceService;
 
+    @Autowired
+    StoreNewsService storeNewsService;
+
     @Test
     public void test() throws IOException, ImageFormatException, InvocationTargetException, IllegalAccessException {
         //管理员登录
@@ -391,5 +394,12 @@ public class HhfTest {
         //根据订单id获取时间周期
 //        OrderShow orderShow=orderService.getOrderTimeById(35);
 //        System.out.print(JSON.toJSONString(orderShow,true));
+
+        //发消息
+        StoreNews storeNews=new StoreNews();
+        storeNews.setStoreId(12);
+        storeNews.setContent("服务最近良好，继续保持");
+        storeNews.setStype("公告信息");
+        storeNewsService.addNew(storeNews);
     }
 }

@@ -33,7 +33,7 @@
     insert into storenews (storenewsid, store_id, type, 
       time, read_status, content
       )
-    values (#{storenewsid,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+    values (#{storenewsid,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{stype,jdbcType=VARCHAR},
       #{time,jdbcType=TIMESTAMP}, #{readStatus,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -46,7 +46,7 @@
       <if test="storeId != null">
         store_id,
       </if>
-      <if test="type != null">
+      <if test="stype != null">
         type,
       </if>
       <if test="time != null">
@@ -66,8 +66,8 @@
       <if test="storeId != null">
         #{storeId,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
+      <if test="stype != null">
+        #{stype,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
