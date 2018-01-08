@@ -160,8 +160,8 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(info,true));
 
         //获取客户退款订单
-//        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(24,1,2);
-//        System.out.print(JSON.toJSONString(info,true));
+        PageInfo<OrderCancel> info=orderService.getAllUserCancelOrder(29,1,100);
+        System.out.print(JSON.toJSONString(info,true));
 
         //确认需求表单生成订单order
 //        RequireList requires=new RequireList();
@@ -396,10 +396,10 @@ public class HhfTest {
 //        System.out.print(JSON.toJSONString(orderShow,true));
 
         //发消息
-        StoreNews storeNews=new StoreNews();
-        storeNews.setStoreId(12);
-        storeNews.setContent("服务最近良好，继续保持");
-        storeNews.setStype("公告信息");
-        storeNewsService.addNew(storeNews);
+//        StoreNews storeNews=new StoreNews();
+//        storeNews.setStoreId(12);
+//        storeNews.setContent("服务最近良好，继续保持");
+//        storeNews.setStype("公告信息");
+//        storeNewsService.addNew(storeNews);
     }
 }
