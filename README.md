@@ -1,2 +1,2 @@
 # husbandry
-spring课程设计，项目停止维护
+智慧家政服务web，项目停止维护
